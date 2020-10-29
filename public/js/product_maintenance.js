@@ -13,11 +13,14 @@ $(document).ready(function(){
    
       processing: true,
       serverSide: true,
+      
      
       ajax:{
        url: "/maintenance/product",
        data: {category:category}
-      },
+      }, 
+      
+       
       columns:[       
        {data: 'productCode', name: 'productCode'},
        {data: 'description', name: 'description'},
@@ -28,6 +31,7 @@ $(document).ready(function(){
        {data: 'exp_date',name: 'exp_date'},
        {data: 'action', name: 'action',orderable: false},
       ]
+      
      });
      
   
@@ -37,8 +41,12 @@ $(document).ready(function(){
       $('#product-table').DataTable().destroy();
      
       fetch_data(category_id);
-      
+
       });
+
+    
+
+       
 
         // delete product alert
         var product_id, product_name;

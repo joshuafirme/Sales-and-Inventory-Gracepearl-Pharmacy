@@ -57,7 +57,7 @@ class ProductMaintenanceCtr extends Controller
 
     public function getAllProduct(){
         $product = DB::table($this->table_prod)
-        ->select("*", DB::raw('tblproduct.id AS productCode'))
+        ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->get();
@@ -67,7 +67,7 @@ class ProductMaintenanceCtr extends Controller
 
     public function filterByCategory($category_param){
         $product = DB::table($this->table_prod)
-        ->select("*", DB::raw('tblproduct.id AS productCode'))
+        ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->where('categoryID', $category_param)
@@ -138,7 +138,7 @@ class ProductMaintenanceCtr extends Controller
 
     public function getPrefix()
     {
-        $prefix = 'P'.date('my').'-';
+        $prefix = 'P-'.date('m');
         return $prefix;
     }
 
@@ -194,7 +194,7 @@ class ProductMaintenanceCtr extends Controller
     public function getAllProductData($category_param)
     {
         $product = DB::table($this->table_prod)
-        ->select("*", DB::raw('tblproduct.id AS productCode'))
+        ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
             ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
             ->where('category_name',  $category_param)
@@ -229,7 +229,7 @@ class ProductMaintenanceCtr extends Controller
         $output .='
         <tr>    
                                
-        <td style="border: 1px solid; padding:10px;">'. $data->_prefix . str_pad($data->productCode,6,'0',STR_PAD_LEFT) .'</td>
+        <td style="border: 1px solid; padding:10px;">'. $data->productCode .'</td>
         <td style="border: 1px solid; padding:10px;">'. $data->description .'</td>
         <td style="border: 1px solid; padding:10px;">'. $data->qty .'</td>
         <td style="border: 1px solid; padding:10px;">'. $data->re_order .'</td>      

@@ -27,6 +27,7 @@ class CreateTblproduct extends Migration
             $table->string('image')->nullable();
             $table->timestamps();
         });
+      //  DB::statement('ALTER TABLE tblproduct CHANGE id id INT(5) UNSIGNED ZEROFILL NOT NULL');
     }
 
     /**

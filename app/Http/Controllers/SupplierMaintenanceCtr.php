@@ -17,7 +17,7 @@ class SupplierMaintenanceCtr extends Controller
     public function index()
     { 
         $suplr = DB::table($this->table_name)
-                                ->select("*", DB::raw('id AS supplierID'))
+                                ->select("*", DB::raw('CONCAT(_prefix, id) AS supplierID'))
                                 ->paginate(10);
 
         return view('maintenance/supplier/supplier', ['suplr' => $suplr]);
@@ -43,6 +43,7 @@ class SupplierMaintenanceCtr extends Controller
     {
 
         $suplr = new SupplierMaintenance;
+        $suplr->_prefix = 'SP-';
         $suplr->supplierName = $request->input('supplierName');
         $suplr->address = $request->input('address');
         $suplr->person = $request->input('person');

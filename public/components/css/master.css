@@ -514,12 +514,33 @@ flex-direction: row;
     }
 
     .btn-primary{
-        background-color: #286090;
-        border-color: #286090;
+        background-color: #318CB8;
+        border-color: #318CB8;
     }
-    .btn-primary :hover{
-        background-color: #1A4060 !important;
-        border-color: #1A4060 !important;
+    .btn-primary:hover{
+        background-color: #3180B8;
+        border-color: #3180B8;
+        color: #fff;
     }
 
+    .btn-primary:focus{
+        background-color: #3180B8;
+        border-color: #3180B8;
+        color: #fff;
+    }
+
+
+    #filter-cont{
+        margin-right: -15px;
+    }
+
+
+    .page-item.active .page-link {
+        background-color: #318CB8 !important;
+        border: 1px solid#318CB8;
+        color: #fff !important;
+    }
+    .page-link {
+        color: black !important;
+    }
 

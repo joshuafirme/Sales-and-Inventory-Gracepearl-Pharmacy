@@ -15,6 +15,7 @@ class CreateTbldiscount extends Migration
     {
         Schema::create('tbldiscount', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('discount');
             $table->timestamps();
         });
     }

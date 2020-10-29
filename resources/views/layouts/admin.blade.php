@@ -26,6 +26,9 @@
                     <a href="{{ url('/dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
                 </li>
                 <li>
+                    <a href="{{ url('/dashboard') }}"><i class="fas fa-search"></i> Product Search</a>
+                </li>
+                <li>
                     <a href="#inventory-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-cube"></i> Inventory </a>
                     <ul class="collapse list-unstyled" id="inventory-menu">
                         <li>
@@ -35,7 +38,16 @@
                             <a href="404.html"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-boxes"></i> Request Purchased <span class="badge badge-warning"> 16</span></a>
+                            <a href="500.html"><i class="fas fa-boxes"></i> Purchase Order <span class="badge badge-warning"> 16</span></a>
+                        </li>
+                        <li>
+                            <a href="404.html"><i class="fas fa-bell"></i> Notifications</a>
+                        </li>
+                        <li>
+                            <a href="404.html"><i class="fas fa-jedi-order"></i> Product Return</a>
+                        </li>
+                        <li>
+                            <a href="404.html"><i class="fas fa-flag"></i> Weed</a>
                         </li>
                     </ul>
                 </li>
@@ -45,9 +57,7 @@
                         <li>
                             <a href="{{ url('sales/cashiering') }}"><i class="fas fa-cash-register"></i> Cashiering</a>
                         </li>
-                        <li>
-                            <a href="404.html"><i class="fas fa-search"></i> Product Search</a>
-                        </li>
+                     
                         <li>
                             <a href="500.html"><i class="fas fa-file-invoice-dollar"></i> Sales Report</a>
                         </li>

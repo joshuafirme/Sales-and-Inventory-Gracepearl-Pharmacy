@@ -14,8 +14,8 @@ class CreateTblsupplier extends Migration
     public function up()
     {
         Schema::create('tblsupplier', function (Blueprint $table) {
-            $table->bigIncrements('id', 6)->unsigned();
-            $table->string('prefix')->default('SPR');
+            $table->bigIncrements('id', 6);
+            $table->string('_prefix');
             $table->string('supplierName');
             $table->string('address');
             $table->string('person');

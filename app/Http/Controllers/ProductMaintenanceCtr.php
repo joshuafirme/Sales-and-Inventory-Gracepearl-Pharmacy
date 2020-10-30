@@ -83,7 +83,7 @@ class ProductMaintenanceCtr extends Controller
     public function show($productCode)
     {
         $product = DB::table($this->table_prod)
-            ->select("*", DB::raw('tblproduct.id AS productCode'))
+            ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
             ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
             ->where('tblproduct.id', $productCode)
@@ -144,6 +144,35 @@ class ProductMaintenanceCtr extends Controller
     {
         $prefix = 'P-'.date('m');
         return $prefix;
+    }
+
+
+    public function update()
+    {
+        $product = new ProductMaintenance;
+        
+        $product_code = Input::get('product_code_hidden');
+        $product->desciption = Input::get('description');
+        $product->categoryID = Input::get('category_name');
+        $product->supplierID = Input::get('supplier_name');
+        $product->qty = Input::get('qty');
+        $product->orig_price = Input::get('orig_price');
+        $product->selling_price = Input::get('selling_price');
+        $product->exp_date = Input::get('exp_date');
+
+        DB::update('UPDATE '. $this->table_prod .' 
+        SET description = ?, categoryID = ?, supplierID = ?, qty = ?, orig_price = ?, selling_price = ?, exp_date = ?
+        WHERE id = ?',
+        [
+            $product->desciption, 
+            $product->categoryID, 
+            $product->supplierID, 
+            $product->qty, 
+            $product->orig_price, 
+            $product->selling_price, 
+            $product->exp_date, 
+            $product_code
+            ]);
     }
 
 

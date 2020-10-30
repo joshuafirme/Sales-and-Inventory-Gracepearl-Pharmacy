@@ -32,7 +32,7 @@ $(document).ready(function(){
               }
               var product_code = response[0].productCode;
 
-              $('#product_code').val('P'+pad(product_code, 6));
+              $('#product_code').val(product_code);
               $('#description').val(response[0].description);
               $('#qty').val(response[0].qty);
               $('#price').val(response[0].selling_price);

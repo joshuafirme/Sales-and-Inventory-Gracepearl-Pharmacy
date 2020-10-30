@@ -129,7 +129,12 @@
           <div class="row">
             {{ csrf_field() }}
 
-  
+            <input type="hidden" id="product_code_hidden">
+
+            <div class="col-md-8 mb-2">
+              <label class="col-form-label">Product Code</label>
+              <input type="text" class="form-control"  name="product_code" id="product_code" readonly>
+            </div>
           
             <div class="col-md-8">
               <label class="col-form-label">Description</label>
@@ -139,7 +144,7 @@
             <div class="col-md-4 mb-2">    
               <label class="col-form-label">Category</label>
               <select class="form-control category_name" name="category_name" >
-                <option id="edit_category_name" selected></option>
+                <option value="" id="edit_category_name" selected></option>
 
                 @foreach($category as $data)
               <option value={{ $data->id }}>{{ $data->category_name }}</option>
@@ -151,7 +156,7 @@
             <div class="col-md-4">
               <label class="col-form-label">Supplier</label>
               <select class="form-control supplier_name" name="supplier_name">
-                <option id="edit_supplier_name" selected></option>
+                <option value="" id="edit_supplier_name" selected></option>
 
                 @foreach($suplr as $data)
                <option value={{ $data->id }}>{{ $data->supplierName }}</option>
@@ -189,9 +194,11 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Update Photo</label>
-              <input type="file"  name="image" id="edit_image">
+              <input type="file"   name="image" id="edit_image">
             <div>{{ $errors->first('image') }}</div>
             </div> 
+
+       
    
             
           </div>

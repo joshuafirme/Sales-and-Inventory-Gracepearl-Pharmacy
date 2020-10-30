@@ -130,7 +130,7 @@ $(document).ready(function(){
 });
 
 
-
+//edit show
 $(document).on('click', '#btn-edit-product-maintenance', function(){
   var productCode = $(this).attr('product-code');
   
@@ -145,6 +145,8 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
     success:function(response){
      
       console.log(response);
+      $('#product_code_hidden').val(response[0].id);
+      $('#product_code').val(response[0].productCode);
       $('#edit_description').val(response[0].description);
       $('#edit_category_name').text(response[0].category_name);
       $('#edit_supplier_name').text(response[0].supplierName);
@@ -165,6 +167,46 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
     }
    });
 });  
+
+
+//update 
+$('#update-product-maintenance').click(function(){
+  var product_code = $('#product_code_hidden').val(); 
+  var description = $('#edit_description').val(); 
+  var category_name = $('#edit_category_name').val();
+  var supplier_name = $('#edit_supplier_name').val();
+  var qty = $('#edit_qty').val();
+  var re_order = $('#edit_re_order').val();
+  var orig_price = $('#edit_orig_price').val();
+  var selling_price = $('#edit_selling_price').val();
+  var exp_date = $('#edit_exp_date').val();
+
+    $.ajax({
+      url:"/maintenance/product/update",
+      type:"POST",
+
+      data:{
+            product_code:product_code,
+            description:description,
+            category_name:category_name,
+            supplier_name:supplier_name,
+            qty:qty,
+            re_order:re_order,
+            orig_price:orig_price,
+            selling_price:selling_price,
+            exp_date:exp_date
+          },
+
+          beforeSend:function(){
+            $('#update-product-maintenance').text('Updating...');
+          },
+          success:function(response){
+            console.log(response);
+            
+          }
+     });
+
+});
 
 
   

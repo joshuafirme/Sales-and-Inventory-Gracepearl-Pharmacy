@@ -54,7 +54,7 @@ class SalesCtr extends Controller
     {
         if($search_key){
             $product = DB::table($this->table_prod)
-            ->select("*", DB::raw('tblproduct.id as productCode'))
+            ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) as productCode'))
             ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
             ->where('tblproduct.id', 'LIKE', '%'.$search_key.'%')

@@ -39,16 +39,16 @@
                           <div class="row">
                             {{ csrf_field() }}   
                           
-                            @foreach ($product as $products)
+                            @foreach ($product as $data)
                             <div class="col-md-8">
                               <label class="col-form-label">Description</label>
-                              <input type="text" class="form-control"  name="description"  value={{ $products->description }} required>
+                              <input type="text" class="form-control"  name="description"  value={{ $data->description }} required>
                             </div>
                   
                             <div class="col-md-4 mb-2">    
                               <label class="col-form-label">Category</label>
                               <select class="form-control category_name" name="category_name" >
-                
+                                <option selected>{{ $data->category_name }}</option>
                                 @foreach ($category as $categories)
                               <option >{{ $categories->category_name }}</option>
                                 @endforeach
@@ -68,27 +68,27 @@
                 
                             <div class="col-md-4">
                               <label class="col-form-label">Quantity</label>
-                              <input type="text" class="form-control" name="qty" id="edit_qty" {{ $products->qty }} required>
+                            <input type="text" class="form-control" name="qty" id="edit_qty" value="{{ $data->qty }}" required>
                             </div>
                   
                             <div class="col-md-4">
                               <label class="col-form-label">Re-Order Point</label>
-                              <input type="text" class="form-control" name="re_order" id="edit_re_order" required>
+                              <input type="text" class="form-control" name="re_order" id="edit_re_order" value="{{ $data->re_order }}" required>
                             </div>
                   
                             <div class="col-md-4  mb-2">
                               <label class="col-form-label">Original Price</label>
-                              <input type="text" class="form-control" name="orig_price" id="edit_orig_price" required>
+                              <input type="text" class="form-control" name="orig_price" id="edit_orig_price" value="{{ $data->orig_price }}" required>
                             </div>
                             
                             <div class="col-md-4">
                               <label class="col-form-label">Selling Price</label>
-                              <input type="text" class="form-control orig_price" name="selling_price" id="edit_selling_price" required>
+                              <input type="text" class="form-control orig_price" name="selling_price" id="edit_selling_price" value="{{ $data->selling_price }}" required>
                             </div>
                 
                             <div class="col-md-4">
                               <label class="col-form-label">Expiration Date</label>
-                              <input type="date" class="form-control" name="exp_date" id="edit_exp_date" required>
+                              <input type="date" class="form-control" name="exp_date" id="edit_exp_date" value="{{ $data->exp_date }}" required>
                             </div>
                 
                             <div class="col-md-4">

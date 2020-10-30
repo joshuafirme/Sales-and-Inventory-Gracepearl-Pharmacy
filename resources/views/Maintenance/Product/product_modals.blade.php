@@ -43,22 +43,22 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Quantity</label>
-              <input type="text" class="form-control" name="qty" id="qty" required>
+              <input type="number" min="1" class="form-control" name="qty" id="qty" required>
             </div>
   
             <div class="col-md-4">
               <label class="col-form-label">Re-Order Point</label>
-              <input type="text" class="form-control" name="re_order" id="re_order" required>
+              <input type="number" class="form-control" name="re_order" id="re_order" required>
             </div>
   
             <div class="col-md-4  mb-2">
               <label class="col-form-label">Original Price</label>
-              <input type="text" class="form-control" name="orig_price" id="orig_price" required>
+              <input type="number" min="1" step=".01" class="form-control" name="orig_price" id="orig_price" required>
             </div>
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
-              <input type="text" class="form-control orig_price" name="selling_price" id="selling_price" required>
+              <input type="number" min="1" step=".01" class="form-control orig_price" name="selling_price" id="selling_price" required>
             </div>
 
             <div class="col-md-4">
@@ -78,8 +78,8 @@
       </div>
       <div class="modal-footer">
 
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary mr-4">Save</button>
+              <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-sm btn-primary mr-4">Save</button>
       </div>
     </form>
     </div>
@@ -101,8 +101,10 @@
           <p class="delete-message"></p>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-danger" type="button" name="ok_button" id="product_ok_button">Ok</button>
-          <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+         
+          <button class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="product_ok_button">Ok</button>
+
         </div>
       </div>
     </div>
@@ -148,8 +150,8 @@
   
             <div class="col-md-4">
               <label class="col-form-label">Supplier</label>
-              <select class="form-control" name="supplierID">
-                <option id="edit_supplier_name"></option>
+              <select class="form-control supplier_name" name="supplier_name">
+                <option id="edit_supplier_name" selected></option>
 
                 @foreach($suplr as $data)
                <option value={{ $data->id }}>{{ $data->supplierName }}</option>
@@ -183,12 +185,10 @@
               <input type="date" class="form-control" name="exp_date" id="edit_exp_date" required>
             </div>
 
-            <div class="col-md-4">
-            <img width="100px"  alt="No image" class="img-thumbnail" id="edit_img_view">
-            </div> 
+     
 
             <div class="col-md-4">
-              <label class="col-form-label">Upload Photo</label>
+              <label class="col-form-label">Update Photo</label>
               <input type="file"  name="image" id="edit_image">
             <div>{{ $errors->first('image') }}</div>
             </div> 
@@ -200,8 +200,8 @@
       </div>
       <div class="modal-footer">
 
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" id="update-product-maintenance" class="btn btn-primary mr-4">Save</button>
+              <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" id="update-product-maintenance" class="btn btn-sm btn-success mr-4">Update</button>
       </div>
     </form>
     </div>

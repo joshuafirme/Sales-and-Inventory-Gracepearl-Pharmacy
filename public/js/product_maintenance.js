@@ -131,23 +131,26 @@ $(document).ready(function(){
 
 
 
-/*$(document).on('click', '#btn-edit-product-maintenance', function(){
-  var productCode = $(this).attr('show-productCode-mntnc');
+$(document).on('click', '#btn-edit-product-maintenance', function(){
+  var productCode = $(this).attr('product-code');
   
+  console.log(productCode);
   $('#edit_category_name').val('');
+  $('#edit_supplier_name').val('');
 
   $.ajax({
     url:"/maintenance/product/show/"+productCode,
     type:"POST",
     data:{productCode:productCode},
     success:function(response){
-      $('#edit_category_name').val('');
+     
       console.log(response);
       $('#edit_description').val(response[0].description);
       $('#edit_category_name').text(response[0].category_name);
       $('#edit_supplier_name').text(response[0].supplierName);
 
-    //  $(".category_name option[value="+response[0].categoryID+"]").remove();
+      $(".category_name option[value="+response[0].categoryID+"]").remove();
+      $(".supplier_name option[value="+response[0].supplierID+"]").remove();
       
       $('#edit_category_name').val(response[0].categoryID);
       $('#edit_supplier_name').val(response[0].supplierID);
@@ -161,7 +164,7 @@ $(document).ready(function(){
       $('#edit_img_view').attr('src', img_source);
     }
    });
-});  */
+});  
 
 
   

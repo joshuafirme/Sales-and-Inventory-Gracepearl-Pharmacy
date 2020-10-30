@@ -22,6 +22,7 @@ class ProductMaintenanceCtr extends Controller
     {
         $category_param = $request->category;
         $product = $this->getAllProduct(); 
+       // dd($product);
         $category = DB::table($this->table_cat)->get();
         $suplr = DB::table($this->table_suplr)->get();
         
@@ -30,24 +31,25 @@ class ProductMaintenanceCtr extends Controller
             if($request->category){
                 return datatables()->of($this->filterByCategory($request->category))
                 ->addColumn('action', function($product){
-                    $button = ' <a class="btn" href="/maintenance/product/edit/'. $product->id .'"><i class="fa fa-edit"></i></a>';
+                   // <button class="btn btn-primary btn-sm" "><span class='fa fa-plus'></span> Add Category</button> 
+                    $button = ' <a class="btn" id="btn-edit-product-maintenance" product-code="'. $product->id .'" data-toggle="modal" data-target="#editProductModal"><i class="fa fa-edit"></i></a>';
                     $button .= '&nbsp;&nbsp;';
                     $button .= '<a class="btn" id="delete-product" delete-id="'. $product->id .'"><i class="fa fa-trash"></i></a>';
                     return $button;
                 })
-                ->rawColumns(['action' => 'action'])
+                ->rawColumns(['action'])
                 ->make(true);
             }
             else{ 
                
                 return datatables()->of($product)
-                ->addColumn('action', function($data){
-                    $button = ' <a class="btn" href="/maintenance/product/edit/'. $data->id .'"><i class="fa fa-edit"></i></a>';
+                ->addColumn('action', function($product){
+                    $button = ' <a class="btn" id="btn-edit-product-maintenance" product-code="'. $product->id .'" data-toggle="modal" data-target="#editProductModal"><i class="fa fa-edit"></i></a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<a class="btn" id="delete-product" delete-id="'. $data->id .'"><i class="fa fa-trash"></i></a>';
+                    $button .= '<a class="btn" id="delete-product" delete-id="'. $product->id .'"><i class="fa fa-trash"></i></a>';
                     return $button;
                 })
-                ->rawColumns(['action' => 'action'])
+                ->rawColumns(['action'])
                 ->make(true);
             }
            
@@ -57,7 +59,7 @@ class ProductMaintenanceCtr extends Controller
 
     public function getAllProduct(){
         $product = DB::table($this->table_prod)
-        ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
+        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->get();
@@ -78,20 +80,22 @@ class ProductMaintenanceCtr extends Controller
 
     
 
-    public function edit($id)
+    public function show($productCode)
     {
         $product = DB::table($this->table_prod)
             ->select("*", DB::raw('tblproduct.id AS productCode'))
             ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-            ->where('tblproduct.id', $id)
+            ->where('tblproduct.id', $productCode)
             ->get();
         
-            $category = DB::table($this->table_cat)->get();
-            $suplr = DB::table($this->table_suplr)->get();
+            //$category = DB::table($this->table_cat)->get();
+           // $suplr = DB::table($this->table_suplr)->get();
 
-            return view('maintenance/product/product_update', ['product' => $product, 'category' => $category, 'suplr' => $suplr]);
+            return $product;
     }
+
+    
 
   
 

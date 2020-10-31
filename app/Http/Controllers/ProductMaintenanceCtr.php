@@ -83,7 +83,7 @@ class ProductMaintenanceCtr extends Controller
     public function show($productCode)
     {
         $product = DB::table($this->table_prod)
-            ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
+            ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, category_name, supplierName'))
             ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
             ->where('tblproduct.id', $productCode)

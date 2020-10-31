@@ -123,69 +123,6 @@ $(document).ready(function(){
         $('#edit_selling_price').val(result);
       });
 
-
-
-    //update 
-$('#update-product-maintenance').click(function(){
-  var product_code = $('#product_code').val(); 
-  var id = product_code.substr(product_code.length - 4);
-  var description = $('#edit_description').val(); 
-  var category_name = $('select[name=category_name] option').filter(':selected').val();
-  var supplier_name = $('select[name=supplier_name] option').filter(':selected').val();
-  var qty = $('#edit_qty').val();
-  var re_order = $('#edit_re_order').val();
-  var orig_price = $('#edit_orig_price').val();
-  var selling_price = $('#edit_selling_price').val();
-  var exp_date = $('#edit_exp_date').val();
-
-  $.ajaxSetup({
-    headers: {
-  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-}
- });
-
-    $.ajax({
-      url:"/maintenance/updateproduct/"+id,
-      type:"POST",
-
-      data:{
-            description:description,
-            category_name:category_name,
-            supplier_name:supplier_name,
-            qty:qty,
-            re_order:re_order,
-            orig_price:orig_price,
-            selling_price:selling_price,
-            exp_date:exp_date
-          },
-
-          beforeSend:function(){
-            $('#update-product-maintenance').text('Updating...');
-          },
-          success:function(response){
-            setTimeout(function(){
-              $('.update-success-validation').css('display', 'inline-block');
-              $('#product-table').DataTable().ajax.reload();
-              $('#update-product-maintenance').text('Update');
-              setTimeout(function(){
-                $('.update-success-validation').fadeOut('slow')
-               
-              },2000);
-            
-            },1000);
-           
-            
-          }
-     });
-
-});
-  
-
- 
-
-});
-
-
 //edit show
 $(document).on('click', '#btn-edit-product-maintenance', function(){
   var productCode = $(this).attr('product-code');
@@ -225,40 +162,67 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
 });  
 
 
+    //update 
+$('#update-product-maintenance').click(function(){
+  var id = $('#product_code_hidden').val(); 
+  console.log(product_code);
+  //var id = product_code.substr(product_code.length - 4);
+  var description = $('#edit_description').val(); 
+  var category_name = $('select[name=category_name] option').filter(':selected').val();
+  var supplier_name = $('select[name=supplier_name] option').filter(':selected').val();
+  var qty = $('#edit_qty').val();
+  var re_order = $('#edit_re_order').val();
+  var orig_price = $('#edit_orig_price').val();
+  var selling_price = $('#edit_selling_price').val();
+  var exp_date = $('#edit_exp_date').val();
 
+  $.ajaxSetup({
+    headers: {
+  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+ });
 
+    $.ajax({
+      url:"/maintenance/updateproduct/"+id,
+      type:"POST",
 
-  
-/*
-      $('#filter_category').change(function(){
-        var category_param = $('#filter_category').find(":selected").text();    
-
-        $.ajax({
-          url:"/maintenance/product/filterByCategory/"+category_param,
-          type:"GET",
-          data:{category_param:category_param},
-          beforeSend: function(response){
-            console.log(response);
-            
-              $("tbody").html('<p style="margin:10px; margin-top:30px;"> Fetching data...</p>');
-             
+      data:{
+            description:description,
+            category_name:category_name,
+            supplier_name:supplier_name,
+            qty:qty,
+            re_order:re_order,
+            orig_price:orig_price,
+            selling_price:selling_price,
+            exp_date:exp_date
           },
-          success: function(response){
+
+          beforeSend:function(){
+            $('#update-product-maintenance').text('Updating...');
+          },
+          success:function(response){
             setTimeout(function(){
-              $("tbody").html('');
-              $("tbody").html(response);
-            },500)
-        
+              $('.update-success-validation').css('display', 'inline');
+              $('#product-table').DataTable().ajax.reload();
+              $('#update-product-maintenance').text('Update');
+              setTimeout(function(){
+                $('.update-success-validation').fadeOut('slow')
+               
+              },2000);
+            
+            },1000);
+           
+            
           }
-        });
+     });
 
-      });
+});
+  
+
+ 
+
+});
 
 
 
-     /* $('#filter-search-product').keyup(function(){
-        var search_key = $(this).val();
-        $("#product-table tbody tr").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(search_key) > -1)
-          });
-      }); */
+

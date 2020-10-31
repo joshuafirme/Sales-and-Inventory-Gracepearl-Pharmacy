@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\CategoryMaintenance;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 
 class CategoryMaintenanceCtr extends Controller
 {
@@ -47,17 +48,6 @@ class CategoryMaintenanceCtr extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $category = DB::select('SELECT * FROM ' . $this->table_name . ' WHERE id = ?', [$id]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -65,19 +55,21 @@ class CategoryMaintenanceCtr extends Controller
      */
     public function edit($id)
     {
-
+        $category = DB::select('SELECT * FROM ' . $this->table_name . ' WHERE id = ?', [$id]);
+        return $category;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function updateCategory($category_id)
     {
-        //
+        $category_name = Input::get('category_name');
+
+        DB::update('UPDATE '. $this->table_name .' 
+        SET category_name = ?
+        WHERE id = ?',
+        [
+            $category_name,
+            $category_id
+        ]);
     }
 
     /**

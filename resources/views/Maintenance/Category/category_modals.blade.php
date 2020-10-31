@@ -39,18 +39,23 @@
           </button>
         </div>
         <div class="modal-body">
-  
     
           {{ csrf_field() }}
+
+          <input type="hidden" id="category_id">
+          
             <div class="form-group">
               <label class="col-form-label">Category Name</label>
-              <input type="text" class="form-control" name="category_name" id="category_name" required>
+              <input type="text" class="form-control" name="category_name" id="edit_category_name" required>
             </div>
     
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-sm btn-success">Update</button>
+                <div class="update-success-validation mr-auto ml-3" style="display: none">
+                    <label class="label text-success">Product was successfully updated</label>    
+                </div> 
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-sm btn-success" id="btn-update-category">Update</button>
         </div>
      
       </div>
@@ -71,8 +76,8 @@
         <p class="delete-category-message"></p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-danger" type="button" name="ok_button" id="ok_button">Ok</button>
-        <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="ok_button">Ok</button>
+        <button class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

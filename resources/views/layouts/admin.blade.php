@@ -81,9 +81,6 @@
                     <a href="#tools-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-tools"></i> Maintenance</a>
                     <ul class="collapse list-unstyled" id="tools-menu">
                         <li>
-                            <a href="blank.html"><i class="fas fa-user"></i> User Maintenance</a>
-                        </li>
-                        <li>
                             <a href="{{ url('maintenance/product') }}"><i class="fas fa-boxes"></i> Product Maintenance</a>
                         </li>
                         <li>
@@ -93,9 +90,14 @@
                             <a href="{{ url('maintenance/category') }}" ><i class="fas fa-list-ul"></i> Category Maintenance</a>
                         </li>
                     </ul>
-                </li>
+                </li>   
                 <li>
-                    <a href="settings.html"><i class="fas fa-user-cog"></i> Utility</a>
+                    <a href="#utility-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-user-cog"></i> Utility</a>
+                    <ul class="collapse list-unstyled" id="utility-menu">
+                        <li>
+                            <a ><i class="fas fa-user"></i> User Maintenance</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>

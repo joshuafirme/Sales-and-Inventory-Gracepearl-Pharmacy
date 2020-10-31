@@ -131,7 +131,7 @@
           <div class="row">
             {{ csrf_field() }}
 
-            <div style="display: none;" id="product_code_hidden"></div>
+            <input type="hidden" id="product_code_hidden">
 
             <div class="col-md-8 mb-2">
               <label class="col-form-label">Product Code</label>
@@ -209,7 +209,8 @@
 
       </div>
       <div class="modal-footer">
-        <div class="col-md-12 mt-3 update-success-validation" style="display: none">
+        
+        <div class="update-success-validation mr-auto ml-3" style="display: none">
           <label class="label text-success">Product was successfully updated</label>    
         </div> 
               <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>

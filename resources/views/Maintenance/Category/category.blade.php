@@ -53,7 +53,7 @@
                               @foreach ($category as $data)                        
                               <td class="td-cat-name">{{ $data->category_name }}</td>                                                           
                                 <td>
-                                  <a class="btn" id="btn-edit-category-maintenance" product-code="{{ $data->id }}" data-toggle="modal" data-target="#editCategoryModal"><i class="fa fa-edit"></i></a>
+                                  <a class="btn" id="btn-edit-category-maintenance" category-id="{{ $data->id }}" data-toggle="modal" data-target="#editCategoryModal"><i class="fa fa-edit"></i></a>
                                   <a class="btn" name="id" id="deleteCategory" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>

@@ -20,9 +20,9 @@ Route::get('/dashboard', 'DashboardCtr@index');
 
 // category
 Route::get('/maintenance/category', 'CategoryMaintenanceCtr@index');
-
 Route::post('/maintenance/category', 'CategoryMaintenanceCtr@store');
-
+Route::post('/maintenance/category/edit/{id}', 'CategoryMaintenanceCtr@edit');
+Route::post('/maintenance/category/update/{category_id}', 'CategoryMaintenanceCtr@updateCategory');
 Route::delete('/maintenance/category/{id}', 'CategoryMaintenanceCtr@destroy');
 
 // Sales

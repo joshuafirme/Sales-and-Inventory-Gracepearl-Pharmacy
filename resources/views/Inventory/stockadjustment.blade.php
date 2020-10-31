@@ -30,7 +30,7 @@
         <div class="row">
 
           <div class="col-sm-2 col-md-2 col-lg-10 mb-3">
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addProductModal"><span class='fa fa-plus'></span> Add Adjustment</button>  
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#stockAdjustmentModal"><span class='fa fa-plus'></span> Add Adjustment</button>  
             </div>
 
 
@@ -72,15 +72,12 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
- 
+
+    @extends('inventory.modals')
+    @section('modals')
+    @endsection
 
 @endsection
 
-<script type="text/javascript">
 
-$(document).ready(function(){
-
-});
-
-</script>
 

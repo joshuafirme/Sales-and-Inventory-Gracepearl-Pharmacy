@@ -100,9 +100,12 @@
         <div class="modal-body">
           <p class="delete-message"></p>
         </div>
+        <div class="delete-success" style="display: none;">
+          <span style="margin-left:180px;" class="text-success">Deleted Successfully!</span>
+          </div>
         <div class="modal-footer">
          
-          <button class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-sm btn-default cancel-delete" data-dismiss="modal">Cancel</button>
           <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="product_ok_button">Ok</button>
 
         </div>
@@ -124,12 +127,11 @@
       </div>
       <div class="modal-body">
 
-        <form action="{{ action('ProductMaintenanceCtr@store') }}" method="POST" enctype="multipart/form-data">
         <div class="container-fluid">
           <div class="row">
             {{ csrf_field() }}
 
-            <input type="hidden" id="product_code_hidden">
+            <div style="display: none;" id="product_code_hidden"></div>
 
             <div class="col-md-8 mb-2">
               <label class="col-form-label">Product Code</label>
@@ -144,7 +146,7 @@
             <div class="col-md-4 mb-2">    
               <label class="col-form-label">Category</label>
               <select class="form-control category_name" name="category_name" >
-                <option value="" id="edit_category_name" selected></option>
+                <option  id="edit_category_name" selected></option>
 
                 @foreach($category as $data)
               <option value={{ $data->id }}>{{ $data->category_name }}</option>
@@ -156,7 +158,7 @@
             <div class="col-md-4">
               <label class="col-form-label">Supplier</label>
               <select class="form-control supplier_name" name="supplier_name">
-                <option value="" id="edit_supplier_name" selected></option>
+                <option  id="edit_supplier_name" selected></option>
 
                 @foreach($suplr as $data)
                <option value={{ $data->id }}>{{ $data->supplierName }}</option>
@@ -190,7 +192,6 @@
               <input type="date" class="form-control" name="exp_date" id="edit_exp_date" required>
             </div>
 
-     
 
             <div class="col-md-4">
               <label class="col-form-label">Update Photo</label>
@@ -206,11 +207,11 @@
 
       </div>
       <div class="modal-footer">
-
+      
               <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
               <button type="submit" id="update-product-maintenance" class="btn btn-sm btn-success mr-4">Update</button>
       </div>
-    </form>
+
     </div>
   </div>
 </div>

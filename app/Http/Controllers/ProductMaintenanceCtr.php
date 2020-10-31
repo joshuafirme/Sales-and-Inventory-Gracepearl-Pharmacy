@@ -147,27 +147,27 @@ class ProductMaintenanceCtr extends Controller
     }
 
 
-    public function update()
+    public function updateProduct($product_code)
     {
         $product = new ProductMaintenance;
-        
-        $product_code = Input::get('product_code_hidden');
         $product->desciption = Input::get('description');
         $product->categoryID = Input::get('category_name');
         $product->supplierID = Input::get('supplier_name');
         $product->qty = Input::get('qty');
+        $product->re_order = Input::get('re_order');
         $product->orig_price = Input::get('orig_price');
         $product->selling_price = Input::get('selling_price');
         $product->exp_date = Input::get('exp_date');
-
+        
         DB::update('UPDATE '. $this->table_prod .' 
-        SET description = ?, categoryID = ?, supplierID = ?, qty = ?, orig_price = ?, selling_price = ?, exp_date = ?
+        SET description = ?, categoryID = ?, supplierID = ?, qty = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
         WHERE id = ?',
         [
             $product->desciption, 
             $product->categoryID, 
             $product->supplierID, 
             $product->qty, 
+            $product->re_order, 
             $product->orig_price, 
             $product->selling_price, 
             $product->exp_date, 

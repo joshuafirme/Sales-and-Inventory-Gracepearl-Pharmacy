@@ -52,7 +52,7 @@ $(document).ready(function(){
         var product_id, product_name;
         $(document).on('click', '#delete-product', function(){
             row = $(this).closest("tr")
-            product_id = $(this).closest("tr").find('td:eq(0)').text();
+            product_id = $(this).attr('delete-id');
             console.log(product_id);
             product_name =  $(this).closest("tr").find('td:eq(1)').text();
             $('#proconfirmModal').modal('show');
@@ -75,8 +75,11 @@ $(document).ready(function(){
                   },
                   success:function(data){
                       setTimeout(function(){
-                          $('#product_ok_button').text('Delete');
-                          $('#proconfirmModal').modal('hide');
+                          $('#product_ok_button').remove();
+                          $('.delete-message').remove();
+                          $('.delete-success').show();
+                          $('.cancel-delete').text('Ok');
+                         // $('#proconfirmModal').modal('hide');
                           row.fadeOut(500, function () {
                             table.row(row).remove().draw()
                             
@@ -171,22 +174,33 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
 
 //update 
 $('#update-product-maintenance').click(function(){
-  var product_code = $('#product_code_hidden').val(); 
+  var product_code = $('#product_code').val(); 
+  var id = product_code.substr(product_code.length - 4);
   var description = $('#edit_description').val(); 
-  var category_name = $('#edit_category_name').val();
-  var supplier_name = $('#edit_supplier_name').val();
+  var category_name = $('select[name=category_name] option').filter(':selected').val();
+  var supplier_name = $('select[name=supplier_name] option').filter(':selected').val();
   var qty = $('#edit_qty').val();
   var re_order = $('#edit_re_order').val();
   var orig_price = $('#edit_orig_price').val();
   var selling_price = $('#edit_selling_price').val();
   var exp_date = $('#edit_exp_date').val();
 
+  console.log(id);
+  console.log(description);
+  console.log(category_name);
+  console.log(supplier_name);
+
+  $.ajaxSetup({
+    headers: {
+  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+ });
+
     $.ajax({
-      url:"/maintenance/product/update",
+      url:"/maintenance/updateproduct/"+id,
       type:"POST",
 
       data:{
-            product_code:product_code,
             description:description,
             category_name:category_name,
             supplier_name:supplier_name,
@@ -201,7 +215,7 @@ $('#update-product-maintenance').click(function(){
             $('#update-product-maintenance').text('Updating...');
           },
           success:function(response){
-            console.log(response);
+            $('#update-product-maintenance').text('Success');
             
           }
      });

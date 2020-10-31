@@ -41,7 +41,7 @@ Route::post('/maintenance/supplier/action', 'SupplierMaintenanceCtr@action');
 // Product
 Route::resource('/maintenance/product', 'ProductMaintenanceCtr');
 Route::post('/maintenance/product', 'ProductMaintenanceCtr@store');
-Route::post('/maintenance/product/update', 'ProductMaintenanceCtr@update');
+Route::post('/maintenance/updateproduct/{id}', 'ProductMaintenanceCtr@updateProduct');
 Route::get('/maintenance/product/edit/{id}', 'ProductMaintenanceCtr@edit');
 Route::delete('/maintenance/product/delete/{productCode}', 'ProductMaintenanceCtr@destroy');
 // Filter Product

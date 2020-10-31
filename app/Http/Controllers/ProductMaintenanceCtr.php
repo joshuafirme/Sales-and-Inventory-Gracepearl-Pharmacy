@@ -69,7 +69,7 @@ class ProductMaintenanceCtr extends Controller
 
     public function filterByCategory($category_param){
         $product = DB::table($this->table_prod)
-        ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
+        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->where('categoryID', $category_param)
@@ -158,7 +158,7 @@ class ProductMaintenanceCtr extends Controller
         $product->orig_price = Input::get('orig_price');
         $product->selling_price = Input::get('selling_price');
         $product->exp_date = Input::get('exp_date');
-        
+
         DB::update('UPDATE '. $this->table_prod .' 
         SET description = ?, categoryID = ?, supplierID = ?, qty = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
         WHERE id = ?',

@@ -64,7 +64,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#reports-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-file"></i> Reports</a>
+                    <a href="#reports-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle caret-down"><i class="fas fa-file"></i> Reports</a>
                     <ul class="collapse list-unstyled" id="reports-menu">
                         <li>
                             <a href="blank.html"><i class="fas fa-file-contract"></i> Inventory Report</a>

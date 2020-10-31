@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="page-header">
-  <h3 class="mt-2" id="page-title">Product Maintenance</h3>
+  <h3 class="mt-2" id="page-title">Stock Adjustment</h3>
           <hr>
       </div>
 
@@ -68,12 +68,11 @@
                       <thead>
                         <tr>
                             <th>Product Code</th>
-                            <th>Description</th>           
-                            <th>Quantity</th>
-                            <th>Re-Order Point</th>
-                            <th>Original Price</th>
-                            <th>Selling Price</th>
-                            <th>Expiration</th>
+                            <th>Description</th>   
+                            <th>Quantity On Record</th>
+                            <th>Quantity To Adjust</th>
+                            <th>Remarks</th>
+                            <th>Date Adjusted</th>
                             <th style="width: 100px;">Action</th>
                         </tr>
                     </thead>

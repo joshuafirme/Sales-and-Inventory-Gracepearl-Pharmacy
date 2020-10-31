@@ -169,22 +169,22 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Quantity</label>
-              <input type="text" class="form-control" name="qty" id="edit_qty" required>
+              <input type="number" class="form-control" name="qty" id="edit_qty" required>
             </div>
   
             <div class="col-md-4">
               <label class="col-form-label">Re-Order Point</label>
-              <input type="text" class="form-control" name="re_order" id="edit_re_order" required>
+              <input type="number" class="form-control" name="re_order" id="edit_re_order" required>
             </div>
   
             <div class="col-md-4  mb-2">
               <label class="col-form-label">Original Price</label>
-              <input type="text" class="form-control" name="orig_price" id="edit_orig_price" required>
+              <input type="number" class="form-control" name="orig_price" id="edit_orig_price" required>
             </div>
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
-              <input type="text" class="form-control orig_price" name="selling_price" id="edit_selling_price" required>
+              <input type="number" class="form-control orig_price" name="selling_price" id="edit_selling_price" readonly>
             </div>
 
             <div class="col-md-4">
@@ -199,6 +199,8 @@
             <div>{{ $errors->first('image') }}</div>
             </div> 
 
+           
+
        
    
             
@@ -207,7 +209,9 @@
 
       </div>
       <div class="modal-footer">
-      
+        <div class="col-md-12 mt-3 update-success-validation" style="display: none">
+          <label class="label text-success">Product was successfully updated</label>    
+        </div> 
               <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
               <button type="submit" id="update-product-maintenance" class="btn btn-sm btn-success mr-4">Update</button>
       </div>

@@ -31,8 +31,7 @@
 
         
 
-        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addCategoryModal"><span class='fa fa-plus'></span> Add Category</button> 
-        <a class="btn btn-danger btn-sm" href="#" target="_blank" ><span class='fa fa-file-pdf'></span> Print as PDF</a> 
+        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addCategoryModal"><span class='fa fa-plus'></span> Add Category</button>
 
         <div class="row">
 
@@ -54,7 +53,7 @@
                               @foreach ($category as $data)                        
                               <td class="td-cat-name">{{ $data->category_name }}</td>                                                           
                                 <td>
-                                  <a class="btn" href="tabledit/action"><i class="fa fa-edit"></i></a>
+                                  <a class="btn" id="btn-edit-category-maintenance" product-code="{{ $data->id }}" data-toggle="modal" data-target="#editCategoryModal"><i class="fa fa-edit"></i></a>
                                   <a class="btn" name="id" id="deleteCategory" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
@@ -79,9 +78,10 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-    @extends('layouts.modals')
-    @section('addcategorymodal')
+    @extends('maintenance.category.category_modals')
+    @section('modals')
     @endsection
+
 @endsection
 
 <script type="text/javascript">

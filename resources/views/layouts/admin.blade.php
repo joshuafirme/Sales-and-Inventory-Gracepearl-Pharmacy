@@ -32,7 +32,7 @@
                     <a href="#inventory-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-cube"></i> Inventory </a>
                     <ul class="collapse list-unstyled" id="inventory-menu">
                         <li>
-                            <a href="blank.html"><i class="fas fa-sliders-h"></i> Stock Adjustment</a>
+                            <a href="{{ url('/inventory/stockadjustment') }}"><i class="fas fa-sliders-h"></i> Stock Adjustment</a>
                         </li>
                         <li>
                             <a href="404.html"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
@@ -64,7 +64,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#reports-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle caret-down"><i class="fas fa-file"></i> Reports</a>
+                    <a href="#reports-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-file"></i> Reports</a>
                     <ul class="collapse list-unstyled" id="reports-menu">
                         <li>
                             <a href="blank.html"><i class="fas fa-file-contract"></i> Inventory Report</a>
@@ -151,13 +151,12 @@
           <script src="{{asset('components/js/script.js')}}"></script>
           <script src="{{asset('components/js/alert-auto-close.js')}}"></script>
           <script src="{{asset('components/jquery-tabledit-master/jquery.tabledit.min.js')}}"></script>
-
-          <script src="{{asset('js/delete_alert.js')}}"></script>
-          <script src="{{asset('js/product_maintenance.js')}}"></script>
+    
+          <script src="{{asset('js/maintenance/product_maintenance.js')}}"></script>
+          <script src="{{asset('js/maintenance/category_maintenance.js')}}"></script>
+          <script src="{{asset('js/maintenance/supplier_maintenance.js')}}"></script>
           <script src="{{asset('js/cashiering/cashiering.js')}}"></script>
 
-          <script src="{{asset('js/jquery-tabledit-1.2.3/jquery.tabledit.min.js')}}"></script>
-          <script src="{{asset('js/table_edit.js')}}"></script>
           <script src="{{asset('components/vendor/DataTables/datatables.min.js')}}"></script>
 
       </body>

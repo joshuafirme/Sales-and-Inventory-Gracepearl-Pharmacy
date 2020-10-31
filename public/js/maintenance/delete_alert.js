@@ -37,16 +37,13 @@ $(document).ready(function(){
       });
 
 
-        
-
-
       // delete category alert
       var category_id, category_name;
       $(document).on('click', '#deleteCategory', function(){
         category_id = $(this).attr('delete-id');
         category_name =  $(this).closest("tr").find('td:eq(0)').text();
         $('#confirmModal').modal('show');
-        $('.delete-category-message').text('Are you sure do you want to delete '+category_name+'?');
+        $('.delete-category-message').html('Are you sure do you want to delete <b>'+category_name+'?</b>');
       }); 
       
       $.ajaxSetup({

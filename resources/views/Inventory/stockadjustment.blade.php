@@ -30,9 +30,7 @@
         <div class="row">
 
           <div class="col-sm-2 col-md-2 col-lg-10 mb-3">
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addProductModal"><span class='fa fa-plus'></span> Add Product</button> 
-            <a class="btn btn-success btn-sm" href="#" target="_blank" ><span class='fa fa-file-excel'></span> Import CSV</a> 
-            <a class="btn btn-danger btn-sm" id="btn-pdf" href="#"  ><span class='fa fa-print'></span> Print as PDF</a> 
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addProductModal"><span class='fa fa-plus'></span> Add Adjustment</button>  
             </div>
 
 
@@ -44,33 +42,17 @@
                 <div class="container-fluid">
                   <div class="row">
 
-                    <div class="input-group col-sm-3 col-md-2 mt-4 mb-3 ml-auto">              
-                      <select class="form-control" id="filter_category" name="filter-category" >
-                        <option>Select Category</option>
-                        @foreach($category as $data)
-                      <option value={{ $data->id }}>{{ $data->category_name }}</option>
-                        @endforeach
-                      </select>
-                    </div>       
-  
-                  <div class="input-group col-sm-3 col-md-2 mt-4 mb-3 ml-auto " id="filter-cont">              
-                    <select class="form-control" id="filter_category" name="filter-category" >
-                      <option>Select Category</option>
-                      @foreach($category as $data)
-                    <option value={{ $data->id }}>{{ $data->category_name }}</option>
-                      @endforeach
-                    </select>
-                  </div>        
+                          
   
              </div>
             </div>    
-                    <table class="table responsive  table-hover" id="product-table" width="100%">                               
+                    <table class="table responsive  table-hover" id="stockadjustment-table" width="100%">                               
                       <thead>
                         <tr>
                             <th>Product Code</th>
                             <th>Description</th>   
                             <th>Quantity On Record</th>
-                            <th>Quantity To Adjust</th>
+                            <th>Quantity To Adjusted</th>
                             <th>Remarks</th>
                             <th>Date Adjusted</th>
                             <th style="width: 100px;">Action</th>
@@ -90,12 +72,7 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-    @extends('maintenance.product.product_modals')
-@section('addproductmodal')
-@endsection
-
-@section('editproductmodal')
-@endsection
+ 
 
 @endsection
 

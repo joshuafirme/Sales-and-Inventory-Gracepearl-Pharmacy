@@ -53,6 +53,8 @@ Route::post('/maintenance/product/getCategoryParam/{category_param}', 'ProductMa
 Route::post('/maintenance/product/show/{productCode}', 'ProductMaintenanceCtr@show');
 Route::get('my-demo-mail','TestController@myDemoMail');
 
+//Stock Adjustment
+Route::resource('/inventory/stockadjustment', 'InventoryCtr');
 
 Auth::routes();
 

@@ -73,6 +73,11 @@
                               <td>{{ $data->address }}</td>
                               <td>{{ $data->person }}</td>
                               <td>{{ $data->contact }}</td>  
+                              <td>
+                               <a class="btn" id="btn-edit-product-maintenance" product-code="{{ $data->id }}" data-toggle="modal" data-target="#editSupplierModal"><i class="fa fa-edit"></i></a>
+                          
+                                <a class="btn" id="delete-supplier" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>
+                              </td> 
                                
                             </tr>
                             @endforeach  
@@ -97,8 +102,8 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-    @extends('layouts.modals')
-@section('addsuppliermodal')
+    @extends('maintenance.supplier.supplier_modals')
+@section('modals')
 @endsection
 @endsection
 

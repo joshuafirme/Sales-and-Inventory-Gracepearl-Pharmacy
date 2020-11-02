@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\SupplierMaintenance;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Input;
 
 class SupplierMaintenanceCtr extends Controller
 {
@@ -75,7 +75,7 @@ class SupplierMaintenanceCtr extends Controller
     public function edit($id)
     {
         $suplr = DB::select('SELECT * FROM ' . $this->table_name . ' WHERE id = ?', [$id]);
-        return view('maintenance/supplier/update_supplier', ['suplr' => $suplr]);
+        return $suplr;
     }
 
     /**
@@ -85,22 +85,23 @@ class SupplierMaintenanceCtr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update()
     {
         $suplr = new SupplierMaintenance;
-        $suplr->supplierName = $request->input('supplierName');
-        $suplr->address = $request->input('address');
-        $suplr->person = $request->input('person');
-        $suplr->contact = $request->input('contact');
+        $suplr->id = Input::get('id');
+        $suplr->supplierName = Input::get('supplier_name');
+        $suplr->address = Input::get('address');
+        $suplr->person = Input::get('person');
+        $suplr->contact = Input::get('contact');
 
         DB::update('UPDATE '. $this->table_name .' SET supplierName = ?,
                                                         address = ?,
                                                         person = ?,
                                                         contact = ?
                                                         WHERE id = ?',
-        [$suplr->supplierName, $suplr->address, $suplr->person, $suplr->contact, $id]);
+        [$suplr->supplierName, $suplr->address, $suplr->person, $suplr->contact, $suplr->id]);
 
-        return redirect('/maintenance/supplier')->with('success', 'Data Updated');
+    
     }
 
     /**

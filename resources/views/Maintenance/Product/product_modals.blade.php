@@ -1,5 +1,5 @@
 <!--Add product Modal-->
-@yield('addproductmodal')
+@yield('modals')
 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -106,7 +106,7 @@
         <div class="modal-footer">
          
           <button class="btn btn-sm btn-default cancel-delete" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="product_ok_button">Ok</button>
+          <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="product_ok_button">Yes</button>
 
         </div>
       </div>
@@ -169,7 +169,7 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Quantity</label>
-              <input type="number" class="form-control" name="qty" id="edit_qty" required>
+              <input type="number" class="form-control" name="qty" id="edit_qty" readonly>
             </div>
   
             <div class="col-md-4">

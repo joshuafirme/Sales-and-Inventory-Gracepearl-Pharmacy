@@ -33,8 +33,8 @@ Route::get('/sales/cashiering/addToCart', 'SalesCtr@addToCart');
 // Supplier
 Route::get('maintenance/supplier/', 'SupplierMaintenanceCtr@index');
 Route::post('/maintenance/supplier', 'SupplierMaintenanceCtr@store');
-Route::post('/maintenance/supplier/update/{supplierID}', 'SupplierMaintenanceCtr@update');
-Route::get('/maintenance/supplier/edit/{id}', 'SupplierMaintenanceCtr@edit');
+Route::post('/maintenance/supplier/update', 'SupplierMaintenanceCtr@update');
+Route::post('/maintenance/supplier/edit/{id}', 'SupplierMaintenanceCtr@edit');
 Route::delete('/maintenance/supplier/{supplierID}', 'SupplierMaintenanceCtr@destroy');
 Route::post('/maintenance/supplier/action', 'SupplierMaintenanceCtr@action');
 
@@ -53,8 +53,14 @@ Route::post('/maintenance/product/getCategoryParam/{category_param}', 'ProductMa
 Route::post('/maintenance/product/show/{productCode}', 'ProductMaintenanceCtr@show');
 Route::get('my-demo-mail','TestController@myDemoMail');
 
+//Discount
+Route::resource('/maintenance/discount', 'DiscountCtr');
+Route::post('/maintenance/discount/activate', 'DiscountCtr@activate');
+
 //Stock Adjustment
 Route::resource('/inventory/stockadjustment', 'InventoryCtr');
+
+
 
 Auth::routes();
 

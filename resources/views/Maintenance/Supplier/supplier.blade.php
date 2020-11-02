@@ -35,22 +35,23 @@
 
           <div class="col-sm-6  col-lg-12 mb-3">
             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addSupplierModal"><span class='fa fa-plus'></span> Add Supplier</button> 
-        <a class="btn btn-danger btn-sm" href="#" target="_blank" ><span class='fa fa-file-pdf'></span> Print as PDF</a> 
             </div>
 
             <div class="col-md-12 col-lg-12">
-          <div class="box box-primary">
 
-            <div class="input-group col-sm-4 col-md-3 mt-4 ml-auto mb-3">
-              <input class="form-control" type="search" id="example-search-input" placeholder="search">
-              <span class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">
-                    <i class="fa fa-search"></i>
-                </button>
-              </span>
-           </div>
+           <div class="card">
+            <div class="card-body">
 
-            <div class="box-body" style="overflow-x:auto;">
+              <div class="row">
+              <div class="input-group col-sm-4 col-md-3 mt-4 ml-auto mb-3">
+                <input class="form-control" type="search" id="example-search-input" placeholder="search">
+                <span class="input-group-append">
+                  <button class="btn btn-outline-secondary" type="button">
+                      <i class="fa fa-search"></i>
+                  </button>
+                </span>
+             </div>
+            </div>
 
                     <table class="table table-hover" id="supplier-table" width="100%">
                       @if(count($suplr) > 0)
@@ -74,7 +75,7 @@
                               <td>{{ $data->person }}</td>
                               <td>{{ $data->contact }}</td>  
                               <td>
-                               <a class="btn" id="btn-edit-product-maintenance" product-code="{{ $data->id }}" data-toggle="modal" data-target="#editSupplierModal"><i class="fa fa-edit"></i></a>
+                               <a class="btn" id="btn-edit-supplier" supplier-id="{{ $data->id }}" data-toggle="modal" data-target="#editSupplierModal"><i class="fa fa-edit"></i></a>
                           
                                 <a class="btn" id="delete-supplier" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>
                               </td> 

@@ -44,14 +44,7 @@
                 <div class="container-fluid">
                   <div class="row">
 
-                    <div class="input-group col-sm-3 col-md-2 mt-4 mb-3 ml-auto">              
-                      <select class="form-control" id="filter_category" name="filter-category" >
-                        <option>Select Category</option>
-                        @foreach($category as $data)
-                      <option value={{ $data->id }}>{{ $data->category_name }}</option>
-                        @endforeach
-                      </select>
-                    </div>       
+                     
   
                   <div class="input-group col-sm-3 col-md-2 mt-4 mb-3 ml-auto " id="filter-cont">              
                     <select class="form-control" id="filter_category" name="filter-category" >
@@ -92,19 +85,8 @@
     </section>
     <!-- /.content -->
     @extends('maintenance.product.product_modals')
-@section('addproductmodal')
-@endsection
-
-@section('editproductmodal')
-@endsection
+    @section('modals')
+    @endsection
 
 @endsection
-
-<script type="text/javascript">
-
-$(document).ready(function(){
-
-});
-
-</script>
 

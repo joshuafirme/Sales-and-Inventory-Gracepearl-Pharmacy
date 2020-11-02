@@ -76,7 +76,7 @@
         <p class="delete-category-message"></p>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="ok_button">Ok</button>
+        <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="ok_button">Yes</button>
         <button class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
       </div>
     </div>

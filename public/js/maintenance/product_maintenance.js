@@ -166,11 +166,9 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
 $('#update-product-maintenance').click(function(){
   var id = $('#product_code_hidden').val(); 
   console.log(product_code);
-  //var id = product_code.substr(product_code.length - 4);
   var description = $('#edit_description').val(); 
   var category_name = $('select[name=category_name] option').filter(':selected').val();
   var supplier_name = $('select[name=supplier_name] option').filter(':selected').val();
-  var qty = $('#edit_qty').val();
   var re_order = $('#edit_re_order').val();
   var orig_price = $('#edit_orig_price').val();
   var selling_price = $('#edit_selling_price').val();
@@ -190,7 +188,6 @@ $('#update-product-maintenance').click(function(){
             description:description,
             category_name:category_name,
             supplier_name:supplier_name,
-            qty:qty,
             re_order:re_order,
             orig_price:orig_price,
             selling_price:selling_price,

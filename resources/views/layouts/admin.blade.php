@@ -28,29 +28,7 @@
                 <li>
                     <a href="{{ url('/dashboard') }}"><i class="fas fa-search"></i> Product Search</a>
                 </li>
-                <li>
-                    <a href="#inventory-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-cube"></i> Inventory </a>
-                    <ul class="collapse list-unstyled" id="inventory-menu">
-                        <li>
-                            <a href="{{ url('/inventory/stockadjustment') }}"><i class="fas fa-sliders-h"></i> Stock Adjustment</a>
-                        </li>
-                        <li>
-                            <a href="404.html"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
-                        </li>
-                        <li>
-                            <a href="500.html"><i class="fas fa-boxes"></i> Purchase Order <span class="badge badge-warning"> 16</span></a>
-                        </li>
-                        <li>
-                            <a href="404.html"><i class="fas fa-bell"></i> Notifications</a>
-                        </li>
-                        <li>
-                            <a href="404.html"><i class="fas fa-jedi-order"></i> Product Return</a>
-                        </li>
-                        <li>
-                            <a href="404.html"><i class="fas fa-flag"></i> Weed</a>
-                        </li>
-                    </ul>
-                </li>
+
                 <li>
                     <a href="#sales-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-file-invoice"></i> Sales</a>
                     <ul class="collapse list-unstyled" id="sales-menu">
@@ -63,6 +41,56 @@
                         </li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="#orders-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-shopping-cart"></i> Manage Online Orders</a>
+                    <ul class="collapse list-unstyled" id="orders-menu">
+                        <li>
+                            <a href="{{ url('sales/cashiering') }}"><i class="fas fa-file-prescription"></i>Prescription Approval<span style="color: #fff" class="badge badge-warning"> 20</span></a>
+                        </li>
+                     
+                        <li>
+                            <a href="500.html"><i class="fas fa-history"></i> Pending</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-truck-pickup"></i> Ready To Ship</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-shipping-fast"></i> Shipped</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-check-circle"></i> Completed</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-times-circle"></i> Bad Order</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#inventory-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-cube"></i> Inventory </a>
+                    <ul class="collapse list-unstyled" id="inventory-menu">
+                        <li>
+                            <a href="{{ url('/inventory/stockadjustment') }}"><i class="fas fa-sliders-h"></i> Stock Adjustment</a>
+                        </li>
+                        <li>
+                            <a href="404.html"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-boxes"></i> Purchase Order <span class="badge badge-warning" style="color: #fff"> 16</span></a>
+                        </li>
+                        <li>
+                            <a href="404.html"><i class="fas fa-bell"></i> Notifications <span class="badge badge-danger"> 20</span></a>
+                        </li>
+                        <li>
+                            <a href="404.html"><i class="fas fa-hand-holding"></i> Product Return</a>
+                        </li>
+                        <li>
+                            <a href="404.html"><i class="fas fa-flag"></i> Weed</a>
+                        </li>
+                    </ul>
+                </li>
+               
                 <li>
                     <a href="#reports-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-file"></i> Reports</a>
                     <ul class="collapse list-unstyled" id="reports-menu">
@@ -81,13 +109,19 @@
                     <a href="#tools-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-tools"></i> Maintenance</a>
                     <ul class="collapse list-unstyled" id="tools-menu">
                         <li>
-                            <a href="{{ url('maintenance/product') }}"><i class="fas fa-boxes"></i> Product Maintenance</a>
+                            <a href="{{ url('maintenance/product') }}"><i class="fas fa-boxes"></i> Product</a>
                         </li>
                         <li>
-                            <a href="{{ url('maintenance/supplier') }}" ><i class="fas fa-warehouse"></i> Supplier Maintenance</a>
+                            <a href="{{ url('maintenance/supplier') }}" ><i class="fas fa-warehouse"></i> Supplier</a>
                         </li>
                         <li>
-                            <a href="{{ url('maintenance/category') }}" ><i class="fas fa-list-ul"></i> Category Maintenance</a>
+                            <a href="{{ url('maintenance/category') }}" ><i class="fas fa-list-ul"></i> Category</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('maintenance/discount') }}" ><i class="fas fa-percent"></i> Discount</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('maintenance/category') }}" ><i class="fas fa-dollar-sign"></i> Shipping Fee</a>
                         </li>
                     </ul>
                 </li>   
@@ -158,6 +192,7 @@
           <script src="{{asset('js/maintenance/category_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/supplier_maintenance.js')}}"></script>
           <script src="{{asset('js/cashiering/cashiering.js')}}"></script>
+          <script src="{{asset('js/inventory/stockadjustment.js')}}"></script>
 
           <script src="{{asset('components/vendor/DataTables/datatables.min.js')}}"></script>
 

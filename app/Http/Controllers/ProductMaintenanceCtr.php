@@ -88,17 +88,9 @@ class ProductMaintenanceCtr extends Controller
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
             ->where('tblproduct.id', $productCode)
             ->get();
-        
-            //$category = DB::table($this->table_cat)->get();
-           // $suplr = DB::table($this->table_suplr)->get();
 
             return $product;
     }
-
-    
-
-  
-
 
     /**
      * Store a newly created resource in storage.
@@ -153,20 +145,18 @@ class ProductMaintenanceCtr extends Controller
         $product->desciption = Input::get('description');
         $product->categoryID = Input::get('category_name');
         $product->supplierID = Input::get('supplier_name');
-        $product->qty = Input::get('qty');
         $product->re_order = Input::get('re_order');
         $product->orig_price = Input::get('orig_price');
         $product->selling_price = Input::get('selling_price');
         $product->exp_date = Input::get('exp_date');
 
         DB::update('UPDATE '. $this->table_prod .' 
-        SET description = ?, categoryID = ?, supplierID = ?, qty = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
+        SET description = ?, categoryID = ?, supplierID = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
         WHERE id = ?',
         [
             $product->desciption, 
             $product->categoryID, 
             $product->supplierID, 
-            $product->qty, 
             $product->re_order, 
             $product->orig_price, 
             $product->selling_price, 

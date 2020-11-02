@@ -56,6 +56,7 @@ Route::get('my-demo-mail','TestController@myDemoMail');
 //Discount
 Route::resource('/maintenance/discount', 'DiscountCtr');
 Route::post('/maintenance/discount/activate', 'DiscountCtr@activate');
+Route::post('/maintenance/discount/getdiscount', 'DiscountCtr@getDiscount');
 
 //Stock Adjustment
 Route::resource('/inventory/stockadjustment', 'InventoryCtr');

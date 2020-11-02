@@ -53,12 +53,12 @@
   
             <div class="col-md-4  mb-2">
               <label class="col-form-label">Original Price</label>
-              <input type="number" min="1" step=".01" class="form-control" name="orig_price" id="orig_price" required>
+              <input type="number" min="1"  class="form-control" name="orig_price" id="orig_price" required>
             </div>
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
-              <input type="number" min="1" step=".01" class="form-control orig_price" name="selling_price" id="selling_price" required>
+              <input type="number" min="1"  class="form-control orig_price" name="selling_price" id="selling_price" required>
             </div>
 
             <div class="col-md-4">
@@ -181,6 +181,8 @@
               <label class="col-form-label">Original Price</label>
               <input type="number" class="form-control" name="orig_price" id="edit_orig_price" required>
             </div>
+
+            <input type="hidden" id="discount_hidden">
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>

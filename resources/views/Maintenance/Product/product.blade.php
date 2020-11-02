@@ -30,11 +30,10 @@
         <div class="row">
 
           <div class="col-sm-2 col-md-2 col-lg-10 mb-3">
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addProductModal"><span class='fa fa-plus'></span> Add Product</button> 
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addProductModal" id="btn-add-product"><span class='fa fa-plus'></span> Add Product</button> 
             <a class="btn btn-success btn-sm" href="#" target="_blank" ><span class='fa fa-file-excel'></span> Import CSV</a> 
             <a class="btn btn-danger btn-sm" id="btn-pdf" href="#"  ><span class='fa fa-print'></span> Print as PDF</a> 
             </div>
-
 
           <div class="col-md-12 col-lg-12">
   
@@ -44,8 +43,6 @@
                 <div class="container-fluid">
                   <div class="row">
 
-                     
-  
                   <div class="input-group col-sm-3 col-md-2 mt-4 mb-3 ml-auto " id="filter-cont">              
                     <select class="form-control" id="filter_category" name="filter-category" >
                       <option>Select Category</option>

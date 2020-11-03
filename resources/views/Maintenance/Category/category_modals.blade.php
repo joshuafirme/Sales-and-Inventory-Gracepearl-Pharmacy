@@ -52,7 +52,7 @@
         </div>
         <div class="modal-footer">
                 <div class="update-success-validation mr-auto ml-3" style="display: none">
-                    <label class="label text-success">Product was successfully updated</label>    
+                    <label class="label text-success">Category was successfully updated</label>    
                 </div> 
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-sm btn-success" id="btn-update-category">Update</button>

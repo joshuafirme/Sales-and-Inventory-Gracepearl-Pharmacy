@@ -10,10 +10,18 @@
         </button>
       </div>
       <div class="modal-body">
-
+        <div class="container-fluid">
+          <div class="row">
         {{ csrf_field() }}
         
-  
+        <div class="col-md-8">
+          <label class="col-form-label">Description</label>
+          <input type="text" class="form-control" name="description" id="description" required>
+        </div>
+
+      </div>
+    </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>

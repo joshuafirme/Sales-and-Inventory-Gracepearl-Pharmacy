@@ -49,40 +49,50 @@
                         <div class="form-group row">
                           <label for="inputEmail3" class="col-sm-4 col-form-label">Product Code</label>
                           <div class="col-sm-7">
-                            <input type="text" class="form-control" id="product_code" readonly>
+                            <input type="text" class="form-control" name="product_code" id="product_code" readonly>
                           </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-4 col-form-label">Description</label>
                             <div class="col-sm-7">
-                              <input type="text" class="form-control" id="description" readonly>
+                              <input type="text" class="form-control" name="description" id="description" readonly>
                             </div>
                           </div>  
-
-                          <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-4 col-form-label">Stock</label>
-                            <div class="col-sm-7">
-                              <input type="number" class="form-control" id="qty" readonly>
-                            </div>
-                          </div> 
-
                       
                         </div> 
             
 
                           <div class="col-lg-6">
 
+                            <div class="form-group row">
+                              <label for="inputEmail3" class="col-sm-4 col-form-label">Stock</label>
+                              <div class="col-sm-5">
+                                <input type="number" class="form-control" id="qty" readonly>
+                              </div>
+                            </div> 
+
                           <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-4 col-form-label">Qty to Adjust</label>
                             <div class="col-sm-5">
-                              <input type="number" class="form-control" >
+                              <input type="number" class="form-control" name="qty-to-adjust" id="qty-to-adjust">
                             </div>
                           </div> 
 
-                        
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="rdo-addless" id="add" value="add" checked>
+                            <label class="form-check-label" for="add">
+                              Add
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="rdo-addless" id="less" value="less">
+                            <label class="form-check-label" for="less">
+                              Less
+                            </label>
+                          </div>
 
-                          <button class="btn btn-primary btn-sm" id="btn-adjust">Adjust</button> 
+                          <button class="btn btn-primary btn-sm mt-2" id="btn-adjust">Adjust</button> 
 
                         </div>
              
@@ -92,7 +102,7 @@
                     
                 </div>
 
-
+              </div>
           <div class="col-md-12 col-lg-12">
   
           <div class="card">
@@ -108,10 +118,9 @@
                             <th>Product Code</th>
                             <th>Description</th>   
                             <th>Stock</th>
-                            <th>Qty Adjusted</th>
-                            <th>Remarks</th>
-                            <th>Date Adjusted</th>
-                            <th style="width: 100px;">Action</th>
+                            <th>Action</th>
+                            <th>Expiration Date</th>
+                         
                         </tr>
                     </thead>
                     

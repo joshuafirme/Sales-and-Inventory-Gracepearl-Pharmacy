@@ -22,7 +22,6 @@ class ProductMaintenanceCtr extends Controller
     {
         $category_param = $request->category;
         $product = $this->getAllProduct(); 
-       // dd($product);
         $category = DB::table($this->table_cat)->get();
         $suplr = DB::table($this->table_suplr)->get();
         

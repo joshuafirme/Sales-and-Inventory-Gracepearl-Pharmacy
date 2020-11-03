@@ -55,20 +55,16 @@ $(document).ready(function(){
           
   }); 
 
-  function pad (str, max) {
-    str = str.toString();
-    return str.length < max ? pad("0" + str, max) : str;
-  }
 
           // Add to Cart
-          $('#btn-addToCart').click(function(){
+          $('#btn-addToCart').click(function(){   
 
             var product_code  = $('#product_code').val();
             var description  = $('#description').val();
             var qty_order  = $('#qty_order').val();
             var price  = $('#price').val();
             var total  = $('#total').val();   
-            $('#total-amount-due').val($('#total-amount').text());                         
+      //      $('#total-amount-due').val($('#total-amount').text());                         
 
               $.ajax({
                 url:"/sales/cashiering/addToCart",
@@ -76,14 +72,18 @@ $(document).ready(function(){
                 data:{product_code:product_code, description:description, qty_order:qty_order, price:price, total:total},
                 success:function(){
            
-                  $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+                  $("#cashiering-table" ).load( "cashiering #cashiering-table" );
                   $('#cashiering_search').val('');
                   $('#product_code').val('');
                   $('#description').val('');
                   $('#qty').val('');
                   $('#price').val('');
                   $('#qty_order').val('');
-                  $('#total').val(); 
+                  $('#total').val(''); 
+
+                  var total_hidden = $('#total_hidden').val();
+                  console.log(total_hidden);
+                  $('#total-amount-due').val(total_hidden);
                 }
               });        
         }); 

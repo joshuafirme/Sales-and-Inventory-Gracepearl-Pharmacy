@@ -58,7 +58,7 @@
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
-              <input type="number" min="1"  class="form-control orig_price" name="selling_price" id="selling_price" required>
+              <input  class="form-control orig_price" name="selling_price" id="selling_price" readonly>
             </div>
 
             <div class="col-md-4">

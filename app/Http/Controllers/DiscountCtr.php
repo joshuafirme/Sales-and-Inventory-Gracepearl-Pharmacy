@@ -31,6 +31,6 @@ class DiscountCtr extends Controller
 
         DB::update('UPDATE tbldiscount SET discount = ?',
         [$discount]);
-        return view('/maintenance/discount/discount', ['discount' => $this->discount()])->with('success', 'Discount Activated');
+        return redirect('/maintenance/discount')->with('success', 'Discount Activated');
     }
 }

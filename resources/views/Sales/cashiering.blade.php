@@ -35,6 +35,7 @@
                       <div class="row mt-5 ml-5">
 
                         <div class="col-lg-6">
+                          
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">Search</label>
                             <div class="col-sm-8">
@@ -138,7 +139,7 @@
                 
                   <div class="card-body">
             <div class="box-body cashiering-table" style="overflow-x:auto; overflow-y:auto; height: 250px">
-              <?php $total =0; ?> 
+              <?php $total = 0; ?> 
               <table class="table table-hover" id="cashiering-table" width="100%">
              
                   <thead>
@@ -166,7 +167,7 @@
                         <?php 
                         $sub_total = $details['qty'] * $details['price'];
                         
-                      //  $total += $sub_total;
+                        $total += $sub_total;
                          ?> 
                         <td>{{ $sub_total }}</td>
                         <td></td>  
@@ -174,10 +175,13 @@
                             <a class="btn" id="void" data-toggle="modal" data-target="#voidModal"><u style="color: #303E9F;">Void</u></a>
                           </td>
                       </tr>
+                      <input type="hidden" id="total_hidden" value={{$total}}>
                       @endforeach
                       @endif                 
                   </tbody>
+             
               </table>
+            
           </div>
                   </div>
                

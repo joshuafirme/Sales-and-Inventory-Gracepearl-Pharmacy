@@ -19,24 +19,20 @@
         </div>
         @endif
     
-        @if(\Session::has('success'))
-        <div class="alert alert-success alert-dismissible">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <h5><i class="icon fas fa-check"></i> </h5>
-          {{ \Session::get('success') }}
-        </div>
-
-       
-        @endif
-
-        
 
         <div class="row">
 
-          <div class="col-sm-2 col-md-3 col-lg-3 mt-3">
+          <div class="col-sm-2 col-md-4 col-lg-4 mt-3">
             <div class="card">
+            
                 <div class="card-body">
-
+                  @if(\Session::has('success'))
+                  <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h5><i class="icon fas fa-check"></i> </h5>
+                    {{ \Session::get('success') }}
+                  </div>
+                  @endif
                 <form method="POST" action="{{ action('DiscountCtr@activate') }}">
                     {{ csrf_field() }}
                         <div class="form-group">

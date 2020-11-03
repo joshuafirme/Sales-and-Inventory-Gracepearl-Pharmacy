@@ -15,9 +15,7 @@ class SalesCtr extends Controller
 
     public function index()
     {
-       // session()->forget('cart');
-     //  $cart = session()->get('cart');
-     //  dd($cart);
+        //session()->forget('cart');
         return view('/sales/cashiering');
    
     }

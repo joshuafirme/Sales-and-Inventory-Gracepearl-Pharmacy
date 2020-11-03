@@ -514,20 +514,27 @@ flex-direction: row;
     }
 
     .btn-primary{
-        background-color: #318CB8;
-        border-color: #318CB8;
+        background-color: #32638D;
+        border-color: #32638D;
     }
     .btn-primary:hover{
-        background-color: #3180B8;
-        border-color: #3180B8;
+        background-color: #1C5071;
+        border-color: #1C5071;
         color: #fff;
     }
 
     .btn-primary:focus{
-        background-color: #3180B8;
-        border-color: #3180B8;
+        background-color: #1C5071 !important;
+        border-color: #1C5071 !important;
         color: #fff;
     }
+
+    .btn-primary:active{
+        background-color: #1C5071 !important;
+        border-color: #1C5071 !important;
+        color: #fff;
+    }
+
 
 
     #filter-cont{

@@ -3,11 +3,6 @@ $(document).ready(function(){
 
   fetch_data();
 
-  function pad (str, max) {
-    str = str.toString();
-    return str.length < max ? pad("0" + str, max) : str;
-  }
-
   function fetch_data(category){
     var table = $('#product-table').DataTable({
    
@@ -44,54 +39,50 @@ $(document).ready(function(){
 
       });
 
-    
-
-       
-
-        // delete product alert
-        var product_id, product_name;
-        $(document).on('click', '#delete-product', function(){
-            row = $(this).closest("tr")
-            product_id = $(this).attr('delete-id');
-            console.log(product_id);
-            product_name =  $(this).closest("tr").find('td:eq(1)').text();
-            $('#proconfirmModal').modal('show');
-            $('.delete-message').html('Are you sure do you want to delete <b>'+ product_name +'</b>?');
-          }); 
-          
-          $.ajaxSetup({
-              headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-          
-          $('#product_ok_button').click(function(){
-              $.ajax({
-                  url: '/maintenance/product/delete/'+ product_id,
-                  type: 'DELETE',
-                
-                  beforeSend:function(){
-                      $('#product_ok_button').text('Deleting...');
-                  },
-                  success:function(data){
-                      setTimeout(function(){
-                          $('#product_ok_button').remove();
-                          $('.delete-message').remove();
-                          $('.delete-success').show();
-                          $('.cancel-delete').text('Ok');
-                         // $('#proconfirmModal').modal('hide');
-                          row.fadeOut(500, function () {
-                            table.row(row).remove().draw()
-                            
-                            });
-                         
-                      }, 1000);
-                  }
-              });
-            
-          });
-  
   }
+
+  // delete product alert
+  var product_id, product_name;
+  $(document).on('click', '#delete-product', function(){
+      row = $(this).closest("tr")
+      product_id = $(this).attr('delete-id');
+      console.log(product_id);
+      product_name =  $(this).closest("tr").find('td:eq(1)').text();
+      $('#proconfirmModal').modal('show');
+      $('.delete-message').html('Are you sure do you want to delete <b>'+ product_name +'</b>?');
+    }); 
+    
+    $.ajaxSetup({
+        headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+    
+    $('#product_ok_button').click(function(){
+        $.ajax({
+            url: '/maintenance/product/delete/'+ product_id,
+            type: 'DELETE',
+          
+            beforeSend:function(){
+                $('#product_ok_button').text('Deleting...');
+            },
+            success:function(data){
+                setTimeout(function(){
+                    $('#product_ok_button').remove();
+                    $('.delete-message').remove();
+                    $('.delete-success').show();
+                    $('.cancel-delete').text('Ok');
+                   // $('#proconfirmModal').modal('hide');
+                    row.fadeOut(500, function () {
+                      table.row(row).remove().draw()
+                      
+                      });
+                   
+                }, 1000);
+            }
+        });
+      
+    });
   
 
       $('#btn-pdf').click(function(){

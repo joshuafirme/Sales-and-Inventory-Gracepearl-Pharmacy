@@ -59,7 +59,7 @@ Route::post('/maintenance/discount/activate', 'DiscountCtr@activate');
 Route::post('/maintenance/discount/getdiscount', 'DiscountCtr@getDiscount');
 
 //Stock Adjustment
-Route::resource('/inventory/stockadjustment', 'InventoryCtr');
+Route::resource('/inventory/stockadjustment', 'StockAdjustmentCtr');
 
 
 

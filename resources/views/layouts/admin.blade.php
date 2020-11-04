@@ -74,10 +74,10 @@
                             <a href="{{ url('/inventory/stockadjustment') }}"><i class="fas fa-sliders-h"></i> Stock Adjustment</a>
                         </li>
                         <li>
-                            <a href="404.html"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
+                            <a href="500.html"><i class="fas fa-boxes"></i> Purchase Order </a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-boxes"></i> Purchase Order <span class="badge badge-warning" style="color: #fff"> 16</span></a>
+                            <a href="404.html"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
                         </li>
                         <li>
                             <a href="404.html"><i class="fas fa-bell"></i> Notifications <span class="badge badge-danger"> 20</span></a>
@@ -86,7 +86,7 @@
                             <a href="404.html"><i class="fas fa-hand-holding"></i> Product Return</a>
                         </li>
                         <li>
-                            <a href="404.html"><i class="fas fa-flag"></i> Weed</a>
+                            <a href="404.html"><i class="fas fa-flag"></i> Weed <span class="badge badge-warning" style="color: #fff;"> 20</span></a>
                         </li>
                     </ul>
                 </li>
@@ -116,6 +116,9 @@
                         </li>
                         <li>
                             <a href="{{ url('maintenance/category') }}" ><i class="fas fa-list-ul"></i> Category</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('maintenance/unit') }}"><i class="fas fa-box"></i> Unit</a>
                         </li>
                         <li>
                             <a href="{{ url('maintenance/discount') }}" ><i class="fas fa-percent"></i> Discount</a>
@@ -182,16 +185,22 @@
           <script src="{{asset('components/vendor/fontawesome5/js/solid.min.js')}}"></script>
           <script src="{{asset('components/vendor/fontawesome5/js/fontawesome.min.js')}}"></script>
           <script src="{{asset('components/vendor/chartsjs/Chart.min.js')}}"></script>
-        
+
           <script src="{{asset('components/js/dashboard-charts.js')}}"></script>
           <script src="{{asset('components/js/script.js')}}"></script>
           <script src="{{asset('components/js/alert-auto-close.js')}}"></script>
           <script src="{{asset('components/jquery-tabledit-master/jquery.tabledit.min.js')}}"></script>
     
+          <!-- maintenance -->
           <script src="{{asset('js/maintenance/product_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/category_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/supplier_maintenance.js')}}"></script>
+          <script src="{{asset('js/maintenance/unit_maintenance.js')}}"></script>
+
+          <!-- inventory -->
           <script src="{{asset('js/cashiering/cashiering.js')}}"></script>
+
+          <!-- inventory -->
           <script src="{{asset('js/inventory/stockadjustment.js')}}"></script>
 
           <script src="{{asset('components/vendor/DataTables/datatables.min.js')}}"></script>

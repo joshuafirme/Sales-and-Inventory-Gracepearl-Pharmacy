@@ -52,10 +52,17 @@ Route::get('/maintenance/product/pdf/{filter_category}', 'ProductMaintenanceCtr@
 Route::post('/maintenance/product/getCategoryParam/{category_param}', 'ProductMaintenanceCtr@getCategoryParam');
 Route::get('my-demo-mail','TestController@myDemoMail');
 
+//Unit 
+Route::resource('/maintenance/unit', 'UnitMaintenanceCtr');
+Route::post('/maintenance/unit/edit/{id}', 'UnitMaintenanceCtr@edit');
+Route::post('/maintenance/unit/update/{id}', 'UnitMaintenanceCtr@update');
+Route::delete('/maintenance/unit/{id}', 'UnitMaintenanceCtr@destroy');
+
 //Discount
 Route::resource('/maintenance/discount', 'DiscountCtr');
 Route::post('/maintenance/discount/activate', 'DiscountCtr@activate');
 Route::post('/maintenance/discount/getdiscount', 'DiscountCtr@getDiscount');
+
 
 //Stock Adjustment
 Route::resource('/inventory/stockadjustment', 'StockAdjustmentCtr');

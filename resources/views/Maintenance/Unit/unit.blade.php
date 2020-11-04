@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="page-header">
-  <h3 class="mt-2" id="page-title">Category Maintenance</h3>
+  <h3 class="mt-2" id="page-title">Unit Maintenance</h3>
           <hr>
       </div>
 
@@ -31,31 +31,30 @@
 
         
 
-        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addCategoryModal"><span class='fa fa-plus'></span> Add Category</button>
+        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addUnitModal"><span class='fa fa-plus'></span> Add Unit</button>
 
         <div class="row">
 
           <div class="col-md-12 col-lg-12 mt-3">
             <div class="card">
                 <div class="card-body">
-                    <p class="card-title"></p>
-                    <table class="table table-hover" id="category-table">
-                      @if(count($category) > 0)
+                    <table class="table table-hover" id="unit-table">
+                        @if(count($unit) > 0)
                         <thead>
                             <tr>
-                                <th>Category Name</th>
+                                <th>Unit</th>
                                 <th width="20%">Action</th>
                             </tr>
                         </thead>
            
                         <tbody>
-                            <tr>    
-                              @foreach ($category as $data)                        
-                              <td class="td-cat-name">{{ $data->category_name }}</td>                                                           
+                            @foreach ($unit as $data)  
+                            <tr>  
+                            <td>{{ $data->unit }}</td>                                                     
                                 <td>
-                                  <a class="btn" id="btn-edit-category-maintenance" category-id="{{ $data->id }}" data-toggle="modal" data-target="#editCategoryModal"><i class="fa fa-edit"></i></a>
-                                  <a class="btn" name="id" id="deleteCategory" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>
-                                </td>
+                                    <a class="btn" id="btn-edit-unit" unit-id="{{ $data->id }}" data-toggle="modal" data-target="#editUnitModal"><i class="fa fa-edit"></i></a>
+                                    <a class="btn" name="id" id="deleteUnit" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>
+                                </td>                             
                             </tr>
                             @endforeach 
                             @else
@@ -63,12 +62,9 @@
                               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                               <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>No data found
                             </div>  
-                      @endif                       
+                      @endif                     
                         </tbody>
                     </table>
-                    <div class="pl-2">
-                      {{ $category->links() }}
-                  </div>
                 </div>
             </div>
         </div>
@@ -78,7 +74,7 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-    @extends('maintenance.category.category_modals')
+    @extends('maintenance.unit.modals')
     @section('modals')
     @endsection
 

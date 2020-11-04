@@ -24,12 +24,14 @@ $(document).ready(function(){
             
               beforeSend:function(){
                   $('#ok_button').text('Deleting...');
+                  $('.loader').css('display', 'inline');
+         
               },
               success:function(data){
                   setTimeout(function(){
                       $('#confirmModal').modal('hide');
                       $( "#supplier-table" ).load( "supplier #supplier-table" );
-                     
+                      $('.loader').css('display', 'none');
                   }, 1000);
               }
           });
@@ -91,15 +93,19 @@ $(document).ready(function(){
 
         beforeSend:function(){
             $('#btn-update-supplier').text('Updating...');
+            $('.loader').css('display', 'inline');
           },
         success:function(response){
     
             setTimeout(function(){
                 $('.update-success-validation').css('display', 'inline');
                 $('#btn-update-supplier').text('Update');
+                $('.loader').css('display', 'none');
+
                 setTimeout(function(){
                 $('.update-success-validation').fadeOut('slow')
                 $( "#supplier-table" ).load( "supplier #supplier-table" );
+           
                 },2000);
             
             },1000);

@@ -42,7 +42,7 @@ Route::post('/maintenance/supplier/action', 'SupplierMaintenanceCtr@action');
 Route::resource('/maintenance/product', 'ProductMaintenanceCtr');
 Route::post('/maintenance/product', 'ProductMaintenanceCtr@store');
 Route::post('/maintenance/updateproduct/{id}', 'ProductMaintenanceCtr@updateProduct');
-Route::get('/maintenance/product/edit/{id}', 'ProductMaintenanceCtr@edit');
+Route::post('/maintenance/product/show/{productCode}', 'ProductMaintenanceCtr@show');
 Route::delete('/maintenance/product/delete/{productCode}', 'ProductMaintenanceCtr@destroy');
 // Filter Product
 Route::get('/maintenance/product/search', 'ProductMaintenanceCtr@search');
@@ -50,7 +50,6 @@ Route::get('/maintenance/product/filterByCategory', 'ProductMaintenanceCtr@filte
 // PDF Product
 Route::get('/maintenance/product/pdf/{filter_category}', 'ProductMaintenanceCtr@pdf');
 Route::post('/maintenance/product/getCategoryParam/{category_param}', 'ProductMaintenanceCtr@getCategoryParam');
-Route::post('/maintenance/product/show/{productCode}', 'ProductMaintenanceCtr@show');
 Route::get('my-demo-mail','TestController@myDemoMail');
 
 //Discount
@@ -60,8 +59,8 @@ Route::post('/maintenance/discount/getdiscount', 'DiscountCtr@getDiscount');
 
 //Stock Adjustment
 Route::resource('/inventory/stockadjustment', 'StockAdjustmentCtr');
-
-
+Route::post('/inventory/stockadjustment/show/{productCode}', 'StockAdjustmentCtr@show');
+Route::post('/inventory/stockadjustment/adjust', 'StockAdjustmentCtr@adjust');
 
 Auth::routes();
 

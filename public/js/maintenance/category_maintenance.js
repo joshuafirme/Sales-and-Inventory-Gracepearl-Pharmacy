@@ -24,13 +24,14 @@ $(document).ready(function(){
             
               beforeSend:function(){
                   $('#ok_button').text('Deleting...');
+                  $('.loader').css('display', 'inline');
               },
               success:function(data){
                   setTimeout(function(){
                       $('#ok_button').text('Delete');
                       $('#confirmModal').modal('hide');
                       $( "#category-table" ).load( "category #category-table" );
-                     
+                      $('.loader').css('display', 'none');
                   }, 1000);
               }
           });
@@ -82,15 +83,18 @@ $(document).on('click', '#btn-edit-category-maintenance', function(){
 
         beforeSend:function(){
             $('#btn-update-category').text('Updating...');
+            $('.loader').css('display', 'inline');
           },
         success:function(response){
     
             setTimeout(function(){
                 $('.update-success-validation').css('display', 'inline');
+                $('.loader').css('display', 'none');
                 $('#btn-update-category').text('Update');
                 setTimeout(function(){
                 $('.update-success-validation').fadeOut('slow')
                 $( "#category-table" ).load( "category #category-table" );
+          
                 },2000);
             
             },1000);

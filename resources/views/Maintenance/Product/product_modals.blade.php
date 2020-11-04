@@ -104,7 +104,7 @@
           <span style="margin-left:180px;" class="text-success">Deleted Successfully!</span>
           </div>
         <div class="modal-footer">
-         
+          <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
           <button class="btn btn-sm btn-default cancel-delete" data-dismiss="modal">Cancel</button>
           <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="product_ok_button">Yes</button>
 
@@ -215,8 +215,9 @@
         <div class="update-success-validation mr-auto ml-3" style="display: none">
           <label class="label text-success">Product was successfully updated</label>    
         </div> 
+        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
               <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" id="update-product-maintenance" class="btn btn-sm btn-success mr-4">Update</button>
+              <button type="submit" id="update-product-maintenance" class="btn btn-sm btn-success mr-4">Update</button> 
       </div>
 
     </div>

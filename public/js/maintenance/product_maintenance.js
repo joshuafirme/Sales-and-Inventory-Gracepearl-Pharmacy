@@ -65,6 +65,7 @@ $(document).ready(function(){
           
             beforeSend:function(){
                 $('#product_ok_button').text('Deleting...');
+                $('.loader').css('display', 'inline');
             },
             success:function(data){
                 setTimeout(function(){
@@ -72,6 +73,7 @@ $(document).ready(function(){
                     $('.delete-message').remove();
                     $('.delete-success').show();
                     $('.cancel-delete').text('Ok');
+                    $('.loader').css('display', 'none');
                    // $('#proconfirmModal').modal('hide');
                     row.fadeOut(500, function () {
                       table.row(row).remove().draw()
@@ -214,12 +216,14 @@ $('#update-product-maintenance').click(function(){
 
           beforeSend:function(){
             $('#update-product-maintenance').text('Updating...');
+            $('.loader').css('display', 'inline');
           },
           success:function(response){
             setTimeout(function(){
               $('.update-success-validation').css('display', 'inline');
               $('#product-table').DataTable().ajax.reload();
               $('#update-product-maintenance').text('Update');
+              $('.loader').css('display', 'none');
               setTimeout(function(){
                 $('.update-success-validation').fadeOut('slow')
                

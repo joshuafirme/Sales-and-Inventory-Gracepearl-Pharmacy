@@ -54,6 +54,7 @@
                 <div class="update-success-validation mr-auto ml-3" style="display: none">
                     <label class="label text-success">Category was successfully updated</label>    
                 </div> 
+                <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-sm btn-success" id="btn-update-category">Update</button>
         </div>
@@ -76,6 +77,7 @@
         <p class="delete-category-message"></p>
       </div>
       <div class="modal-footer">
+        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
         <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="ok_button">Yes</button>
         <button class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
       </div>

@@ -85,8 +85,9 @@
                       <div class="update-success-validation mr-auto ml-3" style="display: none">
                         <label class="label text-success">Product was successfully updated</label>    
                       </div> 
-                      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-sm btn-success" id="btn-update-supplier">Save</button>
+                      <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
+                      <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-sm btn-success" id="btn-update-supplier">Update</button>
                     </div>
                 
                   </div>
@@ -108,7 +109,7 @@
                       <p class="delete-suplr-confirm"></p>
                     </div>
                     <div class="modal-footer">
-                     
+                      <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
                       <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="ok_button">Yes</button>
                       <button class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
                     </div>

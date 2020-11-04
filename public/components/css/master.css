@@ -471,15 +471,7 @@ flex-direction: row;
     margin: 10px 0 10px 5px;
   }
 
-.table td{
-    text-align: center; 
-    vertical-align: middle;
-    }
-    
-.table th{
-    text-align: center; 
-    vertical-align: middle;
-    }
+
 
     .cashiering-table tr{
         height: 20px !important;
@@ -551,4 +543,7 @@ flex-direction: row;
     .page-link {
         color: black !important;
     }
+
+
+
 

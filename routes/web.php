@@ -32,7 +32,7 @@ Route::get('/sales/cashiering/addToCart', 'SalesCtr@addToCart');
 
 // Supplier
 Route::get('maintenance/supplier/', 'SupplierMaintenanceCtr@index');
-Route::post('/maintenance/supplier', 'SupplierMaintenanceCtr@store');
+Route::post('/maintenance/supplier/store', 'SupplierMaintenanceCtr@store');
 Route::post('/maintenance/supplier/update', 'SupplierMaintenanceCtr@update');
 Route::post('/maintenance/supplier/edit/{id}', 'SupplierMaintenanceCtr@edit');
 Route::delete('/maintenance/supplier/{supplierID}', 'SupplierMaintenanceCtr@destroy');

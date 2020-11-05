@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\SupplierMaintenance;
+use App\MarkupMaintenance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 
@@ -23,25 +24,28 @@ class SupplierMaintenanceCtr extends Controller
         return view('maintenance/supplier/supplier', ['suplr' => $suplr]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+   
+    public function store()
     {
 
         $suplr = new SupplierMaintenance;
         $suplr->_prefix = 'SP-';
-        $suplr->supplierName = $request->input('supplierName');
-        $suplr->address = $request->input('address');
-        $suplr->person = $request->input('person');
-        $suplr->contact = $request->input('contact');
-
+        $suplr->supplierName = Input::get('supplier_name');
+        $suplr->address = Input::get('address');
+        $suplr->person = Input::get('person');
+        $suplr->contact = Input::get('contact');
         $suplr->save();
 
-        return redirect('/maintenance/supplier')->with('success', 'Data Saved');
+        $id = $suplr->id;
+        $markup = Input::get('markup');
+        $this->storeToMarkupMaintenance($id, $markup);
+
+    }
+
+    public function storeToMarkupMaintenance($supplierID, $markup){
+        DB::table('tblmarkup')->insert(
+            ['supplierID' => $supplierID, 'markup' => $markup]
+        );
     }
 
     /**
@@ -104,7 +108,14 @@ class SupplierMaintenanceCtr extends Controller
     {
         $suplr = SupplierMaintenance::findOrFail($id);
         $suplr->delete();
+        $this->destroyMarkup($id);
         return $suplr;
+    }
+
+    public function destroyMarkup($id)
+    {
+        $markup = DB::table('tblmarkup')->where('supplierID', '=', $id)->delete();
+        $markup->delete();
     }
 
     public function action(Request $request){

@@ -2,7 +2,6 @@
 var supplier_id, supplier_name;
 $(document).ready(function(){
 
-      
          // delete supplier alert
     $(document).on('click', '#delete-supplier', function(){
         supplier_id = $(this).attr('delete-id');
@@ -17,13 +16,13 @@ $(document).ready(function(){
             }
         });
       
-      $('#ok_button').click(function(){
+      $('#btn-delete-suplr').click(function(){
           $.ajax({
               url: '/maintenance/supplier/'+ supplier_id,
               type: 'DELETE',
             
               beforeSend:function(){
-                  $('#ok_button').text('Deleting...');
+                  $('#btn-delete-suplr').text('Deleting...');
                   $('.loader').css('display', 'inline');
          
               },
@@ -32,6 +31,7 @@ $(document).ready(function(){
                       $('#confirmModal').modal('hide');
                       $( "#supplier-table" ).load( "supplier #supplier-table" );
                       $('.loader').css('display', 'none');
+                      $('#btn-delete-suplr').text('Delete');
                   }, 1000);
               }
           });
@@ -56,7 +56,7 @@ $(document).ready(function(){
     
           success:function(response){
               console.log(response);
-            $('#supplier_id').val(id);
+            $('#edit_supplier_id').val(id);
             $('#edit_supplier_name').val(response[0].supplierName);
             $('#edit_address').val(response[0].address);
             $('#edit_person').val(response[0].person);
@@ -67,7 +67,7 @@ $(document).ready(function(){
 
   //update
   $(document).on('click', '#btn-update-supplier', function(){
-    var id = $('#supplier_id').val();
+    var id = $('#edit_supplier_id').val();
     var supplier_name = $('#edit_supplier_name').val();
     var address = $('#edit_address').val();
     var person = $('#edit_person').val();
@@ -100,6 +100,59 @@ $(document).ready(function(){
             setTimeout(function(){
                 $('.update-success-validation').css('display', 'inline');
                 $('#btn-update-supplier').text('Update');
+                $('.loader').css('display', 'none');
+
+                setTimeout(function(){
+                $('.update-success-validation').fadeOut('slow')
+                $( "#supplier-table" ).load( "supplier #supplier-table" );
+           
+                },2000);
+            
+            },1000);
+        }
+        });
+  }); 
+
+
+   //add supplier
+   $(document).on('click', '#btn-save-supplier', function(){
+    var supplier_name = $('#supplier_name').val();
+    var address = $('#address').val();
+    var person = $('#person').val();
+    var contact = $('#contact').val();
+    var markup = $('#markup').val();
+
+    console.log(supplier_name);
+    console.log(address);
+    console.log(person);
+    console.log(contact);
+
+    $.ajaxSetup({
+        headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+     });
+
+    $.ajax({
+      url:"/maintenance/supplier/store",
+      type:"POST",
+      data:{
+          supplier_name:supplier_name,
+          address:address,
+          person:person,
+          contact:contact,
+          markup:markup
+        },
+
+        beforeSend:function(){
+            $('#btn-save-supplier').text('Saving...');
+            $('.loader').css('display', 'inline');
+          },
+        success:function(response){
+    
+            setTimeout(function(){
+                $('.update-success-validation').css('display', 'inline');
+                $('#btn-save-supplier').text('Save');
                 $('.loader').css('display', 'none');
 
                 setTimeout(function(){

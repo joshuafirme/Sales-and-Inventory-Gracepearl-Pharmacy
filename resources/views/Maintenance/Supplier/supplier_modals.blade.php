@@ -12,12 +12,12 @@
                     </div>
                     <div class="modal-body">
               
-                    <form action="{{ action('SupplierMaintenanceCtr@store') }}" method="POST">
                       {{ csrf_field() }}
+                      <input type="hidden" id="supplier_id">
 
                         <div class="form-group">
                           <label class="col-form-label">Supplier Name</label>
-                          <input type="text" class="form-control" name="supplierName" id="supplierName" required>
+                          <input type="text" class="form-control" name="supplier_name" id="supplier_name" required>
                         </div>
               
                         <div class="form-group">
@@ -33,13 +33,22 @@
                         <div class="form-group">
                           <label class="col-form-label">Contact</label>
                           <input type="text" class="form-control" name="contact" id="contact" required>
-                        </div>         
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-form-label">Markup</label>
+                          <input type="number" step="0.01" class="form-control" name="markup" id="markup" required>
+                        </div>
+
                     </div>
                     <div class="modal-footer">
+                      <div class="update-success-validation mr-auto ml-3" style="display: none">
+                        <label class="label text-success">Supplier was successfully added</label>    
+                    </div> 
+                    <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
                       <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-sm btn-primary">Save</button>
+                      <button type="submit" class="btn btn-sm btn-primary" id="btn-save-supplier">Save</button>
                     </div>
-                  </form>
                   </div>
                 </div>
               </div>
@@ -59,7 +68,7 @@
           
                       {{ csrf_field() }}
 
-                        <input type="hidden" id="supplier_id">
+                        <input type="hidden" id="edit_supplier_id">
 
                         <div class="form-group">
                           <label class="col-form-label">Supplier Name</label>
@@ -110,7 +119,7 @@
                     </div>
                     <div class="modal-footer">
                       <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-                      <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="ok_button">Yes</button>
+                      <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="btn-delete-suplr">Yes</button>
                       <button class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
                     </div>
                   </div>

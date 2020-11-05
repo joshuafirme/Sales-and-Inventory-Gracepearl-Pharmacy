@@ -24,7 +24,7 @@
 
             <div class="form-group">
                 <label class="col-form-label">Markup</label>
-                <input type="number" step="0.1" class="form-control" name="edit_markup" id="edit_markup" required>
+                <input type="number" step="0.01" class="form-control" name="edit_markup" id="edit_markup" required>
               </div>
     
         </div>

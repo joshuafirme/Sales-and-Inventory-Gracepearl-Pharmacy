@@ -58,6 +58,11 @@ Route::post('/maintenance/unit/edit/{id}', 'UnitMaintenanceCtr@edit');
 Route::post('/maintenance/unit/update/{id}', 'UnitMaintenanceCtr@update');
 Route::delete('/maintenance/unit/{id}', 'UnitMaintenanceCtr@destroy');
 
+//Markup
+Route::resource('/maintenance/markup', 'MarkupMaintenanceCtr');
+Route::post('/maintenance/markup/edit/{id}', 'MarkupMaintenanceCtr@edit');
+Route::post('/maintenance/markup/update/{id}', 'MarkupMaintenanceCtr@update');
+
 //Discount
 Route::resource('/maintenance/discount', 'DiscountCtr');
 Route::post('/maintenance/discount/activate', 'DiscountCtr@activate');

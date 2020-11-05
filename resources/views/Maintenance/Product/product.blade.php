@@ -58,7 +58,8 @@
                       <thead>
                         <tr>
                             <th>Product Code</th>
-                            <th>Description</th>           
+                            <th>Description</th>   
+                            <th>Unit</th>        
                             <th>Quantity</th>
                             <th>Re-Order Point</th>
                             <th>Original Price</th>

@@ -121,7 +121,10 @@
                             <a href="{{ url('maintenance/unit') }}"><i class="fas fa-box"></i> Unit</a>
                         </li>
                         <li>
-                            <a href="{{ url('maintenance/discount') }}" ><i class="fas fa-percent"></i> Discount</a>
+                            <a href="{{ url('maintenance/markup') }}" ><i class="fas fa-chart-line"></i> Markup</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('maintenance/discount') }}" ><i class="fas fa-percentage"></i> Discount</a>
                         </li>
                         <li>
                             <a href="{{ url('maintenance/category') }}" ><i class="fas fa-dollar-sign"></i> Shipping Fee</a>
@@ -196,6 +199,7 @@
           <script src="{{asset('js/maintenance/category_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/supplier_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/unit_maintenance.js')}}"></script>
+          <script src="{{asset('js/maintenance/markup_maintenance.js')}}"></script>
 
           <!-- inventory -->
           <script src="{{asset('js/cashiering/cashiering.js')}}"></script>

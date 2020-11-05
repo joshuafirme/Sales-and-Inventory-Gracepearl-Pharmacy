@@ -13,6 +13,7 @@ class ProductMaintenanceCtr extends Controller
     private $table_prod = "tblproduct";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
+    private $table_unit = "tblunit";
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +23,7 @@ class ProductMaintenanceCtr extends Controller
     {
         $category_param = $request->category;
         $product = $this->getAllProduct(); 
+        $unit = DB::table($this->table_unit)->get();
         $category = DB::table($this->table_cat)->get();
         $suplr = DB::table($this->table_suplr)->get();
         
@@ -53,14 +55,15 @@ class ProductMaintenanceCtr extends Controller
             }
            
         }
-        return view('maintenance/product/product', ['product' => $product, 'category' => $category, 'suplr' => $suplr]);
+        return view('maintenance/product/product', ['product' => $product, 'unit' => $unit, 'category' => $category, 'suplr' => $suplr]);
     }
 
     public function getAllProduct(){
         $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
+        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
         ->get();
 
         return $product;
@@ -68,9 +71,10 @@ class ProductMaintenanceCtr extends Controller
 
     public function filterByCategory($category_param){
         $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
+        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
         ->where('categoryID', $category_param)
         ->get();
 
@@ -82,9 +86,10 @@ class ProductMaintenanceCtr extends Controller
     public function show($productCode)
     {
         $product = DB::table($this->table_prod)
-            ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, category_name, supplierName'))
+            ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, category_name, supplierName, unit'))
             ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+            ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
             ->where('tblproduct.id', $productCode)
             ->get();
 
@@ -103,6 +108,7 @@ class ProductMaintenanceCtr extends Controller
 
         $product->_prefix = $this->getPrefix();
         $product->description = $request->input('description');
+        $product->unitID = $request->input('unitID');
         $product->categoryID = $request->input('categoryID');
         $product->supplierID = $request->input('supplierID');
         $product->qty = $request->input('qty');
@@ -142,6 +148,7 @@ class ProductMaintenanceCtr extends Controller
     {
         $product = new ProductMaintenance;
         $product->desciption = Input::get('description');
+        $product->unitID = Input::get('unit');
         $product->categoryID = Input::get('category_name');
         $product->supplierID = Input::get('supplier_name');
         $product->re_order = Input::get('re_order');
@@ -150,10 +157,11 @@ class ProductMaintenanceCtr extends Controller
         $product->exp_date = Input::get('exp_date');
 
         DB::update('UPDATE '. $this->table_prod .' 
-        SET description = ?, categoryID = ?, supplierID = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
+        SET description = ?,  unitID = ?, categoryID = ?, supplierID = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
         WHERE id = ?',
         [
             $product->desciption, 
+            $product->unitID, 
             $product->categoryID, 
             $product->supplierID, 
             $product->re_order, 
@@ -177,29 +185,6 @@ class ProductMaintenanceCtr extends Controller
         return $product;
     }
 
-
-    public function search(Request $request)
-    {
-        $search_key = $request->input('search-product');
-        
-        $product = DB::table($this->table_prod)
-        ->select("*", DB::raw('tblproduct.id AS productCode'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->where('tblproduct.id', 'LIKE', '%'.$search_key.'%')
-        ->orWhere('description', 'LIKE', '%'.$search_key.'%')
-        ->paginate(3);
-
-         $category = DB::table($this->table_cat)->get();
-         $suplr = DB::table($this->table_suplr)->get();
-         
-        return view('maintenance/product/product', ['product' => $product, 'category' => $category, 'suplr' => $suplr]);
-    }
-
-   
-
-
-
     public function pdf($filter_category){
 
         $product_data = $this->getAllProductData($filter_category);
@@ -219,6 +204,7 @@ class ProductMaintenanceCtr extends Controller
         ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
             ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+            ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
             ->where('category_name',  $category_param)
             ->get();
 

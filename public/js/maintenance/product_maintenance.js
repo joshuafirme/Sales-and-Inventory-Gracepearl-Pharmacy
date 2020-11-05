@@ -19,6 +19,7 @@ $(document).ready(function(){
       columns:[       
        {data: 'productCode', name: 'productCode'},
        {data: 'description', name: 'description'},
+       {data: 'unit', name: 'unit'},
        {data: 'qty', name: 'qty'},
        {data: 're_order', name: 're_order'},
        {data: 'orig_price',name: 'orig_price'},
@@ -148,6 +149,7 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
   var productCode = $(this).attr('product-code');
   
   console.log(productCode);
+  $('#edit_unit').val('');
   $('#edit_category_name').val('');
   $('#edit_supplier_name').val('');
 
@@ -161,12 +163,15 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
       $('#product_code_hidden').val(response[0].id);
       $('#product_code').val(response[0].productCode);
       $('#edit_description').val(response[0].description);
+      $('#edit_unit').text(response[0].unit);
       $('#edit_category_name').text(response[0].category_name);
       $('#edit_supplier_name').text(response[0].supplierName);
 
+      $(".edit_unit option[value="+response[0].unitID+"]").remove();
       $(".category_name option[value="+response[0].categoryID+"]").remove();
       $(".supplier_name option[value="+response[0].supplierID+"]").remove();
       
+      $('#edit_unit').val(response[0].unitID);
       $('#edit_category_name').val(response[0].categoryID);
       $('#edit_supplier_name').val(response[0].supplierID);
       $('#edit_qty').val(response[0].qty);
@@ -187,6 +192,7 @@ $('#update-product-maintenance').click(function(){
   var id = $('#product_code_hidden').val(); 
   console.log(product_code);
   var description = $('#edit_description').val(); 
+  var unit = $('select[name=edit_unit] option').filter(':selected').val();
   var category_name = $('select[name=category_name] option').filter(':selected').val();
   var supplier_name = $('select[name=supplier_name] option').filter(':selected').val();
   var re_order = $('#edit_re_order').val();
@@ -206,6 +212,7 @@ $('#update-product-maintenance').click(function(){
 
       data:{
             description:description,
+            unit:unit,
             category_name:category_name,
             supplier_name:supplier_name,
             re_order:re_order,

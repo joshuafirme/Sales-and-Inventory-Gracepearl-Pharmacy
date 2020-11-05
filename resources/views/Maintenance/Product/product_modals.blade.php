@@ -21,6 +21,16 @@
               <label class="col-form-label">Description</label>
               <input type="text" class="form-control" name="description" id="description" required>
             </div>
+
+            <div class="col-md-4 mb-2">    
+              <label class="col-form-label">Unit</label>
+              <select class="form-control" name="unit" id="unit">
+                
+                @foreach($unit as $data)
+              <option value={{ $data->id }}>{{ $data->unit }}</option>
+                @endforeach
+              </select>
+            </div>
   
             <div class="col-md-4 mb-2">    
               <label class="col-form-label">Category</label>
@@ -141,6 +151,18 @@
             <div class="col-md-8">
               <label class="col-form-label">Description</label>
               <input type="text" class="form-control"  name="description" id="edit_description" required>
+            </div>
+
+            <div class="col-md-4 mb-2">    
+              <label class="col-form-label">Unit</label>
+              <select class="form-control edit_unit" name="edit_unit" >
+                <option  id="edit_unit" selected></option>
+
+                @foreach($unit as $data)
+              <option value={{ $data->id }}>{{ $data->unit }}</option>
+                @endforeach
+
+              </select>
             </div>
   
             <div class="col-md-4 mb-2">    

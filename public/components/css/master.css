@@ -536,8 +536,8 @@ flex-direction: row;
 
 /* Pagination Color  */
     .page-item.active .page-link {
-        background-color: #318CB8 !important;
-        border: 1px solid#318CB8;
+        background-color: #32638D !important;
+        border: 1px solid#1C5071;
         color: #fff !important;
     }
     .page-link {

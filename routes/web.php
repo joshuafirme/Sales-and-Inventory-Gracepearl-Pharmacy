@@ -18,6 +18,8 @@ Route::get('/login-backend', 'LoginCtr@index');
 
 Route::get('/dashboard', 'DashboardCtr@index');
 
+Route::resource('/products', 'ProductSearch');
+
 // category
 Route::get('/maintenance/category', 'CategoryMaintenanceCtr@index');
 Route::post('/maintenance/category', 'CategoryMaintenanceCtr@store');
@@ -73,6 +75,12 @@ Route::post('/maintenance/discount/getdiscount', 'DiscountCtr@getDiscount');
 Route::resource('/inventory/stockadjustment', 'StockAdjustmentCtr');
 Route::post('/inventory/stockadjustment/show/{productCode}', 'StockAdjustmentCtr@show');
 Route::post('/inventory/stockadjustment/adjust', 'StockAdjustmentCtr@adjust');
+
+//Purchase Order
+Route::resource('/inventory/purchaseorder', 'PurchaseOrderCtr');
+//Notification
+Route::resource('/inventory/notification', 'NotificationCtr');
+Route::get('/inventory/notification/expiredProduct', 'NotificationCtr@expiredProduct');
 
 Auth::routes();
 

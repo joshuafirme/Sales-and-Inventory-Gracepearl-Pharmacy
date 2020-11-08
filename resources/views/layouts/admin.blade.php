@@ -23,10 +23,10 @@
             </div>
             <ul class="list-unstyled components text-secondary">
                 <li>
-                    <a href="{{ url('/dashboard') }}"><i class="fas fa-home"></i> Dashboard</a>
+                    <a href="{{ url('/dashboard') }}"><i class="fas fa-chart-bar"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="{{ url('/dashboard') }}"><i class="fas fa-search"></i> Product Search</a>
+                    <a href="{{ url('/products') }}"><i class="fas fa-search"></i> Products</a>
                 </li>
 
                 <li>
@@ -44,13 +44,9 @@
 
                 <li>
                     <a href="#orders-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-shopping-cart"></i> Manage Online Orders</a>
-                    <ul class="collapse list-unstyled" id="orders-menu">
+                    <ul class="collapse list-unstyled" id="orders-menu">        
                         <li>
-                            <a href="{{ url('sales/cashiering') }}"><i class="fas fa-file-prescription"></i>Prescription Approval<span style="color: #fff" class="badge badge-warning"> 20</span></a>
-                        </li>
-                     
-                        <li>
-                            <a href="500.html"><i class="fas fa-history"></i> Pending</a>
+                            <a href="500.html"><i class="fas fa-history"></i> Pending <span style="color: #fff" class="badge badge-success"> 20</span></a>
                         </li>
                         <li>
                             <a href="500.html"><i class="fas fa-truck-pickup"></i> Ready To Ship</a>
@@ -74,13 +70,13 @@
                             <a href="{{ url('/inventory/stockadjustment') }}"><i class="fas fa-sliders-h"></i> Stock Adjustment</a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-boxes"></i> Purchase Order </a>
+                            <a href="{{ url('/inventory/purchaseorder') }}"><i class="fas fa-boxes"></i> Purchase Order </a>
                         </li>
                         <li>
                             <a href="404.html"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
                         </li>
                         <li>
-                            <a href="404.html"><i class="fas fa-bell"></i> Notifications <span class="badge badge-danger"> 20</span></a>
+                            <a href="{{ url('/inventory/notification') }}"><i class="fas fa-bell"></i> Notification <span class="badge badge-danger"> 20</span></a>
                         </li>
                         <li>
                             <a href="404.html"><i class="fas fa-hand-holding"></i> Product Return</a>
@@ -206,6 +202,10 @@
 
           <!-- inventory -->
           <script src="{{asset('js/inventory/stockadjustment.js')}}"></script>
+          <script src="{{asset('js/inventory/purchase_order.js')}}"></script>
+          <script src="{{asset('js/inventory/notification.js')}}"></script>
+
+          <script src="{{asset('js/products.js')}}"></script>
 
           <script src="{{asset('components/vendor/DataTables/datatables.min.js')}}"></script>
 

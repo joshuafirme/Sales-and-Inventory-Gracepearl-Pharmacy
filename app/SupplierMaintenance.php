@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class SupplierMaintenance extends Model
 {
     protected $table = 'tblsupplier';
-    protected $fillable = ['id, _prefix, supplierName', 'address', 'person', 'contact'];
+    protected $fillable = ['id, _prefix, supplierName', 'address', 'email', 'person', 'contact'];
 }

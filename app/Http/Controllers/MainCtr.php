@@ -13,7 +13,6 @@ class MainCtr extends Controller
     	$myEmail = 'rhealyncatapang@gmail.com';
     	Mail::to($myEmail)->send(new MyMail());
 
-    	
     	dd("Mail Send Successfully");
     }
 }

@@ -24,7 +24,12 @@
                           <label class="col-form-label">Address</label>
                           <textarea class="form-control" name="address" id="address" required></textarea>
                         </div>
-              
+
+                        <div class="form-group">
+                          <label class="col-form-label">Email</label>
+                          <input type="email" class="form-control" name="address" id="email" required>
+                        </div>
+          
                         <div class="form-group">
                           <label class="col-form-label">Person</label>
                           <input type="text" class="form-control" name="person" id="person" required>
@@ -79,10 +84,15 @@
                           <label class="col-form-label">Address</label>
                           <textarea class="form-control" name="address" id="edit_address" required></textarea>
                         </div>
+
+                        <div class="form-group">
+                          <label class="col-form-label">Email</label>
+                          <textarea class="form-control" name="address" id="edit_email" required></textarea>
+                        </div>
               
                         <div class="form-group">
                           <label class="col-form-label">Person</label>
-                          <input type="text" class="form-control" name="person" id="edit_person" required>
+                          <input type="email" class="form-control" name="person" id="edit_person" required>
                         </div>
               
                         <div class="form-group">

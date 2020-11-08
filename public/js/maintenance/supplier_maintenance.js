@@ -59,6 +59,7 @@ $(document).ready(function(){
             $('#edit_supplier_id').val(id);
             $('#edit_supplier_name').val(response[0].supplierName);
             $('#edit_address').val(response[0].address);
+            $('#edit_email').val(response[0].email);
             $('#edit_person').val(response[0].person);
             $('#edit_contact').val(response[0].contact);
           }
@@ -70,6 +71,7 @@ $(document).ready(function(){
     var id = $('#edit_supplier_id').val();
     var supplier_name = $('#edit_supplier_name').val();
     var address = $('#edit_address').val();
+    var email = $('#edit_email').val();
     var person = $('#edit_person').val();
     var contact = $('#edit_contact').val();
 
@@ -87,6 +89,7 @@ $(document).ready(function(){
           id:id,
           supplier_name:supplier_name,
           address:address,
+          email:email,
           person:person,
           contact:contact
         },
@@ -118,6 +121,7 @@ $(document).ready(function(){
    $(document).on('click', '#btn-save-supplier', function(){
     var supplier_name = $('#supplier_name').val();
     var address = $('#address').val();
+    var email = $('#email').val();
     var person = $('#person').val();
     var contact = $('#contact').val();
     var markup = $('#markup').val();
@@ -140,6 +144,7 @@ $(document).ready(function(){
           supplier_name:supplier_name,
           address:address,
           person:person,
+          email:email,
           contact:contact,
           markup:markup
         },

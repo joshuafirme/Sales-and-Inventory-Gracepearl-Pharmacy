@@ -32,6 +32,7 @@ class SupplierMaintenanceCtr extends Controller
         $suplr->_prefix = 'SP-';
         $suplr->supplierName = Input::get('supplier_name');
         $suplr->address = Input::get('address');
+        $suplr->email = Input::get('email');
         $suplr->person = Input::get('person');
         $suplr->contact = Input::get('contact');
         $suplr->save();
@@ -85,15 +86,17 @@ class SupplierMaintenanceCtr extends Controller
         $suplr->id = Input::get('id');
         $suplr->supplierName = Input::get('supplier_name');
         $suplr->address = Input::get('address');
+        $suplr->email = Input::get('email');
         $suplr->person = Input::get('person');
         $suplr->contact = Input::get('contact');
 
         DB::update('UPDATE '. $this->table_name .' SET supplierName = ?,
                                                         address = ?,
+                                                        email= ?,
                                                         person = ?,
                                                         contact = ?
                                                         WHERE id = ?',
-        [$suplr->supplierName, $suplr->address, $suplr->person, $suplr->contact, $suplr->id]);
+        [$suplr->supplierName, $suplr->address, $suplr->email, $suplr->person, $suplr->contact, $suplr->id]);
 
     
     }
@@ -118,33 +121,7 @@ class SupplierMaintenanceCtr extends Controller
         $markup->delete();
     }
 
-    public function action(Request $request){
-
-        if($request->ajax()){
-            if($request->action == 'Edit'){
-                $data = array(
-                    'supplierName' => $request->supplierName,
-                    'address' => $request->address,
-                    'person' => $request->person,
-                    'contact' => $request->contact
-                );
-          
-                DB::table($table_name)
-                ->where('id', $request->supplierID)
-                ->update($data);
-            }
-
-
-            if($request->action == 'delete'){
-               
-                DB::table($table_name)
-                ->where('id', $request->supplierID)
-                ->delete();
-            }
-        }
-
-        return request()->json($request);
-    }
+    
 
     public function getDate(){
         $date = date('my');

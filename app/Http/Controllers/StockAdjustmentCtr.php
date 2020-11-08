@@ -73,12 +73,6 @@ class StockAdjustmentCtr extends Controller
         }
     }
 
-    public function getPrefix()
-    {
-        $prefix = 'SA-'.date('m');
-        return $prefix;
-    }
-
     public function updateStock($action, $product_code, $qtyAdjusted){
         if($action == 'add'){ 
             DB::table($this->table_prod)
@@ -104,6 +98,12 @@ class StockAdjustmentCtr extends Controller
             ->get();
 
             return $product;
+    }
+
+    public function getPrefix()
+    {
+        $prefix = 'SA-'.date('m');
+        return $prefix;
     }
 
 }

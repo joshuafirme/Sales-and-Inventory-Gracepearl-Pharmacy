@@ -60,6 +60,7 @@
                                 <th>Supplier ID</th>
                                 <th>Supplier Name</th>
                                 <th>Address</th>
+                                <th>Email</th>
                                 <th>Person</th>
                                 <th>Contact</th>
                                 <th style="width: 12%;">Action</th>
@@ -72,6 +73,7 @@
                               <td>{{ $data->supplierID }}</td>
                               <td>{{ $data->supplierName }}</td>
                               <td>{{ $data->address }}</td>
+                              <td>{{ $data->email }}</td>
                               <td>{{ $data->person }}</td>
                               <td>{{ $data->contact }}</td>  
                               <td>

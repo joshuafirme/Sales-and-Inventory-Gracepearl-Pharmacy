@@ -4,7 +4,7 @@ $(document).ready(function(){
   fetch_data();
 
   function fetch_data(category){
-    var table = $('#product-table').DataTable({
+    $('#product-table').DataTable({
    
       processing: true,
       serverSide: true,
@@ -29,18 +29,50 @@ $(document).ready(function(){
       ]
       
      });
-     
-  
-     $('#filter_category').change(function(){
-      var category_id = $('#filter_category').val();
- 
-      $('#product-table').DataTable().destroy();
-     
-      fetch_data(category_id);
-
-      });
-
   }
+
+
+  function fetch_All(){
+    $('#product-table').DataTable({
+   
+      processing: true,
+      serverSide: true,
+      
+     
+      ajax:{
+       url: "/maintenance/product",
+      }, 
+      
+       
+      columns:[       
+       {data: 'productCode', name: 'productCode'},
+       {data: 'description', name: 'description'},
+       {data: 'unit', name: 'unit'},
+       {data: 'qty', name: 'qty'},
+       {data: 're_order', name: 're_order'},
+       {data: 'orig_price',name: 'orig_price'},
+       {data: 'selling_price',name: 'selling_price'},      
+       {data: 'exp_date',name: 'exp_date'},
+       {data: 'action', name: 'action',orderable: false},
+      ]
+      
+     });
+  }
+  $('#filter_category').change(function(){
+    var category = $('#filter_category').val();
+
+    if(category=='All'){
+      $('#product-table').DataTable().destroy();
+      fetch_All();
+    }
+    else{
+      $('#product-table').DataTable().destroy();
+   
+      fetch_data(category);
+    }
+  
+
+    });
 
   // delete product alert
   var product_id, product_name;

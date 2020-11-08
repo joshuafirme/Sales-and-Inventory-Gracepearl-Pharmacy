@@ -43,9 +43,10 @@
                 <div class="container-fluid">
                   <div class="row">
 
-                  <div class="input-group col-sm-3 col-md-2 mt-4 mb-3 ml-auto " id="filter-cont">              
+                  <div class="input-group col-sm-3 col-md-3 mt-4 mb-3 ml-auto " id="filter-cont">   
+                    <label class="m-2 ml-2">Category</label>           
                     <select class="form-control" id="filter_category" name="filter-category" >
-                      <option>Select Category</option>
+                      <option value="All">All</option>
                       @foreach($category as $data)
                     <option value={{ $data->id }}>{{ $data->category_name }}</option>
                       @endforeach

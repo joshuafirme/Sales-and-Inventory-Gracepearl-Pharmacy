@@ -16,7 +16,8 @@
           <div class="row">
             {{ csrf_field() }}
 
-  
+            <input type="hidden" id="discount_hidden">
+            
             <div class="col-md-8">
               <label class="col-form-label">Description</label>
               <input type="text" class="form-control" name="description" id="description" required>
@@ -204,7 +205,7 @@
               <input type="number" class="form-control" name="orig_price" id="edit_orig_price" required>
             </div>
 
-            <input type="hidden" id="discount_hidden">
+            <input type="hidden" id="edit_discount_hidden">
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>

@@ -53,5 +53,7 @@ class MarkupMaintenanceCtr extends Controller
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_name . '.supplierID')
         ->where('tblmarkup.supplierID', $id)
         ->get();
+
+        return $markup;
     }
 }

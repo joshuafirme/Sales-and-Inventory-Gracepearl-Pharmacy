@@ -134,35 +134,30 @@ $(document).ready(function(){
      
       });
 
-      $('#btn-add-product').click(function(){
-          getPercentage();    
-      });
+     
 
-      function getPercentage(){
+      function getPercentage(id){
         $.ajax({
-          url:"/maintenance/discount/getdiscount",
+          url:"/maintenance/markup/getSupplierMarkup/"+id,
           type:"POST",
           success:function(response){
-          //  console.log(response[0].discount);
-            $('#discount_hidden').val(response[0].discount);
+            console.log(response);
+            $('#discount_hidden').val(response[0].markup);
           }
          });
         
       }
 
-      function getDiscount(result){
-        var orig_price = $(this).val();
-        var percentage = $('#discount_hidden').val();
-        var markup = orig_price * percentage;
-        console.log(percentage);
-        var result =  parseInt(orig_price) + markup;
-        return result;
-      }
+      $('#supplier_name').change(function(){
+        var id = $(this).val();
+        getPercentage(id);
+      });
 
 
       $('#orig_price').keyup(function(){
         var orig_price = $(this).val();
         var percentage = $('#discount_hidden').val();
+        console.log(percentage);
         var markup = orig_price * percentage;
         var discounted =  parseInt(orig_price) + markup;
         $('#selling_price').val(discounted);

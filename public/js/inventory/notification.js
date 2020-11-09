@@ -25,12 +25,15 @@ $(document).ready(function(){
         
        });
 
-       $('#expired-product-table').DataTable({  
+       $('#expired-product-table').DataTable({
+     
         processing: true,
         serverSide: true,
+            
         ajax:{
-          url: "/inventory/notification",
-        }, 
+          url: "/inventory/notification/expired",
+        },
+        
         
          
         columns:[       
@@ -43,12 +46,9 @@ $(document).ready(function(){
         
        });
 
+  
     }
 
-    $('#expired-tab').click(function(){
-      
-    
-  });
     
 });
     

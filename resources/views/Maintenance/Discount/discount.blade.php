@@ -37,7 +37,7 @@
                     {{ csrf_field() }}
                         <div class="form-group">
                           <label for="discount">Discount Percentage</label>
-                          <input type="number" step="0.01" class="form-control" name="discount" id="discount" value={{ $discount->discount }}>
+                          <input type="number" step="0.01" min="0.01" max="1.0" class="form-control" name="discount" id="discount" value={{ $discount->discount }}>
                           <small class="form-text text-muted">0.01 is equal to 1% discount.</small>
                         </div>             
                         <button type="submit" class="btn btn-sm btn-success" id="btn-activate">Activate</button>

@@ -44,4 +44,14 @@ class MarkupMaintenanceCtr extends Controller
             $id
         ]);
     }
+
+    
+    public function getSupplierMarkup($id){
+
+        $markup = DB::table($this->table_name)
+        ->select("tblmarkup.*", DB::raw('tblmarkup.id AS id, supplierName'))
+        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_name . '.supplierID')
+        ->where('tblmarkup.supplierID', $id)
+        ->get();
+    }
 }

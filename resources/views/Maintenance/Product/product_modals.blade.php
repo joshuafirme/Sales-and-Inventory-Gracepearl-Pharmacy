@@ -24,7 +24,7 @@
 
             <div class="col-md-4 mb-2">    
               <label class="col-form-label">Unit</label>
-              <select class="form-control" name="unit" id="unit">
+              <select class="form-control" name="unitID" id="unitID">
                 
                 @foreach($unit as $data)
               <option value={{ $data->id }}>{{ $data->unit }}</option>
@@ -34,7 +34,7 @@
   
             <div class="col-md-4 mb-2">    
               <label class="col-form-label">Category</label>
-              <select class="form-control" name="categoryID" id="categoryID">
+              <select class="form-control" name="category_name" id="category_name">
                 
                 @foreach($category as $data)
               <option value={{ $data->id }}>{{ $data->category_name }}</option>
@@ -44,7 +44,7 @@
   
             <div class="col-md-4">
               <label class="col-form-label">Supplier</label>
-              <select class="form-control" name="supplierID" id="supplierID">
+              <select class="form-control" name="supplier_name" id="supplier_name">
                 @foreach($suplr as $data)
                <option value={{ $data->id }}>{{ $data->supplierName }}</option>
                 @endforeach
@@ -68,7 +68,7 @@
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
-              <input  class="form-control orig_price" name="selling_price" id="selling_price" readonly>
+              <input  class="form-control orig_price" name="selling_price" id="selling_price" required>
             </div>
 
             <div class="col-md-4">

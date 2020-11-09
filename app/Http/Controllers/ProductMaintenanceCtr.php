@@ -109,8 +109,8 @@ class ProductMaintenanceCtr extends Controller
         $product->_prefix = $this->getPrefix();
         $product->description = $request->input('description');
         $product->unitID = $request->input('unitID');
-        $product->categoryID = $request->input('categoryID');
-        $product->supplierID = $request->input('supplierID');
+        $product->categoryID = $request->input('category_name');
+        $product->supplierID = $request->input('supplier_name');
         $product->qty = $request->input('qty');
         $product->re_order = $request->input('re_order');
         $product->orig_price = $request->input('orig_price');

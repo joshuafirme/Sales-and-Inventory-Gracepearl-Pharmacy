@@ -8,14 +8,11 @@ $(document).ready(function(){
    
       processing: true,
       serverSide: true,
-      
      
-      ajax:{
-       url: "/maintenance/product",
-       data: {category:category}
-      }, 
-      
-       
+      ajax:"/maintenance/product",
+ 
+      data: {category:category}, 
+          
       columns:[       
        {data: 'productCode', name: 'productCode'},
        {data: 'description', name: 'description'},
@@ -148,27 +145,38 @@ $(document).ready(function(){
         
       }
 
-      $('#supplier_name').change(function(){
-        var id = $(this).val();
+
+      function computeMarkup(){
+        var id = $('#supplier_name').val();
         getPercentage(id);
-      });
-
-
-      $('#orig_price').keyup(function(){
         var orig_price = $(this).val();
         var percentage = $('#discount_hidden').val();
         console.log(percentage);
-        var markup = orig_price * percentage;
-        var discounted =  parseInt(orig_price) + markup;
-        $('#selling_price').val(discounted);
+        var diff = orig_price * percentage;
+        var markup =  parseFloat(orig_price) + diff;
+        return markup;
+      }
+
+      $('#orig_price').keyup(function(){
+        var id = $('#supplier_name').val();
+        getPercentage(id);
+        var orig_price = $(this).val();
+        var percentage = $('#discount_hidden').val();
+        console.log(percentage);
+        var diff = orig_price * percentage;
+        var markup =  parseFloat(orig_price) + diff;
+        $('#selling_price').val(markup);
       });
 
       $('#edit_orig_price').keyup(function(){
+        var id = $('#supplier_name').val();
+        getPercentage(id);
         var orig_price = $(this).val();
         var percentage = $('#discount_hidden').val();
-        var markup = orig_price * percentage;
-        var discounted =  parseInt(orig_price) + markup;
-        $('#edit_selling_price').val(discounted);
+        console.log(percentage);
+        var diff = orig_price * percentage;
+        var markup =  parseFloat(orig_price) + diff;
+        $('#edit_selling_price').val(markup);
       });
 
 //edit show

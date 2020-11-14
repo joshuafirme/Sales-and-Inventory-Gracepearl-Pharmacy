@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Input;
 class SupplierMaintenanceCtr extends Controller
 {
     private $table_name = "tblsupplier";
+    private $table_company = "tblcompany";
     /**
      * Display a listing of the resource.
      *
@@ -17,11 +18,13 @@ class SupplierMaintenanceCtr extends Controller
      */
     public function index()
     { 
+        $company = DB::table($this->table_company)->get();
         $suplr = DB::table($this->table_name)
-                                ->select("*", DB::raw('CONCAT(_prefix, id) AS supplierID'))
-                                ->paginate(10);
+        ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID, company_name'))
+        ->leftJoin($this->table_company, $this->table_company . '.id', '=', $this->table_name . '.companyID')
+        ->paginate(10);
 
-        return view('maintenance/supplier/supplier', ['suplr' => $suplr]);
+        return view('maintenance/supplier/supplier', ['suplr' => $suplr, 'company' => $company]);
     }
 
    
@@ -35,19 +38,11 @@ class SupplierMaintenanceCtr extends Controller
         $suplr->email = Input::get('email');
         $suplr->person = Input::get('person');
         $suplr->contact = Input::get('contact');
+        $suplr->companyID = Input::get('companyID');
         $suplr->save();
 
-        $id = $suplr->id;
-        $markup = Input::get('markup');
-        $this->storeToMarkupMaintenance($id, $markup);
-
     }
 
-    public function storeToMarkupMaintenance($supplierID, $markup){
-        DB::table('tblmarkup')->insert(
-            ['supplierID' => $supplierID, 'markup' => $markup]
-        );
-    }
 
     /**
      * Display the specified resource.
@@ -55,11 +50,7 @@ class SupplierMaintenanceCtr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $suplr = DB::select('SELECT * FROM ' . $this->table_name . ' WHERE id = ?', [$id]);
-        return view('maintenance/supplier/update_supplier', ['suplr' => $suplr]);
-    }
+  
 
     /**
      * Show the form for editing the specified resource.
@@ -69,7 +60,11 @@ class SupplierMaintenanceCtr extends Controller
      */
     public function edit($id)
     {
-        $suplr = DB::select('SELECT * FROM ' . $this->table_name . ' WHERE id = ?', [$id]);
+        $suplr = DB::table($this->table_name)
+        ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID, company_name'))
+        ->leftJoin($this->table_company, $this->table_company . '.id', '=', $this->table_name . '.companyID')
+        ->where('tblsupplier.id', $id)
+        ->get();
         return $suplr;
     }
 
@@ -89,14 +84,16 @@ class SupplierMaintenanceCtr extends Controller
         $suplr->email = Input::get('email');
         $suplr->person = Input::get('person');
         $suplr->contact = Input::get('contact');
+        $suplr->companyID = Input::get('company');
 
         DB::update('UPDATE '. $this->table_name .' SET supplierName = ?,
                                                         address = ?,
                                                         email= ?,
                                                         person = ?,
-                                                        contact = ?
+                                                        contact = ?,
+                                                        companyID = ?
                                                         WHERE id = ?',
-        [$suplr->supplierName, $suplr->address, $suplr->email, $suplr->person, $suplr->contact, $suplr->id]);
+        [$suplr->supplierName, $suplr->address, $suplr->email, $suplr->person, $suplr->contact, $suplr->companyID, $suplr->id]);
 
     
     }
@@ -111,15 +108,9 @@ class SupplierMaintenanceCtr extends Controller
     {
         $suplr = SupplierMaintenance::findOrFail($id);
         $suplr->delete();
-        $this->destroyMarkup($id);
         return $suplr;
     }
 
-    public function destroyMarkup($id)
-    {
-        $markup = DB::table('tblmarkup')->where('supplierID', '=', $id)->delete();
-        $markup->delete();
-    }
 
     
 

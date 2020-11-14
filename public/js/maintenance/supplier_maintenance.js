@@ -44,7 +44,7 @@ $(document).ready(function(){
       //edit show
       $(document).on('click', '#btn-edit-supplier', function(){
         var id = $(this).attr('supplier-id');
-        
+        $('#edit_company').val('');
         console.log(id);
       
         $.ajax({
@@ -62,6 +62,10 @@ $(document).ready(function(){
             $('#edit_email').val(response[0].email);
             $('#edit_person').val(response[0].person);
             $('#edit_contact').val(response[0].contact);
+            
+            $('#edit_company').text(response[0].company_name);
+            $('#edit_company').val(response[0].companyID);
+        
           }
          });
       }); 
@@ -74,7 +78,8 @@ $(document).ready(function(){
     var email = $('#edit_email').val();
     var person = $('#edit_person').val();
     var contact = $('#edit_contact').val();
-
+    var company = $('select[name=edit_company] option').filter(':selected').val();
+    console.log(company);
 
     $.ajaxSetup({
         headers: {
@@ -91,7 +96,8 @@ $(document).ready(function(){
           address:address,
           email:email,
           person:person,
-          contact:contact
+          contact:contact,
+          company:company
         },
 
         beforeSend:function(){
@@ -124,7 +130,7 @@ $(document).ready(function(){
     var email = $('#email').val();
     var person = $('#person').val();
     var contact = $('#contact').val();
-    var markup = $('#markup').val();
+    var company = $('#company').val();
 
     console.log(supplier_name);
     console.log(address);
@@ -146,7 +152,8 @@ $(document).ready(function(){
           person:person,
           email:email,
           contact:contact,
-          markup:markup
+          markup:markup,
+          company:company
         },
 
         beforeSend:function(){

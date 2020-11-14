@@ -90,32 +90,32 @@
 
         <div class="col-md-8 mb-2">
           <label class="col-form-label">Product Code</label>
-          <input type="text" class="form-control" name="product_code" id="product_code" readonly>
+          <input type="text" class="form-control" name="po_product_code" id="po_product_code" readonly>
         </div>
         
         <div class="col-md-8 mb-2">
           <label class="col-form-label">Description</label>
-          <input type="text" class="form-control" name="description" id="description" readonly>
+          <input type="text" class="form-control" name="po_description" id="po_description" readonly>
         </div>
 
         <div class="col-md-4">
           <label class="col-form-label">Stock</label>
-          <input type="text" class="form-control" name="qty" id="qty" readonly>
+          <input type="text" class="form-control" name="po_qty" id="po_qty" readonly>
         </div>
 
         <div class="col-md-4">
           <label class="col-form-label">Supplier</label>
-          <input type="text" class="form-control" name="qty" id="qty" readonly>
+          <input type="text" class="form-control" name="po_supplier" id="po_supplier" readonly>
         </div>
 
         <div class="col-md-4">
           <label class="col-form-label">Unit</label>
-          <input type="text" class="form-control" name="qty" id="qty" readonly>
+          <input type="text" class="form-control" name="po_unit" id="po_unit" readonly>
         </div>
 
         <div class="col-md-4">
           <label class="col-form-label">Qty Order</label>
-          <input type="number" class="form-control" name="qty_to_adjust" id="qty_to_adjust">
+          <input type="number" class="form-control" >
         </div>
 
       </div>
@@ -183,7 +183,7 @@
 
         
 
-        <div class="col-md-4 mb-2">
+        <div class="col-md-6 mb-2">
           <label class="col-form-label">Supplier Email</label>
           <input type="email" class="form-control" name="email" id="email" required>
         </div>
@@ -204,8 +204,7 @@
           <label class="label text-success">Product added</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
-        <button style="color: #fff" type="submit" class="btn btn-sm btn-success mr-4" id="btn-add-order">Send Order <i class="fas fa-paper-plane"></i></button>
+        <button style="color: #fff" type="submit" class="btn btn-sm btn-success mr-1" id="btn-add-order">Send Order <i class="fas fa-paper-plane"></i></button>
       </div>
     </div>
   </div>

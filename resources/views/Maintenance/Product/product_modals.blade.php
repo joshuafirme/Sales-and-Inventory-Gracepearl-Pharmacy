@@ -116,8 +116,8 @@
           </div>
         <div class="modal-footer">
           <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-          <button class="btn btn-sm btn-default cancel-delete" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-sm btn-danger" type="button" name="ok_button" id="product_ok_button">Yes</button>
+          <button class="btn btn-sm btn-outline-dark" type="button" name="ok_button" id="product_ok_button">Yes</button>
+        <button class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
 
         </div>
       </div>

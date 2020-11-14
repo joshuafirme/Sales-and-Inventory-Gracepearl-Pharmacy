@@ -60,11 +60,11 @@ Route::post('/maintenance/unit/edit/{id}', 'UnitMaintenanceCtr@edit');
 Route::post('/maintenance/unit/update/{id}', 'UnitMaintenanceCtr@update');
 Route::delete('/maintenance/unit/{id}', 'UnitMaintenanceCtr@destroy');
 
-//Markup
-Route::resource('/maintenance/markup', 'MarkupMaintenanceCtr');
-Route::post('/maintenance/markup/edit/{id}', 'MarkupMaintenanceCtr@edit');
-Route::post('/maintenance/markup/update/{id}', 'MarkupMaintenanceCtr@update');
-Route::post('/maintenance/markup/getSupplierMarkup/{id}', 'MarkupMaintenanceCtr@getSupplierMarkup');
+//Company
+Route::resource('/maintenance/company', 'CompanyMaintenanceCtr');
+Route::post('/maintenance/company/edit/{id}', 'CompanyMaintenanceCtr@edit');
+Route::post('/maintenance/company/update/{id}', 'CompanyMaintenanceCtr@update');
+Route::delete('/maintenance/company/destroy/{id}', 'CompanyMaintenanceCtr@destroy');
 
 //Discount
 Route::resource('/maintenance/discount', 'DiscountCtr');
@@ -81,7 +81,7 @@ Route::post('/inventory/stockadjustment/adjust', 'StockAdjustmentCtr@adjust');
 Route::resource('/inventory/purchaseorder', 'PurchaseOrderCtr');
 //Notification
 Route::resource('/inventory/notification', 'NotificationCtr');
-Route::get('/inventory/notification/expired', 'NotificationCtr@expiredProduct');
+Route::get('/inventory/notification/expired', 'NotificationCtr@showExpired');
 
 Auth::routes();
 

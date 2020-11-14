@@ -63,6 +63,7 @@
                                 <th>Email</th>
                                 <th>Person</th>
                                 <th>Contact</th>
+                                <th>Company</th>
                                 <th style="width: 12%;">Action</th>
                             </tr>
                         </thead>
@@ -76,6 +77,7 @@
                               <td>{{ $data->email }}</td>
                               <td>{{ $data->person }}</td>
                               <td>{{ $data->contact }}</td>  
+                              <td>{{ $data->company_name }}</td>  
                               <td>
                                <a class="btn" id="btn-edit-supplier" supplier-id="{{ $data->id }}" data-toggle="modal" data-target="#editSupplierModal"><i class="fa fa-edit"></i></a>
                           

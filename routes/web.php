@@ -39,6 +39,7 @@ Route::post('/maintenance/supplier/update', 'SupplierMaintenanceCtr@update');
 Route::post('/maintenance/supplier/edit/{id}', 'SupplierMaintenanceCtr@edit');
 Route::delete('/maintenance/supplier/{supplierID}', 'SupplierMaintenanceCtr@destroy');
 Route::post('/maintenance/supplier/action', 'SupplierMaintenanceCtr@action');
+Route::post('/getCompanyMarkup', 'SupplierMaintenanceCtr@getCompanyMarkup');
 
 // Product
 Route::resource('/maintenance/product', 'ProductMaintenanceCtr');
@@ -81,7 +82,7 @@ Route::post('/inventory/stockadjustment/adjust', 'StockAdjustmentCtr@adjust');
 Route::resource('/inventory/purchaseorder', 'PurchaseOrderCtr');
 //Notification
 Route::resource('/inventory/notification', 'NotificationCtr');
-Route::get('/inventory/notification/expired', 'NotificationCtr@showExpired');
+Route::get('/getAllNotif', 'NotificationCtr@getAllNotif');
 
 Auth::routes();
 

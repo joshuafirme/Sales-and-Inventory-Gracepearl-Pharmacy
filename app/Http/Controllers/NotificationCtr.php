@@ -20,7 +20,7 @@ class NotificationCtr extends Controller
         $expired_product = $this->getAllExpired(); 
         $reorder_product = $this->getAllReOrder(); 
 
-        //count 
+        //count notifs
         $near_expiry_count = $near_expiry_product->count();
         $expired_count = $expired_product->count();
         $reorder_count = $reorder_product->count();
@@ -35,6 +35,26 @@ class NotificationCtr extends Controller
             'reorderCount' => $reorder_count,             
             ]);
     }
+
+
+    public function getAllNotif(){
+        $near_expiry_product = $this->getAllNearExpiry(); 
+        $expired_product = $this->getAllExpired(); 
+        $reorder_product = $this->getAllReOrder(); 
+
+        //count 
+        $near_expiry_count = $near_expiry_product->count();
+        $expired_count = $expired_product->count();
+        $reorder_count = $reorder_product->count();
+
+        $sanaAll = $near_expiry_count + $expired_count + $reorder_count;
+        $counts = $near_expiry_count .' '. $expired_count .' '. $reorder_count .' '. $sanaAll;
+        $arr = explode(' ', $counts);
+        
+        return $arr;
+    }
+
+  
 
     public function getAllNearExpiry()
     {

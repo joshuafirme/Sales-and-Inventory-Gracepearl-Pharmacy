@@ -39,7 +39,7 @@ Route::post('/maintenance/supplier/update', 'SupplierMaintenanceCtr@update');
 Route::post('/maintenance/supplier/edit/{id}', 'SupplierMaintenanceCtr@edit');
 Route::delete('/maintenance/supplier/{supplierID}', 'SupplierMaintenanceCtr@destroy');
 Route::post('/maintenance/supplier/action', 'SupplierMaintenanceCtr@action');
-Route::post('/getCompanyMarkup', 'SupplierMaintenanceCtr@getCompanyMarkup');
+Route::post('/getCompanyMarkup/{id}', 'SupplierMaintenanceCtr@getCompanyMarkup');
 
 // Product
 Route::resource('/maintenance/product', 'ProductMaintenanceCtr');
@@ -53,7 +53,6 @@ Route::get('/maintenance/product/filterByCategory', 'ProductMaintenanceCtr@filte
 // PDF Product
 Route::get('/maintenance/product/pdf/{filter_category}', 'ProductMaintenanceCtr@pdf');
 Route::post('/maintenance/product/getCategoryParam/{category_param}', 'ProductMaintenanceCtr@getCategoryParam');
-Route::get('my-demo-mail','TestController@myDemoMail');
 
 //Unit 
 Route::resource('/maintenance/unit', 'UnitMaintenanceCtr');
@@ -80,6 +79,11 @@ Route::post('/inventory/stockadjustment/adjust', 'StockAdjustmentCtr@adjust');
 
 //Purchase Order
 Route::resource('/inventory/purchaseorder', 'PurchaseOrderCtr');
+Route::post('/inventory/purchaseorder/show/{product_code}', 'PurchaseOrderCtr@show');
+Route::post('/inventory/purchaseorder/addToOrder', 'PurchaseOrderCtr@addToOrder');
+Route::get('/inventory/order/print', 'PurchaseOrderCtr@pdf');
+Route::get('/inventory/order/downloadOrderPDF', 'PurchaseOrderCtr@downloadOrderPDF');
+
 //Notification
 Route::resource('/inventory/notification', 'NotificationCtr');
 Route::get('/getAllNotif', 'NotificationCtr@getAllNotif');

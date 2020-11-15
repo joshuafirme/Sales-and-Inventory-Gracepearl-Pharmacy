@@ -16,8 +16,11 @@ class PurchaseOrderCtr extends Controller
 
     public function index(Request $request)
     {
+        //session()->forget('orders');
         $category_param = $request->category;
-        $product = $this->getAllProduct(); 
+        $product = $this->getAllReorder(); 
+        $reorder_count = $product->count(); 
+
         $unit = DB::table($this->table_unit)->get();
         $category = DB::table($this->table_cat)->get();
         $suplr = DB::table($this->table_suplr)->get();
@@ -27,7 +30,7 @@ class PurchaseOrderCtr extends Controller
            
                 return datatables()->of($product)
                 ->addColumn('action', function($product){
-                    $button = ' <a class="btn" id="btn-reorder" product-code="'. $product->id .'" data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>';
+                    $button = ' <a class="btn" id="btn-add-order" product-code="'. $product->id .'" data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>';
                
                     return $button;
                 })
@@ -35,12 +38,19 @@ class PurchaseOrderCtr extends Controller
                 ->make(true);
            
         }
-        return view('/inventory/purchase_order', ['product' => $product, 'unit' => $unit, 'category' => $category, 'suplr' => $suplr]);
+        return view('/inventory/purchase_order', 
+            [
+            'product' => $product,
+            'unit' => $unit,
+            'category' => $category,
+            'suplr' => $suplr,
+            'reorderCount' => $reorder_count
+            ]);
     }
 
-    public function getAllProduct(){
+    public function getAllReorder(){
         $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName'))
+        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
@@ -50,4 +60,151 @@ class PurchaseOrderCtr extends Controller
 
         return $product;
     }
+
+    public function show($product_code){
+        $product = DB::table($this->table_prod)
+        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name'))
+        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
+        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+        ->where('tblproduct.id', $product_code)
+        ->get();
+ 
+
+        return $product;
+    }
+
+    public function addToOrder(){
+
+        $product_code = Input::get('product_code');
+        $description = Input::get('description');
+        $category = Input::get('category');
+        $unit = Input::get('unit');
+        $supplier = Input::get('supplier');
+        $qty_order = Input::get('qty_order');
+        $price = Input::get('price');
+        $amount = Input::get('amount');
+
+        $orders = session()->get('orders');
+        if(!$orders) {
+            $orders = [
+                $product_code => [
+                        "description" => $description,
+                        "category" => $category,
+                        "unit" => $unit,
+                        "supplier" => $supplier,
+                        "qty_order" => $qty_order,
+                        "price" => $price,   
+                        "amount" => $amount
+                    ]
+            ];
+            
+            session()->put('orders', $orders);
+            return redirect()->back()->with('success', 'Product added to order successfully!');
+        }
+
+        if(isset($orders[$product_code])) {
+            $orders[$product_code]['qty_order'] += $qty_order;
+            session()->put('orders', $orders);
+            return redirect()->back()->with('success', 'Product added to orders successfully!');
+        }
+        
+        $orders[$product_code] = [
+    
+            "description" => $description,
+            "category" => $category,
+            "unit" => $unit,
+            "supplier" => $supplier,
+            "qty_order" => $qty_order,
+            "price" => $price,   
+            "amount" => $amount
+        ];
+    
+        session()->put('orders', $orders);
+
+
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
+}
+
+public function pdf(){
+
+    $output = $this->convertProductDataToHTML();
+
+    $pdf = \App::make('dompdf.wrapper');
+    $pdf->loadHTML($output);
+    $pdf->setPaper('A4', 'landscape');
+
+    return $pdf->stream();
+}
+
+public function downloadOrderPDF(){
+
+    $output = $this->convertProductDataToHTML();
+
+    $pdf = \App::make('dompdf.wrapper');
+    $pdf->loadHTML($output);
+    $pdf->setPaper('A4', 'landscape');
+
+    return $pdf->download();
+}
+
+public function convertProductDataToHTML(){
+
+    $output = '
+    <div style="width:100%">
+    <p style="text-align:right;">Date: '. $this->getDate() .'</p>
+    
+    <h2 style="text-align:center;">Request Order</h2>
+
+    <table width="100%" style="border-collapse:collapse; border: 1px solid;">
+                  
+    <thead>
+      <tr>
+          <th style="border: 1px solid;">Product Code</th>
+          <th style="border: 1px solid;">Description</th>     
+          <th style="border: 1px solid;">Category</th>
+          <th style="border: 1px solid;">Unit</th>
+          <th style="border: 1px solid;">Supplier</th>
+          <th style="border: 1px solid;">Unit Price</th>   
+          <th style="border: 1px solid;">Qty Order</th>   
+          <th style="border: 1px solid;">Amount</th>   
+  </thead>
+  <tbody>
+    ';
+    $total_amount = 0;
+    $sub_total = 0;
+    foreach (session()->get('orders') as $product_code => $data) {
+        
+    $sub_total = $data['qty_order'] * $data['price'];
+    $total_amount += $sub_total;
+
+    $output .='
+    <tr>                             
+    <td style="border: 1px solid; padding:10px;">'. $product_code .'</td>
+    <td style="border: 1px solid; padding:10px;">'. $data['description'] .'</td>
+    <td style="border: 1px solid; padding:10px;">'. $data['category'] .'</td> 
+    <td style="border: 1px solid; padding:10px;">'. $data['unit'] .'</td>  
+    <td style="border: 1px solid; padding:10px;">'. $data['supplier'] .'</td>  
+    <td style="border: 1px solid; padding:10px;">'. $data['price'] .'</td>  
+    <td style="border: 1px solid; padding:10px;">'. $data['qty_order'] .'</td>  
+    <td style="border: 1px solid; padding:10px;">'. number_format($sub_total) .' PhP</td>              
+  </tr>
+  ';
+
+}
+      
+ $output .='
+   </tbody>
+  </table>
+  <p style="text-align:right;">Total: '. number_format($total_amount) .' PhP</p>
+  </div>';
+
+    return $output;
+}
+
+public function getDate(){
+    $date = date('m-d-yy');
+    return $date;
+}
+
 }

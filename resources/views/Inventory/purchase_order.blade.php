@@ -24,14 +24,24 @@
         <div class="row">
         
           <div class="col-sm-6  col-lg-12 mb-3">
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal"><span class='fas fa-cart-arrow-down'></span> Purchase Orders  <span class="badge badge-warning"> 16</span></button> 
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal"><span class='fas fa-cart-arrow-down' id="btn-show-orders"></span> Request Orders <span class="badge badge-warning"> 16</span></button>
+             
             </div>
 
           <div class="col-md-12 col-lg-12 mt-2">
   
           <div class="card">
             <div class="card-body">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
 
+                <li class="nav-item">
+                  <a class="nav-link  active" id="reorder-tab" data-toggle="tab" href="#reordertab" role="tab" aria-controls="contact" aria-selected="true">Reorder Products
+                  <span class="badge badge-pill badge-success">{{ $reorderCount }}</span>
+                  </a>
+              </li>
+             
+                 
+              </ul>
                 <div class="form-group row">
             
                     <label class="m-2 ml-2">Filter By:</label>
@@ -53,10 +63,11 @@
                         <tr>
                             <th>Product Code</th>
                             <th>Description</th> 
+                            <th>Unit</th>      
+                            <th>Category</th>      
                             <th>Supplier</th>          
                             <th>Stock</th>                                
-                            <th>Re Order</th>             
-                            <th>Expiration Date</th>
+                            <th>Reorder Point</th>        
                             <th>Action</th>
                          
                         </tr>

@@ -111,7 +111,25 @@ class SupplierMaintenanceCtr extends Controller
         return $suplr;
     }
 
+    public function getCompanyMarkup($id)
+    {
+        $suplr = DB::table($this->table_name)
+        ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID, markup'))
+        ->leftJoin($this->table_company, $this->table_company . '.id', '=', $this->table_name . '.companyID')
+        ->where('tblsupplier.companyID', $id)
+        ->get();
+        return $suplr;
+    }
 
+    public function getCompanyID($id)
+    {
+        $suplr = DB::table($this->table_name)
+        ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID, markup'))
+        ->leftJoin($this->table_company, $this->table_company . '.id', '=', $this->table_name . '.companyID')
+        ->where('tblsupplier.companyID', $id)
+        ->get();
+        return $suplr;
+    }
     
 
     public function getDate(){

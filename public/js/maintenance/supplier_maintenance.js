@@ -64,6 +64,7 @@ $(document).ready(function(){
             $('#edit_contact').val(response[0].contact);
             
             $('#edit_company').text(response[0].company_name);
+            $(".edit_company option[value="+response[0].companyID+"]").remove();
             $('#edit_company').val(response[0].companyID);
         
           }

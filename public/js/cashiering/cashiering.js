@@ -69,10 +69,16 @@ $(document).ready(function(){
               $.ajax({
                 url:"/sales/cashiering/addToCart",
                 type:"GET",
-                data:{product_code:product_code, description:description, qty_order:qty_order, price:price, total:total},
+                data:{
+                    product_code:product_code, 
+                    description:description,
+                    qty_order:qty_order, 
+                    price:price,
+                    total:total
+                  },
+
                 success:function(){
            
-                  $("#cashiering-table" ).load( "cashiering #cashiering-table" );
                   $('#cashiering_search').val('');
                   $('#product_code').val('');
                   $('#description').val('');
@@ -81,9 +87,12 @@ $(document).ready(function(){
                   $('#qty_order').val('');
                   $('#total').val(''); 
 
+                  $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+
                   var total_hidden = $('#total_hidden').val();
                   console.log(total_hidden);
                   $('#total-amount-due').val(total_hidden);
+              
                 }
               });        
         }); 

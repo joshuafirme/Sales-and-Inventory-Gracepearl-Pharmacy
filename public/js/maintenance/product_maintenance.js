@@ -133,9 +133,9 @@ $(document).ready(function(){
 
      
 
-      function getPercentage(id){
+      function getMarkup(id){
         $.ajax({
-          url:"/maintenance/markup/getSupplierMarkup/"+id,
+          url:"/getCompanyMarkup/"+id,
           type:"POST",
           success:function(response){
             console.log(response);
@@ -146,20 +146,10 @@ $(document).ready(function(){
       }
 
 
-      function computeMarkup(){
-        var id = $('#supplier_name').val();
-        getPercentage(id);
-        var orig_price = $(this).val();
-        var percentage = $('#discount_hidden').val();
-        console.log(percentage);
-        var diff = orig_price * percentage;
-        var markup =  parseFloat(orig_price) + diff;
-        return markup;
-      }
-
       $('#orig_price').keyup(function(){
         var id = $('#supplier_name').val();
-        getPercentage(id);
+        console.log(id);
+        getMarkup(id);
         var orig_price = $(this).val();
         var percentage = $('#discount_hidden').val();
         console.log(percentage);
@@ -170,7 +160,7 @@ $(document).ready(function(){
 
       $('#edit_orig_price').keyup(function(){
         var id = $('#supplier_name').val();
-        getPercentage(id);
+        getMarkup(id);
         var orig_price = $(this).val();
         var percentage = $('#discount_hidden').val();
         console.log(percentage);

@@ -36,14 +36,14 @@
         <div class="row">
 
           <div class="col-md-12 col-lg-12 mt-3">
-            <div class="card">
+            <div class="card" style="width: 500px">
                 <div class="card-body">
                     <table class="table table-hover" id="unit-table">
                         @if(count($unit) > 0)
                         <thead>
                             <tr>
                                 <th>Unit</th>
-                                <th width="20%">Action</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
            

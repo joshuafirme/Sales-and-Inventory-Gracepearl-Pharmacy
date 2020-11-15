@@ -12,7 +12,6 @@
                     </div>
                     <div class="modal-body">
 
-                      <div class="container-fluid">
                         <div class="row">
 
                           {{ csrf_field() }}
@@ -61,8 +60,7 @@
                 
                               </select>
                             </div>
-
-                        </div>
+                            
                       </div>         
                       
 
@@ -81,7 +79,7 @@
 
               <!-- edit modal -->
               <div class="modal fade" id="editSupplierModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog " role="document">
+                <div class="modal-dialog modal-lg" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="exampleModalLabel">Edit Supplier</h5>
@@ -96,41 +94,55 @@
 
                         <input type="hidden" id="edit_supplier_id">
 
-                        <div class="form-group">
-                          <label class="col-form-label">Supplier Name</label>
-                          <input type="text" class="form-control" name="supplierName" id="edit_supplier_name" required>
-                        </div>
+                        <div class="row">
+
+                          <div class="col-md-4">
+                            <label class="col-form-label">Supplier Name</label>
+                            <input type="text" class="form-control" name="supplier_name" id="edit_supplier_name" required>
+                          </div>
               
-                        <div class="form-group">
-                          <label class="col-form-label">Address</label>
-                          <textarea class="form-control" name="address" id="edit_address" required></textarea>
+                  
+                          <div class="col-md-4 mb-2">   
+                              <label class="col-form-label">Address</label>
+                              <input class="form-control" name="address" id="edit_address" required>
+                           
+                           </div>
+    
+                           <div class="col-md-4 mb-2">  
+                            <div class="form-group">
+                              <label class="col-form-label">Email</label>
+                              <input type="email" class="form-control" name="address" id="edit_email" required>
+                            </div>
+                          </div>
+              
+                            <div class="col-md-4 mb-2">  
+                            <div class="form-group">
+                              <label class="col-form-label">Person</label>
+                              <input type="text" class="form-control" name="person" id="edit_person" required>
+                            </div>
+                          </div>
+                  
+                            <div class="col-md-4 mb-2">  
+                            <div class="form-group">
+                              <label class="col-form-label">Contact</label>
+                              <input type="text" class="form-control" name="contact" id="edit_contact" required>
+                            </div>
+                          </div>
+                          
+                          <div class="col-md-4 mb-2">    
+                            <label class="col-form-label">Company</label>
+                            <select class="form-control edit_company" name="edit_company">
+                              <option  id="edit_company" selected></option>
+                              @foreach($company as $data)
+                            <option value={{ $data->id }}>{{ $data->company_name }}</option>
+                              @endforeach
+              
+                            </select>
+                          </div>
+                          
+
                         </div>
 
-                        <div class="form-group">
-                          <label class="col-form-label">Email</label>
-                          <textarea class="form-control" name="address" id="edit_email" required></textarea>
-                        </div>
-              
-                        <div class="form-group">
-                          <label class="col-form-label">Person</label>
-                          <input type="email" class="form-control" name="person" id="edit_person" required>
-                        </div>
-              
-                        <div class="form-group">
-                          <label class="col-form-label">Contact</label>
-                          <input type="text" class="form-control" name="contact" id="edit_contact" required>
-                        </div> 
-                        
-                        <div class="col-md-4 mb-2">    
-                          <label class="col-form-label">Company</label>
-                          <select class="form-control edit_company" name="edit_company">
-                            <option  id="edit_company" selected></option>
-                            @foreach($company as $data)
-                          <option value={{ $data->id }}>{{ $data->company_name }}</option>
-                            @endforeach
-            
-                          </select>
-                        </div>
                         
                     </div>
                     <div class="modal-footer">

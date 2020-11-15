@@ -36,7 +36,7 @@
         <div class="row">
 
           <div class="col-md-12 col-lg-12 mt-3">
-            <div class="card">
+            <div class="card" style="width: 500px">
                 <div class="card-body">
                     <p class="card-title"></p>
                     <table class="table table-hover" id="category-table">
@@ -44,7 +44,7 @@
                         <thead>
                             <tr>
                                 <th>Category Name</th>
-                                <th width="20%">Action</th>
+                                <th >Action</th>
                             </tr>
                         </thead>
            

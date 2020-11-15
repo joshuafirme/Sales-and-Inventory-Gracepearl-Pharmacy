@@ -12,7 +12,7 @@
       <div class="modal-body">
 
         <form action="{{ action('ProductMaintenanceCtr@store') }}" method="POST" enctype="multipart/form-data">
-        <div class="container-fluid">
+
           <div class="row">
             {{ csrf_field() }}
 
@@ -58,7 +58,7 @@
             </div>
   
             <div class="col-md-4">
-              <label class="col-form-label">Re-Order Point</label>
+              <label class="col-form-label">Reorder Point</label>
               <input type="number" class="form-control" name="re_order" id="re_order" required>
             </div>
   
@@ -84,13 +84,13 @@
             </div> 
             
           </div>
-        </div>  
+       
 
       </div>
       <div class="modal-footer">
 
               <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-sm btn-primary mr-4">Save</button>
+              <button type="submit" class="btn btn-sm btn-primary">Save</button>
       </div>
     </form>
     </div>
@@ -138,18 +138,17 @@
       </div>
       <div class="modal-body">
 
-        <div class="container-fluid">
           <div class="row">
             {{ csrf_field() }}
 
             <input type="hidden" id="product_code_hidden">
 
-            <div class="col-md-8 mb-2">
+            <div class="col-md-4 mb-2">
               <label class="col-form-label">Product Code</label>
               <input type="text" class="form-control"  name="product_code" id="product_code" readonly>
             </div>
           
-            <div class="col-md-8">
+            <div class="col-md-4">
               <label class="col-form-label">Description</label>
               <input type="text" class="form-control"  name="description" id="edit_description" required>
             </div>
@@ -196,7 +195,7 @@
             </div>
   
             <div class="col-md-4">
-              <label class="col-form-label">Re-Order Point</label>
+              <label class="col-form-label">Reorder Point</label>
               <input type="number" class="form-control" name="re_order" id="edit_re_order" required>
             </div>
   
@@ -225,11 +224,6 @@
             </div> 
 
            
-
-       
-   
-            
-          </div>
         </div>  
 
       </div>
@@ -240,7 +234,7 @@
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
               <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" id="update-product-maintenance" class="btn btn-sm btn-success mr-4">Update</button> 
+              <button type="submit" id="update-product-maintenance" class="btn btn-sm btn-success">Update</button> 
       </div>
 
     </div>

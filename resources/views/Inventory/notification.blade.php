@@ -19,15 +19,11 @@
         </div>
         @endif
 
-        <div class="row">
 
-          <div class="col-md-12 col-lg-12 mt-2">
-
-                <div class="container-fluid">
                      
                        <div class="row">
 
-                        <div class="col-md-12 col-lg-12">
+                        <div class="col-md-12 col-lg-12 mt-2">
                           <div class="card">
                               <div class="card-body">
                                   <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -133,8 +129,7 @@
                                                 <th>Category</th>    
                                                 <th>Unit</th>   
                                                 <th>Quantity</th>  
-                                                <th>Reorder Point</th>                                                    
-                                                <th>Expiration Date</th>
+                                                <th>Reorder Point</th>  
                                               </tr>
                                           </thead>
                                                  
@@ -146,8 +141,7 @@
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>{{ $data->unit }}</td>      
                                                 <td>{{ $data->qty }}</td>      
-                                                <td>{{ $data->re_order }}</td>                                           
-                                                <td>{{ $data->exp_date }}</td>
+                                                <td>{{ $data->re_order }}</td>   
                                            
                                                 
                                               </tr>
@@ -165,17 +159,13 @@
                                       </div>
                                   </div>
                               </div>
-                          </div>
-                      </div>
+                          </div> 
                     
                       
                       </div>
                 </div>
 
-                </div>
-                
-            </div>
-        </div>
+           
 
         <!-- /.row (main row) -->
         

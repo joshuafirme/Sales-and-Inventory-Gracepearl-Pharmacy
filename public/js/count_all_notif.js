@@ -1,9 +1,10 @@
 
 $(document).ready(function(){
- 
+    getAllNotif();
+
     setInterval(function(){
         getAllNotif();
-    },1000);
+    },300000);
      
 
       function getAllNotif(){

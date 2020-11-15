@@ -174,9 +174,9 @@
                           <td>
                             <a class="btn" id="void" data-toggle="modal" data-target="#voidModal"><u style="color: #303E9F;">Void</u></a>
                           </td>
-                      </tr>
-                      <input type="hidden" id="total_hidden" value={{$total}}>
+                      </tr>                    
                       @endforeach
+                      <input type="hidden" id="total_hidden" value={{ $total }}>
                       @endif                 
                   </tbody>
              

@@ -8,11 +8,12 @@ use App\Mail\MyMail;
 
 class MainCtr extends Controller
 {
-    public function myDemoMail()
+    public function sendMail()
     {
-    	$myEmail = 'rhealyncatapang@gmail.com';
-    	Mail::to($myEmail)->send(new MyMail());
+    	$data = array('name'=>"Gracepearl Testing",
+                    'name'=>"Gracepearl Testing");
 
-    	dd("Mail Send Successfully");
+            Mail::to('rhealyncatapang@gmail.com')
+                    ->send(new MyMail($data));
     }
 }

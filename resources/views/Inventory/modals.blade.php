@@ -215,17 +215,8 @@
 
         <div class="col-md-6 mb-2">
           <label class="col-form-label">Supplier's Email</label>
-          <input type="email" class="form-control" name="email" id="email" required>
+          <input type="email" class="form-control" name="email" id="supplier_email" required>
         </div>
-        
-    
-
-        <div class="col-md-4">
-          <label class="col-form-label">Upload Order</label>
-          <input type="file" name="printed_order" id="printed_order" required>
-        </div>
-
-      </div>
     
 
       </div>
@@ -234,7 +225,9 @@
           <label class="label text-success">Order sent successfully</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-        <button style="color: #fff" type="submit" class="btn btn-sm btn-success" id="btn-send-order">Send Order <i class="fas fa-paper-plane"></i></button>
+
+        <button type="submit" style="color: #fff" class="btn btn-sm btn-success" id="btn-send-order">Send Order <i class="fas fa-paper-plane"></i></button>
+     
       </div>
     </div>
   </div>

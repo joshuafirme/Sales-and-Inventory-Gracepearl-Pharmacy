@@ -83,6 +83,7 @@ Route::post('/inventory/purchaseorder/show/{product_code}', 'PurchaseOrderCtr@sh
 Route::post('/inventory/purchaseorder/addToOrder', 'PurchaseOrderCtr@addToOrder');
 Route::get('/inventory/order/print', 'PurchaseOrderCtr@pdf');
 Route::get('/inventory/order/downloadOrderPDF', 'PurchaseOrderCtr@downloadOrderPDF');
+Route::get('/sendorder', 'PurchaseOrderCtr@sendMail');
 
 //Notification
 Route::resource('/inventory/notification', 'NotificationCtr');

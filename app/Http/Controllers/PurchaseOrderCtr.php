@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Mail;
+use App\Mail\MyMail;
+
 use App\ProductMaintenance;
 
 class PurchaseOrderCtr extends Controller
@@ -47,6 +50,15 @@ class PurchaseOrderCtr extends Controller
             'reorderCount' => $reorder_count
             ]);
     }
+
+
+    public function sendMail(){
+        $data = $this->convertProductDataToHTML();
+
+        Mail::to('joshuafirme1@gmail.com')
+                ->send(new MyMail($data));
+    }
+
 
     public function getAllReorder(){
         $product = DB::table($this->table_prod)
@@ -164,7 +176,6 @@ public function convertProductDataToHTML(){
           <th style="border: 1px solid;">Description</th>     
           <th style="border: 1px solid;">Category</th>
           <th style="border: 1px solid;">Unit</th>
-          <th style="border: 1px solid;">Supplier</th>
           <th style="border: 1px solid;">Unit Price</th>   
           <th style="border: 1px solid;">Qty Order</th>   
           <th style="border: 1px solid;">Amount</th>   
@@ -184,7 +195,6 @@ public function convertProductDataToHTML(){
     <td style="border: 1px solid; padding:10px;">'. $data['description'] .'</td>
     <td style="border: 1px solid; padding:10px;">'. $data['category'] .'</td> 
     <td style="border: 1px solid; padding:10px;">'. $data['unit'] .'</td>  
-    <td style="border: 1px solid; padding:10px;">'. $data['supplier'] .'</td>  
     <td style="border: 1px solid; padding:10px;">'. $data['price'] .'</td>  
     <td style="border: 1px solid; padding:10px;">'. $data['qty_order'] .'</td>  
     <td style="border: 1px solid; padding:10px;">'. number_format($sub_total) .' PhP</td>              

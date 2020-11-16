@@ -63,8 +63,7 @@ $(document).ready(function(){
             var description  = $('#description').val();
             var qty_order  = $('#qty_order').val();
             var price  = $('#price').val();
-            var total  = $('#total').val();   
-      //      $('#total-amount-due').val($('#total-amount').text());                         
+            var total  = $('#total').val();                         
 
               $.ajax({
                 url:"/sales/cashiering/addToCart",
@@ -94,8 +93,12 @@ $(document).ready(function(){
                   $('#total-amount-due').val(total_hidden);
               
                 }
-              });        
+              });     
+              setTimeout(function(){
+                $('#total-amount-due').val();
+              },2000);
         }); 
+       
 
         //compute change
           $('#tendered').keyup(function(){

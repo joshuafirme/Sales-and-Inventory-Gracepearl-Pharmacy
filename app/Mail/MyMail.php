@@ -11,14 +11,15 @@ class MyMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $data;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($data)
     {
-        //
+        $this->data = $data;
     }
 
     /**
@@ -28,10 +29,12 @@ class MyMail extends Mailable
      */
     public function build()
     {
-        return $this->view('myDemoMail')
-        ->attach(public_path('pdf/sample.pdf'), [
-             'as' => 'sample.pdf',
-             'mime' => 'application/pdf',
-        ]);
+        return $this->from('gracepearltesting@gmail.com')
+        ->subject('Request Order')
+        ->view('send_mail')->with('data', $this->data); 
+        
     }
+
+  /* 
+       */
 }

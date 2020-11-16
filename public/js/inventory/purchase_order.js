@@ -66,11 +66,13 @@ $(document).ready(function(){
       var unit_price = $('#po_price').val();
       var amount = qty * unit_price;
       $('#po_amount').text('₱'+amount);
+      
     
     });
 
     //add to order
     $(document).on('click', '#btn-add-to-order', function(){
+
       var product_code = $('#po_product_code').val();
       var description = $('#po_description').val();
       var category = $('#po_category').val();
@@ -107,20 +109,20 @@ $(document).ready(function(){
                     setTimeout(function(){
                       $('.update-success-validation').fadeOut('slow');
            
-                     
+       
                     },2000);
                   
                   },1000);
                 }
               
          });
+      
     
     });
 
     //show orders           
     $('#btn-show-orders').click(function(){
-      $( "#order-table" ).load( "purchaseorder #order-table" );
-
+    
     });
 
     //print pdf
@@ -142,7 +144,31 @@ $(document).ready(function(){
     //send order
     $('#btn-send-order').click(function(){
      
-    
+      $.ajax({
+        url:"/sendorder",
+        type:"GET",
+     
+        beforeSend:function(){
+          $('#btn-send-order').text('Sending...');
+          $('.loader').css('display', 'inline');
+        },
+            success:function(response){
+             
+              setTimeout(function(){
+                $('.update-success-validation').css('display', 'inline');
+                $('#btn-send-order').text('Send Order');
+                $('.loader').css('display', 'none');
+                setTimeout(function(){
+                  $('.update-success-validation').fadeOut('slow');
+       
+   
+                },2000);
+              
+              },1000);
+
+              }
+            
+       });
     });
 
 

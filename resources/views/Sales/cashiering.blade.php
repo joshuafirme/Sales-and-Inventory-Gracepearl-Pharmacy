@@ -108,13 +108,13 @@
                         <div class="row amount-due">
                        
                             <label>Total Amout Due</label>
-                              <input type="text" class="form-control" id="total-amount-due" readonly>
+                              <input type="text" class="form-control" id="total-amount-due" value="₱0" readonly>
                   
                               <label>Tentered</label>
                               <input type="text" class="form-control" id="tendered">
 
                               <label>Change</label>
-                              <input type="text" class="form-control" id="change" readonly>
+                              <input type="text" class="form-control" id="change" value="₱0" readonly>
 
                               <div class="form-check mt-1">
                                 <input type="checkbox" class="form-check-input chk-senior" id="exampleCheck1">
@@ -166,15 +166,15 @@
                         <td>{{ $details['qty'] }}</td>
                         <?php 
                         $sub_total = $details['qty'] * $details['price'];
-                        
-                        $total += $sub_total;
                          ?> 
                         <td>{{ $sub_total }}</td>
                         <td></td>  
                           <td>
                             <a class="btn" id="void" data-toggle="modal" data-target="#voidModal"><u style="color: #303E9F;">Void</u></a>
                           </td>
-                      </tr>                    
+                      </tr>  
+                      
+                      <?php $total += $sub_total; ?>                  
                       @endforeach
                       <input type="hidden" id="total_hidden" value={{ $total }}>
                       @endif                 

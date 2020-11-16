@@ -24,7 +24,7 @@
         <div class="row">
         
           <div class="col-sm-6  col-lg-12 mb-3">
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal"><span class='fas fa-cart-arrow-down' id="btn-show-orders"></span> Request Orders <span class="badge badge-warning"> 16</span></button>
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal" id="btn-show-orders"><span class='fas fa-cart-arrow-down' ></span> Request Orders <span class="badge badge-warning"> 16</span></button>
              
             </div>
 

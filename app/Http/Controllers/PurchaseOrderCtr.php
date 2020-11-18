@@ -28,19 +28,7 @@ class PurchaseOrderCtr extends Controller
         $category = DB::table($this->table_cat)->get();
         $suplr = DB::table($this->table_suplr)->get();
         
-        if(request()->ajax())
-        {
-           
-                return datatables()->of($product)
-                ->addColumn('action', function($product){
-                    $button = ' <a class="btn" id="btn-add-order" product-code="'. $product->id .'" data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>';
-               
-                    return $button;
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-           
-        }
+       
         return view('/inventory/purchase_order', 
             [
             'product' => $product,
@@ -55,10 +43,12 @@ class PurchaseOrderCtr extends Controller
     public function sendMail(){
         $data = $this->convertProductDataToHTML();
 
-        Mail::to('joshuafirme1@gmail.com')
-                ->send(new MyMail($data));
+        $email = Input::get('supplier_email');
+        Mail::to($email)
+        ->send(new MyMail($data));
     }
 
+   
 
     public function getAllReorder(){
         $product = DB::table($this->table_prod)
@@ -195,7 +185,7 @@ public function convertProductDataToHTML(){
     <td style="border: 1px solid; padding:10px;">'. $data['description'] .'</td>
     <td style="border: 1px solid; padding:10px;">'. $data['category'] .'</td> 
     <td style="border: 1px solid; padding:10px;">'. $data['unit'] .'</td>  
-    <td style="border: 1px solid; padding:10px;">'. $data['price'] .'</td>  
+    <td style="border: 1px solid; padding:10px;">'. number_format($data['price']) .'</td>  
     <td style="border: 1px solid; padding:10px;">'. $data['qty_order'] .'</td>  
     <td style="border: 1px solid; padding:10px;">'. number_format($sub_total) .' PhP</td>              
   </tr>

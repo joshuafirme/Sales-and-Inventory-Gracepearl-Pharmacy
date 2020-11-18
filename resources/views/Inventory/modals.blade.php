@@ -165,7 +165,7 @@
   
          
         <?php $subtotal = 0; $total = 0; ?>
-        <table class="table responsive table-hover mb-2 mt-4" id="order-table">                               
+        <table class="table responsive table-hover mb-2 mt-3" id="order-table">                               
           <thead>
             <tr>
                 <th>Product Code</th>
@@ -187,12 +187,27 @@
                         <td>{{ $details['unit'] }}</td>
                         <td>{{ number_format($details['price']) }}</td>
                         <td>{{ $details['qty_order'] }}</td>   
-                        <?php $subtotal = $details['price']  * $details['qty_order'];
-                        $total += $subtotal;
+                        <?php $subtotal = $details['price'] * $details['qty_order'];
+                              $total += $subtotal;
                         ?>
                         <td>{{ number_format($subtotal) }}</td>
+                        
                       </tr>
+                      
+                      
+                      
                       @endforeach
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total Amount:</td>
+                        <td>
+                          <b>{{ number_format($total) }}</b>
+                        </td>
+                     </tr>
                       @endif  
             </tbody>
         </thead>
@@ -204,7 +219,7 @@
 
       <div class="row">
      
-        <label class="col-sm-3 ml-auto mr-4">Total Amount: ₱{{ number_format($total) }}</label>
+     
 
         <div class="col-sm-6  col-lg-12 mt-2">
           <button class="btn btn-outline-danger btn-sm mt-2" id="btn-download-order"><span class='fas fa-download'></span> Download PDF</button> 
@@ -220,15 +235,18 @@
     
 
       </div>
+    </div>
+
       <div class="modal-footer">
         <div class="update-success-validation mr-auto ml-3" style="display: none">
           <label class="label text-success">Order sent successfully</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
 
-        <button type="submit" style="color: #fff" class="btn btn-sm btn-success" id="btn-send-order">Send Order <i class="fas fa-paper-plane"></i></button>
+        <button style="color: #fff" class="btn btn-sm btn-success" id="btn-send-order">Send Order <i class="fas fa-paper-plane"></i></button>
      
       </div>
+
     </div>
   </div>
 </div>

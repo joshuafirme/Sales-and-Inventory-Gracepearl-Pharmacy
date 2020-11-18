@@ -24,7 +24,7 @@
         <div class="row">
         
           <div class="col-sm-6  col-lg-12 mb-3">
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal" id="btn-show-orders"><span class='fas fa-cart-arrow-down' ></span> Request Orders <span class="badge badge-warning"> 16</span></button>
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal" id="btn-show-orders"><span class='fas fa-cart-arrow-down' ></span> Request Orders</button>
              
             </div>
 
@@ -58,7 +58,8 @@
 
              </div>
             </div>    
-                    <table class="table responsive  table-hover" id="purchase-order-table" width="100%">                               
+                    <table class="table responsive  table-hover" id="purchase-order-table" width="100%">       
+                      @if(count($product) > 0)                        
                       <thead>
                         <tr>
                             <th>Product Code</th>
@@ -72,6 +73,28 @@
                          
                         </tr>
                     </thead>
+                    <tbody>
+                      <tr>    
+                        @foreach ($product as $data)                        
+                        <td>{{ $data->productCode }}</td>
+                        <td>{{ $data->description }}</td>
+                        <td>{{ $data->unit }}</td>
+                        <td>{{ $data->category_name }}</td>
+                        <td>{{ $data->supplierName }}</td>
+                        <td>{{ $data->qty }}</td>
+                        <td>{{ $data->re_order }}</td>                                   
+                        <td>
+                          <a class="btn" id="btn-add-order" product-code="{{ $data->id }}" data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>
+                        </td>
+                      </tr>
+                      @endforeach  
+                      @else
+                      <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>No data found
+                      </div>  
+                @endif                      
+                  </tbody>
                     
                     </table>
                   </div>

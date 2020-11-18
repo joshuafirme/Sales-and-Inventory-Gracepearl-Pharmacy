@@ -6,7 +6,7 @@ $(document).ready(function(){
 }
  });
 
-    fetch_data();
+   // fetch_data();
   
     function fetch_data(){
       $('#purchase-order-table').DataTable({
@@ -108,33 +108,34 @@ $(document).ready(function(){
                     $('.loader').css('display', 'none');
                     setTimeout(function(){
                       $('.update-success-validation').fadeOut('slow');
-           
+                    
        
                     },2000);
                   
                   },1000);
-                }
-              
-         });
-      
-    
+                }          
+         });    
     });
+
 
     //show orders           
     $('#btn-show-orders').click(function(){
-    
+      $.getJSON("/inventory/purchaseorder/addToOrder", function(result) {
+        console.log(result[0].myVariable);
+    });
+      
+      $("#order-table").load( "purchaseorder #order-table" );
     });
 
     //print pdf
     $('#btn-print-order').click(function(){  
-      console.log('test');
+
       window.open('/inventory/order/print', '_blank'); 
    
     });
 
+    //download pdf 
     $('#btn-download-order').click(function(){  
-      console.log('test');
-
 
         window.open('/inventory/order/downloadOrderPDF', '_blank'); 
    
@@ -144,9 +145,13 @@ $(document).ready(function(){
     //send order
     $('#btn-send-order').click(function(){
      
+      var supplier_email = $('#supplier_email').val();
       $.ajax({
         url:"/sendorder",
         type:"GET",
+        data:{
+          supplier_email:supplier_email
+        },
      
         beforeSend:function(){
           $('#btn-send-order').text('Sending...');
@@ -166,11 +171,9 @@ $(document).ready(function(){
               
               },1000);
 
-              }
-            
+              }          
        });
     });
-
 
 
 });

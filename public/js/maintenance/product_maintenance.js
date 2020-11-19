@@ -4,7 +4,7 @@ $(document).ready(function(){
   fetch_data();
 
   function fetch_data(category){
-    $('#product-table').DataTable({
+   var product_table = $('#product-table').DataTable({
    
       processing: true,
       serverSide: true,
@@ -16,6 +16,7 @@ $(document).ready(function(){
       columns:[       
        {data: 'productCode', name: 'productCode'},
        {data: 'description', name: 'description'},
+       {data: 'category_name', name: 'category_name'},
        {data: 'unit', name: 'unit'},
        {data: 'qty', name: 'qty'},
        {data: 're_order', name: 're_order'},
@@ -24,52 +25,25 @@ $(document).ready(function(){
        {data: 'exp_date',name: 'exp_date'},
        {data: 'action', name: 'action',orderable: false},
       ]
-      
      });
-  }
 
+     $('#filter_category').change(function(){
+      var category = $('#filter_category').val();
 
-  function fetch_All(){
-    $('#product-table').DataTable({
-   
-      processing: true,
-      serverSide: true,
-      
-     
-      ajax:{
-       url: "/maintenance/product",
-      }, 
-      
-       
-      columns:[       
-       {data: 'productCode', name: 'productCode'},
-       {data: 'description', name: 'description'},
-       {data: 'unit', name: 'unit'},
-       {data: 'qty', name: 'qty'},
-       {data: 're_order', name: 're_order'},
-       {data: 'orig_price',name: 'orig_price'},
-       {data: 'selling_price',name: 'selling_price'},      
-       {data: 'exp_date',name: 'exp_date'},
-       {data: 'action', name: 'action',orderable: false},
-      ]
-      
-     });
-  }
-  $('#filter_category').change(function(){
-    var category = $('#filter_category').val();
+      if(category=='All'){
+        $('#product-table').DataTable().destroy();
+        fetch_data();
+      }
 
-    if(category=='All'){
-      $('#product-table').DataTable().destroy();
-      fetch_All();
-    }
-    else{
-      $('#product-table').DataTable().destroy();
-   
-      fetch_data(category);
-    }
+      product_table.column( $(this).data('column') )
+      .search( $(this).val() )
+      .draw();
   
+      });
+  }
 
-    });
+
+
 
   // delete product alert
   var product_id, product_name;
@@ -218,8 +192,9 @@ $('#update-product-maintenance').click(function(){
   console.log(product_code);
   var description = $('#edit_description').val(); 
   var unit = $('select[name=edit_unit] option').filter(':selected').val();
-  var category_name = $('select[name=category_name] option').filter(':selected').val();
-  var supplier_name = $('select[name=supplier_name] option').filter(':selected').val();
+  var category_name = $('select[name=edit_category_name] option').filter(':selected').val();
+  console.log(category_name);
+  var supplier_name = $('select[name=edit_supplier_name] option').filter(':selected').val();
   var re_order = $('#edit_re_order').val();
   var orig_price = $('#edit_orig_price').val();
   var selling_price = $('#edit_selling_price').val();

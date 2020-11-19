@@ -117,7 +117,7 @@
         <div class="modal-footer">
           <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
           <button class="btn btn-sm btn-outline-dark" type="button" name="ok_button" id="product_ok_button">Yes</button>
-        <button class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-sm btn-danger cancel-delete" data-dismiss="modal">Cancel</button>
 
         </div>
       </div>
@@ -167,7 +167,7 @@
   
             <div class="col-md-4 mb-2">    
               <label class="col-form-label">Category</label>
-              <select class="form-control category_name" name="category_name" >
+              <select class="form-control category_name" name="edit_category_name" >
                 <option  id="edit_category_name" selected></option>
 
                 @foreach($category as $data)
@@ -179,7 +179,7 @@
   
             <div class="col-md-4">
               <label class="col-form-label">Supplier</label>
-              <select class="form-control supplier_name" name="supplier_name">
+              <select class="form-control supplier_name" name="edit_supplier_name">
                 <option  id="edit_supplier_name" selected></option>
 
                 @foreach($suplr as $data)

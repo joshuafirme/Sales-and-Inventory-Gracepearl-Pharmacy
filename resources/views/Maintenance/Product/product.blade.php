@@ -44,11 +44,12 @@
                   <div class="row">
 
                   <div class="input-group col-sm-3 col-md-3 mt-4 mb-3 ml-auto " id="filter-cont">   
-                    <label class="m-2 ml-2">Category</label>           
-                    <select class="form-control" id="filter_category" name="filter-category" >
+                    <label class="m-2 ml-2">Category</label>  
+
+                    <select data-column="2" class="form-control" id="filter_category" name="filter-category" >
                       <option value="All">All</option>
                       @foreach($category as $data)
-                    <option value={{ $data->id }}>{{ $data->category_name }}</option>
+                    <option value="{{ $data->category_name }}">{{ $data->category_name }}</option>
                       @endforeach
                     </select>
                   </div>        
@@ -59,10 +60,11 @@
                       <thead>
                         <tr>
                             <th>Product Code</th>
-                            <th>Description</th>   
+                            <th>Description</th> 
+                            <th>Category</th>   
                             <th>Unit</th>        
                             <th>Quantity</th>
-                            <th>Re-Order Point</th>
+                            <th>Reorder</th>
                             <th>Original Price</th>
                             <th>Selling Price</th>
                             <th>Expiration</th>

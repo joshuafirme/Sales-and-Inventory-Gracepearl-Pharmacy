@@ -35,6 +35,8 @@
                       <div class="row mt-5 ml-5">
 
                         <div class="col-lg-6">
+
+                        <p>Transaction No: {{ $getTransNo }}</p>
                           
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">Search</label>
@@ -42,6 +44,8 @@
                               <input type="search" class="form-control" id="cashiering_search">
                             </div>
                           </div>
+
+                          <input type="hidden" id="product_code_hidden">
 
                         <div class="form-group row">
                           <label for="inputEmail3" class="col-sm-4 col-form-label">Product Code</label>
@@ -120,7 +124,7 @@
                                 <input type="checkbox" class="form-check-input chk-senior" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1">Senior Citizen</label>
                               </div>
-
+                              {{ csrf_field() }}
                               <div class="form-group">
                                 <button class="btn btn-success btn-sm btn-process" id="btn-process">Process</button> 
                               </div>
@@ -138,7 +142,7 @@
                 <div class="card  mt-1" style="width: 1267px">
                 
                   <div class="card-body">
-            <div class="box-body cashiering-table" style="overflow-x:auto; overflow-y:auto; height: 250px">
+            <div class="box-body cashiering-table">
               <?php $total = 0; ?> 
               <table class="table table-hover" id="cashiering-table" width="100%">
              
@@ -148,7 +152,7 @@
                           <th>Description</th>
                           <th>Price</th>
                           <th>Qty</th>
-                          <th>Total</th>
+                          <th>Amount</th>
                           <th>Date</th>
                           <th>Action</th>
                       </tr>
@@ -162,21 +166,25 @@
                         @foreach(session('cart') as $product_code => $details)
                         <td>{{ $product_code }}</td>
                         <td>{{ $details['description'] }}</td>
-                        <td>{{ $details['price'] }}</td>
+                        <td>₱ {{ number_format($details['unit_price'], 2, '.', '') }}</td>
                         <td>{{ $details['qty'] }}</td>
                         <?php 
-                        $sub_total = $details['qty'] * $details['price'];
+                        $sub_total = $details['qty'] * $details['unit_price'];
+                        $total += $sub_total;
+                       // dd(session('cart'));
                          ?> 
-                        <td>{{ $sub_total }}</td>
-                        <td></td>  
+                        <td>₱ {{ number_format($sub_total, 2, '.', '') }}</td>
+                        <td>{{ $details['date'] }}</td>
                           <td>
-                            <a class="btn" id="void" data-toggle="modal" data-target="#voidModal"><u style="color: #303E9F;">Void</u></a>
+                            <a class="btn" id="void" product-code="{{ $product_code }}" data-toggle="modal" data-target="#voidModal"><u style="color: #303E9F;">Void</u></a>
                           </td>
                       </tr>  
-                      
-                      <?php $total += $sub_total; ?>                  
+                                 
                       @endforeach
-                      <input type="hidden" id="total_hidden" value={{ $total }}>
+                      <td>
+                        <input type="hidden" id="total_hidden" value={{ $total }}>
+                      </td>
+                      <td></td>    <td></td>    <td></td>    <td></td>    <td></td>    <td></td>
                       @endif                 
                   </tbody>
              

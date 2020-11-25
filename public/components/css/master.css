@@ -473,13 +473,16 @@ flex-direction: row;
 
 
 
-    .cashiering-table tr{
-        height: 20px !important;
-    }
     .cashiering-table th{
         position: sticky;
         top: 0;
         background-color: #fff;
+    }
+
+    .cashiering-table{
+        overflow-x:auto; 
+        overflow-y:auto; 
+        height: 290px;
     }
     
     
@@ -487,6 +490,10 @@ flex-direction: row;
       border-collapse: collapse;
       width: 100%;
     }
+
+    #cashiering-table tbody{
+        height: 10px !important;
+      }
 
 
     .amount-due{
@@ -547,3 +554,6 @@ flex-direction: row;
 
 
 
+    .order-modal{
+        max-width: 70% !important;
+    }

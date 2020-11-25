@@ -31,6 +31,8 @@ Route::delete('/maintenance/category/{id}', 'CategoryMaintenanceCtr@destroy');
 Route::get('/sales/cashiering', 'SalesCtr@index');
 Route::post('/sales/cashiering/{search_key}', 'SalesCtr@search');
 Route::get('/sales/cashiering/addToCart', 'SalesCtr@addToCart');
+Route::get('/sales/cashiering/process', 'SalesCtr@process');
+Route::get('/sales/cashiering/getTransNo', 'SalesCtr@getCurrentTransacNo');
 
 // Supplier
 Route::get('maintenance/supplier/', 'SupplierMaintenanceCtr@index');
@@ -84,6 +86,7 @@ Route::post('/inventory/purchaseorder/addToOrder', 'PurchaseOrderCtr@addToOrder'
 Route::get('/inventory/order/print', 'PurchaseOrderCtr@pdf');
 Route::get('/inventory/order/downloadOrderPDF', 'PurchaseOrderCtr@downloadOrderPDF');
 Route::get('/sendorder', 'PurchaseOrderCtr@sendMail');
+Route::post('/getSupplierEmail/{supplier_id}', 'PurchaseOrderCtr@getSupplierEmail');
 
 //Notification
 Route::resource('/inventory/notification', 'NotificationCtr');

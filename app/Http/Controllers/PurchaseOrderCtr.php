@@ -48,6 +48,14 @@ class PurchaseOrderCtr extends Controller
         ->send(new MyMail($data));
     }
 
+    public function getSupplierEmail($supplier_id){
+        $supplier = DB::table($this->table_suplr)
+        ->where('id', $supplier_id)
+        ->value('email');
+
+        return $supplier;
+    }
+
    
 
     public function getAllReorder(){
@@ -174,24 +182,30 @@ public function convertProductDataToHTML(){
     ';
     $total_amount = 0;
     $sub_total = 0;
-    foreach (session()->get('orders') as $product_code => $data) {
+    if(session()->get('orders')){
+        foreach (session()->get('orders') as $product_code => $data) {
         
-    $sub_total = $data['qty_order'] * $data['price'];
-    $total_amount += $sub_total;
-
-    $output .='
-    <tr>                             
-    <td style="border: 1px solid; padding:10px;">'. $product_code .'</td>
-    <td style="border: 1px solid; padding:10px;">'. $data['description'] .'</td>
-    <td style="border: 1px solid; padding:10px;">'. $data['category'] .'</td> 
-    <td style="border: 1px solid; padding:10px;">'. $data['unit'] .'</td>  
-    <td style="border: 1px solid; padding:10px;">'. number_format($data['price']) .'</td>  
-    <td style="border: 1px solid; padding:10px;">'. $data['qty_order'] .'</td>  
-    <td style="border: 1px solid; padding:10px;">'. number_format($sub_total) .' PhP</td>              
-  </tr>
-  ';
-
-}
+            $sub_total = $data['qty_order'] * $data['price'];
+            $total_amount += $sub_total;
+        
+            $output .='
+            <tr>                             
+            <td style="border: 1px solid; padding:10px;">'. $product_code .'</td>
+            <td style="border: 1px solid; padding:10px;">'. $data['description'] .'</td>
+            <td style="border: 1px solid; padding:10px;">'. $data['category'] .'</td> 
+            <td style="border: 1px solid; padding:10px;">'. $data['unit'] .'</td>  
+            <td style="border: 1px solid; padding:10px;">'. number_format($data['price']) .'</td>  
+            <td style="border: 1px solid; padding:10px;">'. $data['qty_order'] .'</td>  
+            <td style="border: 1px solid; padding:10px;">'. number_format($sub_total) .' PhP</td>              
+          </tr>
+          ';
+        
+        } 
+    }
+    else{
+        echo "No data found";
+    }
+    
       
  $output .='
    </tbody>

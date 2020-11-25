@@ -16,6 +16,8 @@ class NotificationCtr extends Controller
 
     public function index()
     {
+        $suplr = DB::table($this->table_suplr)->get();
+
         $near_expiry_product = $this->getAllNearExpiry(); 
         $expired_product = $this->getAllExpired(); 
         $reorder_product = $this->getAllReOrder(); 
@@ -27,6 +29,7 @@ class NotificationCtr extends Controller
 
         return view('/inventory/notification',
             [
+            'suplr' => $suplr,
             'nearExpiryProduct' => $near_expiry_product,
             'expiredProduct' => $expired_product,
             'reorderProduct' => $reorder_product,

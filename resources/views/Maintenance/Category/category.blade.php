@@ -36,15 +36,15 @@
         <div class="row">
 
           <div class="col-md-12 col-lg-12 mt-3">
-            <div class="card" style="width: 500px">
+            <div class="card" style="width: 100%">
                 <div class="card-body">
                     <p class="card-title"></p>
                     <table class="table table-hover" id="category-table">
                       @if(count($category) > 0)
                         <thead>
                             <tr>
-                                <th>Category Name</th>
-                                <th >Action</th>
+                                <th style="width: 90%">Category Name</th>
+                                <th style="width: 60px">Action</th>
                             </tr>
                         </thead>
            

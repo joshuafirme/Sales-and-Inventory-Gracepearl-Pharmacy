@@ -152,7 +152,7 @@
 
 <!-- Send Order -->
 <div class="modal fade" id="ordersModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="modal-dialog modal-lg order-modal" role="document">
     <div class="modal-content lg">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Request Order</h5>
@@ -162,19 +162,41 @@
       </div>
       <div class="modal-body">
 
+        <div class="row">
+
+          <div class="col-sm-8">
+              <div class="form-group row mt-1 ml-1">
+                
+                <label class="m-2 ml-2">Supplier</label>
+                <select class=" form-control col-sm-3"  id="suppliers">
+                  
+                  @foreach($suplr as $data)
+                <option value={{ $data->id }}>{{ $data->supplierName }}</option>
+                  @endforeach
+                </select>
+              </div>
+         </div>
   
+          <div class="ml-auto mr-3">
+            <button class="btn btn-outline-danger btn-sm mt-2" id="btn-download-order"><span class='fas fa-download'></span> Download PDF</button> 
+            <button class="btn btn-outline-dark btn-sm mt-2" id="btn-print-order"><span class='fas fa-print'></span> Print</button>  
+          </div>
+        </div>
+
+        
          
         <?php $subtotal = 0; $total = 0; ?>
-        <table class="table responsive table-hover mb-2 mt-3" id="order-table">                               
+        <table class="table responsive table-hover mb-2" id="order-table">                               
           <thead>
             <tr>
                 <th>Product Code</th>
                 <th>Description</th> 
                 <th>Category</th>           
                 <th>Unit</th>     
-                <th>Unit Price</th>                                          
-                <th>Qty Order</th>   
+                <th>Price</th>                                          
+                <th>Qty</th>   
                 <th>Amount</th>  
+                <th>Action</th>  
              
             </tr>
             <tbody>
@@ -203,9 +225,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>Total Amount:</td>
+                        <td>Total:</td>
                         <td>
-                          <b>{{ number_format($total) }}</b>
+                          <b>{{ number_format($total) }} PhP</b>
                         </td>
                      </tr>
                       @endif  
@@ -219,18 +241,9 @@
 
       <div class="row">
      
-     
-
-        <div class="col-sm-6  col-lg-12 mt-2">
-          <button class="btn btn-outline-danger btn-sm mt-2" id="btn-download-order"><span class='fas fa-download'></span> Download PDF</button> 
-          <button class="btn btn-outline-dark btn-sm mt-2" id="btn-print-order"><span class='fas fa-print'></span> Print</button>  
-          
-          <div class="line mt-4 mb-3"></div>
-          </div>
-
-        <div class="col-md-6 mb-2">
+        <div class="col-sm-3 mb-2 ml-auto">
           <label class="col-form-label">Supplier's Email</label>
-          <input type="email" class="form-control" name="email" id="supplier_email" required>
+          <input type="email" class="form-control" name="email" id="supplier_email" >
         </div>
     
 

@@ -37,6 +37,7 @@ body{
 	justify-content: flex-start;
 	align-items: center;
 	text-align: center;
+	
 }
 
 .img img{
@@ -49,6 +50,7 @@ form{
 	background-color: #fff;
 	border-radius: 10px;
 	padding: 30px;
+	
 }
 
 form .input-div{
@@ -164,6 +166,14 @@ a{
 	transition: .3s;
 }
 
+p{
+	display: block;
+	text-decoration: none;
+	color: #999;
+	font-size: 0.9rem;
+	transition: .3s;
+}
+
 a:hover{
 	color: #38d39f;
 }
@@ -180,13 +190,42 @@ a:hover{
 	font-size: 11pt;
 	color: #fff;
 	font-family: 'Poppins', sans-serif;
-	text-transform: uppercase;
 	margin: 1rem 0;
 	cursor: pointer;
 	transition: .5s;
 }
 .btn:hover{
-	background-position: right;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.btn-google{
+	display: block;
+	width: 100%;
+	height: 50px;
+	border-radius: 25px;
+	outline: none;
+	color: black;
+	border: 2px solid #32be8f; /* Green */
+	font-size: 11pt;
+	color: #32be8f;
+	font-family: 'Poppins', sans-serif;
+	margin: 1rem 0;
+	cursor: pointer;
+	transition: .5s;
+	background: url('https://img.icons8.com/color/48/000000/google-logo.png') #f2f2f2;
+	background-position: left;	
+    background-repeat: no-repeat;
+	background-size: 40px 40px;
+	background-color: #fff;
+}
+
+.google{
+	width: 30px;
+	height: 30px;
+}
+
+.btn-google:hover{
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 

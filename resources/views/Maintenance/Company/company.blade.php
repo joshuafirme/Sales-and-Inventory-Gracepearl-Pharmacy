@@ -41,7 +41,7 @@
                             <tr>
                                 <th>Company Name</th>
                                 <th>Markup</th>
-                                <th width="20%">Action</th>
+                                <th width="10px">Action</th>
                             </tr>
                         </thead>
            

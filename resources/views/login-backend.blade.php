@@ -36,7 +36,10 @@
 					</div>
 				</div>
 				<a href="#">Forgot Password?</a>
-				<input type="submit" class="btn" value="login">	
+				<input type="submit" class="btn" value="Login">	
+				<p>or</p>
+				<button type="button" class="btn-google">Sign in with Google</button>
+
 			</form>	
 		</div>
 

@@ -120,11 +120,10 @@ $(document).ready(function(){
 
     //show orders           
     $('#btn-show-orders').click(function(){
-      $.getJSON("/inventory/purchaseorder/addToOrder", function(result) {
-        console.log(result[0].myVariable);
-    });
-      
-      $("#order-table").load( "purchaseorder #order-table" );
+      setTimeout(function(){
+        $("#order-table").load( "purchaseorder #order-table" );
+      },1500);
+    
     });
 
     //print pdf
@@ -139,6 +138,20 @@ $(document).ready(function(){
 
         window.open('/inventory/order/downloadOrderPDF', '_blank'); 
    
+    });
+
+    $('#suppliers').change(function(){
+      supplier_id = $(this).val();
+      console.log(supplier_id);
+      $.ajax({
+        url:"/getSupplierEmail/" + supplier_id,
+        type:"POST",
+
+            success:function(response){
+              // console.log(response);
+                $('#supplier_email').val(response);
+              }          
+       });
     });
 
 

@@ -28,7 +28,7 @@
       <div class="modal-footer">
 
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-sm btn-danger ">Void</button>
+              <button type="submit" class="btn btn-sm btn-danger" id="btn-void">Void</button>
       </div>
     </form>
     </div>

@@ -10,6 +10,7 @@
     <link href="{{asset('components/css/master.css')}}" rel="stylesheet">
     <link href="{{asset('components/vendor/chartsjs/Chart.min.css')}}" rel="stylesheet">
     <link href="{{asset('components/vendor/flagiconcss3/css/flag-icon.min.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
@@ -43,24 +44,8 @@
                 </li>
 
                 <li>
-                    <a href="#orders-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-shopping-cart"></i> Manage Online Orders</a>
-                    <ul class="collapse list-unstyled" id="orders-menu">        
-                        <li>
-                            <a href="500.html"><i class="fas fa-history"></i> Pending <span style="color: #fff" class="badge badge-success"> 20</span></a>
-                        </li>
-                        <li>
-                            <a href="500.html"><i class="fas fa-truck-pickup"></i> Ready To Ship</a>
-                        </li>
-                        <li>
-                            <a href="500.html"><i class="fas fa-shipping-fast"></i> Shipped</a>
-                        </li>
-                        <li>
-                            <a href="500.html"><i class="fas fa-check-circle"></i> Completed</a>
-                        </li>
-                        <li>
-                            <a href="500.html"><i class="fas fa-times-circle"></i> Bad Order</a>
-                        </li>
-                    </ul>
+                    <a href="#orders-menu" ><i class="fas fa-shopping-cart"></i> Manage Online Orders</a>
+               
                 </li>
 
                 <li>
@@ -196,7 +181,6 @@
           <script src="{{asset('js/maintenance/unit_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/company_maintenance.js')}}"></script>
 
-          <!-- inventory -->
           <script src="{{asset('js/cashiering/cashiering.js')}}"></script>
 
           <!-- inventory -->

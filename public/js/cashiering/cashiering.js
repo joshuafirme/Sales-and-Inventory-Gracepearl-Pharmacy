@@ -1,6 +1,10 @@
 
 $(document).ready(function(){
-
+  $.ajaxSetup({
+    headers: {
+  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+}
+ });
   //search product
     $('#cashiering_search').keyup(function(){
         var search_key = $(this).val();
@@ -30,8 +34,10 @@ $(document).ready(function(){
                 $('#qty_order').val('');
                 $('#total').val('');
               }
+              console.log(response);
               var product_code = response[0].productCode;
 
+              $('#product_code_hidden').val(response[0].id);
               $('#product_code').val(product_code);
               $('#description').val(response[0].description);
               $('#qty').val(response[0].qty);
@@ -59,6 +65,7 @@ $(document).ready(function(){
           // Add to Cart
           $('#btn-addToCart').click(function(){   
 
+       //     var product_code_hidden  = $('#product_code').val();
             var product_code  = $('#product_code').val();
             var description  = $('#description').val();
             var qty_order  = $('#qty_order').val();
@@ -88,18 +95,32 @@ $(document).ready(function(){
 
                   $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
 
-                  var total_hidden = $('#total_hidden').val();
-                  console.log(total_hidden);
-                  $('#total-amount-due').val(total_hidden);
-              
+                  computeTotalAmountDue();
+                  getCurrentTransNo();  
                 }
               });     
               setTimeout(function(){
                 $('#total-amount-due').val();
               },2000);
         }); 
-       
 
+        computeTotalAmountDue();
+
+        function computeTotalAmountDue(){
+          setTimeout(function(){
+            var total_hidden = $('#total_hidden').val();
+            console.log(total_hidden);
+            $('#total-amount-due').val(total_hidden);
+          },500);
+         
+        }
+
+        $('#void').click(function(){
+          product_code = $(this).attr('product-code');
+          console.log(product_code);
+       
+        });
+       
         //compute change
           $('#tendered').keyup(function(){
 
@@ -109,5 +130,35 @@ $(document).ready(function(){
             $('#change').val(change.toFixed(2));
                     
         }); 
+
+        //proccess items
+        $('#btn-process').click(function(){
+
+          $.ajax({
+            url:"/sales/cashiering/process",
+            type:"GET",
+            beforeSend:function(){
+              console.log('processing...');
+            },
+            success:function(response){
+              console.log(response);
+              $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+          
+            }
+          });     
+      
+      });
+      
+      function getCurrentTransNo(){
+        $.ajax({
+          url:"/sales/cashiering/getTransNo",
+          type:"GET",
+          success:function(response){
+            console.log(response);
+              $('#transno').val(response);
+           
+          }
+        }); 
+      }
 
 });

@@ -20,14 +20,13 @@
         @endif
     
       
-
+      <form method="POST" action="{{action('PurchaseOrderCtr@pay')}}">
+        {{ csrf_field() }}
         <div class="row">
         
           <div class="col-sm-6  col-lg-12 mb-3">
             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal" id="btn-show-orders"><span class='fas fa-cart-arrow-down' ></span> Request Orders</button>
-          <form method="GET" action="{{action('PurchaseOrderCtr@pay')}}">
-            {{ csrf_field() }}
-            <button type="submit" class="btn btn-primary btn-sm" id="btn-pays--"><span class='fas fa-money-bill' ></span> GCash</button>
+            <button type="submit" class="btn btn-primary btn-sm" id="btn-pay-"><span class='fas fa-money-bill' ></span> GCash</button>
           </form>
             </div>
 

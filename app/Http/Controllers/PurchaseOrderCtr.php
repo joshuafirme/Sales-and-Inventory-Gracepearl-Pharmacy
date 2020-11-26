@@ -41,18 +41,19 @@ class PurchaseOrderCtr extends Controller
     }
 
     public function pay(){
-        //dd('test');
-        $gcashSource = Paymongo::source()->create([
+
+        $source = Paymongo::source()->create([
             'type' => 'gcash',
             'amount' => 100.00,
             'currency' => 'PHP',
             'redirect' => [
-                'success' => url('http://127.0.0.1:8000/inventory/purchaseorder'),
-                'failed' => url('http://127.0.0.1:8000/inventory/purchaseorder')
+                'success' => route('pay'),
+                'failed' => route('pay')
             ]
         ]);
-
-      //  return $gcashSource;
+       // dd($source);
+      //  dd($source->getRedirect()['checkout_url']);
+        return redirect($source->getRedirect()['checkout_url']);
     }
 
 

@@ -1,10 +1,6 @@
 
 $(document).ready(function(){
-  $.ajaxSetup({
-    headers: {
-  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-}
- });
+
 
    // fetch_data();
   
@@ -193,7 +189,7 @@ $(document).ready(function(){
      
   $.ajax({
     url:"/pay",
-    type:"GET",
+    type:"POST",
  
         success:function(response){
             console.log(response);

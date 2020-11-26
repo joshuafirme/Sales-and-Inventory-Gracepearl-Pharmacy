@@ -88,7 +88,7 @@ Route::get('/inventory/order/downloadOrderPDF', 'PurchaseOrderCtr@downloadOrderP
 Route::get('/sendorder', 'PurchaseOrderCtr@sendMail');
 Route::post('/getSupplierEmail/{supplier_id}', 'PurchaseOrderCtr@getSupplierEmail');
 //pay
-Route::get('/pay', 'PurchaseOrderCtr@pay');
+Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');
 
 //Notification
 Route::resource('/inventory/notification', 'NotificationCtr');

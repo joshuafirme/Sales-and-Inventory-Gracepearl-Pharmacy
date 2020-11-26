@@ -131,23 +131,44 @@ $(document).ready(function(){
                     
         }); 
 
+        $('#senior-chk').click(function(){
+
+          if($('#senior-chk').prop('checked') == true)
+          {
+            $('#senior-name').css('display','inline');
+          }
+          else
+          {
+            $('#senior-name').css('display','none');
+          }    
+      
+      });
+      
+
         //proccess items
         $('#btn-process').click(function(){
 
           $.ajax({
             url:"/sales/cashiering/process",
             type:"GET",
-            beforeSend:function(){
-              console.log('processing...');
-            },
             success:function(response){
-              console.log(response);
+          //    console.log(response);
               $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
           
             }
           });     
       
       });
+
+       //confirm sales invoice
+       $('#btn-confirm-inv').click(function(){
+        console.log('test');
+        if($('#sales-invoice').val() == ''){
+          $('.text-danger').css('display','inline');
+        }
+      
+    
+    });
       
       function getCurrentTransNo(){
         $.ajax({

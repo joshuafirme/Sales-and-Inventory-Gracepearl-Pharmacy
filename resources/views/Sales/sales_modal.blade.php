@@ -1,4 +1,5 @@
 @yield('voidModal')
+<!-- void modal -->
 <div class="modal fade" id="voidModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
@@ -29,6 +30,46 @@
 
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
               <button type="submit" class="btn btn-sm btn-danger" id="btn-void">Void</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- process modal -->
+<div class="modal fade" id="processModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Process</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="container-fluid">
+          <div class="row">
+            {{ csrf_field() }}
+
+              <label class="col-form-label">Sales Invoice #</label>
+              <input type="number" class="form-control" name="sales-invoice" id="sales-invoice" required>
+              <small style="display: none" class="form-text text-danger">Please fillup this field to process</small>
+              <div class="form-check mt-1  mb-2">
+                <input type="checkbox" class="form-check-input chk-senior" id="senior-chk">
+                <label class="form-check-label" for="exampleCheck1">Senior Citizen</label>
+              </div>
+
+              <input style="display: none"  class="form-control mb-2 mt-2" name="senior-name" id="senior-name"  placeholder="Senior citizen name">
+            
+          </div>
+        </div>  
+
+      </div>
+      <div class="modal-footer">
+
+              <button type="submit" class="btn btn-sm btn-success" id="btn-confirm-inv">Confirm</button>
       </div>
     </form>
     </div>

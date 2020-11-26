@@ -36,7 +36,7 @@
 
                         <div class="col-lg-6">
 
-                        <p>Transaction No: {{ $getTransNo }}</p>
+                        
                           
                         <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-3 col-form-label">Search</label>
@@ -120,13 +120,9 @@
                               <label>Change</label>
                               <input type="text" class="form-control" id="change" value="₱0" readonly>
 
-                              <div class="form-check mt-1">
-                                <input type="checkbox" class="form-check-input chk-senior" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Senior Citizen</label>
-                              </div>
                               {{ csrf_field() }}
                               <div class="form-group">
-                                <button class="btn btn-success btn-sm btn-process" id="btn-process">Process</button> 
+                                <button class="btn btn-success btn-sm btn-processs" data-toggle="modal" data-target="#processModal" id="btn-process">Process</button> 
                               </div>
 
                           </div> 
@@ -171,7 +167,6 @@
                         <?php 
                         $sub_total = $details['qty'] * $details['unit_price'];
                         $total += $sub_total;
-                       // dd(session('cart'));
                          ?> 
                         <td>₱ {{ number_format($sub_total, 2, '.', '') }}</td>
                         <td>{{ $details['date'] }}</td>

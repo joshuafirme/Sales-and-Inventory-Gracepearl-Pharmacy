@@ -157,6 +157,7 @@ class SalesCtr extends Controller
                 $total_amount += $sub_total;
                 $sales = new Sales;
                 $sales->_prefix = $this->getPrefix();
+                $sales->sales_inv_no = 10001;
                 $sales->product_code = $product_code;
                 $sales->qty = $data['qty'];
                 $sales->amount = $sub_total;       

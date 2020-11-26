@@ -32,7 +32,7 @@
                            <div class="col-md-4 mb-2">  
                             <div class="form-group">
                               <label class="col-form-label">Email</label>
-                              <input type="email" class="form-control" name="address" id="email" required>
+                              <input type="email" class="form-control" name="email" id="email" required>
                             </div>
                           </div>
               
@@ -52,7 +52,7 @@
     
                             <div class="col-md-4 mb-2">    
                               <label class="col-form-label">Company</label>
-                              <select class="form-control company" name="category" >
+                              <select class="form-control company" name="company" id="company">
                 
                                 @foreach($company as $data)
                               <option value={{ $data->id }}>{{ $data->company_name }}</option>

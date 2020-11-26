@@ -25,6 +25,7 @@
         
           <div class="col-sm-6  col-lg-12 mb-3">
             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal" id="btn-show-orders"><span class='fas fa-cart-arrow-down' ></span> Request Orders</button>
+            <button class="btn btn-primary btn-sm" id="btn-gcash"><span class='fas fa-money-bill' ></span> GCash</button>
              
             </div>
 

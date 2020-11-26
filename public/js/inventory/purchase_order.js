@@ -189,5 +189,20 @@ $(document).ready(function(){
     });
 
 
+     //send order
+     $('#btn-gcash').click(function(){
+  
+      $.ajax({
+        url:"/gcashPayment",
+        type:"POST",
+    
+            success:function(response){
+                console.log(response);
+                console.log('test');
+              }          
+       });
+    });
+
+
 });
     

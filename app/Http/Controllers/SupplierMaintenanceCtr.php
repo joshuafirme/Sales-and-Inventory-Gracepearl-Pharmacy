@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 use App\SupplierMaintenance;
 use App\MarkupMaintenance;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
+use Input;
 
 class SupplierMaintenanceCtr extends Controller
 {
@@ -30,15 +30,15 @@ class SupplierMaintenanceCtr extends Controller
    
     public function store()
     {
-
         $suplr = new SupplierMaintenance;
         $suplr->_prefix = 'SP-';
-        $suplr->supplierName = Input::get('supplier_name');
-        $suplr->address = Input::get('address');
-        $suplr->email = Input::get('email');
-        $suplr->person = Input::get('person');
-        $suplr->contact = Input::get('contact');
-        $suplr->companyID = Input::get('companyID');
+        $suplr->supplierName = Input::input('supplier_name');
+        $suplr->address = Input::input('address');
+        $suplr->email = Input::input('email');
+        $suplr->person = Input::input('person');
+        $suplr->contact = Input::input('contact');
+        $suplr->companyID = Input::input('company');
+ 
         $suplr->save();
 
     }

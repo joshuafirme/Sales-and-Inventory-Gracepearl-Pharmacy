@@ -87,6 +87,8 @@ Route::get('/inventory/order/print', 'PurchaseOrderCtr@pdf');
 Route::get('/inventory/order/downloadOrderPDF', 'PurchaseOrderCtr@downloadOrderPDF');
 Route::get('/sendorder', 'PurchaseOrderCtr@sendMail');
 Route::post('/getSupplierEmail/{supplier_id}', 'PurchaseOrderCtr@getSupplierEmail');
+//GCash Payment
+Route::post('/gcashPayment', 'PurchaseOrderCtr@gcashPayment');
 
 //Notification
 Route::resource('/inventory/notification', 'NotificationCtr');

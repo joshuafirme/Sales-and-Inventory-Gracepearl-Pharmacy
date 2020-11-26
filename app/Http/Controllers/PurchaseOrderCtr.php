@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
+use Input;
 use Mail;
 use App\Mail\MyMail;
-
+use Luigel\Paymongo\Facades\Paymongo;
 use App\ProductMaintenance;
 
 class PurchaseOrderCtr extends Controller
@@ -39,11 +39,29 @@ class PurchaseOrderCtr extends Controller
             ]);
     }
 
+public function gcashPayment(){
+
+    $gcashSource = Paymongo::source()->create([
+        'type' => 'gcash',
+        'amount' => 100.00,
+        'currency' => 'PHP',
+        'redirect' => [
+            'success' => route('/inventory/purchaseorder'),
+            'failed' => route('/inventory/purchaseorder')
+        ]
+    ]);
+    //dd($gcashSource);
+
+    return $gcashSource;
+}
+
+
+
 
     public function sendMail(){
         $data = $this->convertProductDataToHTML();
 
-        $email = Input::get('supplier_email');
+        $email = Input::input('supplier_email');
         Mail::to($email)
         ->send(new MyMail($data));
     }

@@ -19,6 +19,7 @@ class CreateTblproduct extends Migration
             $table->text('description');
             $table->integer('qty');
             $table->integer('re_order');
+            $table->integer('unitID');
             $table->string('categoryID');
             $table->string('supplierID');
             $table->double('orig_price');

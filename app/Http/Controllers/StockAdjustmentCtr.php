@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
+use Input;
 use App\ProductMaintenance;
 use App\StockAdjustment;
 
@@ -53,10 +53,10 @@ class StockAdjustmentCtr extends Controller
             $stockad = new StockAdjustment;
 
             $stockad->_prefix = $this->getPrefix();
-            $stockad->product_code = Input::get('product_code');
-            $stockad->qtyToAdjust = Input::get('qty_to_adjust');
+            $stockad->product_code = Input::input('product_code');
+            $stockad->qtyToAdjust = Input::input('qty_to_adjust');
             $stockad->action = 'add';
-            $stockad->remarks = Input::get('remarks');
+            $stockad->remarks = Input::input('remarks');
             $stockad->save();
             $this->updateStock($action, $stockad->product_code, $stockad->qtyToAdjust);
         }
@@ -64,10 +64,10 @@ class StockAdjustmentCtr extends Controller
             $stockad = new StockAdjustment;
 
             $stockad->_prefix = $this->getPrefix();
-            $stockad->product_code = Input::get('product_code');
-            $stockad->qtyToAdjust = Input::get('qty_to_adjust');
+            $stockad->product_code = Input::input('product_code');
+            $stockad->qtyToAdjust = Input::input('qty_to_adjust');
             $stockad->action = 'less';
-            $stockad->remarks = Input::get('remarks');
+            $stockad->remarks = Input::input('remarks');
             $stockad->save();
             $this->updateStock($action, $stockad->product_code, $stockad->qtyToAdjust);
         }

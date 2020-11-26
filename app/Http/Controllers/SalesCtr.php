@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
+use Input;
 use App\Sales;
 use Illuminate\Http\Request;
 
@@ -67,11 +67,11 @@ class SalesCtr extends Controller
     }
     // add product to cart
     public function addToCart(){
-            $product_code = Input::get('product_code');
-            $description = Input::get('description');
-            $qty_order = Input::get('qty_order');
-            $price = Input::get('price');
-            $total = Input::get('total');
+            $product_code = Input::input('product_code');
+            $description = Input::input('description');
+            $qty_order = Input::input('qty_order');
+            $price = Input::input('price');
+            $total = Input::input('total');
             $date = $this->getDate();
 
             $cart = session()->get('cart');

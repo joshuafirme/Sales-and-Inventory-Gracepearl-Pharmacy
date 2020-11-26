@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
-       // Luigel\Paymongo\ServiceProvider::class,
+
     ],
 
     /*
@@ -228,7 +228,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Paymongo' => Luigel\Paymongo\Fecade::class,
+        'Paymongo' => Luigel\Paymongo\Facade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
     ],
 

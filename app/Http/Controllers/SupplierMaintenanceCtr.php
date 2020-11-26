@@ -30,6 +30,7 @@ class SupplierMaintenanceCtr extends Controller
    
     public function store()
     {
+
         $suplr = new SupplierMaintenance;
         $suplr->_prefix = 'SP-';
         $suplr->supplierName = Input::input('supplier_name');
@@ -38,7 +39,6 @@ class SupplierMaintenanceCtr extends Controller
         $suplr->person = Input::input('person');
         $suplr->contact = Input::input('contact');
         $suplr->companyID = Input::input('company');
- 
         $suplr->save();
 
     }

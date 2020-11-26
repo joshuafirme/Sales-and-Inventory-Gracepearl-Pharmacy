@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Input;
+use Input;
 use App\ProductMaintenance;
 use App\SupplierMaintenance;
 use Illuminate\Http\Request;
@@ -147,14 +147,14 @@ class ProductMaintenanceCtr extends Controller
     public function updateProduct($product_code)
     {
         $product = new ProductMaintenance;
-        $product->desciption = Input::get('description');
-        $product->unitID = Input::get('unit');
-        $product->categoryID = Input::get('category_name');
-        $product->supplierID = Input::get('supplier_name');
-        $product->re_order = Input::get('re_order');
-        $product->orig_price = Input::get('orig_price');
-        $product->selling_price = Input::get('selling_price');
-        $product->exp_date = Input::get('exp_date');
+        $product->desciption = Input::input('description');
+        $product->unitID = Input::input('unit');
+        $product->categoryID = Input::input('category_name');
+        $product->supplierID = Input::input('supplier_name');
+        $product->re_order = Input::input('re_order');
+        $product->orig_price = Input::input('orig_price');
+        $product->selling_price = Input::input('selling_price');
+        $product->exp_date = Input::input('exp_date');
 
         DB::update('UPDATE '. $this->table_prod .' 
         SET description = ?,  unitID = ?, categoryID = ?, supplierID = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
@@ -258,7 +258,7 @@ class ProductMaintenanceCtr extends Controller
 
     public function getCategoryParam()
     {
-        $filter_category = Input::get('filter_category');
+        $filter_category = Input::input('filter_category');
         
         return $filter_category;
     }

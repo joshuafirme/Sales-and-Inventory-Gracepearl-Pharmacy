@@ -32,7 +32,7 @@
                            <div class="col-md-4 mb-2">  
                             <div class="form-group">
                               <label class="col-form-label">Email</label>
-                              <input type="email" class="form-control" name="email" id="email" required>
+                              <input type="email" class="form-control" name="address" id="email" required>
                             </div>
                           </div>
               

@@ -122,11 +122,7 @@ $(document).ready(function(){
         }
         });
   }); 
-  $.ajaxSetup({
-    headers: {
-  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-}
- });
+
 
    //add supplier
    $(document).on('click', '#btn-save-supplier', function(){
@@ -139,10 +135,15 @@ $(document).ready(function(){
 
     console.log(supplier_name);
     console.log(address);
-    console.log(email);
     console.log(person);
     console.log(contact);
     console.log(company);
+
+    $.ajaxSetup({
+        headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+     });
 
     $.ajax({
       url:"/maintenance/supplier/store",

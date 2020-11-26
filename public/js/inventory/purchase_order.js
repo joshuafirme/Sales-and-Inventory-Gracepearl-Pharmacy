@@ -188,21 +188,19 @@ $(document).ready(function(){
        });
     });
 
-
-     //send order
-     $('#btn-gcash').click(function(){
-  
-      $.ajax({
-        url:"/gcashPayment",
-        type:"POST",
-    
-            success:function(response){
-                console.log(response);
-                console.log('test');
-              }          
-       });
-    });
-
+ //send order
+ $('#btn-pay').click(function(){
+     
+  $.ajax({
+    url:"/pay",
+    type:"GET",
+ 
+        success:function(response){
+            console.log(response);
+            console.log('test');
+          }          
+   });
+});
 
 });
     

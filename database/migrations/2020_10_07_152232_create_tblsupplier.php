@@ -20,7 +20,6 @@ class CreateTblsupplier extends Migration
             $table->string('address');
             $table->string('person');
             $table->string('contact');
-            $table->string('email');
             $table->string('companyID');
             $table->timestamps();
         });

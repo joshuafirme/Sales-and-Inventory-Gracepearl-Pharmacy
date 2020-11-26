@@ -8,6 +8,7 @@ use Input;
 use Mail;
 use App\Mail\MyMail;
 use Luigel\Paymongo\Facades\Paymongo;
+use Illuminate\Support\Str;
 use App\ProductMaintenance;
 
 class PurchaseOrderCtr extends Controller
@@ -39,23 +40,20 @@ class PurchaseOrderCtr extends Controller
             ]);
     }
 
-public function gcashPayment(){
+    public function pay(){
+        //dd('test');
+        $gcashSource = Paymongo::source()->create([
+            'type' => 'gcash',
+            'amount' => 100.00,
+            'currency' => 'PHP',
+            'redirect' => [
+                'success' => url('http://127.0.0.1:8000/inventory/purchaseorder'),
+                'failed' => url('http://127.0.0.1:8000/inventory/purchaseorder')
+            ]
+        ]);
 
-    $gcashSource = Paymongo::source()->create([
-        'type' => 'gcash',
-        'amount' => 100.00,
-        'currency' => 'PHP',
-        'redirect' => [
-            'success' => route('/inventory/purchaseorder'),
-            'failed' => route('/inventory/purchaseorder')
-        ]
-    ]);
-    //dd($gcashSource);
-
-    return $gcashSource;
-}
-
-
+      //  return $gcashSource;
+    }
 
 
     public function sendMail(){
@@ -104,14 +102,14 @@ public function gcashPayment(){
 
     public function addToOrder(){
 
-        $product_code = Input::get('product_code');
-        $description = Input::get('description');
-        $category = Input::get('category');
-        $unit = Input::get('unit');
-        $supplier = Input::get('supplier');
-        $qty_order = Input::get('qty_order');
-        $price = Input::get('price');
-        $amount = Input::get('amount');
+        $product_code = Input::input('product_code');
+        $description = Input::input('description');
+        $category = Input::input('category');
+        $unit = Input::input('unit');
+        $supplier = Input::input('supplier');
+        $qty_order = Input::input('qty_order');
+        $price = Input::input('price');
+        $amount = Input::input('amount');
 
         $orders = session()->get('orders');
         if(!$orders) {

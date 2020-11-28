@@ -61,7 +61,8 @@
                             <th>Product Code</th>
                             <th>Description</th> 
                             <th>Category</th>   
-                            <th>Unit</th>        
+                            <th>Unit</th> 
+                            <th>Supplier</th>          
                             <th>Quantity</th>
                             <th>Reorder</th>
                             <th>Original Price</th>

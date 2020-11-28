@@ -87,7 +87,7 @@
           <div class="row">
         {{ csrf_field() }}
 
-        <input type="hidden" id="product_code_hidden" required>
+        <input type="hidden" id="po_product_code_hidden" required>
 
         <div class="col-md-4 mb-2">
           <label class="col-form-label">Product Code</label>
@@ -164,33 +164,25 @@
 
         <div class="row">
 
-          <div class="col-sm-8">
-              <div class="form-group row mt-1 ml-1">
-                
-                <label class="m-2 ml-2">Supplier</label>
-                <select class=" form-control col-sm-3"  id="suppliers">
-                  
-                  @foreach($suplr as $data)
-                <option value={{ $data->id }}>{{ $data->supplierName }}</option>
-                  @endforeach
-                </select>
-              </div>
-         </div>
+        
+
+       
   
           <div class="ml-auto mr-3">
-            <button class="btn btn-outline-danger btn-sm mt-2" id="btn-download-order"><span class='fas fa-download'></span> Download PDF</button> 
-            <button class="btn btn-outline-dark btn-sm mt-2" id="btn-print-order"><span class='fas fa-print'></span> Print</button>  
+            <button class="btn btn-outline-danger btn-sm mt-2 mb-2" id="btn-download-order" ><span class='fas fa-download'></span> Download PDF</button> 
+            <button class="btn btn-outline-dark btn-sm mt-2 mb-2" id="btn-print-order"><span class='fas fa-print'></span> Print</button>  
           </div>
-        </div>
 
-        
-         
+        </div>
+       
         <?php $subtotal = 0; $total = 0; ?>
+        @if(session('orders')) 
         <table class="table responsive table-hover mb-2" id="order-table">                               
           <thead>
             <tr>
                 <th>Product Code</th>
-                <th>Description</th> 
+                <th>Description</th>
+                <th>Supplier</th>      
                 <th>Category</th>           
                 <th>Unit</th>     
                 <th>Price</th>                                          
@@ -199,12 +191,14 @@
                 <th>Action</th>  
              
             </tr>
+          </thead>
             <tbody>
               <tr>
-                @if(session('orders'))
+              
                         @foreach(session('orders') as $product_code => $details)
                         <td>{{ $product_code }}</td>
                         <td>{{ $details['description'] }}</td>
+                        <td>{{ $details['supplier'] }}</td>
                         <td>{{ $details['category'] }}</td>
                         <td>{{ $details['unit'] }}</td>
                         <td>{{ number_format($details['price']) }}</td>
@@ -214,6 +208,9 @@
                         ?>
                         <td>{{ number_format($subtotal) }}</td>
                         
+                        <td>
+                          <a class="btn" name="id" id="remove-order" delete-id="{{ $product_code }}"><i class="fa fa-trash"></i></a>
+                        </td>
                       </tr>
                       
                       
@@ -224,14 +221,20 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>                 
                         <td></td>
                         <td>Total:</td>
                         <td>
                           <b>{{ number_format($total) }} PhP</b>
-                        </td>
-                     </tr>
-                      @endif  
+                        </td>     <td></td>
+                     </tr> 
             </tbody>
+            @else
+            <div class="alert alert-danger alert-dismissible">
+             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+             <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>You have no orders yet
+           </div>  
+             @endif 
         </thead>
         
         </table>
@@ -255,8 +258,8 @@
           <label class="label text-success">Order sent successfully</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-
-        <button style="color: #fff" class="btn btn-sm btn-success" id="btn-send-order">Send Order <i class="fas fa-paper-plane"></i></button>
+        <button style="color: #fff" class="btn btn-sm btn-primary" id="btn-add-record"> <i class="fas fa-plus"></i> Add to Record</button>
+        <button style="color: #fff" class="btn btn-sm btn-success" id="btn-send-order"> <i class="fas fa-paper-plane"></i> Send Order</button>
      
       </div>
 

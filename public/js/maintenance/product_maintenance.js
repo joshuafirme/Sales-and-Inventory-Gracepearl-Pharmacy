@@ -18,6 +18,7 @@ $(document).ready(function(){
        {data: 'description', name: 'description'},
        {data: 'category_name', name: 'category_name'},
        {data: 'unit', name: 'unit'},
+       {data: 'supplierName', name: 'supplierName'},
        {data: 'qty', name: 'qty'},
        {data: 're_order', name: 're_order'},
        {data: 'orig_price',name: 'orig_price'},

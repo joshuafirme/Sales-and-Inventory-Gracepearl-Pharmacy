@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblpurchaseorder extends Migration
+class CreateTblsupplierDelivery extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,16 @@ class CreateTblpurchaseorder extends Migration
      */
     public function up()
     {
-        Schema::create('tblpurchaseorder', function (Blueprint $table) {
+        Schema::create('tblsupplier_delivery', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('_prefix');
-            $table->integer('product_code');
-            $table->integer('qty_order');
+            $table->int('delivery_num');
+            $table->string('product_code');
+            $table->integer('qty_delivered');
+            $table->string('exp_date');
+            $table->string('date_recieved');
             $table->double('amount');
+            $table->string('remarks');
             $table->timestamps();
         });
     }
@@ -30,6 +34,6 @@ class CreateTblpurchaseorder extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tblpurchaseorder');
+        Schema::dropIfExists('tblsupplier_delivery');
     }
 }

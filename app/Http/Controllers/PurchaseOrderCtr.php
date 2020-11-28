@@ -10,6 +10,7 @@ use App\Mail\MyMail;
 use Luigel\Paymongo\Facades\Paymongo;
 use Illuminate\Support\Str;
 use App\ProductMaintenance;
+use App\PurchaseOrder;
 
 class PurchaseOrderCtr extends Controller
 {
@@ -17,6 +18,7 @@ class PurchaseOrderCtr extends Controller
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
+    private $table_po = "tblpurchaseorder";
 
     public function index(Request $request)
     {
@@ -28,6 +30,8 @@ class PurchaseOrderCtr extends Controller
         $unit = DB::table($this->table_unit)->get();
         $category = DB::table($this->table_cat)->get();
         $suplr = DB::table($this->table_suplr)->get();
+        //
+        $get_all_orders = $this->getAllOrders();
         
        
         return view('/inventory/purchase_order', 
@@ -36,13 +40,14 @@ class PurchaseOrderCtr extends Controller
             'unit' => $unit,
             'category' => $category,
             'suplr' => $suplr,
-            'reorderCount' => $reorder_count
+            'reorderCount' => $reorder_count,
+            'getAllOrders' => $get_all_orders
             ]);
     }
 
     public function pay(){
 
-        $source = Paymongo::source()->create([
+     /*   $source = Paymongo::source()->create([
             'type' => 'gcash',
             'amount' => 100.00,
             'currency' => 'PHP',
@@ -54,6 +59,7 @@ class PurchaseOrderCtr extends Controller
        // dd($source);
       //  dd($source->getRedirect()['checkout_url']);
         return redirect($source->getRedirect()['checkout_url']);
+        */
     }
 
 
@@ -63,6 +69,9 @@ class PurchaseOrderCtr extends Controller
         $email = Input::input('supplier_email');
         Mail::to($email)
         ->send(new MyMail($data));
+        
+        // after email sent, it will automatically save orders to database
+        $this->recordOrder();
     }
 
     public function getSupplierEmail($supplier_id){
@@ -73,8 +82,6 @@ class PurchaseOrderCtr extends Controller
         return $supplier;
     }
 
-   
-
     public function getAllReorder(){
         $product = DB::table($this->table_prod)
         ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name'))
@@ -83,7 +90,19 @@ class PurchaseOrderCtr extends Controller
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
         ->whereColumn('tblproduct.re_order','>=', 'tblproduct.qty')
         ->get();
- 
+
+        return $product;
+    }
+    
+    public function getAllOrders(){
+        $product = DB::table($this->table_po)
+        ->select("tblpurchaseorder.*", DB::raw('CONCAT('.$this->table_po.'._prefix, '.$this->table_po.'.po_num) AS po_num, description, unit, supplierName, category_name'))
+        ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_po . '.product_code')
+        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
+        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         return $product;
     }
@@ -99,6 +118,15 @@ class PurchaseOrderCtr extends Controller
  
 
         return $product;
+    }
+
+    public function filterSupplier($supplier){
+  
+        $orders = session()->get('orders');
+        
+        $arr = ['data' => $orders];
+
+        return $arr;
     }
 
     public function addToOrder(){
@@ -153,6 +181,53 @@ class PurchaseOrderCtr extends Controller
         return redirect()->back()->with('success', 'Product added to cart successfully!');
 }
 
+public function recordOrder(){
+    $sub_total = 0;
+    $total_amount = 0;
+    $po_num = $this->getPONum();
+    if(session()->get('orders')){
+        foreach (session()->get('orders') as $product_code => $data) {
+
+            $sub_total = $data['qty_order'] * $data['price'];
+            $total_amount += $sub_total;
+           
+            $po = new PurchaseOrder;
+            $po->_prefix = 'PO' . $this->getPrefix();
+            $po->po_num = $po_num;
+            $po->product_code = $product_code;
+            $po->qty_order = $data['qty_order'];
+            $po->amount = $sub_total;       
+            $po->date = $this->getPrefix();  
+            $po->status = 'Pending';    
+            $po->save();     
+        } 
+    }
+    // remove request orders after save to PO database
+    session()->forget('orders');
+}
+
+public function getPONum(){
+    $po_num = DB::table($this->table_po)
+    ->max('po_num');
+    $inc = ++ $po_num;
+    return $inc;
+}
+
+public function getPrefix(){
+    return $date = $this->getYear() . $this->getMonth() . $this->getDay();
+ }
+
+ public function getYear(){
+     return $year = date('y');
+ }
+
+ public function getMonth(){
+     return $month = date('m');
+ }
+
+ public function getDay(){
+     return $month = date('d');
+ }
 public function pdf(){
 
     $output = $this->convertProductDataToHTML();

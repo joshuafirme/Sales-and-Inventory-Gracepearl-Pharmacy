@@ -87,6 +87,8 @@ Route::get('/inventory/order/print', 'PurchaseOrderCtr@pdf');
 Route::get('/inventory/order/downloadOrderPDF', 'PurchaseOrderCtr@downloadOrderPDF');
 Route::get('/sendorder', 'PurchaseOrderCtr@sendMail');
 Route::post('/getSupplierEmail/{supplier_id}', 'PurchaseOrderCtr@getSupplierEmail');
+Route::post('/filterSupplier/{supplier_id}', 'PurchaseOrderCtr@filterSupplier');
+Route::post('/inventory/addRecord', 'PurchaseOrderCtr@recordOrder');
 //pay
 Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');
 

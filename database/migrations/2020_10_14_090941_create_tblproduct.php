@@ -24,6 +24,7 @@ class CreateTblproduct extends Migration
             $table->double('orig_price');
             $table->double('selling_price');
             $table->string('exp_date');
+            $table->string('withPresciption')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

@@ -33,6 +33,7 @@ Route::post('/sales/cashiering/{search_key}', 'SalesCtr@search');
 Route::get('/sales/cashiering/addToCart', 'SalesCtr@addToCart');
 Route::get('/sales/cashiering/process', 'SalesCtr@process');
 Route::get('/sales/cashiering/getTransNo', 'SalesCtr@getCurrentTransacNo');
+Route::get('/sales/cashiering/getSalesInvNo', 'SalesCtr@getSalesInvNo');
 
 // Supplier
 Route::get('maintenance/supplier/', 'SupplierMaintenanceCtr@index');

@@ -54,10 +54,10 @@
             {{ csrf_field() }}
 
               <label class="col-form-label">Sales Invoice #</label>
-              <input type="number" class="form-control" name="sales-invoice" id="sales-invoice" required>
+              <input type="number" class="form-control" name="sales-invoice" id="sales-invoice-no" required>
               <small style="display: none" class="form-text text-danger">Please fillup this field to process</small>
               <div class="form-check mt-1  mb-2">
-                <input type="checkbox" class="form-check-input chk-senior" id="senior-chk">
+                <input type="checkbox" class="form-check-input chk-senior" id="senior-chk" value="yes">
                 <label class="form-check-label" for="exampleCheck1">Senior Citizen</label>
               </div>
 

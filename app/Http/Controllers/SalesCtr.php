@@ -108,7 +108,7 @@ class SalesCtr extends Controller
             session()->put('cart', $cart);
             return redirect()->back();
     }
-    // void
+    // remove item from cart
     public function void($product_code){
         $cart[$product_code]['qty'] --;
         session()->put('cart', $cart);
@@ -144,36 +144,74 @@ class SalesCtr extends Controller
         return $month = date('d');
     }
 
+    public function getSalesInvNo(){
+        $sales_inv_no = DB::table($this->table_sales)
+        ->max('sales_inv_no');
+        $inc = ++ $sales_inv_no;
+        return str_pad($inc, 5, '0', STR_PAD_LEFT);
+    }
+
     public function process(){
 
-    
+        $isSenior = Input::input('senior_chk');
+        $sales_inv_no = Input::input('sales_inv_no');
+        $senior_name = Input::input('senior_name');
+      //  $sales_inv_no = $this->getSalesInvNo();
+
+        if($isSenior == 'yes' || !$isSenior == ''){
+            $this->updateSales($sales_inv_no);
+            $this->recordSeniorInfo($senior_name, $sales_inv_no);
+        }
+        else if($isSenior == 'no'){
+            $this->updateSales($sales_inv_no);
+        }
+       
+        session()->forget('cart');
+        return redirect()->back();
+    }
+
+    public function updateSales($sales_inv_no){
+
         $total_amount = 0;
         $sub_total = 0;
-  
+
         if(session()->get('cart')){
             foreach (session()->get('cart') as $product_code => $data) {
             
                 $sub_total = $data['qty'] * $data['unit_price'];
                 $total_amount += $sub_total;
                 $sales = new Sales;
-                $sales->_prefix = $this->getPrefix();
-                $sales->sales_inv_no = 10001;
+                $sales->sales_inv_no = $sales_inv_no;
                 $sales->product_code = $product_code;
                 $sales->qty = $data['qty'];
                 $sales->amount = $sub_total;       
                 $sales->date = $data['date'];     
-                $sales->employeeID = 1;   
-                $sales->order_from = "nyaa";   
-                $sales->save();
-
-               
+                $sales->employeeID = 20001;   
+                $sales->order_from = "Walk-in";   
+                $sales->save();   
+                
+                $this->updateInventory($sales->product_code, $sales->qty);
             } 
         }
         else{
             echo "No data found";
         }
-        session()->forget('cart');
-        return redirect()->back();
+    }
+
+    public function updateInventory($product_code, $qty){
+        DB::table($this->table_prod)
+        ->where(DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), $product_code)
+        ->update(array(
+            'qty' => DB::raw('qty - '. $qty .'')));
+    }
+
+    public function recordSeniorInfo($senior_name, $sales_inv_no){
+        DB::table('tblsenior_citizen')->insert(
+            [
+                'sales_inv_no' => $sales_inv_no,
+                'name' => $senior_name   
+            ]
+        );
     }
 
     public function getDate(){

@@ -143,28 +143,61 @@ $(document).ready(function(){
           }    
       
       });
-      
-
+              
+        //get sales inv and pass to input
+        function getSalesInv(){
+          $.ajax({
+            url:"/sales/cashiering/getSalesInvNo",
+            type:"GET",
+            success:function(response){
+              console.log(response);
+              $('#sales-invoice-no').val(response);
+              
+            }
+          });
+        }
+        
         //proccess items
         $('#btn-process').click(function(){
 
-          $.ajax({
-            url:"/sales/cashiering/process",
-            type:"GET",
-            success:function(response){
-          //    console.log(response);
-              $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
-          
-            }
-          });     
+          getSalesInv();
       
-      });
+        });
 
        //confirm sales invoice
        $('#btn-confirm-inv').click(function(){
-        console.log('test');
+   
+        var senior_chk = $('#senior-chk').val();
+        var sales_inv_no= $('#sales-invoice-no').val();
+        var senior_name = $('#senior-name').val();
+
+        console.log(senior_chk);
+        console.log(sales_inv_no);
+        console.log(senior_name);
+
+        if(senior_chk == ''){
+          $('#senior-chk').val('no');
+        }
+
         if($('#sales-invoice').val() == ''){
           $('.text-danger').css('display','inline');
+        }
+        else{
+          
+          $.ajax({
+            url:"/sales/cashiering/process",
+            type:"GET",
+            data:{
+              sales_inv_no:sales_inv_no,
+              senior_name:senior_name,
+              senior_chk:senior_chk
+            },
+            success:function(response){
+              console.log('test');
+              $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+              $('#processModal').modal('hide');
+            }
+          });   
         }
       
     

@@ -177,7 +177,7 @@
        
         <?php $subtotal = 0; $total = 0; ?>
         @if(session('orders')) 
-        <table class="table responsive table-hover mb-2" id="order-table">                               
+        <table class="table responsive table-hover" id="order-table">                               
           <thead>
             <tr>
                 <th>Product Code</th>
@@ -236,15 +236,15 @@
         @else
         <div class="alert alert-danger alert-dismissible request-order-isEmpty" style="display: block">
          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-         <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>Your cart is empty
+         <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>No data found
        </div>  
          @endif 
-        <div class="line mb-3"></div>
+        <div class="line"></div>
 
 
       <div class="row">
      
-        <div class="col-sm-3 mb-2 ml-auto">
+        <div class="col-sm-3 ml-auto">
           <label class="col-form-label">Supplier's Email</label>
           <input type="email" class="form-control" name="email" id="supplier_email" >
           <small style="display: none" class="form-text text-danger">Supplier's email is required</small>

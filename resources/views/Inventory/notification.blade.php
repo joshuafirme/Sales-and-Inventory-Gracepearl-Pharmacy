@@ -32,7 +32,7 @@
                                       <a class="nav-link  active" id="reorder-tab" data-toggle="tab" href="#reordertab" role="tab" aria-controls="contact" aria-selected="true">Reorder
                                         <span class="badge badge-pill badge-success"> {{ $reorderCount }} </span>
                                       </a>
-                                  </li>
+                                     </li>
                                       <li class="nav-item">
                                           <a class="nav-link" id="expiry-tab" data-toggle="tab" href="#expirytab" role="tab" aria-controls="home" aria-selected="false">Near Expiry
                                             <span class="badge badge-pill badge-warning" style="color: #fff">{{ $expiryCount }}</span>
@@ -119,7 +119,7 @@
                                       </div>
                                       <div class="tab-pane fade  active show" id="reordertab" role="tabpanel" aria-labelledby="reorder-tab">
 
-                                        <table class="table responsive  table-hover" id="reorder-table" width="100%">   
+                                        <table class="table responsive  table-hover" id="reorders-table" width="100%">   
                                                     
                                           @if(count($reorderProduct) > 0)
                                           <thead>

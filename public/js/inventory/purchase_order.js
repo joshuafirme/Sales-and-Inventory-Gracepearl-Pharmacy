@@ -5,7 +5,7 @@ $(document).ready(function(){
     fetch_reorders();
 
     function fetch_orders(){
-      $('#ord-table').DataTable({
+      var order_tbl = $('#ord-table').DataTable({
      
         processing: true,
         serverSide: true,
@@ -29,7 +29,13 @@ $(document).ready(function(){
         ]
         
        });
+       $('#ord_supplier').change(function(){
   
+        order_tbl.column( $(this).data('column') )
+        .search( $(this).val() )
+        .draw();
+    
+        });
     }
 
     function fetch_reorders(){
@@ -56,12 +62,6 @@ $(document).ready(function(){
         
        });
        $('#ro_supplier').change(function(){
-        var supplier = $('#ro_supplier').val();
-  
-        if(supplier=='All'){
-          $('#reorder-table').DataTable().destroy();
-          fetch_reorders();
-        }
   
         reoder_tbl.column( $(this).data('column') )
         .search( $(this).val() )

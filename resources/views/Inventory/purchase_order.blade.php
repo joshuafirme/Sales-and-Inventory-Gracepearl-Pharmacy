@@ -59,7 +59,6 @@
                     <label class="m-2 ml-3">Supplier</label>
                     <select data-column="4" class=" form-control col-sm-2 ml-2" name="ro_supplier" id="ro_supplier">
                       
-                      <option value="All">All</option>
                       @foreach($suplr as $data)
                     <option value={{ $data->supplierName }}>{{ $data->supplierName }}</option>
                       @endforeach
@@ -98,10 +97,9 @@
                     <div class="form-group row">
                 
                         <label class="m-2 ml-3">Supplier</label>
-                        <select class=" form-control col-sm-2 ml-2" name="ord_supplier" id="ord_supplier">
-                          <option value="All">All</option>
+                        <select data-column="5" class=" form-control col-sm-2 ml-2" name="ord_supplier" id="ord_supplier">
                           @foreach($suplr as $data)
-                        <option value={{ $data->id }}>{{ $data->supplierName }}</option>
+                        <option value={{ $data->supplierName }}>{{ $data->supplierName }}</option>
                           @endforeach
                         </select>
                       </div>

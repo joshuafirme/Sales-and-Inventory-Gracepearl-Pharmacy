@@ -76,13 +76,31 @@
                     <a href="#reports-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-file-contract"></i> Reports</a>
                     <ul class="collapse list-unstyled" id="reports-menu">
                         <li>
-                            <a href="blank.html"><i class="fas fa-file-contract"></i> Inventory Report</a>
-                        </li>
-                        <li>
-                            <a href="404.html"><i class="fas fa-truck-moving"></i> Delivery Report</a>
+                            <a href="blank.html"><i class="fas fa-cube"></i> Inventory Report</a>
                         </li>
                         <li>
                             <a href="500.html"><i class="fas fa-file-invoice-dollar"></i> Sales Report</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-file-invoice-dollar"></i> Stock Adjustment</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-truck-moving"></i> Supplier Delivery</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-dolly-flatbed"></i> Stock Entry</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-radiation-alt"></i> Expired Products</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-list-ul"></i> Reorder List</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-chart-bar"></i> Fast and Slow Moving</a>
+                        </li>
+                        <li>
+                            <a href="500.html"><i class="fas fa-hand-holding"></i> Returns</a>
                         </li>
                     </ul>
                 </li>

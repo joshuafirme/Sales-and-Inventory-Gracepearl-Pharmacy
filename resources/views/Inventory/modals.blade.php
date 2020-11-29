@@ -229,16 +229,16 @@
                         </td>     <td></td>
                      </tr> 
             </tbody>
-            @else
-            <div class="alert alert-danger alert-dismissible">
-             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-             <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>You have no orders yet
-           </div>  
-             @endif 
+            
         </thead>
         
         </table>
-
+        @else
+        <div class="alert alert-danger alert-dismissible request-order-isEmpty" style="display: block">
+         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+         <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>Your cart is empty
+       </div>  
+         @endif 
         <div class="line mb-3"></div>
 
 
@@ -247,6 +247,7 @@
         <div class="col-sm-3 mb-2 ml-auto">
           <label class="col-form-label">Supplier's Email</label>
           <input type="email" class="form-control" name="email" id="supplier_email" >
+          <small style="display: none" class="form-text text-danger">Supplier's email is required</small>
         </div>
     
 
@@ -258,7 +259,6 @@
           <label class="label text-success">Order sent successfully</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-        <button style="color: #fff" class="btn btn-sm btn-primary" id="btn-add-record"> <i class="fas fa-plus"></i> Add to Record</button>
         <button style="color: #fff" class="btn btn-sm btn-success" id="btn-send-order"> <i class="fas fa-paper-plane"></i> Send Order</button>
      
       </div>

@@ -22,7 +22,7 @@
       
         <div class="row">
         
-          <div class="col-sm-6  col-lg-12 mb-3">
+          <div class="col-sm-6  col-lg-12 mb-2">
             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal" id="btn-show-orders"><span class='fas fa-cart-arrow-down' ></span> Request Orders</button>
            
             </div>
@@ -56,17 +56,18 @@
 
                 <div class="form-group row">
             
-                    <label class="m-2 ml-4">Supplier</label>
-                    <select class=" form-control col-sm-2 ml-2" name="po_suppliers" id="po_suppliers">
+                    <label class="m-2 ml-3">Supplier</label>
+                    <select data-column="4" class=" form-control col-sm-2 ml-2" name="ro_supplier" id="ro_supplier">
                       
+                      <option value="All">All</option>
                       @foreach($suplr as $data)
-                    <option value={{ $data->id }}>{{ $data->supplierName }}</option>
+                    <option value={{ $data->supplierName }}>{{ $data->supplierName }}</option>
                       @endforeach
                     </select>
                   </div>
- 
-                    <table class="table responsive  table-hover" id="po-table" width="100%">       
-                      @if(count($product) > 0)                        
+
+                  @if(count($product) > 0)     
+                    <table class="table responsive  table-hover" id="reorder-table" width="100%">                                     
                       <thead>
                         <tr>
                             <th>Product Code</th>
@@ -81,20 +82,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                      <tr>    
-                        @foreach ($product as $data)                        
-                        <td>{{ $data->productCode }}</td>
-                        <td>{{ $data->description }}</td>
-                        <td>{{ $data->unit }}</td>
-                        <td>{{ $data->category_name }}</td>
-                        <td>{{ $data->supplierName }}</td>
-                        <td>{{ $data->qty }}</td>
-                        <td>{{ $data->re_order }}</td>                                   
-                        <td>
-                          <a class="btn" id="btn-add-order" product-code="{{ $data->id }}" data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>
-                        </td>
-                      </tr>
-                      @endforeach  
                       @else
                       <div class="alert alert-danger alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -110,17 +97,17 @@
 
                     <div class="form-group row">
                 
-                        <label class="m-2 ml-4">Supplier</label>
-                        <select class=" form-control col-sm-2 ml-2" name="ord_suppliers" >
-                          
+                        <label class="m-2 ml-3">Supplier</label>
+                        <select class=" form-control col-sm-2 ml-2" name="ord_supplier" id="ord_supplier">
+                          <option value="All">All</option>
                           @foreach($suplr as $data)
                         <option value={{ $data->id }}>{{ $data->supplierName }}</option>
                           @endforeach
                         </select>
                       </div>
-                 
+
+                      @if(count($getAllOrders) > 0) 
                         <table class="table responsive  table-hover" id="ord-table" width="100%">       
-                          @if(count($product) > 0)              
                           <thead>
                             <tr>
                                 <th>PO#</th>
@@ -136,24 +123,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                          <tr>    
-                            @foreach ($getAllOrders as $data)                        
-                            <td>{{ $data->po_num }}</td>
-                            <td>{{ $data->product_code }}</td>
-                            <td>{{ $data->description }}</td>
-                            <td>{{ $data->supplierName }}</td>
-                            <td>{{ $data->category_name }}</td>
-                            <td>{{ $data->unit }}</td>
-                            <td>{{ $data->qty_order }}</td> 
-                            <td>{{ $data->amount }}</td>
-                            <td>{{ $data->date }}</td>
-                            <td>{{ $data->status }}</td>
-                          </tr>
-                          @endforeach  
                           @else
                           <div class="alert alert-danger alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>No data found
+                            <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>No orders found
                           </div>  
                            @endif                     
                       </tbody>

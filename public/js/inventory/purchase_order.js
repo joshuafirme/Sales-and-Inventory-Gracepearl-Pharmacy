@@ -1,21 +1,48 @@
 
 $(document).ready(function(){
 
+    fetch_orders();
+    fetch_reorders();
 
-   // fetch_data();
-  
-    function fetch_data(){
-      $('#purchase-order-table').DataTable({
+    function fetch_orders(){
+      $('#ord-table').DataTable({
      
         processing: true,
         serverSide: true,
         
        
         ajax:{
-         url: "/inventory/purchaseorder",
+         url: "/inventory/displayOrders",
         }, 
         
-         
+        columns:[       
+         {data: 'po_num', name: 'po_num'},
+         {data: 'product_code', name: 'product_code'},
+         {data: 'description', name: 'description'},
+         {data: 'unit', name: 'unit'},   
+         {data: 'category_name', name: 'category_name'},    
+         {data: 'supplierName', name: 'supplierName'},    
+         {data: 'qty_order', name: 'qty_order'},
+         {data: 'amount', name: 'amount'},
+         {data: 'date', name: 'date'},
+         {data: 'status', name: 'status',orderable: false},
+        ]
+        
+       });
+  
+    }
+
+    function fetch_reorders(){
+      var reoder_tbl = $('#reorder-table').DataTable({
+     
+        processing: true,
+        serverSide: true,
+        
+       
+        ajax:{
+         url: "/inventory/displayReorders",
+        }, 
+   
         columns:[       
          {data: 'productCode', name: 'productCode'},
          {data: 'description', name: 'description'},
@@ -28,7 +55,19 @@ $(document).ready(function(){
         ]
         
        });
+       $('#ro_supplier').change(function(){
+        var supplier = $('#ro_supplier').val();
   
+        if(supplier=='All'){
+          $('#reorder-table').DataTable().destroy();
+          fetch_reorders();
+        }
+  
+        reoder_tbl.column( $(this).data('column') )
+        .search( $(this).val() )
+        .draw();
+    
+        });
     }
 
     //show product details
@@ -104,7 +143,6 @@ $(document).ready(function(){
                     $('.loader').css('display', 'none');
                     setTimeout(function(){
                       $('.update-success-validation').fadeOut('slow');
-                    
        
                     },2000);
                   
@@ -117,6 +155,7 @@ $(document).ready(function(){
 
     //show orders           
     $('#btn-show-orders').click(function(){
+      $('.text-danger').css('display', 'none');
       setTimeout(function(){
         $("#order-table").load( "purchaseorder #order-table" );
   
@@ -138,9 +177,10 @@ $(document).ready(function(){
     */
     });
 
-    //get supplier's email by change
-    $('#po_suppliers').change(function(){
+    //get supplier's email when change
+    $('#ro_supplier').change(function(){
       supplier_id = $(this).val();
+      console.log(supplier_id);
       $.ajax({
         url:"/getSupplierEmail/" + supplier_id,
         type:"POST",
@@ -198,34 +238,39 @@ $(document).ready(function(){
     $('#btn-send-order').click(function(){
      
       var supplier_email = $('#supplier_email').val();
-      $.ajax({
-        url:"/sendorder",
-        type:"GET",
-        data:{
-          supplier_email:supplier_email
-        },
-     
-        beforeSend:function(){
-          $('#btn-send-order').text('Sending...');
-          $('.loader').css('display', 'inline');
-        },
-            success:function(response){
-             
-              setTimeout(function(){
-                $('.update-success-validation').css('display', 'inline');
-                $('#btn-send-order').text('Send Order');
-                $('.loader').css('display', 'none');
-                setTimeout(function(){
-                  $('.update-success-validation').fadeOut('slow');
-                  // load order table
-                  $("#ord-table").load( "purchaseorder #ord-table" );
-   
-                },2000);
-              
-              },1000);
 
-              }          
-       });
+      if(supplier_email == ''){
+        $('.text-danger').css('display', 'block');
+      }
+      else{
+        $.ajax({
+          url:"/sendorder",
+          type:"GET",
+          data:{
+            supplier_email:supplier_email
+          },
+       
+          beforeSend:function(){
+            $('#btn-send-order').text('Sending...');
+            $('.loader').css('display', 'inline');
+          },
+              success:function(response){
+               
+                setTimeout(function(){
+                  $('.update-success-validation').css('display', 'inline');
+                  $('#btn-send-order').text('Send Order');
+                  $('.loader').css('display', 'none');
+                  setTimeout(function(){
+                    $('.update-success-validation').fadeOut('slow');
+     
+                  },2000);
+                
+                },1000);
+  
+                }          
+         });
+      }
+     
     });
 
  //send order

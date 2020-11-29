@@ -24,25 +24,52 @@ class PurchaseOrderCtr extends Controller
     {
         //session()->forget('orders');
         $category_param = $request->category;
-        $product = $this->getAllReorder(); 
-        $reorder_count = $product->count(); 
+        $get_all_reorder = $this->getAllReorder(); 
+       
 
         $unit = DB::table($this->table_unit)->get();
         $category = DB::table($this->table_cat)->get();
         $suplr = DB::table($this->table_suplr)->get();
+        
         //
         $get_all_orders = $this->getAllOrders();
-        
+        $reorder_count = $get_all_reorder->count(); 
        
         return view('/inventory/purchase_order', 
             [
-            'product' => $product,
+            'product' => $get_all_reorder,
             'unit' => $unit,
             'category' => $category,
             'suplr' => $suplr,
             'reorderCount' => $reorder_count,
             'getAllOrders' => $get_all_orders
             ]);
+    }
+
+    public function displayReorders(){
+        
+        $get_all_reorder = $this->getAllReorder();
+        
+        if(request()->ajax())
+        {       
+            return datatables()->of($get_all_reorder)
+            ->addColumn('action', function($product){
+                $button = '<a class="btn" id="btn-add-order" product-code='. $product->id .' data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>';
+
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);            
+        }
+    }
+
+    public function displayOrders(){
+        $get_all_orders = $this->getAllOrders();
+        if(request()->ajax())
+        {       
+            return datatables()->of($get_all_orders)
+            ->make(true);            
+        }
     }
 
     public function pay(){
@@ -74,9 +101,9 @@ class PurchaseOrderCtr extends Controller
         $this->recordOrder();
     }
 
-    public function getSupplierEmail($supplier_id){
+    public function getSupplierEmail($supplier){
         $supplier = DB::table($this->table_suplr)
-        ->where('id', $supplier_id)
+        ->where('supplierName', $supplier)
         ->value('email');
 
         return $supplier;
@@ -101,7 +128,7 @@ class PurchaseOrderCtr extends Controller
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->orderBy('created_at', 'desc')
+        ->orderBy('date', 'desc')
         ->get();
 
         return $product;

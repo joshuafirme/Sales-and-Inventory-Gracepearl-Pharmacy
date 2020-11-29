@@ -198,7 +198,7 @@
     </section>
     <!-- /.content -->
     @extends('sales.sales_modal')
-@section('addproductmodal')
+@section('voidModal')
 @endsection
 
 @endsection

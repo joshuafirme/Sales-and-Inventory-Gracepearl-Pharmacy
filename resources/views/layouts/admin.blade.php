@@ -38,7 +38,7 @@
                         </li>
                      
                         <li>
-                            <a href="500.html"><i class="fas fa-file-invoice-dollar"></i> Sales Report</a>
+                            <a href="{{ url('sales/salesreport') }}"><i class="fas fa-file-invoice-dollar"></i> Sales Report</a>
                         </li>
                     </ul>
                 </li>
@@ -199,7 +199,8 @@
           <script src="{{asset('js/maintenance/unit_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/company_maintenance.js')}}"></script>
 
-          <script src="{{asset('js/cashiering/cashiering.js')}}"></script>
+          <script src="{{asset('js/sales/cashiering.js')}}"></script>
+          <script src="{{asset('js/sales/sales_report.js')}}"></script>
 
           <!-- inventory -->
           <script src="{{asset('js/inventory/stockadjustment.js')}}"></script>

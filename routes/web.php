@@ -27,13 +27,16 @@ Route::post('/maintenance/category/edit/{id}', 'CategoryMaintenanceCtr@edit');
 Route::post('/maintenance/category/update/{category_id}', 'CategoryMaintenanceCtr@updateCategory');
 Route::delete('/maintenance/category/{id}', 'CategoryMaintenanceCtr@destroy');
 
-// Sales
+// Cashiering
 Route::get('/sales/cashiering', 'SalesCtr@index');
 Route::post('/sales/cashiering/{search_key}', 'SalesCtr@search');
 Route::get('/sales/cashiering/addToCart', 'SalesCtr@addToCart');
 Route::get('/sales/cashiering/process', 'SalesCtr@process');
 Route::get('/sales/cashiering/getTransNo', 'SalesCtr@getCurrentTransacNo');
 Route::get('/sales/cashiering/getSalesInvNo', 'SalesCtr@getSalesInvNo');
+// Sales report
+Route::get('/sales/salesreport', 'SalesReportCtr@index');
+Route::get('/sales/displaySales', 'SalesReportCtr@displaySales');
 
 // Supplier
 Route::get('maintenance/supplier/', 'SupplierMaintenanceCtr@index');

@@ -199,10 +199,22 @@ class SalesCtr extends Controller
     }
 
     public function updateInventory($product_code, $qty){
+        
         DB::table($this->table_prod)
         ->where(DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), $product_code)
         ->update(array(
             'qty' => DB::raw('qty - '. $qty .'')));
+    }
+
+    public function checkQty($product_code){
+        
+        $qty = DB::table($this->table_prod)
+        ->where(DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), $product_code)
+        ->value('qty');
+
+        if($qty <= 0){
+            
+        }
     }
 
     public function recordSeniorInfo($senior_name, $sales_inv_no){

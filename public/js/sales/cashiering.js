@@ -196,6 +196,9 @@ $(document).ready(function(){
               console.log('test');
               $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
               $('#processModal').modal('hide');
+              $('#total-amount-due').val('');
+              $('#change').val('');
+              $('#tendered').val('');
             }
           });   
         }

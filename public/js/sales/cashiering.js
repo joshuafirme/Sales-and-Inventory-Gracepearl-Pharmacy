@@ -164,7 +164,7 @@ $(document).ready(function(){
       
         });
 
-       //confirm sales invoice
+       //confirm proccess and check if senior citizen
        $('#btn-confirm-inv').click(function(){
    
         var senior_chk = $('#senior-chk').val();
@@ -175,35 +175,38 @@ $(document).ready(function(){
         console.log(sales_inv_no);
         console.log(senior_name);
 
-        if(senior_chk == ''){
-          $('#senior-chk').val('no');
-        }
-
-        if($('#sales-invoice').val() == ''){
-          $('.text-danger').css('display','inline');
+        if($('#senior-chk').prop('checked') == true){
+          senior_chk = 'yes';
         }
         else{
-          
-          $.ajax({
-            url:"/sales/cashiering/process",
-            type:"GET",
-            data:{
-              sales_inv_no:sales_inv_no,
-              senior_name:senior_name,
-              senior_chk:senior_chk
-            },
-            success:function(response){
-              console.log('test');
-              $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
-              $('#processModal').modal('hide');
-              $('#total-amount-due').val('');
-              $('#change').val('');
-              $('#tendered').val('');
-            }
-          });   
+          senior_chk = 'no';
         }
-      
-    
+
+          if($('#sales-invoice').val() == ''){
+            $('.text-danger').css('display','inline');
+          }
+          else{
+            
+            $.ajax({
+              url:"/sales/cashiering/process",
+              type:"GET",
+              data:{
+                sales_inv_no:sales_inv_no,
+                senior_name:senior_name,
+                senior_chk:senior_chk
+              },
+              success:function(){
+                console.log('test');
+                $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+                $('#processModal').modal('hide');
+                $('#total-amount-due').val('');
+                $('#change').val('');
+                $('#tendered').val('');
+              }
+            });   
+          }
+        
+
     });
       
       function getCurrentTransNo(){

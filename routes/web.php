@@ -37,6 +37,7 @@ Route::get('/sales/cashiering/getSalesInvNo', 'SalesCtr@getSalesInvNo');
 // Sales report
 Route::get('/sales/salesreport', 'SalesReportCtr@index');
 Route::get('/sales/displaySales', 'SalesReportCtr@displaySales');
+Route::get('/sales/displaySalesByDate', 'SalesReportCtr@displaySalesByDate');
 
 // Supplier
 Route::get('maintenance/supplier/', 'SupplierMaintenanceCtr@index');

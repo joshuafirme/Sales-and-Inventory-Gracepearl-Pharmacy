@@ -15,6 +15,7 @@ class CreateTblsales extends Migration
     {
         Schema::create('tblsales', function (Blueprint $table) {
             $table->bigIncrements('transactionID');
+            $table->integer('_prefix');
             $table->integer('sales_inv_no');
             $table->string('product_code');
             $table->integer('qty');

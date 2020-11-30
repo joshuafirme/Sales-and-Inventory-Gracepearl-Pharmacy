@@ -158,7 +158,7 @@ class SalesCtr extends Controller
         $senior_name = Input::input('senior_name');
       //  $sales_inv_no = $this->getSalesInvNo();
 
-        if($isSenior == 'yes' || !$isSenior == ''){
+        if($isSenior == 'yes'){
             $this->updateSales($sales_inv_no);
             $this->recordSeniorInfo($senior_name, $sales_inv_no);
         }
@@ -181,6 +181,7 @@ class SalesCtr extends Controller
                 $sub_total = $data['qty'] * $data['unit_price'];
                 $total_amount += $sub_total;
                 $sales = new Sales;
+                $sales->_prefix = $this->getPrefix();
                 $sales->sales_inv_no = $sales_inv_no;
                 $sales->product_code = $product_code;
                 $sales->qty = $data['qty'];
@@ -212,9 +213,6 @@ class SalesCtr extends Controller
         ->where(DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), $product_code)
         ->value('qty');
 
-        if($qty <= 0){
-            
-        }
     }
 
     public function recordSeniorInfo($senior_name, $sales_inv_no){
@@ -227,7 +225,7 @@ class SalesCtr extends Controller
     }
 
     public function getDate(){
-        $date = date('m-d-yy');
+        $date = date('yy-m-d');
         return $date;
     }
 }

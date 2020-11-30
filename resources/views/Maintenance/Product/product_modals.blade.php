@@ -82,6 +82,20 @@
               <input type="file"  name="image" id="image">
             <div>{{ $errors->first('image') }}</div>
             </div> 
+
+            <div class="col-md-4 mt-2 with-prescription"  style="display: none">
+              <label for="">With Presciption?</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="with_prescription" id="with_prescription" value="yes" checked>
+                <label class="form-check-label" for="add">
+                  Yes
+                </label>
+                <input class="form-check-input ml-2" type="radio" name="with_prescription" id="no_prescription" value="no">
+                <label class="form-check-label ml-4" for="less">
+                  No
+                </label>
+              </div>
+            </div>
             
           </div>
        

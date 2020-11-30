@@ -106,6 +106,21 @@ $(document).ready(function(){
      
       });
 
+      //when branded and generic selected, the "with prescription" appeared
+      $('#category_name').change(function(){
+        category =  $('select[name=category_name] option').filter(':selected').text();
+
+        if(category == 'Branded' || category == 'Generic'){
+          $('.with-prescription').css('display', 'block');
+        }
+        else{
+          $('input[name ="with_prescription"]').val('no');
+          $('.with-prescription').css('display', 'none');
+        }
+       
+    
+        });
+
      
 
       function getMarkup(id){

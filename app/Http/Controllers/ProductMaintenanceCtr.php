@@ -116,6 +116,7 @@ class ProductMaintenanceCtr extends Controller
         $product->orig_price = $request->input('orig_price');
         $product->selling_price = $request->get('selling_price');
         $product->exp_date = $request->input('exp_date');
+        $product->with_prescription = $request->input('with_prescription');
 
         if(request()->hasFile('image')){
             request()->validate([

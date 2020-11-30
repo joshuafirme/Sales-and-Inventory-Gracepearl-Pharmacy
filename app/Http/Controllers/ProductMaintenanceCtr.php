@@ -118,13 +118,13 @@ class ProductMaintenanceCtr extends Controller
         $product->exp_date = $request->input('exp_date');
         $product->with_prescription = $request->input('with_prescription');
 
+        $product->save();
+
         if(request()->hasFile('image')){
             request()->validate([
                 'image' => 'file|image|max:5000',
             ]);
         }
-
-        $product->save();
         $this->storeImage($product);
 
         return redirect('/maintenance/product')->with('success', 'Data Saved');
@@ -137,6 +137,8 @@ class ProductMaintenanceCtr extends Controller
             ]);
         }
     }
+
+  
 
     public function getPrefix()
     {
@@ -156,6 +158,13 @@ class ProductMaintenanceCtr extends Controller
         $product->orig_price = Input::input('orig_price');
         $product->selling_price = Input::input('selling_price');
         $product->exp_date = Input::input('exp_date');
+        
+        if(request()->hasFile('image')){
+            request()->validate([
+                'image' => 'file|image|max:5000',
+            ]);
+        }
+        $this->updateImage($product_code);
 
         DB::update('UPDATE '. $this->table_prod .' 
         SET description = ?,  unitID = ?, categoryID = ?, supplierID = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
@@ -171,9 +180,18 @@ class ProductMaintenanceCtr extends Controller
             $product->exp_date, 
             $product_code
             ]);
+           
     }
 
-
+    public function updateImage($product_code){
+        
+        if(request()->has('image')){
+            DB::table($table_prod)
+            ->where('id', $product_code)
+            ->update(['image' => request()->image->store('uploads', 'public')]);
+ 
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *

@@ -55,7 +55,7 @@
   
              </div>
             </div>    
-                    <table class="table table-striped responsive  table-hover" id="product-table" width="100%">                               
+                    <table class="table table-data responsive  table-hover" id="product-table" width="100%">                               
                       <thead>
                         <tr>
                             <th>Product Code</th>

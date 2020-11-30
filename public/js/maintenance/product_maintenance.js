@@ -194,9 +194,9 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
       $('#edit_orig_price').val(response[0].orig_price);
       $('#edit_selling_price').val(response[0].selling_price);
       $('#edit_exp_date').val(response[0].exp_date);
-
-      var img_source = "{{asset('storage/'"+response[0].image+")}}";
-      $('#edit_img_view').attr('src', img_source);
+      
+      var img_source = '../../storage/'+response[0].image;
+      $('#img_view').attr('src', img_source);
     }
    });
 });  

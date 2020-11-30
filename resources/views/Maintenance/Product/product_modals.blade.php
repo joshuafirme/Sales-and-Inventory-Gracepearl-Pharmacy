@@ -233,7 +233,12 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Update Photo</label>
-              <input type="file"   name="image" id="edit_image">
+              <input type="file" name="image" id="image" onerror="this.onerror=null;this.src='../../assets/sLogo.jpg'">
+            <div>{{ $errors->first('image') }}</div>
+            </div> 
+
+            <div class="col-md-4">
+              <img alt="no available image" style="width: 200px;"  name="img_view" id="img_view">
             <div>{{ $errors->first('image') }}</div>
             </div> 
 

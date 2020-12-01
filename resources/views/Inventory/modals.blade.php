@@ -11,7 +11,6 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="container-fluid">
           <div class="row">
         {{ csrf_field() }}
 
@@ -57,7 +56,6 @@
         </div>
       </div>
 
-      </div>
     </div>
 
       </div>
@@ -67,7 +65,7 @@
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
-        <button style="color: #fff" type="submit" class="btn btn-sm btn-warning mr-3" id="btn-adjust">Adjust</button>
+        <button style="color: #fff" type="submit" class="btn btn-sm btn-warning" id="btn-adjust">Adjust</button>
       </div>
     </div>
   </div>

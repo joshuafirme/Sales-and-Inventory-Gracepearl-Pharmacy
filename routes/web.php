@@ -46,12 +46,12 @@ Route::post('/maintenance/supplier/update', 'SupplierMaintenanceCtr@update');
 Route::post('/maintenance/supplier/edit/{id}', 'SupplierMaintenanceCtr@edit');
 Route::delete('/maintenance/supplier/{supplierID}', 'SupplierMaintenanceCtr@destroy');
 Route::post('/maintenance/supplier/action', 'SupplierMaintenanceCtr@action');
-Route::post('/getCompanyMarkup/{id}', 'SupplierMaintenanceCtr@getCompanyMarkup');
+Route::post('/getCompanyID/{supplierID}', 'SupplierMaintenanceCtr@getCompanyID');
 
 // Product
 Route::resource('/maintenance/product', 'ProductMaintenanceCtr');
 Route::post('/maintenance/product', 'ProductMaintenanceCtr@store');
-Route::post('/maintenance/updateproduct/{id}', 'ProductMaintenanceCtr@updateProduct');
+Route::post('/maintenance/updateproduct/{id}', 'ProductMaintenanceCtr@updateProduct')->name('updateProduct');
 Route::post('/maintenance/product/show/{productCode}', 'ProductMaintenanceCtr@show');
 Route::delete('/maintenance/product/delete/{productCode}', 'ProductMaintenanceCtr@destroy');
 // Filter Product
@@ -72,6 +72,7 @@ Route::resource('/maintenance/company', 'CompanyMaintenanceCtr');
 Route::post('/maintenance/company/edit/{id}', 'CompanyMaintenanceCtr@edit');
 Route::post('/maintenance/company/update/{id}', 'CompanyMaintenanceCtr@update');
 Route::delete('/maintenance/company/destroy/{id}', 'CompanyMaintenanceCtr@destroy');
+Route::post('/maintenance/company/getCompanyMarkup/{companyID}', 'CompanyMaintenanceCtr@getCompanyMarkup');
 
 //Discount
 Route::resource('/maintenance/discount', 'DiscountCtr');

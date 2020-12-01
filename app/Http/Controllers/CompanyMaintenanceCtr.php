@@ -30,6 +30,15 @@ class CompanyMaintenanceCtr extends Controller
         return redirect('/maintenance/company')->with('success', 'Data Saved');
     }
 
+    
+    public function getCompanyMarkup($companyID)
+    {
+        $suplr = DB::table($this->table_name)
+        ->where('tblcompany.id', $companyID)
+        ->get();
+        return $suplr;
+    }
+
 
     public function edit($id)
     {

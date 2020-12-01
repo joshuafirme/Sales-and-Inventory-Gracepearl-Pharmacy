@@ -121,44 +121,81 @@ $(document).ready(function(){
     
         });
 
-     
-
-      function getMarkup(id){
+      function getCompanyID(supplierID){
         $.ajax({
-          url:"/getCompanyMarkup/"+id,
+          url:"/getCompanyID/"+supplierID,
           type:"POST",
           success:function(response){
-            console.log(response);
-            $('#discount_hidden').val(response[0].markup);
+           //used companyID parameter to get company markup
+           getCompanyMarkup(response[0].companyID)
           }
          });
         
       }
 
+      function getCompanyMarkup(companyID){
+        $.ajax({
+          url:"/maintenance/company/getCompanyMarkup/"+companyID,
+          type:"POST",
+          success:function(response){
+            //get the result from url and pass it to discount_hidden input
+           $('#discount_hidden').val(response[0].markup);
+           $('#edit_discount_hidden').val(response[0].markup);
 
-      $('#orig_price').keyup(function(){
-        var id = $('#supplier_name').val();
-        console.log(id);
-        getMarkup(id);
-        var orig_price = $(this).val();
+           var markup = computeMarkup();
+           var edit_markup = editComputeMarkup();
+           $('#selling_price').val(markup);
+           $('#edit_selling_price').val(edit_markup);
+          }
+         });
+      }
+
+      function computeMarkup(){
+        var orig_price = $('#orig_price').val();
         var percentage = $('#discount_hidden').val();
-        console.log(percentage);
         var diff = orig_price * percentage;
         var markup =  parseFloat(orig_price) + diff;
+        return markup;
+      }
+
+      function editComputeMarkup(){
+        var orig_price = $('#edit_orig_price').val();
+        var percentage = $('#edit_discount_hidden').val();
+        var prod = orig_price * percentage;
+        var markup =  parseFloat(orig_price) + prod;
+        return markup;
+      }
+
+      $('#supplier_name').change(function(){
+        var supplierID = $(this).val();
+        getCompanyID(supplierID);
+     
+      });
+
+      $('#edit_supplier_name').change(function(){
+        var supplierID = $(this).val();
+        getCompanyID(supplierID);
+     
+      });
+
+
+      $('#orig_price').keyup(function(){
+        var supplierID = $('#supplier_name').val();
+        getCompanyID(supplierID);
+
+        var markup = computeMarkup();
         $('#selling_price').val(markup);
       });
 
       $('#edit_orig_price').keyup(function(){
-        var id = $('#supplier_name').val();
-        getMarkup(id);
-        var orig_price = $(this).val();
-        var percentage = $('#discount_hidden').val();
-        console.log(percentage);
-        var diff = orig_price * percentage;
-        var markup =  parseFloat(orig_price) + diff;
+        var supplierID = $('#edit_supplier_name').val();
+        getCompanyID(supplierID);
+
+        var markup = editComputeMarkup();
         $('#edit_selling_price').val(markup);
       });
 
+      
 //edit show
 $(document).on('click', '#btn-edit-product-maintenance', function(){
   var productCode = $(this).attr('product-code');
@@ -194,7 +231,7 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
       $('#edit_orig_price').val(response[0].orig_price);
       $('#edit_selling_price').val(response[0].selling_price);
       $('#edit_exp_date').val(response[0].exp_date);
-      
+
       var img_source = '../../storage/'+response[0].image;
       $('#img_view').attr('src', img_source);
     }
@@ -215,7 +252,7 @@ $('#update-product-maintenance').click(function(){
   var orig_price = $('#edit_orig_price').val();
   var selling_price = $('#edit_selling_price').val();
   var exp_date = $('#edit_exp_date').val();
-
+  var img_path = $('#edit_image').val();
   $.ajaxSetup({
     headers: {
   'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -234,7 +271,8 @@ $('#update-product-maintenance').click(function(){
             re_order:re_order,
             orig_price:orig_price,
             selling_price:selling_price,
-            exp_date:exp_date
+            exp_date:exp_date,
+            img_path:img_path
           },
 
           beforeSend:function(){

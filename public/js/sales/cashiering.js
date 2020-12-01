@@ -122,14 +122,18 @@ $(document).ready(function(){
         });
        
         //compute change
+        function computeChange(){
+          var tendered  =  $('#tendered').val();
+          var total_amount_due  = $('#total-amount-due').val();                         
+          var change = parseFloat(tendered) - parseFloat(total_amount_due);
+          $('#change').val(change.toFixed(2));
+        }
+
           $('#tendered').keyup(function(){
 
-            var tendered  = $(this).val();
-            var total_amount_due  = $('#total-amount-due').val();                         
-            var change = parseFloat(tendered) - parseFloat(total_amount_due);
-            $('#change').val(change.toFixed(2));
+           computeChange();
                     
-        }); 
+          }); 
 
         $('#senior-chk').click(function(){
 
@@ -156,6 +160,34 @@ $(document).ready(function(){
             }
           });
         }
+
+        //check if senior checkbox is cheked
+        $('#senior-chk').click(function(){
+          if($('#senior-chk').prop('checked') == true){
+            $.ajax({
+              url:"/maintenance/discount/getdiscount",
+              type:"POST",
+              success:function(data){
+                
+                var discount = data[0].discount;
+                var total = $('#total-amount-due').val();
+
+                console.log(discount);
+                var result = discount * total;
+                var nya = total - result;
+                $('#total-amount-due').val(nya);
+                computeChange();
+              }
+            });
+          }
+          else{
+            computeTotalAmountDue();
+            setTimeout(function(){
+              computeChange();
+            },500);
+     
+          }
+        });
         
         //proccess items
         $('#btn-process').click(function(){
@@ -164,7 +196,7 @@ $(document).ready(function(){
       
         });
 
-       //confirm proccess and check if senior citizen
+       //enter sales invoice # and check if senior citizen
        $('#btn-confirm-inv').click(function(){
    
         var senior_chk = $('#senior-chk').val();
@@ -195,13 +227,44 @@ $(document).ready(function(){
                 senior_name:senior_name,
                 senior_chk:senior_chk
               },
+              beforeSend:function(){
+                $('#btn-confirm-inv').text('Processing...');
+                $('.loader').css('display', 'inline');
+              },
               success:function(){
-                console.log('test');
-                $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
-                $('#processModal').modal('hide');
-                $('#total-amount-due').val('');
-                $('#change').val('');
-                $('#tendered').val('');
+
+                setTimeout(function(){
+
+                  $('.loader').css('display', 'none');
+                  $('.update-success-validation').css('display', 'inline');
+                  $('#btn-confirm-inv').text('Confirm');
+
+                  $('#cashiering_search').val('');
+                  $('#product_code').val('');
+                  $('#description').val('');
+                  $('#qty').val('');
+                  $('#price').val('');
+                  $('#qty_order').val('');
+                  $('#total').val(''); 
+
+                  $('#total-amount-due').val('');
+                  $('#change').val('');
+                  $('#tendered').val('');
+                  $('#senior-chk').prop('checked', false);
+                  
+                  $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+
+                 setTimeout(function(){
+                    $('.update-success-validation').fadeOut('slow')
+
+                    setTimeout(function(){
+                      $('#processModal').modal('hide');
+                    },1000);
+
+                  },500);
+
+                },500);
+               
               }
             });   
           }

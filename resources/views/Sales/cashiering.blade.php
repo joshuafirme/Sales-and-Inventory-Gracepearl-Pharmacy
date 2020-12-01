@@ -120,8 +120,12 @@
                               <label>Change</label>
                               <input type="text" class="form-control" id="change" value="₱0" readonly>
 
-                              {{ csrf_field() }}
-                              <div class="form-group">
+                              <div class="form-check mt-1 mr-2  mb-2">
+                                <input type="checkbox" class="form-check-input chk-senior" id="senior-chk">
+                                <label class="form-check-label" for="exampleCheck1">Senior Citizen</label>
+                              </div>
+
+                              <div class="form-group ml-auto">
                                 <button class="btn btn-success btn-sm btn-processs" data-toggle="modal" data-target="#processModal" id="btn-process">Process</button> 
                               </div>
 

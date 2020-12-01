@@ -55,13 +55,11 @@
 
               <label class="col-form-label">Sales Invoice #</label>
               <input type="number" class="form-control" name="sales-invoice" id="sales-invoice-no" required>
-              <small style="display: none" class="form-text text-danger">Please fillup this field to process</small>
-              <div class="form-check mt-1  mb-2">
-                <input type="checkbox" class="form-check-input chk-senior" id="senior-chk">
-                <label class="form-check-label" for="exampleCheck1">Senior Citizen</label>
-              </div>
 
-              <input style="display: none"  class="form-control mb-2 mt-2" name="senior-name" id="senior-name"  placeholder="Senior citizen name">
+              <small style="display: none" class="form-text text-danger">Please fillup this field to continue</small>
+        
+
+              <input style="display: none"  class="form-control mb-2 mt-4" name="senior-name" id="senior-name"  placeholder="Senior citizen name">
             
           </div>
         </div>  
@@ -69,7 +67,12 @@
       </div>
       <div class="modal-footer">
 
-              <button type="submit" class="btn btn-sm btn-success" id="btn-confirm-inv">Confirm</button>
+        <div class="update-success-validation mr-auto ml-3" style="display: none">
+          <label class="label text-success">Proccess completed</label>    
+        </div> 
+        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
+          <button type="submit" class="btn btn-sm btn-success" id="btn-confirm-inv">Confirm</button>
+
       </div>
     </form>
     </div>

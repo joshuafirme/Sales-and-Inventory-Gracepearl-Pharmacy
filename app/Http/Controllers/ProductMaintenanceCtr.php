@@ -7,6 +7,7 @@ use App\ProductMaintenance;
 use App\SupplierMaintenance;
 use Illuminate\Http\Request;
 use PDF;
+use Storage;
 
 class ProductMaintenanceCtr extends Controller
 {
@@ -138,15 +139,6 @@ class ProductMaintenanceCtr extends Controller
         }
     }
 
-  
-
-    public function getPrefix()
-    {
-        $prefix = 'P-'.date('m');
-        return $prefix;
-    }
-
-
     public function updateProduct($product_code)
     {
         $product = new ProductMaintenance;
@@ -158,13 +150,7 @@ class ProductMaintenanceCtr extends Controller
         $product->orig_price = Input::input('orig_price');
         $product->selling_price = Input::input('selling_price');
         $product->exp_date = Input::input('exp_date');
-        
-        if(request()->hasFile('image')){
-            request()->validate([
-                'image' => 'file|image|max:5000',
-            ]);
-        }
-        $this->updateImage($product_code);
+        $image = Input::input('img_path');
 
         DB::update('UPDATE '. $this->table_prod .' 
         SET description = ?,  unitID = ?, categoryID = ?, supplierID = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
@@ -180,18 +166,31 @@ class ProductMaintenanceCtr extends Controller
             $product->exp_date, 
             $product_code
             ]);
+
+        
+        Storage::disk('local')->put($image, 'Contents');
+        $img_path = substr($image, 12);
+        $this->updateImage($product_code,$img_path);
            
     }
 
-    public function updateImage($product_code){
+    public function updateImage($product_code, $img_path){
         
-        if(request()->has('image')){
-            DB::table($table_prod)
+            DB::table($this->table_prod)
             ->where('id', $product_code)
-            ->update(['image' => request()->image->store('uploads', 'public')]);
+            ->update(['image' => $img_path]);
  
-        }
+        
     }
+
+    
+
+    public function getPrefix()
+    {
+        $prefix = 'P-'.date('m');
+        return $prefix;
+    }
+
     /**
      * Remove the specified resource from storage.
      *

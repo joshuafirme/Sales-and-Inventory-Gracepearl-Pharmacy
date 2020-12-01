@@ -154,7 +154,7 @@
 
           <div class="row">
             {{ csrf_field() }}
-
+            <input type="hidden" id="edit_discount_hidden">
             <input type="hidden" id="product_code_hidden">
 
             <div class="col-md-4 mb-2">
@@ -205,35 +205,35 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Quantity</label>
-              <input type="number" class="form-control" name="qty" id="edit_qty" readonly>
+              <input type="number" class="form-control" name="edit_qty" id="edit_qty" readonly>
             </div>
   
             <div class="col-md-4">
               <label class="col-form-label">Reorder Point</label>
-              <input type="number" class="form-control" name="re_order" id="edit_re_order" required>
+              <input type="number" class="form-control" name="edit_re_order" id="edit_re_order" required>
             </div>
   
             <div class="col-md-4  mb-2">
               <label class="col-form-label">Original Price</label>
-              <input type="number" class="form-control" name="orig_price" id="edit_orig_price" required>
+              <input type="number" class="form-control" name="edit_orig_price" id="edit_orig_price" required>
             </div>
 
             <input type="hidden" id="edit_discount_hidden">
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
-              <input type="number" class="form-control orig_price" name="selling_price" id="edit_selling_price" readonly>
+              <input type="number" class="form-control orig_price" name="edit_selling_price" id="edit_selling_price" readonly>
             </div>
 
             <div class="col-md-4">
               <label class="col-form-label">Expiration Date</label>
-              <input type="date" class="form-control" name="exp_date" id="edit_exp_date" required>
+              <input type="date" class="form-control" name="edit_exp_date" id="edit_exp_date" required>
             </div>
 
 
             <div class="col-md-4">
               <label class="col-form-label">Update Photo</label>
-              <input type="file" name="image" id="image" onerror="this.onerror=null;this.src='../../assets/sLogo.jpg'">
+              <input type="file" name="image" id="edit_image">
             <div>{{ $errors->first('image') }}</div>
             </div> 
 

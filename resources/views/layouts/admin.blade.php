@@ -59,7 +59,7 @@
                             <a href="{{ url('/inventory/purchaseorder') }}"><i class="fas fa-boxes"></i> Purchase Order </a>
                         </li>
                         <li>
-                            <a href="404.html"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
+                            <a href="{{ url('/inventory/delivery') }}"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
                         </li>
                         <li>
                             <a href="{{ url('/inventory/notification') }}"><i class="fas fa-bell"></i> Notification <span class="badge badge-danger" id="count-all-notifs"> </span></a>

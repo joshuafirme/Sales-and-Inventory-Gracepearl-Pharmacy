@@ -58,7 +58,7 @@ class SalesCtr extends Controller
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
             ->where(DB::raw('CONCAT(tblproduct._prefix, tblproduct.id)'), 'LIKE', '%'.$search_key.'%') // CONCAT 
             ->orWhere('description', 'LIKE', '%'.$search_key.'%')
-            ->orWhere('qty', '>=', 0)
+            ->where('qty', '>=', 0)
             ->get();
 
             return $product;

@@ -1,9 +1,18 @@
 
 $(document).ready(function(){
    
-  fetch_sales();
+    load_data();
 
-   function fetch_sales(date_from, date_to){
+   function load_data()  {
+    var date_from = $('#sales_date_from').val()
+    var date_to = $('#sales_date_to').val();
+    var category = $('select[name=sales_category] option').filter(':selected').text();
+
+    $('#sales-report-table').DataTable().destroy();
+    fetch_sales(date_from, date_to, category);
+   }
+
+   function fetch_sales(date_from, date_to, category){
     console.log(date_from);
     console.log(date_to);
 
@@ -12,19 +21,27 @@ $(document).ready(function(){
     var month = d.getMonth()+1;
     var day = d.getDate();
     
-    var output = d.getFullYear() + '/' +
+    var date = d.getFullYear() + '/' +
         (month<10 ? '0' : '') + month + '/' +
         (day<10 ? '0' : '') + day;
 
-    $('#sales-report-table').DataTable({
+    var sales_table = $('#sales-report-table').DataTable({
+
        processing: true,
        serverSide: true,
+       bPaginate: false,
+       ajax: '/path/to/script',
+       scrollY: 550,
+       scroller: {
+           loadingIndicator: true
+       },
      
        ajax:{
-        url: "/sales/displaySalesByDate",
+        url: "/sales/salesreport",
         data:{
           date_from:date_from,
-          date_to:date_to
+          date_to:date_to,
+          category:category
         },
        }, 
        
@@ -33,8 +50,8 @@ $(document).ready(function(){
         {data: 'sales_inv_no', name: 'sales_inv_no'},
         {data: 'product_code', name: 'product_code'},
         {data: 'description', name: 'description'},
-        {data: 'unit', name: 'unit'},   
-        {data: 'category_name', name: 'category_name'},    
+        {data: 'category_name', name: 'category_name'},         
+        {data: 'unit', name: 'unit'},     
         {data: 'supplierName', name: 'supplierName'},    
         {data: 'qty', name: 'qty'},
         {data: 'amount', name: 'amount'},
@@ -54,17 +71,17 @@ $(document).ready(function(){
          
             extend: 'excel',        
             title: 'Sales Report',
-            messageTop: output
+            messageTop: date
         },
         {
             extend: 'pdf',
             title: 'Sales Report',
-            messageTop: output
+            messageTop: date
         },
         {
           extend: 'csv',
           title: 'Sales Report',
-          messageTop: output
+          messageTop: date
         },
         {
             extend: 'print',
@@ -74,7 +91,7 @@ $(document).ready(function(){
                 altkey: true
             },
             title: 'Sales Report',
-            messageTop: output,         
+            messageTop: date,         
             customize: function (win){
               $(win.document.body).find('h1').css('text-align', 'center');
               $(win.document.body).css( 'font-size', '10pt' )
@@ -85,29 +102,22 @@ $(document).ready(function(){
        
       });
 
-    $('#sales_date_from').change(function() {
-      var date_from = $(this).val()
+    $('.btn-load-records').click(function(){
+
+      var date_from = $('#sales_date_from').val()
       var date_to = $('#sales_date_to').val();
-    //  console.log(date_from +' to '+ date_to);
+      var category = $('select[name=sales_category] option').filter(':selected').text();
 
       $('#sales-report-table').DataTable().destroy();
-      fetch_sales(date_from, date_to)
-
-      
-    });
-
-    $('#sales_date_to').change(function() {
-      var date_to = $(this).val()
-      var date_from = $('#sales_date_from').val();
-   //   console.log(date_from +' to '+ date_to);
-
-      $('#sales-report-table').DataTable().destroy();
-      fetch_sales(date_from, date_to)
-    });
+      fetch_sales(date_from, date_to, category)
+    //  sales_table.ajax.reload();
+     });
+  
 
  //end of fetch_sales
    }
 
+ 
    
 
   });

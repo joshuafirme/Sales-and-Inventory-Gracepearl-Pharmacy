@@ -37,7 +37,7 @@ Route::get('/sales/cashiering/getSalesInvNo', 'SalesCtr@getSalesInvNo');
 // Sales report
 Route::get('/sales/salesreport', 'SalesReportCtr@index');
 Route::get('/sales/displaySales', 'SalesReportCtr@displaySales');
-Route::get('/sales/displaySalesByDate', 'SalesReportCtr@displaySalesByDate');
+//Route::get('/sales/displaySalesByDate', 'SalesReportCtr@displaySalesByDate');
 
 // Supplier
 Route::get('maintenance/supplier/', 'SupplierMaintenanceCtr@index');
@@ -103,6 +103,9 @@ Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');
 //Notification
 Route::resource('/inventory/notification', 'NotificationCtr');
 Route::get('/getAllNotif', 'NotificationCtr@getAllNotif');
+
+//Supplier Delivery
+Route::get('/inventory/delivery', 'SupplierDeliveryCtr@index');
 
 Auth::routes();
 

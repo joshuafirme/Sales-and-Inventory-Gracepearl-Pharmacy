@@ -557,3 +557,7 @@ flex-direction: row;
     .order-modal{
         max-width: 70% !important;
     }
+
+    .total-sales{
+       margin-top: 40px; 
+    }

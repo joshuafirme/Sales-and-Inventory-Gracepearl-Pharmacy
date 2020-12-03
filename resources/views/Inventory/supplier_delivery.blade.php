@@ -33,28 +33,75 @@
   
           <div class="card">
             <div class="card-body">
-                <div class="container-fluid">
-                  <div class="row">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
 
-             </div>
-            </div>    
-                    <table class="table responsive  table-hover" id="supplier-delivery-table" width="100%">                               
-                      <thead>
-                        <tr>
-                            <th>PO#</th>
-                            <th>Product Code</th>     
-                            <th>Description</th>   
-                            <th>Supplier</th> 
-                            <th>Category</th> 
-                            <th>Unit</th>                                 
-                            <th>Qty Order</th>        
-                            <th>Amount</th>
-                            <th>Date Order</th>
-                            <th>Status</th>                                 
-                        </tr>
+                <li class="nav-item">
+                  <a class="nav-link  active" id="po-tab" data-toggle="tab" href="#potab" role="tab" aria-controls="contact" aria-selected="true">Purchase Orders   
+
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" id="delivered-tab" data-toggle="tab" href="#deliveredtab" role="tab" aria-controls="contact" aria-selected="true">Delivered Products   
+
+                  </a>
+                </li>
+ 
+              </ul>   
+
+              <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade active show" id="potab" role="tabpanel" aria-labelledby="po-tab">
+                  
+                  <table class="table responsive table-hover" id="po-table" width="100%">                               
+                    <thead>
+                      <tr>
+                        <th>PO#</th>
+                        <th>Product Code</th>     
+                        <th>Description</th>   
+                        <th>Supplier</th> 
+                        <th>Category</th> 
+                        <th>Unit</th>                                 
+                        <th>Qty Order</th>        
+                        <th>Amount</th>
+                        <th>Date Order</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                       
+                      </tr>
                     </thead>
+                      
+                  
+                  </table>
+                  </div>
+
+
+                  <div class="tab-pane fade" id="deliveredtab" role="tabpanel" aria-labelledby="delivered-tab">
+
+
+                        <table class="table responsive  table-hover" id="supplier-delivery-table" width="100%">       
+                          <thead>
+                            <tr>
+                                <th>Delivery #</th>
+                                <th>Product Code</th>     
+                                <th>Description</th>   
+                                <th>Supplier</th> 
+                                <th>Category</th> 
+                                <th>Unit</th>                                 
+                                <th>Qty Delivered</th>        
+                                <th>Amount</th>
+                                <th>Date Order</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                              
+                       </tbody>
+                        
+                        </table> 
+                      </div>
+
+                </div>
                     
-                    </table>
                   </div>
                 </div>
                 
@@ -63,7 +110,7 @@
 
         <!-- /.row (main row) -->
         
-      </div><!-- /.container-fluid -->
+     
     </section>
     <!-- /.content -->
 

@@ -97,6 +97,11 @@ Route::post('/filterSupplier/{supplier_id}', 'PurchaseOrderCtr@filterSupplier');
 Route::post('/inventory/addRecord', 'PurchaseOrderCtr@recordOrder');
 Route::get('/inventory/displayReorders', 'PurchaseOrderCtr@displayReorders');
 Route::get('/inventory/displayOrders', 'PurchaseOrderCtr@displayOrders');
+
+//Supplier Delivery
+Route::get('/inventory/delivery', 'SupplierDeliveryCtr@index');
+Route::get('/inventory/delivery/displayPO', 'SupplierDeliveryCtr@displayPurchaseOrder');
+
 //pay
 Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');
 
@@ -104,8 +109,7 @@ Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');
 Route::resource('/inventory/notification', 'NotificationCtr');
 Route::get('/getAllNotif', 'NotificationCtr@getAllNotif');
 
-//Supplier Delivery
-Route::get('/inventory/delivery', 'SupplierDeliveryCtr@index');
+
 
 Auth::routes();
 

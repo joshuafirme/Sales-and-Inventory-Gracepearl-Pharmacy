@@ -265,3 +265,49 @@
   </div>
 </div>
 
+
+
+<!-- qty deliver -->
+<div class="modal fade  mt-5" id="qtyDeliverModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="container-fluid">
+          <div class="row">
+
+              <label class="col-form-label">Product Code</label>
+              <input type="text" class="form-control" name="product-code" id="product-code" readonly>
+
+              <label class="col-form-label mt-3">Quantity Delivered</label>
+              <input type="number" class="form-control" name="sales-invoice" id="sales-invoice-no" required>
+
+              <small style="display: none" class="form-text text-danger">Please fillup this field to continue</small>
+        
+              <label class="col-form-label mt-3">Date</label>
+              <input type="date" class="form-control mb-2" >
+            
+        </div>
+        </div>  
+
+      </div>
+      <div class="modal-footer">
+
+        <div class="update-success-validation mr-auto ml-3" style="display: none">
+          <label class="label text-success">Proccess completed</label>    
+        </div> 
+        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
+          <button type="submit" class="btn btn-sm btn-success" id="btn-add-delivery">Confirm</button>
+
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+

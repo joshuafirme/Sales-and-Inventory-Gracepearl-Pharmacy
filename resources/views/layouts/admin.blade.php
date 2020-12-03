@@ -9,8 +9,8 @@
     <link href="{{asset('components/vendor/DataTables/datatables.min.css')}}" rel="stylesheet">
     <link href="{{asset('components/css/master.css')}}" rel="stylesheet">
     <link href="{{asset('components/vendor/chartsjs/Chart.min.css')}}" rel="stylesheet">
-    <link href="{{asset('components/vendor/flagiconcss3/css/flag-icon.min.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <!--   <link href="asset('components/vendor/flagiconcss3/css/flag-icon.min.css')}}" rel="stylesheet">-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
    
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -23,6 +23,19 @@
             <div class="sidebar-header" style="margin-left:-16px;  background-color:#2A2F6E">
             <img src="../../assets/slogo.jpg" alt="bootraper logo" class="app-logo">
             </div>
+
+            <div class="row mt-1">
+            <img src="../../assets/male_user_50px.png" style=" display: block;
+            margin-left: auto;
+            margin-right: auto;">
+            </div>
+            <div class="row mb-1">
+              
+            <p style="color: #494F54; margin:auto">Admin</p>
+                </div>
+
+            <div class="line"></div>
+
             <ul class="list-unstyled components text-secondary">
                 <li>
                     <a href="{{ url('/dashboard') }}"><i class="fas fa-chart-bar"></i> Dashboard</a>
@@ -207,6 +220,7 @@
           <script src="{{asset('js/inventory/stockadjustment.js')}}"></script>
           <script src="{{asset('js/inventory/purchase_order.js')}}"></script>
           <script src="{{asset('js/inventory/notification.js')}}"></script>
+          <script src="{{asset('js/inventory/supplier_delivery.js')}}"></script>
 
           <!-- count all notif -->
           <script src="{{asset('js/count_all_notif.js')}}"></script>
@@ -220,7 +234,6 @@
           <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
           <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.html5.min.js"></script>
           <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.print.min.js"></script>
-
 
       </body>
       

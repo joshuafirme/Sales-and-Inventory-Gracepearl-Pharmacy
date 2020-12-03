@@ -8,6 +8,11 @@ $(document).ready(function(){
    
       processing: true,
       serverSide: true,
+      ajax: '/path/to/script',
+      scrollY: 470,
+      scroller: {
+          loadingIndicator: true
+      },
      
       ajax:"/maintenance/product",
  

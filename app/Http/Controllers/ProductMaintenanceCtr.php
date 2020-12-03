@@ -34,9 +34,10 @@ class ProductMaintenanceCtr extends Controller
                 return datatables()->of($this->filterByCategory($request->category))
                 ->addColumn('action', function($product){
                    // <button class="btn btn-primary btn-sm" "><span class='fa fa-plus'></span> Add Category</button> 
-                    $button = ' <a class="btn" id="btn-edit-product-maintenance" product-code="'. $product->id .'" data-toggle="modal" data-target="#editProductModal"><i class="fa fa-edit"></i></a>';
+                    $button = ' <a class="btn btn-sm btn-primary" id="btn-edit-product-maintenance" product-code="'. $product->id .'" 
+                    data-toggle="modal" data-target="#editProductModal"><i class="fa fa-edit"></i></a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<a class="btn" id="delete-product" delete-id="'. $product->id .'"><i class="fa fa-trash"></i></a>';
+                    $button .= '<a class="btn btn-sm" id="delete-product" delete-id="'. $product->id .'"><i style="color:#DC3545;" class="fa fa-trash"></i></a>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -46,9 +47,10 @@ class ProductMaintenanceCtr extends Controller
                
                 return datatables()->of($product)
                 ->addColumn('action', function($product){
-                    $button = ' <a class="btn" id="btn-edit-product-maintenance" product-code="'. $product->id .'" data-toggle="modal" data-target="#editProductModal"><i class="fa fa-edit"></i></a>';
-                    $button .= '&nbsp;&nbsp;';
-                    $button .= '<a class="btn" id="delete-product" delete-id="'. $product->id .'"><i class="fa fa-trash"></i></a>';
+                    $button = ' <a class="btn btn-sm" id="btn-edit-product-maintenance" product-code="'. $product->id .'"
+                    data-toggle="modal" data-target="#editProductModal" ><i class="fa fa-edit"></i></a>';
+                   $button .= '&nbsp;&nbsp;';
+                   $button .= '<a class="btn btn-sm" id="delete-product" delete-id="'. $product->id .'"><i  style="color:#DC3545;" class="fa fa-trash"></i></a>';
                     return $button;
                 })
                 ->rawColumns(['action'])

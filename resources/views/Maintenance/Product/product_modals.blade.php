@@ -83,14 +83,14 @@
             <div>{{ $errors->first('image') }}</div>
             </div> 
 
-            <div class="col-md-4 mt-2 with-prescription"  style="display: none">
+            <div class="col-md-12 mt-3 with-prescription"  style="display: none">
               <label for="">With Presciption?</label>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="with_prescription" id="with_prescription" value="yes" checked>
+                <input class="form-check-input" type="radio" name="with_prescription" id="with_prescription" value="yes">
                 <label class="form-check-label" for="add">
                   Yes
                 </label>
-                <input class="form-check-input ml-2" type="radio" name="with_prescription" id="no_prescription" value="no">
+                <input class="form-check-input ml-2" type="radio" name="with_prescription" id="no_prescription" value="no" checked>
                 <label class="form-check-label ml-4" for="less">
                   No
                 </label>
@@ -233,11 +233,24 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Update Photo</label>
-              <input type="file" name="image" id="edit_image">
+              <input  type="file" name="image" id="edit_image">
             <div>{{ $errors->first('image') }}</div>
             </div> 
+            <div class="col-md-4 mt-3 with-prescription" style="display: none">
+              <label for="">With Presciption?</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="with_prescription" id="with_prescription" value="yes">
+                <label class="form-check-label" for="add">
+                  Yes
+                </label>
+                <input class="form-check-input ml-2" type="radio" name="with_prescription" id="no_prescription" value="no" checked>
+                <label class="form-check-label ml-4" for="less">
+                  No
+                </label>
+              </div>
+            </div>
 
-            <div class="col-md-4">
+            <div class="col-md-4 mt-2">
               <img alt="no available image" style="width: 200px;"  name="img_view" id="img_view">
             <div>{{ $errors->first('image') }}</div>
             </div> 

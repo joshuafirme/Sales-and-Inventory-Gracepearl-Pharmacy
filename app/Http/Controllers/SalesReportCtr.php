@@ -13,28 +13,35 @@ class SalesReportCtr extends Controller
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
-
+ 
     public function index(Request $request)
     {       
-        $total_sales = $this->getTotalSales($request->date_from, $request->date_to, $request->category);
-     
-        if(request()->ajax())
-        {       
-       
-                return datatables()->of($this->getSalesByDate($request->date_from, $request->date_to, $request->category))
-                ->make(true);   
-          
-        }
+        $date_from = Input::input('date_from');
+        $date_to = Input::input('date_to');
+        $category = Input::input('category');
+        $total_sales = $this->getTotalSales($date_from, $date_to, $category);
         $category = DB::table($this->table_cat)->get();
-      
-
         
-        return view('/sales/sales_report', 
-        [
-            'currentDate' => $this->getDate(),
-            'category' => $category,
-            'totalSales' => $total_sales
-        ]);
+        if(request()->ajax()){   
+            if($request->category == 'All'){
+                
+                return datatables()->of($this->getSalesByDate($request->date_from, $request->date_to))
+                ->make(true);  
+            } 
+            else{ 
+                return datatables()->of($this->getSalesByDateAndCategory($request->date_from, $request->date_to, $request->category))
+                ->make(true); 
+            }  
+           
+        }
+        
+    
+    return view('/sales/sales_report', 
+    [
+        'currentDate' => $this->getDate(),
+        'category' => $category,
+        'totalSales' => $total_sales
+    ]);     
     }
 
     public function getTotalSales($date_from, $date_to, $category){
@@ -63,7 +70,7 @@ class SalesReportCtr extends Controller
         return $product;
     }
 
-    public function getSalesByDate($date_from, $date_to, $category){
+    public function getSalesByDateAndCategory($date_from, $date_to, $category){
         // dd('test');
          $product = DB::table($this->table_sales)
          ->select("tblsales.*", DB::raw('CONCAT(tblsales._prefix, tblsales.transactionNo) AS transNo, description, unit, supplierName, category_name'))
@@ -73,6 +80,20 @@ class SalesReportCtr extends Controller
          ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
          ->whereBetween('date', [$date_from, $date_to])
          ->where('category_name', $category)
+         ->get();
+ 
+         return $product;
+     }
+
+     public function getSalesByDate($date_from, $date_to){
+        // dd('test');
+         $product = DB::table($this->table_sales)
+         ->select("tblsales.*", DB::raw('CONCAT(tblsales._prefix, tblsales.transactionNo) AS transNo, description, unit, supplierName, category_name'))
+         ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_sales . '.product_code')
+         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
+         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+         ->whereBetween('date', [$date_from, $date_to])
          ->get();
  
          return $product;

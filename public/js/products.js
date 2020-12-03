@@ -8,7 +8,11 @@ $(document).ready(function(){
      
         processing: true,
         serverSide: true,
-        
+        ajax: '/path/to/script',
+        scrollY: 530,
+        scroller: {
+            loadingIndicator: true
+        },
        
         ajax:{
          url: "/products",

@@ -29,20 +29,30 @@
               
                   <div class="row">
 
+
+                    <div class="mt-2 ml-3">
+                       Date From
+                      </div>              
+                    
                     <div class="col-sm-2 mb-3">
                       <input data-column="9" type="date" class="form-control" name="sales_date_from" id="sales_date_from" value="{{ $currentDate }}">
                       </div>
 
-                      <div class=" mt-1">
-                        to
+                      <div class="mt-2">
+                        -
                         </div>
           
                       <div class="col-sm-2 mb-3">
                         <input data-column="9" type="date" class="form-control" name="sales_date_to" id="sales_date_to" value="{{ $currentDate }}">
                         </div>
 
-                        <div class="col-sm-2  mb-3">
+                        <div class="mt-2 ml-4">
+                          Category
+                        </div>
+
+                        <div class="col-sm-2 mb-3">
                           <select data-column="4" class=" form-control col-sm-12" name="sales_category" id="sales_category">
+                            <option value="All">All</option>
                             @foreach($category as $data)
                           <option value={{ $data->category_name }}>{{ $data->category_name }}</option>
                             @endforeach
@@ -50,17 +60,15 @@
                           </div>
 
                         <div class="col-sm-2 mt-1">
-                          <button class="btn btn-primary btn-sm btn-load-records" id="btn-print"><span class='fa fa-redo'></span> Load Records</button> 
+                          <button class="btn btn-primary btn-sm btn-load-records" id="btn-print"><span class='fas fa-redo-alt'></span> Load Records</button>                       
                           </div>
-                          
 
-                        
-                          <div class="col-sm-2 mt-1 ml-auto">          
-                            <p class="total-sales">Total Sales: {{ number_format($totalSales) }}</p>
-                            </div>
+                          
+                    <div class="col-sm-2 mt-1">
+                      Total Sales: {{ number_format($totalSales) }}</b>
+                      </div>
 
                    </div>
-
                     <table class="table table-data responsive  table-hover" id="sales-report-table" width="100%">                               
                       <thead>
                         <tr>

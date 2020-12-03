@@ -8,13 +8,24 @@ $(document).ready(function(){
     var date_to = $('#sales_date_to').val();
     var category = $('select[name=sales_category] option').filter(':selected').text();
 
-    $('#sales-report-table').DataTable().destroy();
-    fetch_sales(date_from, date_to, category);
+    
+    $.ajax({
+      url:"/sales/salesreport",
+      type:"GET",
+      data:{
+        date_from:date_from,
+        date_to:date_to,
+        category:category
+      },
+      success:function(response){
+     
+      fetch_sales(date_from, date_to, category);
+      }
+     });
+
    }
 
    function fetch_sales(date_from, date_to, category){
-    console.log(date_from);
-    console.log(date_to);
 
     var d = new Date();
 
@@ -30,14 +41,16 @@ $(document).ready(function(){
        processing: true,
        serverSide: true,
        bPaginate: false,
+       
        ajax: '/path/to/script',
-       scrollY: 550,
+       scrollY: 530,
        scroller: {
            loadingIndicator: true
        },
      
        ajax:{
         url: "/sales/salesreport",
+        type:"GET",
         data:{
           date_from:date_from,
           date_to:date_to,
@@ -69,7 +82,8 @@ $(document).ready(function(){
        buttons: [
         {
          
-            extend: 'excel',        
+            extend: 'excel', 
+            text:'nya',       
             title: 'Sales Report',
             messageTop: date
         },
@@ -79,9 +93,9 @@ $(document).ready(function(){
             messageTop: date
         },
         {
-          extend: 'csv',
-          title: 'Sales Report',
-          messageTop: date
+            extend: 'csv',
+            title: 'Sales Report',
+            messageTop: date
         },
         {
             extend: 'print',
@@ -109,7 +123,9 @@ $(document).ready(function(){
       var category = $('select[name=sales_category] option').filter(':selected').text();
 
       $('#sales-report-table').DataTable().destroy();
-      fetch_sales(date_from, date_to, category)
+
+
+      fetch_sales(date_from, date_to, category);
     //  sales_table.ajax.reload();
      });
   

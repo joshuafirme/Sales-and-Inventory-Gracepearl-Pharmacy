@@ -39,12 +39,12 @@
 
                 <li class="nav-item">
                   <a class="nav-link  active" id="reorder-tab" data-toggle="tab" href="#reordertab" role="tab" aria-controls="contact" aria-selected="true">Reorder Products   
-                  <span class="badge badge-pill badge-success">{{ $reorderCount }}</span>
+
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orderstab" role="tab" aria-controls="contact" aria-selected="true">Orders   
+                  <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orderstab" role="tab" aria-controls="contact" aria-selected="true">Purchase Orders   
 
                   </a>
                 </li>

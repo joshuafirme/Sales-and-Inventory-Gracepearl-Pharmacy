@@ -191,7 +191,7 @@ $(document).ready(function(){
         
         //proccess items
         $('#btn-process').click(function(){
-
+    
           getSalesInv();
       
         });
@@ -251,7 +251,7 @@ $(document).ready(function(){
                   $('#change').val('');
                   $('#tendered').val('');
                   $('#senior-chk').prop('checked', false);
-                  
+                  $('#senior-name').css('display', 'none');
                   $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
 
                  setTimeout(function(){

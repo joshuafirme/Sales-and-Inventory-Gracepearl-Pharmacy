@@ -12,6 +12,8 @@
  <!--   <link href="asset('components/vendor/flagiconcss3/css/flag-icon.min.css')}}" rel="stylesheet">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+
    
     <meta name="csrf-token" content="{{ csrf_token() }}">
     

@@ -318,7 +318,7 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Quantity Delivered</label>
-              <input type="number" class="form-control" id="del_qty_delivered">
+              <input type="number" min="1" max="1000" class="form-control" name="del_qty_delivered" id="del_qty_delivered">
             </div>
 
             <div class="col-md-4">
@@ -334,7 +334,7 @@
             <div class="col-md-4">
               <label class="col-form-label">Remarks</label>
               <select class="form-control" name="del_remarks" id="del_remarks">
-              <option>Dispatched</option>
+              <option>Completed</option>
               <option>Partial</option>
               <option>Damaged</option>
 

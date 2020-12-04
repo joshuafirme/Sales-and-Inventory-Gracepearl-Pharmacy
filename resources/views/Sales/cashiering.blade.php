@@ -175,7 +175,7 @@
                         <td>₱ {{ number_format($sub_total, 2, '.', '') }}</td>
                         <td>{{ $details['date'] }}</td>
                           <td>
-                            <a class="btn" id="void" product-code="{{ $product_code }}" data-toggle="modal" data-target="#voidModal"><u style="color: #303E9F;">Void</u></a>
+                            <a class="btn btn-sm" id="void" product-code="{{ $product_code }}" data-toggle="modal" data-target="#voidModal"><u style="color: #303E9F;">Void</u></a>
                           </td>
                       </tr>  
                                  

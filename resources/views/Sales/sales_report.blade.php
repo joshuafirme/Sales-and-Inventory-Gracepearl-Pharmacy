@@ -59,12 +59,13 @@
                           </select>
                           </div>
 
-                        <div class="col-sm-2 mt-1">
-                          <button class="btn btn-primary btn-sm btn-load-records" id="btn-print"><span class='fas fa-redo-alt'></span> Load Records</button>                                    
-                          </div>
+                        <div class="col-sm-4 mt-1">
+                          <button class="btn btn-primary btn-sm btn-load-records"><span class='fas fa-redo-alt'></span> Load Records</button>   
                           
-                    <div class="col-sm-2 mt-1 ml-auto">Total Sales: ₱ <b style="font-size: 21px" id="total-sales"></b>
-                      </div>
+                            <button class="btn btn-success btn-sm btn-compute-sales ml-auto"><span class='fas fa-chart-line'></span> Compute Sales</button>   
+                            <span class="ml-2">Total Sales: ₱ <b style="font-size: 21px" id="total-sales"></b>      </span>    
+                          </div>
+                 
 
                    </div>
                     <table class="table table-data responsive  table-hover" id="sales-report-table" width="100%">                               

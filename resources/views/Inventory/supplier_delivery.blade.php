@@ -55,6 +55,7 @@
                         <table class="table responsive table-hover" id="po-table" width="100%">                               
                           <thead>
                             <tr>
+
                               <th>PO#</th>
                               <th>Product Code</th>     
                               <th>Description</th>   
@@ -69,11 +70,8 @@
                             
                             </tr>
                           </thead>
-                            
-                        
                         </table>
                         </div>
-
 
                   <div class="tab-pane fade" id="deliveredtab" role="tabpanel" aria-labelledby="delivered-tab">
 
@@ -81,6 +79,7 @@
                         <table class="table responsive  table-hover" id="supplier-delivery-table" width="100%">       
                           <thead>
                             <tr>
+                                <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th>
                                 <th>Delivery #</th>
                                 <th>PO #</th>
                                 <th>Product Code</th>     
@@ -100,6 +99,9 @@
                        </tbody>
                         
                         </table> 
+                        <img src="../../assets/arrow_ltr.png" class="ml-2">
+                        
+                        <button class="btn btn-success btn-sm"> Mark as Completed</button>  
                       </div>
 
                 </div>

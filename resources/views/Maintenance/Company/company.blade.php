@@ -52,8 +52,8 @@
                               <td>{{ $data->company_name }}</td>                                     
                               <td>{{ $data->markup }}</td>                                                           
                                 <td>
-                                  <a class="btn" id="btn-edit-company" company-id="{{ $data->id }}" data-toggle="modal" data-target="#editCompanyModal"><i class="fa fa-edit"></i></a>
-                                  <a class="btn" name="id" id="deleteCompany" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>
+                                  <a class="btn btn-sm" id="btn-edit-company" company-id="{{ $data->id }}" data-toggle="modal" data-target="#editCompanyModal"><i class="fa fa-edit"></i></a>
+                                  <a class="btn btn-sm" name="id" id="deleteCompany" delete-id="{{ $data->id }}"><i style="color:#DC3545;" class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                             @endforeach 

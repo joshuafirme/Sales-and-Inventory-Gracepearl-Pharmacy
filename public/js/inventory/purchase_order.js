@@ -36,6 +36,8 @@ $(document).ready(function(){
         .draw();
     
         });
+
+        
     }
 
     function fetch_reorders(){
@@ -255,7 +257,7 @@ $(document).ready(function(){
             $('.loader').css('display', 'inline');
           },
               success:function(response){
-               
+                $('#ord-table').DataTable().ajax.reload();
                 setTimeout(function(){
                   $('.update-success-validation').css('display', 'inline');
                   $('#btn-send-order').text('Send Order');

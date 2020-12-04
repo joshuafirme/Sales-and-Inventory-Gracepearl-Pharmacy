@@ -8,8 +8,8 @@ $(document).ready(function(){
       var date_to = $('#sales_date_to').val();
       var category = $('select[name=sales_category] option').filter(':selected').text();
 
-      fetch_sales(date_from, date_to, category);
-        getTotalSales();
+     fetch_sales(date_from, date_to, category);
+     
    }  
 
    function fetch_sales(date_from, date_to, category){
@@ -95,7 +95,7 @@ $(document).ready(function(){
             },
             
             title: 'Sales Report',
-            messageTop: date,         
+            messageTop: date,                
             customize: function (win){
               $(win.document.body).find('h1').css('text-align', 'center');
               $(win.document.body).css( 'font-size', '10pt' )
@@ -108,23 +108,27 @@ $(document).ready(function(){
 
     $('.btn-load-records').click(function(){
 
-      var date_from = $('#sales_date_from').val()
-      var date_to = $('#sales_date_to').val();
-      var category = $('select[name=sales_category] option').filter(':selected').text();
+        var date_from = $('#sales_date_from').val()
+        var date_to = $('#sales_date_to').val();
+        var category = $('select[name=sales_category] option').filter(':selected').text();
 
-      $('#sales-report-table').DataTable().destroy();
+        $('#sales-report-table').DataTable().destroy();
+        fetch_sales(date_from, date_to, category);
+      //  getTotalSales();
+     });
+     
+     $('.btn-compute-sales').click(function(){
 
-      fetch_sales(date_from, date_to, category);
-      
-     getTotalSales();
+        getTotalSales();
      });
 
      function getTotalSales(){
       var total_sales = sales_table.column(8).data().sum();
       var round_off = Math.round((total_sales + Number.EPSILON) * 100) / 100;
       var money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      $('#total-sales').text(money_format);
+      return $('#total-sales').text(money_format);
      }
+
   
 
  //end of fetch_sales

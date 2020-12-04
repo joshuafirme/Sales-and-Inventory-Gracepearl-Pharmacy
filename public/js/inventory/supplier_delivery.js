@@ -9,12 +9,11 @@ $(document).ready(function(){
      
         processing: true,
         serverSide: true,
-        
-       
+
         ajax:{
          url: "/inventory/delivery/displayPO",
         }, 
-        
+
         columns:[       
          {data: 'po_num', name: 'po_num'},
          {data: 'product_code', name: 'product_code'},
@@ -33,7 +32,7 @@ $(document).ready(function(){
     }
 
     function fetch_delivered(){
-      var supplier_tbl = $('#supplier-delivery-table').DataTable({
+      var suplr_del_tbl = $('#supplier-delivery-table').DataTable({
      
         processing: true,
         serverSide: true,
@@ -42,7 +41,20 @@ $(document).ready(function(){
          url: "/inventory/delivered",
         }, 
         
+        columnDefs: [{
+          targets: 0,
+          searchable: false,
+          orderable: false,
+          changeLength: false,
+          className: 'dt-body-center',
+          render: function (data, type, full, meta){
+              return '<input type="checkbox" name="checkbox[]" value="' + $('<div/>').text(data).html() + '">';
+          }
+       }],
+       order: [[1, 'asc']],
+
         columns:[       
+         {data: 'product_code', name: 'product_code'},
          {data: 'del_num', name: 'del_num'},
          {data: 'po_num', name: 'po_num'},
          {data: 'product_code', name: 'product_code'},
@@ -58,13 +70,37 @@ $(document).ready(function(){
         ]
         
        });
+
+       
+        // Handle click on "Select all" control
+   $('#example-select-all').on('click', function(){
+    // Get all rows with search applied
+    var rows = suplr_del_tbl.rows({ 'search': 'applied' }).nodes();
+    // Check/uncheck checkboxes for all rows in the table
+    $('input[type="checkbox"]', rows).prop('checked', this.checked);
+    });
+
+    // Handle click on checkbox to set state of "Select all" control
+    $('#po-table tbody').on('change', 'input[type="checkbox"]', function(){
+      // If checkbox is not checked
+      if(!this.checked){
+         var el = $('#example-select-all').get(0);
+         // If "Select all" control is checked and has 'indeterminate' property
+         if(el && el.checked && ('indeterminate' in el)){
+            // Set visual state of "Select all" control
+            // as 'indeterminate'
+            el.indeterminate = true;
+         }
+      }
+   });
     }
 
 //show
 $(document).on('click', '#btn-add-delivery', function(){
     var product_code = $(this).attr('product-code');
 
-    console.log(product_code);
+    $('#del_qty_delivered').val('');
+    $('#del_qty_delivered').focus();
   
     $.ajax({
       url:"/inventory/delivery/show/"+product_code,
@@ -117,15 +153,17 @@ $(document).on('click', '#btn-add', function(){
             $('#btn-add').text('Adding...');
             $('.loader').css('display', 'inline');
           },
-          success:function(response){
+          success:function(){
             setTimeout(function(){
+              $('#supplier-delivery-table').DataTable().ajax.reload();
+              $('#po-table').DataTable().ajax.reload();
               $('.update-success-validation').css('display', 'inline');
            //   $('#stockadjustment-table').DataTable().ajax.reload();
               $('#btn-add').text('Add');
               $('.loader').css('display', 'none');
               setTimeout(function(){
                 $('.update-success-validation').fadeOut('slow')
-               
+
               },2000);
             
             },1000);

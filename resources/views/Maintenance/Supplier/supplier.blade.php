@@ -79,9 +79,9 @@
                               <td>{{ $data->contact }}</td>  
                               <td>{{ $data->company_name }}</td>  
                               <td>
-                               <a class="btn" id="btn-edit-supplier" supplier-id="{{ $data->id }}" data-toggle="modal" data-target="#editSupplierModal"><i class="fa fa-edit"></i></a>
+                               <a class="btn btn-sm" id="btn-edit-supplier" supplier-id="{{ $data->id }}" data-toggle="modal" data-target="#editSupplierModal"><i class="fa fa-edit"></i></a>
                           
-                                <a class="btn" id="delete-supplier" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>
+                                <a class="btn btn-sm" id="delete-supplier" delete-id="{{ $data->id }}"><i style="color:#DC3545;" class="fa fa-trash"></i></a>
                               </td> 
                                
                             </tr>

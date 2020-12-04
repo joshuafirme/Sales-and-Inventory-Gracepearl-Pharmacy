@@ -51,28 +51,28 @@
 
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade active show" id="potab" role="tabpanel" aria-labelledby="po-tab">
-                  
-                  <table class="table responsive table-hover" id="po-table" width="100%">                               
-                    <thead>
-                      <tr>
-                        <th>PO#</th>
-                        <th>Product Code</th>     
-                        <th>Description</th>   
-                        <th>Supplier</th> 
-                        <th>Category</th> 
-                        <th>Unit</th>                                 
-                        <th>Qty Order</th>        
-                        <th>Amount</th>
-                        <th>Date Order</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                       
-                      </tr>
-                    </thead>
-                      
-                  
-                  </table>
-                  </div>
+
+                        <table class="table responsive table-hover" id="po-table" width="100%">                               
+                          <thead>
+                            <tr>
+                              <th>PO#</th>
+                              <th>Product Code</th>     
+                              <th>Description</th>   
+                              <th>Supplier</th> 
+                              <th>Category</th> 
+                              <th>Unit</th>                                 
+                              <th>Qty Order</th>        
+                              <th>Amount</th>
+                              <th>Date Order</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            
+                            </tr>
+                          </thead>
+                            
+                        
+                        </table>
+                        </div>
 
 
                   <div class="tab-pane fade" id="deliveredtab" role="tabpanel" aria-labelledby="delivered-tab">
@@ -82,14 +82,16 @@
                           <thead>
                             <tr>
                                 <th>Delivery #</th>
+                                <th>PO #</th>
                                 <th>Product Code</th>     
                                 <th>Description</th>   
                                 <th>Supplier</th> 
                                 <th>Category</th> 
-                                <th>Unit</th>                                 
-                                <th>Qty Delivered</th>        
-                                <th>Amount</th>
-                                <th>Date Order</th>
+                                <th>Unit</th>      
+                                <th>Qty Ordered</th>                              
+                                <th>Qty Delivered</th>   
+                                <th>Expiration Date</th>  
+                                <th>Date Recieved</th>
                                 <th>Remarks</th>
                             </tr>
                         </thead>

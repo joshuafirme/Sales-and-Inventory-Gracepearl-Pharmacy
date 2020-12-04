@@ -24,7 +24,7 @@ class StockAdjustmentCtr extends Controller
         {
             return datatables()->of($product)
             ->addColumn('action', function($product){
-                $button = ' <a class="btn" id="btn-stockad" product-code="'. $product->id .'" data-toggle="modal" data-target="#stockAdjustmentModal"><i class="fa fa-sliders-h"></i></a>';
+                $button = ' <a class="btn btn-sm" id="btn-stockad" product-code="'. $product->id .'" data-toggle="modal" data-target="#stockAdjustmentModal"><i class="fa fa-sliders-h"></i></a>';
            
                 return $button;
             })
@@ -33,7 +33,7 @@ class StockAdjustmentCtr extends Controller
             }
            
         
-        return view('inventory/stockadjustment', ['product' => $product, 'category' => $category, 'suplr' => $suplr]);
+        return view('inventory/stockadjustment', ['product' => $product, 'category' => $category, 'suplr' => $suplr, 'getCurrentDate' => date('yy-m-d')]);
     }
 
     public function getAllProduct(){

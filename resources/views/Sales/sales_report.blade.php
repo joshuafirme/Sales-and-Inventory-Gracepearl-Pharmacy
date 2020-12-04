@@ -60,12 +60,10 @@
                           </div>
 
                         <div class="col-sm-2 mt-1">
-                          <button class="btn btn-primary btn-sm btn-load-records" id="btn-print"><span class='fas fa-redo-alt'></span> Load Records</button>                       
+                          <button class="btn btn-primary btn-sm btn-load-records" id="btn-print"><span class='fas fa-redo-alt'></span> Load Records</button>                                    
                           </div>
-
                           
-                    <div class="col-sm-2 mt-1">
-                      Total Sales: {{ number_format($totalSales) }}</b>
+                    <div class="col-sm-2 mt-1 ml-auto">Total Sales: ₱ <b style="font-size: 21px" id="total-sales"></b>
                       </div>
 
                    </div>

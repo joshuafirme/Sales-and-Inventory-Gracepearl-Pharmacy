@@ -16,15 +16,10 @@ class SalesReportCtr extends Controller
  
     public function index(Request $request)
     {       
-        $date_from = Input::input('date_from');
-        $date_to = Input::input('date_to');
-        $category = Input::input('category');
-        $total_sales = $this->getTotalSales($date_from, $date_to, $category);
-        $category = DB::table($this->table_cat)->get();
+        $category_name = DB::table($this->table_cat)->get();
         
         if(request()->ajax()){   
             if($request->category == 'All'){
-                
                 return datatables()->of($this->getSalesByDate($request->date_from, $request->date_to))
                 ->make(true);  
             } 
@@ -34,26 +29,22 @@ class SalesReportCtr extends Controller
             }  
            
         }
-        
-    
-    return view('/sales/sales_report', 
-    [
-        'currentDate' => $this->getDate(),
-        'category' => $category,
-        'totalSales' => $total_sales
-    ]);     
+        return view('/sales/sales_report', 
+        [
+            'currentDate' => $this->getDate(),
+            'category' => $category_name
+        ]);     
     }
 
     public function getTotalSales($date_from, $date_to, $category){
-         $total_sales = DB::table($this->table_sales)
-         ->select("tblsales.*", DB::raw('CONCAT(tblsales._prefix, tblsales.transactionNo) AS transNo, category_name'))
-         ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_sales . '.product_code')
-         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-         ->whereBetween('date', [$date_from, $date_to])
-         ->where('category_name', $category)
-         ->sum('amount');
- 
-         return $total_sales;
+          $total_sales = DB::table($this->table_sales)
+            ->select("tblsales.*", DB::raw('CONCAT(tblsales._prefix, tblsales.transactionNo) AS transNo, category_name'))
+            ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_sales . '.product_code')
+            ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+            ->whereBetween('date', [$date_from, $date_to])
+            ->sum('amount');
+         
+          return $total_sales;
      }
 
     public function getAllSales(){

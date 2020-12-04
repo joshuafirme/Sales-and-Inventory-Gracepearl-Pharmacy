@@ -42,7 +42,8 @@ class PurchaseOrderCtr extends Controller
             'category' => $category,
             'suplr' => $suplr,
             'reorderCount' => $reorder_count,
-            'getAllOrders' => $get_all_orders
+            'getAllOrders' => $get_all_orders,
+            'getCurrentDate' => date('yy-m-d')
             ]);
     }
 
@@ -255,6 +256,7 @@ public function getPrefix(){
  public function getDay(){
      return $month = date('d');
  }
+
 public function pdf(){
 
     $output = $this->convertProductDataToHTML();

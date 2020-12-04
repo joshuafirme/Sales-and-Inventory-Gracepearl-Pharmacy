@@ -35,7 +35,8 @@ class NotificationCtr extends Controller
             'reorderProduct' => $reorder_product,
             'expiredCount' => $expired_count, 
             'expiryCount' => $near_expiry_count, 
-            'reorderCount' => $reorder_count,             
+            'reorderCount' => $reorder_count,     
+            'getCurrentDate' => date('yy-m-d')        
             ]);
     }
 

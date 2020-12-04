@@ -4,26 +4,13 @@ $(document).ready(function(){
     load_data();
 
    function load_data()  {
-    var date_from = $('#sales_date_from').val()
-    var date_to = $('#sales_date_to').val();
-    var category = $('select[name=sales_category] option').filter(':selected').text();
+      var date_from = $('#sales_date_from').val()
+      var date_to = $('#sales_date_to').val();
+      var category = $('select[name=sales_category] option').filter(':selected').text();
 
-    
-    $.ajax({
-      url:"/sales/salesreport",
-      type:"GET",
-      data:{
-        date_from:date_from,
-        date_to:date_to,
-        category:category
-      },
-      success:function(response){
-     
       fetch_sales(date_from, date_to, category);
-      }
-     });
-
-   }
+        getTotalSales();
+   }  
 
    function fetch_sales(date_from, date_to, category){
 
@@ -37,10 +24,12 @@ $(document).ready(function(){
         (day<10 ? '0' : '') + day;
 
     var sales_table = $('#sales-report-table').DataTable({
-
+    
        processing: true,
        serverSide: true,
        bPaginate: false,
+
+    
        
        ajax: '/path/to/script',
        scrollY: 530,
@@ -104,6 +93,7 @@ $(document).ready(function(){
                 key: 'p',
                 altkey: true
             },
+            
             title: 'Sales Report',
             messageTop: date,         
             customize: function (win){
@@ -124,10 +114,17 @@ $(document).ready(function(){
 
       $('#sales-report-table').DataTable().destroy();
 
-
       fetch_sales(date_from, date_to, category);
-    //  sales_table.ajax.reload();
+      
+     getTotalSales();
      });
+
+     function getTotalSales(){
+      var total_sales = sales_table.column(8).data().sum();
+      var round_off = Math.round((total_sales + Number.EPSILON) * 100) / 100;
+      var money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      $('#total-sales').text(money_format);
+     }
   
 
  //end of fetch_sales

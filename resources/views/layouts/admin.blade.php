@@ -31,7 +31,7 @@
             </div>
             <div class="row mb-1">
               
-            <p style="color: #494F54; margin:auto">Admin</p>
+            <a style="color: #494F54; margin:auto"  href="#" class="text-secondary">Admin</a>
                 </div>
 
             <div class="line"></div>
@@ -234,6 +234,7 @@
           <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
           <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.html5.min.js"></script>
           <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.print.min.js"></script>
+          <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
 
       </body>
       

@@ -33,7 +33,7 @@
 
         <div class="col-md-4">
           <label class="col-form-label">Qty to adjust</label>
-          <input type="number" class="form-control" name="qty_to_adjust" id="qty_to_adjust">
+          <input type="number" class="form-control" name="qty_to_adjust" id="qty_to_adjust" autofocus>
         </div>
 
         <div class="col-md-4">
@@ -269,41 +269,88 @@
 
 <!-- qty deliver -->
 <div class="modal fade  mt-5" id="qtyDeliverModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Add Delivery</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
 
-        <div class="container-fluid">
           <div class="row">
 
-              <label class="col-form-label">Product Code</label>
-              <input type="text" class="form-control" name="product-code" id="product-code" readonly>
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Purchase Order #</label><br>
+              <a class="form-control" id="del_po_num"></a>
+            </div>
 
-              <label class="col-form-label mt-3">Quantity Delivered</label>
-              <input type="number" class="form-control" name="sales-invoice" id="sales-invoice-no" required>
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Product Code</label><br>
+              <a class="form-control" id="del_product_code"></a>
+            </div>
 
-              <small style="display: none" class="form-text text-danger">Please fillup this field to continue</small>
-        
-              <label class="col-form-label mt-3">Date</label>
-              <input type="date" class="form-control mb-2" >
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Description</label><br>
+              <a class="form-control" id="del_description"></a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Supplier</label><br>
+              <a class="form-control" id="del_supplier"></a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Unit</label><br>
+              <a class="form-control" id="del_unit"></a>
+            </div>
             
-        </div>
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Category</label><br>
+              <a class="form-control" id="del_category"></a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Quantity Ordered</label>
+              <a class="form-control" id="del_qty_ordered"></a>
+            </div>
+
+            <div class="col-md-4">
+              <label class="col-form-label">Quantity Delivered</label>
+              <input type="number" class="form-control" id="del_qty_delivered">
+            </div>
+
+            <div class="col-md-4">
+              <label class="col-form-label">Expiration Date</label>
+              <input type="date" class="form-control" id="del_exp_date" value="{{ $getCurrentDate }}">
+            </div>
+
+            <div class="col-md-4">
+              <label class="col-form-label">Date Delivered</label>
+            <input type="date" class="form-control" id="del_date_recieved" value="{{ $getCurrentDate }}">
+            </div>
+       
+            <div class="col-md-4">
+              <label class="col-form-label">Remarks</label>
+              <select class="form-control" name="del_remarks" id="del_remarks">
+              <option>Dispatched</option>
+              <option>Partial</option>
+              <option>Damaged</option>
+
+              </select>
+            </div>
+            
         </div>  
 
       </div>
       <div class="modal-footer">
 
         <div class="update-success-validation mr-auto ml-3" style="display: none">
-          <label class="label text-success">Proccess completed</label>    
+          <label class="label text-success">Product is successfully added to delivery</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-          <button type="submit" class="btn btn-sm btn-success" id="btn-add-delivery">Confirm</button>
+          <button type="submit" class="btn btn-sm btn-primary" id="btn-add"><i class="fas fa-plus"></i> Add</button>
 
       </div>
     </form>

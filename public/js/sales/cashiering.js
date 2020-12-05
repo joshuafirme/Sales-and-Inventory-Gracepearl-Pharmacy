@@ -218,55 +218,68 @@ $(document).ready(function(){
             $('.text-danger').css('display','inline');
           }
           else{
-            
             $.ajax({
-              url:"/sales/cashiering/process",
+              url:"/sales/cashiering/isInvoiceExist/" + sales_inv_no,
               type:"GET",
-              data:{
-                sales_inv_no:sales_inv_no,
-                senior_name:senior_name,
-                senior_chk:senior_chk
-              },
-              beforeSend:function(){
-                $('#btn-confirm-inv').text('Processing...');
-                $('.loader').css('display', 'inline');
-              },
-              success:function(){
-
-                setTimeout(function(){
-
-                  $('.loader').css('display', 'none');
-                  $('.update-success-validation').css('display', 'inline');
-                  $('#btn-confirm-inv').text('Confirm');
-
-                  $('#cashiering_search').val('');
-                  $('#product_code').val('');
-                  $('#description').val('');
-                  $('#qty').val('');
-                  $('#price').val('');
-                  $('#qty_order').val('');
-                  $('#total').val(''); 
-
-                  $('#total-amount-due').val('');
-                  $('#change').val('');
-                  $('#tendered').val('');
-                  $('#senior-chk').prop('checked', false);
-                  $('#senior-name').css('display', 'none');
-                  $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
-
-                 setTimeout(function(){
-                    $('.update-success-validation').fadeOut('slow')
-
-                    setTimeout(function(){
-                      $('#processModal').modal('hide');
-                    },1000);
-
-                  },500);
-
-                },500);
-               
+              success:function(response){
+                
+                if(response == 'yes'){
+                  alert('Sales Invoice is already exist!')
+                }
+                else{
+                  $.ajax({
+                    url:"/sales/cashiering/process",
+                    type:"GET",
+                    data:{
+                      sales_inv_no:sales_inv_no,
+                      senior_name:senior_name,
+                      senior_chk:senior_chk
+                    },
+                    beforeSend:function(){
+                      $('#btn-confirm-inv').text('Processing...');
+                      $('.loader').css('display', 'inline');
+                    },
+                    success:function(){
+      
+                      setTimeout(function(){
+      
+                        $('.loader').css('display', 'none');
+                        $('.update-success-validation').css('display', 'inline');
+                        $('#btn-confirm-inv').text('Confirm');
+      
+                        $('#cashiering_search').val('');
+                        $('#product_code').val('');
+                        $('#description').val('');
+                        $('#qty').val('');
+                        $('#price').val('');
+                        $('#qty_order').val('');
+                        $('#total').val(''); 
+      
+                        $('#total-amount-due').val('');
+                        $('#change').val('');
+                        $('#tendered').val('');
+                        $('#senior-chk').prop('checked', false);
+                        $('#senior-name').css('display', 'none');
+                        $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+      
+                       setTimeout(function(){
+                          $('.update-success-validation').fadeOut('slow')
+      
+                          setTimeout(function(){
+                            $('#processModal').modal('hide');
+                          },1000);
+      
+                        },500);
+      
+                      },500);
+                     
+                    }
+                  });   
+                }
               }
-            });   
+            });
+          
+           
           }
         
 

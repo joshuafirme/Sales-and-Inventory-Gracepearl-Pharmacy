@@ -30,8 +30,8 @@ class SupplierDeliveryCtr extends Controller
         {       
             return datatables()->of($po)
             ->addColumn('action', function($po){
-                $button = '<a class="btn btn-sm btn-success" id="btn-add-delivery" product-code='. $po->product_code .' 
-                data-toggle="modal" data-target="#qtyDeliverModal" title="Add Delivery" style="color:#fff;"><i class="fas fa-plus"></i></a>';
+                $button = '<a class="btn btn-sm" id="btn-add-delivery" product-code='. $po->product_code .' 
+                data-toggle="modal" data-target="#qtyDeliverModal" title="Add Delivery" style="color:#28A745;"><i class="fas fa-plus"></i></a>';
 
                 return $button;
             })
@@ -46,6 +46,19 @@ class SupplierDeliveryCtr extends Controller
         if(request()->ajax())
         {       
             return datatables()->of($del)
+            ->addColumn('remarks', function($del){
+                if($del->remarks == 'Completed'){
+                    $button = '<a style="color:#28A745;">Completed</a>';     
+                    return $button;
+                }
+                else if($del->remarks == 'Partial'){
+                    $button = '<a style="color:#FFC107;">Partial</a>';
+                    return $button;
+                }
+               
+
+            })
+            ->rawColumns(['remarks'])
             ->make(true);            
         }
     }
@@ -58,6 +71,7 @@ class SupplierDeliveryCtr extends Controller
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+        ->where('status', ['Pending'])
         ->get();
 
         return $product;
@@ -74,10 +88,13 @@ class SupplierDeliveryCtr extends Controller
              $sd->qty_delivered = Input::input('qty_delivered');
              $sd->exp_date = Input::input('exp_date');
              $sd->date_recieved = Input::input('date_recieved');
-             $sd->remarks = Input::input('remarks');
+
+             $checked_result = $this->checkDeliveredQty($sd->product_code, $sd->qty_delivered );
+             $sd->remarks = $checked_result;
              $sd->save();
 
-             $this->updatePurchaseOrder($sd->po_num, $sd->product_code, $sd->remarks);
+           //  $checked_result = $this->checkDeliveredQty($sd->product_code, $sd->remarks);
+             $this->updatePurchaseOrder($sd->po_num, $sd->product_code, $checked_result);
      
      }
 
@@ -87,12 +104,28 @@ class SupplierDeliveryCtr extends Controller
             ->update(['status' => $remarks]);
     }
 
+    public function checkDeliveredQty($product_code, $qty_delivered){
+        $qty_order = DB::table($this->table_po)
+            ->where('product_code', $product_code)
+            ->value('qty_order');
+
+            if($qty_order > $qty_delivered){
+                $p = 'Partial';
+            }
+            else if($qty_order == $qty_delivered){
+                $p = 'Completed';
+            }
+            
+            return $p;
+    }
+
+
      public function getDelivery()
      {
         $product = DB::table($this->table_delivery)
-        ->select("tblsupplier_delivery.*", DB::raw('CONCAT('.$this->table_delivery.'._prefix, '.$this->table_delivery.'.delivery_num)
-         AS del_num, po_num, product_code, description, unit, supplierName, category_name, qty_order'))
-        ->leftJoin($this->table_po,  DB::raw('CONCAT('.$this->table_po.'._prefix, '.$this->table_po.'.po_num)'), '=', $this->table_delivery. '.po_num')
+        ->select("tblsupplier_delivery.*", DB::raw('CONCAT('.$this->table_delivery.'._prefix, '.$this->table_delivery.'.delivery_num) AS del_num, description, supplierName, category_name, unit, qty_order'))
+        ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_delivery. '.product_code')
+        ->leftJoin($this->table_po,  $this->table_po.'.product_code', '=', $this->table_delivery. '.product_code')
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
@@ -118,7 +151,7 @@ class SupplierDeliveryCtr extends Controller
 
 
     public function getDeliveryNumPrefix(){
-        return 'DELI-' . $this->getDate() .'-';
+        return 'D-' . $this->getDate() . '-';
     }
 
     public function getDate(){

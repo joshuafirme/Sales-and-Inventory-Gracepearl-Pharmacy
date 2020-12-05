@@ -34,6 +34,7 @@ Route::get('/sales/cashiering/addToCart', 'SalesCtr@addToCart');
 Route::get('/sales/cashiering/process', 'SalesCtr@process');
 Route::get('/sales/cashiering/getTransNo', 'SalesCtr@getCurrentTransacNo');
 Route::get('/sales/cashiering/getSalesInvNo', 'SalesCtr@getSalesInvNo');
+Route::get('/sales/cashiering/isInvoiceExist/{sales_inv_no}', 'SalesCtr@isInvoiceExist');
 // Sales report
 Route::get('/sales/salesreport', 'SalesReportCtr@index');
 Route::get('/sales/displaySales', 'SalesReportCtr@displaySales');
@@ -104,6 +105,11 @@ Route::get('/inventory/delivery/displayPO', 'SupplierDeliveryCtr@displayPurchase
 Route::get('/inventory/delivery/show/{product_code}', 'SupplierDeliveryCtr@show');
 Route::get('/inventory/delivered', 'SupplierDeliveryCtr@displayDelivered');
 Route::post('/inventory/delivery/recordDelivery', 'SupplierDeliveryCtr@recordDelivery');
+
+//Return/Change
+Route::get('/inventory/returnchange', 'ReturnChangeCtr@index');
+Route::post('/inventory/returnchange/searchSalesInvoice', 'ReturnChangeCtr@searchSalesInvoice');
+Route::post('/inventory/returnchange/searchProdAndInv', 'ReturnChangeCtr@searchProdAndInv');
 
 //pay
 Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');

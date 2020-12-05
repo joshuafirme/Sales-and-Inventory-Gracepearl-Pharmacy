@@ -80,7 +80,7 @@
                             <a href="{{ url('/inventory/notification') }}"><i class="fas fa-bell"></i> Notification <span class="badge badge-danger" id="count-all-notifs"> </span></a>
                         </li>
                         <li>
-                            <a href="404.html"><i class="fas fa-hand-holding"></i> Product Return</a>
+                            <a href="{{ url('/inventory/returnchange') }}"><i class="fas fa-hand-holding"></i> Product Return</a>
                         </li>
                         <li>
                             <a href="404.html"><i class="fas fa-flag"></i> Weed <span class="badge badge-warning" style="color: #fff;"> 20</span></a>
@@ -154,6 +154,10 @@
                         </li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="#tools-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-sign-out-alt"></i> Logout</a>
+
             </ul>
         </nav>
         <div id="body" class="active">
@@ -223,6 +227,7 @@
           <script src="{{asset('js/inventory/purchase_order.js')}}"></script>
           <script src="{{asset('js/inventory/notification.js')}}"></script>
           <script src="{{asset('js/inventory/supplier_delivery.js')}}"></script>
+          <script src="{{asset('js/inventory/return_change.js')}}"></script>
 
           <!-- count all notif -->
           <script src="{{asset('js/count_all_notif.js')}}"></script>

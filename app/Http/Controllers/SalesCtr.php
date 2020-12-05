@@ -152,6 +152,18 @@ class SalesCtr extends Controller
         return str_pad($inc, 5, '0', STR_PAD_LEFT);
     }
 
+    public function isInvoiceExist($sales_inv_no){
+        $invoice = DB::table($this->table_sales)
+        ->where('sales_inv_no', $sales_inv_no);
+        if($invoice->count() > 0){
+            $s = 'yes';
+        }
+        else{
+            $s = 'no';
+        }
+        return $s;
+    }
+
     public function process(){
 
         $isSenior = Input::input('senior_chk');

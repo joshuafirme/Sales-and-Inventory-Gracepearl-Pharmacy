@@ -268,7 +268,7 @@
 
 
 <!-- qty deliver -->
-<div class="modal fade  mt-5" id="qtyDeliverModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="qtyDeliverModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -337,6 +337,119 @@
               <option>Completed</option>
               <option>Partial</option>
               <option>Damaged</option>
+
+              </select>
+            </div>
+            
+        </div>  
+
+      </div>
+      <div class="modal-footer">
+
+        <div class="update-success-validation mr-auto ml-3" style="display: none">
+          <label class="label text-success">Product is successfully added to delivery</label>    
+        </div> 
+        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
+          <button type="submit" class="btn btn-sm btn-primary" id="btn-add"><i class="fas fa-plus"></i> Add</button>
+
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- Return Change Modal -->
+<div class="modal fade" id="returnchangeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Return/Change</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+          <div class="row">
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Sales Invoice #</label><br>
+              <input type="search" class="form-control" id="rc_sales_inv_no">
+            </div>
+
+            <div class="col-md-4">
+              <label class="col-form-label">List of Product Code</label>
+              <select class="form-control" id="rc_product_code" name="rc_product_code" >
+              </select>
+            </div>
+
+            <div class="col-md-12 mt-2 mb-2 line"></div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Description</label><br>
+              <a class="form-control" id="rc_description"></a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Unit</label><br>
+              <a class="form-control" id="rc_unit"></a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Category</label><br>
+              <a class="form-control" id="rc_category"></a>
+            </div>
+            
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Selling Price</label><br>
+              <a class="form-control" id="rc_selling_price"></a>
+            </div>
+            
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Quantity Purchased</label><br>
+              <a class="form-control" id="rc_qty_purchased"></a>
+            </div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Amount Purchased</label><br>
+              <a class="form-control" id="rc_amount_purchased"></a>
+            </div>
+
+            <div class="col-md-12 mt-2 mb-2 line"></div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Qty to Return/Change</label><br>
+              <input type="number" class="form-control" id="rc_qty_to_rc">
+            </div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Amount</label><br>
+              <input type="number" class="form-control" id="rc_amount" readonly>
+            </div>
+
+            <div class="col-md-4 mt-4">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="rb-return-change" id="rc_return" value="Return" checked required>
+                <label class="form-check-label">
+                  Return
+                </label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="rb-return-change" id="change" value="Change" required>
+                <label class="form-check-label">
+                  Change
+                </label>
+              </div>
+            </div>
+            
+       
+            <div class="col-md-4">
+              <label class="col-form-label">Reason</label>
+              <select class="form-control" name="del_remarks" id="rc_reason">
+              <option>Damaged</option>
+              <option>Wrong Purchase</option>
+              <option>Expired</option>
 
               </select>
             </div>

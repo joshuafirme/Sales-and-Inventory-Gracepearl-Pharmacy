@@ -35,7 +35,14 @@ class SupplierDeliveryCtr extends Controller
 
                 return $button;
             })
-            ->rawColumns(['action'])
+            ->addColumn('status', function($po){
+                if($po->status == 'Pending'){
+                    $button = '<span class="badge" style="background-color:#337AB7; color:#fff;">Pending</span>';     
+                    return $button;
+                }
+                return $button;
+            })
+            ->rawColumns(['action','status'])
             ->make(true);            
         }
     }
@@ -48,15 +55,17 @@ class SupplierDeliveryCtr extends Controller
             return datatables()->of($del)
             ->addColumn('remarks', function($del){
                 if($del->remarks == 'Completed'){
-                    $button = '<a style="color:#28A745;">Completed</a>';     
+                    $button = '<span class="badge badge-success">Completed</span>';     
                     return $button;
                 }
                 else if($del->remarks == 'Partial'){
-                    $button = '<a style="color:#FFC107;">Partial</a>';
+                    $button = '<span class="badge badge-warning">Partial</span>';     
                     return $button;
                 }
-               
-
+                else if($del->remarks == 'Pending'){
+                    $button = '<span class="badge" style="background-color:#337AB7; color:#fff;">Pending</span>';     
+                    return $button;
+                }
             })
             ->rawColumns(['remarks'])
             ->make(true);            

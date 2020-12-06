@@ -69,7 +69,22 @@ class PurchaseOrderCtr extends Controller
         if(request()->ajax())
         {       
             return datatables()->of($get_all_orders)
-            ->make(true);            
+            ->addColumn('status', function($orders){
+                if($orders->status == 'Completed'){
+                    $button = '<span class="badge badge-success">Completed</span>';     
+                    return $button;
+                }
+                else if($orders->status == 'Partial'){
+                    $button = '<span class="badge badge-warning">Partial</span>';     
+                    return $button;
+                }
+                else if($orders->status == 'Pending'){
+                    $button = '<span class="badge" style="background-color:#337AB7; color:#fff;">Pending</span>';     
+                    return $button;
+                }
+            })
+            ->rawColumns(['status'])
+            ->make(true);           
         }
     }
 

@@ -4,7 +4,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+        <h4 class="modal-title" id="exampleModalLabel">Add Product</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -97,14 +97,29 @@
               </div>
             </div>
             
+            <div class="container-fluid">
+              <div class="page-title  mt-3">
+                  <h5>Product Highlights</h5>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-12 col-lg-12">
+                    <div id="summernote">
+
+              
+                  </div>        
+                  </div>
+
+              </div>
           </div>
-       
+
+          </div>
 
       </div>
       <div class="modal-footer">
 
               <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-sm btn-primary">Save</button>
+              <button type="submit" class="btn btn-sm btn-primary" id="btn-add-product">Save</button>
       </div>
     </form>
     </div>
@@ -256,7 +271,20 @@
             </div> 
 
            
-        </div>  
+        </div>
+        <label><b>Highlights:</b></label> 
+        
+        <div class="product-highlights"> 
+        <ul>
+          <li>Paste images from clipboard</li>
+          <li>Saves images directly in the content of the field using base64 encoding.</li>
+          <li>Simple UI</li>
+          <li>Interactive WYSIWYG editing</li>
+          <li>Handy integration with server</li>
+          <li>Supports Bootstrap 3 and 4 integrities</li>
+          <li>Lots of plugins and connectors provided together</li>
+      </ul>
+    </div>
 
       </div>
       <div class="modal-footer">

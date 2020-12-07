@@ -240,7 +240,7 @@ public function recordOrder(){
             $po->product_code = $product_code;
             $po->qty_order = $data['qty_order'];
             $po->amount = $sub_total;       
-            $po->date = $this->getPrefix();  
+            $po->date = date('yy-m-d');  
             $po->status = 'Pending';    
             $po->save();     
         } 
@@ -257,7 +257,7 @@ public function getPONum(){
 }
 
 public function getPrefix(){
-    return $date = $this->getYear() . $this->getMonth() . $this->getDay();
+    return $date = $this->getMonth() . $this->getDay();
  }
 
  public function getYear(){

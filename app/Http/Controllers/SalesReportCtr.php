@@ -8,11 +8,14 @@ use Illuminate\Http\Request;
 
 class SalesReportCtr extends Controller
 {
+    private $module = 'Sales Report';
+
     private $table_sales = "tblsales";
     private $table_prod = "tblproduct";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
+
  
     public function index(Request $request)
     {       

@@ -98,15 +98,20 @@ $(document).ready(function(){
 //show
 $(document).on('click', '#btn-add-delivery', function(){
     var product_code = $(this).attr('product-code');
+    var po_num = $(this).attr('po-num');
 
     $('#del_qty_delivered').val('');
     $('#del_qty_delivered').focus();
   
+    console.log(product_code);
+    console.log(po_num);
+
     $.ajax({
-      url:"/inventory/delivery/show/"+product_code,
+      url:"/inventory/delivery/show",
       type:"GET",
       data:{
-          product_code:product_code
+          product_code:product_code,
+          po_num:po_num
         },
       success:function(response){
         console.log(response);

@@ -13,6 +13,7 @@ class StockAdjustmentCtr extends Controller
     private $table_prod = "tblproduct";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
+    private $table_unit = "tblunit";
     private $table_stockad = "tblstockadjustment";
 
     public function index(Request $request){
@@ -38,9 +39,10 @@ class StockAdjustmentCtr extends Controller
 
     public function getAllProduct(){
         $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
+        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, supplierName, category_name, unit'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
         ->get();
 
         return $product;
@@ -91,9 +93,10 @@ class StockAdjustmentCtr extends Controller
     public function show($productCode)
     {
         $product = DB::table($this->table_prod)
-            ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
+            ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, supplierName, category_name, unit'))
             ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+            ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
             ->where('tblproduct.id', $productCode)
             ->get();
 

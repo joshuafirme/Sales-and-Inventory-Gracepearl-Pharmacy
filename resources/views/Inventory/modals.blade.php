@@ -16,19 +16,37 @@
 
         <input type="hidden" id="product_code_hidden" required>
 
-        <div class="col-md-8 mb-2">
+        <div class="col-md-4 mb-2">
           <label class="col-form-label">Product Code</label>
-          <input type="text" class="form-control" name="product_code" id="product_code" readonly>
+          <a class="form-control" name="product_code" id="product_code"></a>
         </div>
         
-        <div class="col-md-8 mb-2">
+        <div class="col-md-4 mb-2">
           <label class="col-form-label">Description</label>
-          <input type="text" class="form-control" name="description" id="description" readonly>
+          <a class="form-control" name="description" id="description"></a>
+        </div>
+
+        <div class="col-md-4">
+          <label class="col-form-label">Unit</label>
+          <a class="form-control" id="unit"></a>
+        </div>
+
+        <div class="col-md-4">
+          <label class="col-form-label">Category</label>
+          <a class="form-control" id="category"></a>
+        </div>
+
+        <div class="col-md-4">
+          <label class="col-form-label">Supplier</label>
+          <a class="form-control" id="supplier"></a>
         </div>
 
         <div class="col-md-4">
           <label class="col-form-label">Stock on hand</label>
-          <input type="text" class="form-control" name="qty" id="qty" readonly>
+          <a class="form-control" id="qty"></a>
+        </div>
+
+        <div class="col-md-12 line mt-4 mb-2">
         </div>
 
         <div class="col-md-4">
@@ -65,7 +83,7 @@
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
         <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
-        <button style="color: #fff" type="submit" class="btn btn-sm btn-warning" id="btn-adjust">Adjust</button>
+        <button class="btn btn-sm btn-success" id="btn-adjust">Adjust</button>
       </div>
     </div>
   </div>

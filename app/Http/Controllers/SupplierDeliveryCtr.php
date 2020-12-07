@@ -30,7 +30,7 @@ class SupplierDeliveryCtr extends Controller
         {       
             return datatables()->of($po)
             ->addColumn('action', function($po){
-                $button = '<a class="btn btn-sm" id="btn-add-delivery" product-code='. $po->product_code .' 
+                $button = '<a class="btn btn-sm" id="btn-add-delivery" product-code='. $po->product_code .' po-num='. $po->po_num .' 
                 data-toggle="modal" data-target="#qtyDeliverModal" title="Add Delivery" style="color:#28A745;"><i class="fas fa-plus"></i></a>';
 
                 return $button;
@@ -147,15 +147,20 @@ class SupplierDeliveryCtr extends Controller
      }
 
      
-     public function show($product_code)
+     public function show()
      {
+         $product_code = Input::input('product_code');
+         $po_num = Input::input('po_num');
          $po = DB::table($this->table_po)
              ->select("tblpurchaseorder.*", DB::raw('CONCAT(tblpurchaseorder._prefix, tblpurchaseorder.po_num) AS po_num, description, supplierName, category_name, unit'))
              ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_po . '.product_code')
              ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
              ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
              ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-             ->where('tblpurchaseorder.product_code', $product_code)
+             ->where([
+                 ['tblpurchaseorder.product_code', $product_code],
+                 [DB::raw('CONCAT(tblpurchaseorder._prefix, tblpurchaseorder.po_num)'), $po_num]
+                 ])
              ->get();
  
              return $po;
@@ -163,7 +168,7 @@ class SupplierDeliveryCtr extends Controller
 
 
     public function getDeliveryNumPrefix(){
-        return 'D-' . $this->getMonth() . $this->getDay() .'-';
+        return 'D' . $this->getMonth() . $this->getDay();
     }
 
     public function getDate(){

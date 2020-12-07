@@ -15,6 +15,7 @@ class CreateTbldrugDisposal extends Migration
     {
         Schema::create('tbldrug_disposal', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('id');
             $table->timestamps();
         });
     }

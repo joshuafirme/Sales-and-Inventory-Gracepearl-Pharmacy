@@ -43,6 +43,9 @@
                         <tr>
                             <th>Product Code</th>
                             <th>Description</th>   
+                            <th>Unit</th>   
+                            <th>Category</th>   
+                            <th>Supplier</th>   
                             <th>Stock</th>              
                             <th>Expiration Date</th>
                             <th>Action</th>

@@ -109,6 +109,7 @@ class ProductMaintenanceCtr extends Controller
      */
     public function store(Request $request)
     {
+        $summernote_val = Input::input('summernote_val');
         $product = new ProductMaintenance;
 
         $product->_prefix = $this->getPrefix();
@@ -122,6 +123,7 @@ class ProductMaintenanceCtr extends Controller
         $product->selling_price = $request->get('selling_price');
         $product->exp_date = $request->input('exp_date');
         $product->with_prescription = $request->input('with_prescription');
+        $product->highlights = $summernote_val;
 
         $product->save();
 
@@ -133,6 +135,12 @@ class ProductMaintenanceCtr extends Controller
         $this->storeImage($product);
 
         return redirect('/maintenance/product')->with('success', 'Data Saved');
+    }
+
+    public function storeHighlights($id){
+        DB::table($this->table_prod)
+        ->where('id', $id)
+        ->update();
     }
 
     public function storeImage($product){

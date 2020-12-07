@@ -48,7 +48,22 @@ $(document).ready(function(){
       });
   }
 
+  //add product
+  $('#btn-add-product').click(function(){
+    var summernote_val = $('#summernote').summernote('code');
+    console.log(summernote_val);
+    $.ajax({
+      url:"/maintenance/product/store",
+      type:"POST",
+      data:{
+        summernote_val:summernote_val
+      },
+      success:function(response){
+        console.log(response);
 
+      }
+     });
+  });
 
 
   // delete product alert

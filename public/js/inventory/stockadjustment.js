@@ -18,6 +18,9 @@ $(document).ready(function(){
       columns:[       
        {data: 'productCode', name: 'productCode'},
        {data: 'description', name: 'description'},
+       {data: 'unit', name: 'unit'},
+       {data: 'category_name', name: 'category_name'},
+       {data: 'supplierName', name: 'supplierName'},
        {data: 'qty', name: 'qty'},
        {data: 'exp_date', name: 'exp_date'},
        {data: 'action', name: 'action',orderable: false},
@@ -33,6 +36,7 @@ $(document).ready(function(){
 $(document).on('click', '#btn-stockad', function(){
   var productCode = $(this).attr('product-code');
   $('#qty_to_adjust').val('');
+  $('#qty_to_adjust').focus();
   $('#remarks').val('');
   console.log(productCode);
 
@@ -44,9 +48,12 @@ $(document).on('click', '#btn-stockad', function(){
      
       console.log(response);
       $('#product_code_hidden').val(response[0].id);
-      $('#product_code').val(response[0].productCode);
-      $('#description').val(response[0].description);
-      $('#qty').val(response[0].qty);
+      $('#product_code').text(response[0].productCode);
+      $('#description').text(response[0].description);
+      $('#unit').text(response[0].unit);
+      $('#category').text(response[0].category_name);
+      $('#supplier').text(response[0].supplierName);
+      $('#qty').text(response[0].qty);
     }
    });
 });

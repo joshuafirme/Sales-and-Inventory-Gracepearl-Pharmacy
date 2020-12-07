@@ -7,6 +7,7 @@
     <title>Gracepearl Pharmacy</title>
     <link href="{{asset('components/vendor/bootstrap4/css/bootstrap.min.css')}}" rel="stylesheet"> 
     <link href="{{asset('components/vendor/DataTables/datatables.min.css')}}" rel="stylesheet">
+    <link href="{{asset('components/vendor/summernote/summernote-bs4.css')}}" rel="stylesheet">
     <link href="{{asset('components/css/master.css')}}" rel="stylesheet">
     <link href="{{asset('components/vendor/chartsjs/Chart.min.css')}}" rel="stylesheet">
  <!--   <link href="asset('components/vendor/flagiconcss3/css/flag-icon.min.css')}}" rel="stylesheet">-->
@@ -212,6 +213,8 @@
           <script src="{{asset('components/js/script.js')}}"></script>
           <script src="{{asset('components/js/alert-auto-close.js')}}"></script>
           <script src="{{asset('components/jquery-tabledit-master/jquery.tabledit.min.js')}}"></script>
+          <script src="{{asset('components/vendor/summernote/summernote-bs4.min.js')}}"></script>
+          <script src="{{asset('components/js/initiate-summernote.js')}}"></script>
     
           <!-- maintenance -->
           <script src="{{asset('js/maintenance/product_maintenance.js')}}"></script>

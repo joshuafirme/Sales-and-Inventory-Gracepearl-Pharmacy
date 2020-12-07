@@ -51,7 +51,7 @@ Route::post('/getCompanyID/{supplierID}', 'SupplierMaintenanceCtr@getCompanyID')
 
 // Product
 Route::resource('/maintenance/product', 'ProductMaintenanceCtr');
-Route::post('/maintenance/product', 'ProductMaintenanceCtr@store');
+Route::post('/maintenance/product/store', 'ProductMaintenanceCtr@store');
 Route::post('/maintenance/updateproduct/{id}', 'ProductMaintenanceCtr@updateProduct')->name('updateProduct');
 Route::post('/maintenance/product/show/{productCode}', 'ProductMaintenanceCtr@show');
 Route::delete('/maintenance/product/delete/{productCode}', 'ProductMaintenanceCtr@destroy');
@@ -102,7 +102,7 @@ Route::get('/inventory/displayOrders', 'PurchaseOrderCtr@displayOrders');
 //Supplier Delivery
 Route::get('/inventory/delivery', 'SupplierDeliveryCtr@index');
 Route::get('/inventory/delivery/displayPO', 'SupplierDeliveryCtr@displayPurchaseOrder');
-Route::get('/inventory/delivery/show/{product_code}', 'SupplierDeliveryCtr@show');
+Route::get('/inventory/delivery/show', 'SupplierDeliveryCtr@show');
 Route::get('/inventory/delivered', 'SupplierDeliveryCtr@displayDelivered');
 Route::post('/inventory/delivery/recordDelivery', 'SupplierDeliveryCtr@recordDelivery');
 

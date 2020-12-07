@@ -33,10 +33,10 @@ class CompanyMaintenanceCtr extends Controller
     
     public function getCompanyMarkup($companyID)
     {
-        $suplr = DB::table($this->table_name)
+        $com = DB::table($this->table_name)
         ->where('tblcompany.id', $companyID)
         ->get();
-        return $suplr;
+        return $com;
     }
 
 

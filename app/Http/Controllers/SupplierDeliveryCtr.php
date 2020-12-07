@@ -75,7 +75,8 @@ class SupplierDeliveryCtr extends Controller
     public function getPurchaseOrder()
      {
         $product = DB::table($this->table_po)
-        ->select("tblpurchaseorder.*", DB::raw('CONCAT('.$this->table_po.'._prefix, '.$this->table_po.'.po_num) AS po_num, description, unit, supplierName, category_name'))
+        ->select("tblpurchaseorder.*", 
+        DB::raw('CONCAT('.$this->table_po.'._prefix, '.$this->table_po.'.po_num) AS po_num, description, unit, supplierName, category_name, DATE_FORMAT(date,"%d-%m-%Y") as date'))
         ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_po . '.product_code')
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
@@ -132,7 +133,9 @@ class SupplierDeliveryCtr extends Controller
      public function getDelivery()
      {
         $product = DB::table($this->table_delivery)
-        ->select("tblsupplier_delivery.*", DB::raw('CONCAT('.$this->table_delivery.'._prefix, '.$this->table_delivery.'.delivery_num) AS del_num, description, supplierName, category_name, unit, qty_order'))
+        ->select("tblsupplier_delivery.*", 
+        DB::raw('CONCAT('.$this->table_delivery.'._prefix, '.$this->table_delivery.'.delivery_num) 
+        AS del_num, description, supplierName, category_name, unit, qty_order,  DATE_FORMAT(tblsupplier_delivery.exp_date,"%d-%m-%Y") as exp_date, DATE_FORMAT(date_recieved,"%d-%m-%Y") as date_recieved'))
         ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_delivery. '.product_code')
         ->leftJoin($this->table_po,  $this->table_po.'.product_code', '=', $this->table_delivery. '.product_code')
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
@@ -160,7 +163,7 @@ class SupplierDeliveryCtr extends Controller
 
 
     public function getDeliveryNumPrefix(){
-        return 'D-' . $this->getDate() . '-';
+        return 'D-' . $this->getMonth() . $this->getDay() .'-';
     }
 
     public function getDate(){

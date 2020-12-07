@@ -63,7 +63,7 @@ class NotificationCtr extends Controller
     public function getAllNearExpiry()
     {
         $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode,  unit, category_name'))
+        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode,  unit, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')

@@ -22,7 +22,9 @@ $(document).ready(function(){
         columns:[       
          {data: 'productCode', name: 'productCode'},
          {data: 'description', name: 'description'},
+         {data: 'category_name', name: 'ategory_name'},
          {data: 'unit', name: 'unit'},
+         {data: 'supplierName', name: 'supplierName'},
          {data: 'qty', name: 'qty'},
          {data: 'selling_price',name: 'selling_price'},      
          {data: 'exp_date',name: 'exp_date'},

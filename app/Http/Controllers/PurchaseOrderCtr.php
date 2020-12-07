@@ -75,7 +75,7 @@ class PurchaseOrderCtr extends Controller
                     return $button;
                 }
                 else if($orders->status == 'Partial'){
-                    $button = '<span class="badge badge-warning">Partial</span>';     
+                    $button = '<span style="color:#fff;" class="badge badge-warning">Partial</span>';     
                     return $button;
                 }
                 else if($orders->status == 'Pending'){

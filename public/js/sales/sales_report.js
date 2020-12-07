@@ -9,7 +9,6 @@ $(document).ready(function(){
       var category = $('select[name=sales_category] option').filter(':selected').text();
 
      fetch_sales(date_from, date_to, category);
-     
    }  
 
    function fetch_sales(date_from, date_to, category){
@@ -123,10 +122,11 @@ $(document).ready(function(){
      });
 
      function getTotalSales(){
+       
       var total_sales = sales_table.column(8).data().sum();
       var round_off = Math.round((total_sales + Number.EPSILON) * 100) / 100;
       var money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      return $('#total-sales').text(money_format);
+      $('#total-sales').text(money_format);
      }
 
   

@@ -363,7 +363,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Return/Change</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Return Item</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -418,8 +418,8 @@
             <div class="col-md-12 mt-2 mb-2 line"></div>
 
             <div class="col-md-4 mb-2">
-              <label class="col-form-label">Qty to Return/Change</label><br>
-              <input type="number" class="form-control" id="rc_qty_to_rc">
+              <label class="col-form-label">Qty to Return</label><br>
+              <input type="number" class="form-control" id="rc_qty_return">
             </div>
 
             <div class="col-md-4 mb-2">
@@ -427,28 +427,16 @@
               <input type="number" class="form-control" id="rc_amount" readonly>
             </div>
 
-            <div class="col-md-4 mt-4">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="rb-return-change" id="rc_return" value="Return" checked required>
-                <label class="form-check-label">
-                  Return
-                </label>
-              </div>
-              
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="rb-return-change" id="change" value="Change" required>
-                <label class="form-check-label">
-                  Change
-                </label>
-              </div>
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Date</label><br>
+            <input type="date" class="form-control" id="rc_date" value="{{ $getCurrentDate }}">
             </div>
-            
        
             <div class="col-md-4">
               <label class="col-form-label">Reason</label>
-              <select class="form-control" name="del_remarks" id="rc_reason">
+              <select class="form-control" name="rc_reason" id="rc_reason">
               <option>Damaged</option>
-              <option>Wrong Purchase</option>
+              <option>Wrong Item</option>
               <option>Expired</option>
 
               </select>
@@ -463,7 +451,7 @@
           <label class="label text-success">Product is successfully added to delivery</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-          <button type="submit" class="btn btn-sm btn-primary" id="btn-add"><i class="fas fa-plus"></i> Add</button>
+          <button type="submit" class="btn btn-sm btn-primary" id="btn-add-return"><i class="fas fa-plus"></i> Return</button>
 
       </div>
     </form>

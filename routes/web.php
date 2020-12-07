@@ -106,10 +106,12 @@ Route::get('/inventory/delivery/show/{product_code}', 'SupplierDeliveryCtr@show'
 Route::get('/inventory/delivered', 'SupplierDeliveryCtr@displayDelivered');
 Route::post('/inventory/delivery/recordDelivery', 'SupplierDeliveryCtr@recordDelivery');
 
-//Return/Change
-Route::get('/inventory/returnchange', 'ReturnChangeCtr@index');
-Route::post('/inventory/returnchange/searchSalesInvoice', 'ReturnChangeCtr@searchSalesInvoice');
-Route::post('/inventory/returnchange/searchProdAndInv', 'ReturnChangeCtr@searchProdAndInv');
+//Return
+Route::get('/inventory/return', 'ReturnCtr@index');
+Route::post('/inventory/return/searchSalesInvoice', 'ReturnCtr@searchSalesInvoice');
+Route::post('/inventory/return/searchProdAndInv', 'ReturnCtr@searchProdAndInv');
+Route::post('/inventory/return/store', 'ReturnCtr@returnItem');
+Route::get('/inventory/return/displayreturn', 'ReturnCtr@displayReturns');
 
 //pay
 Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');

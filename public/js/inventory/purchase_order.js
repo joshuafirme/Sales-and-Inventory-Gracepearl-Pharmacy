@@ -161,7 +161,7 @@ $(document).ready(function(){
       setTimeout(function(){
         $("#order-table").load( "purchaseorder #order-table" );
   
-    },1500);
+    },1000);
    /*  $.ajax({
           url:"/filterSupplier/" + supplier_id,
           type:"POST",

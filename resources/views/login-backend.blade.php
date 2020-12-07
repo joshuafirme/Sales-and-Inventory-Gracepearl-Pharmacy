@@ -6,10 +6,10 @@
      <link href="{{asset('components/css/login-style.css')}}" rel="stylesheet">
 </head>
 <body>
-	<img class="bg" src="{{asset('assets/gracepearl-bg.jpg')}}">
+	<img class="bg" src="{{asset('assets/gp-bg.jpg')}}">
 	<div class="container">
 		<div class="img">
-			<img src="assets/bg.svg">
+			<img src="assets/undraw_medicine_b1ol.svg">
 		</div>
 		<div class="login-container">
 			<form action="{{ action('DashboardCtr@index') }}">

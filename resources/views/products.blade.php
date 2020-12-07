@@ -40,7 +40,9 @@
                         <tr>
                             <th>Product Code</th>
                             <th>Description</th>   
-                            <th>Unit</th>        
+                            <th>Category</th>        
+                            <th>Unit</th>   
+                            <th>Supplier</th>             
                             <th>Quantity</th>
                             <th>Selling Price</th>
                             <th>Expiration</th>

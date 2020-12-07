@@ -47,7 +47,7 @@
                 </li>
 
                 <li>
-                    <a href="#sales-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-file-invoice"></i> Sales</a>
+                    <a href="#sales-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-dollar-sign"></i> Sales</a>
                     <ul class="collapse list-unstyled" id="sales-menu">
                         <li>
                             <a href="{{ url('sales/cashiering') }}"><i class="fas fa-cash-register"></i> Cashiering</a>
@@ -77,13 +77,13 @@
                             <a href="{{ url('/inventory/delivery') }}"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
                         </li>
                         <li>
-                            <a href="{{ url('/inventory/notification') }}"><i class="fas fa-bell"></i> Notification <span class="badge badge-danger" id="count-all-notifs"> </span></a>
+                            <a href="{{ url('/inventory/notification') }}"><i class="fas fa-bell"></i> Notification</a>
                         </li>
                         <li>
-                            <a href="{{ url('/inventory/returnchange') }}"><i class="fas fa-hand-holding"></i> Product Return</a>
+                            <a href="{{ url('/inventory/return') }}"><i class="fas fa-hand-holding"></i> Product Return</a>
                         </li>
                         <li>
-                            <a href="404.html"><i class="fas fa-flag"></i> Weed <span class="badge badge-warning" style="color: #fff;"> 20</span></a>
+                            <a href="{{ url('/inventory/drugdisposal') }}"><i class="fas fa-trash"></i> Drug Disposal<span class="badge badge-warning"></a>
                         </li>
                     </ul>
                 </li>
@@ -156,7 +156,7 @@
                 </li>
 
                 <li>
-                    <a href="#tools-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a href="{{ url('login-backend') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
 
             </ul>
         </nav>
@@ -201,12 +201,13 @@
                 <div class="container-fluid">               
                     @yield('content')
           </div>
+
+          <!-- components -->
           <script src="{{asset('components/vendor/jquery3/jquery.min.js')}}"></script>
           <script src="{{asset('components/vendor/bootstrap4/js/bootstrap.bundle.min.js')}}"></script>
           <script src="{{asset('components/vendor/fontawesome5/js/solid.min.js')}}"></script>
           <script src="{{asset('components/vendor/fontawesome5/js/fontawesome.min.js')}}"></script>
           <script src="{{asset('components/vendor/chartsjs/Chart.min.js')}}"></script>
-
           <script src="{{asset('components/js/dashboard-charts.js')}}"></script>
           <script src="{{asset('components/js/script.js')}}"></script>
           <script src="{{asset('components/js/alert-auto-close.js')}}"></script>
@@ -219,6 +220,7 @@
           <script src="{{asset('js/maintenance/unit_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/company_maintenance.js')}}"></script>
 
+          <!-- sales -->
           <script src="{{asset('js/sales/cashiering.js')}}"></script>
           <script src="{{asset('js/sales/sales_report.js')}}"></script>
 
@@ -227,7 +229,7 @@
           <script src="{{asset('js/inventory/purchase_order.js')}}"></script>
           <script src="{{asset('js/inventory/notification.js')}}"></script>
           <script src="{{asset('js/inventory/supplier_delivery.js')}}"></script>
-          <script src="{{asset('js/inventory/return_change.js')}}"></script>
+          <script src="{{asset('js/inventory/return.js')}}"></script>
 
           <!-- count all notif -->
           <script src="{{asset('js/count_all_notif.js')}}"></script>

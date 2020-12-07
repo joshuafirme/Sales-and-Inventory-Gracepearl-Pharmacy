@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="page-header">
-  <h3 class="mt-2" id="page-title">Customer Return/Change</h3>
+  <h3 class="mt-2" id="page-title">Customer Return</h3>
           <hr>
       </div>
 
@@ -42,18 +42,18 @@
 
              </div>
             </div>    
-                    <table class="table responsive  table-hover" id="return-change-table" width="100%">                               
+                    <table class="table responsive  table-hover" id="return-table" width="100%">                               
                       <thead>
                         <tr>
+                            <th>Return ID</th>
                             <th>Sales Invoice #</th>
                             <th>Product Code</th>   
                             <th>Description</th>   
                             <th>Unit</th>      
                             <th>Category</th>    
-                            <th>Qty</th>      
-                            <th>Action</th>     
+                            <th>Qty</th>       
                             <th>Reason</th>   
-                         
+                            <th>Date Return</th> 
                         </tr>
                     </thead>
                     

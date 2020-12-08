@@ -18,7 +18,8 @@ class SalesReportCtr extends Controller
 
  
     public function index(Request $request)
-    {       
+    {
+               
         $category_name = DB::table($this->table_cat)->get();
         
         if(request()->ajax()){   

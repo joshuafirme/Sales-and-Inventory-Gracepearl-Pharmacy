@@ -47,25 +47,31 @@ class PurchaseOrderCtr extends Controller
             ]);
     }
 
-    public function displayReorders(){
+    public function displayReorders(Request $request){
         
         $get_all_reorder = $this->getAllReorder();
+      // $get_reorderby_supplier = 
         
         if(request()->ajax())
         {       
-            return datatables()->of($get_all_reorder)
-            ->addColumn('action', function($product){
-                $button = '<a class="btn" id="btn-add-order" product-code='. $product->id .' data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>';
-
-                return $button;
-            })
-            ->rawColumns(['action'])
-            ->make(true);            
+           // if($request->supplier){
+                return datatables()->of($this->getReorderBySupplier())
+                ->addColumn('action', function($product){
+                    $button = '<a class="btn" id="btn-add-order" product-code='. $product->id .' data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>';
+    
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);   
+        //    }
+                    
         }
     }
 
     public function displayOrders(){
+
         $get_all_orders = $this->getAllOrders();
+
         if(request()->ajax())
         {       
             return datatables()->of($get_all_orders)
@@ -132,6 +138,19 @@ class PurchaseOrderCtr extends Controller
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
         ->whereColumn('tblproduct.re_order','>=', 'tblproduct.qty')
+        ->get();
+
+        return $product;
+    }
+
+    public function getReorderBySupplier(){
+        $product = DB::table($this->table_prod)
+        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name'))
+        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
+        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+        ->whereColumn('tblproduct.re_order','>=', 'tblproduct.qty')
+      //  ->where('supplierName', $supplier)
         ->get();
 
         return $product;

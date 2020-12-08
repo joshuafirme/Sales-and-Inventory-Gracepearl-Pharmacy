@@ -4,6 +4,14 @@ $(document).ready(function(){
     fetch_orders();
     fetch_reorders();
 
+    function loadData(){
+      supplier = $('#ro_supplier').val();
+      console.log(supplier);
+      $('#reorder-table').DataTable().destroy();
+      fetch_reorders(supplier);
+    }
+
+
     function fetch_orders(){
       var order_tbl = $('#ord-table').DataTable({
      
@@ -13,6 +21,7 @@ $(document).ready(function(){
        
         ajax:{
          url: "/inventory/displayOrders",
+      
         }, 
         
         columns:[       
@@ -30,7 +39,7 @@ $(document).ready(function(){
         
        });
        $('#ord_supplier').change(function(){
-  
+        
         order_tbl.column( $(this).data('column') )
         .search( $(this).val() )
         .draw();
@@ -40,7 +49,7 @@ $(document).ready(function(){
         
     }
 
-    function fetch_reorders(){
+    function fetch_reorders($supplier){
       var reoder_tbl = $('#reorder-table').DataTable({
      
         processing: true,
@@ -49,6 +58,10 @@ $(document).ready(function(){
        
         ajax:{
          url: "/inventory/displayReorders",
+         type:"GET",
+         data:{
+          $supplier:$supplier
+        }
         }, 
    
         columns:[       
@@ -64,7 +77,7 @@ $(document).ready(function(){
         
        });
        $('#ro_supplier').change(function(){
-  
+        var supplier = $(this).val();
         reoder_tbl.column( $(this).data('column') )
         .search( $(this).val() )
         .draw();
@@ -259,6 +272,7 @@ $(document).ready(function(){
               success:function(response){
                 $('#ord-table').DataTable().ajax.reload();
                 setTimeout(function(){
+                  $('#ord-table').DataTable().ajax.reload();
                   $('.update-success-validation').css('display', 'inline');
                   $('#btn-send-order').text('Send Order');
                   $('.loader').css('display', 'none');

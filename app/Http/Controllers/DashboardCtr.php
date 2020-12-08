@@ -8,6 +8,12 @@ class DashboardCtr extends Controller
 {
     public function index()
     {
+        if(session()->get('position') == 'owner'){
+           
+        }
+        else{
+            dd('nyaa no no no!');
+        }
         return view('/dashboard');
     }
 }

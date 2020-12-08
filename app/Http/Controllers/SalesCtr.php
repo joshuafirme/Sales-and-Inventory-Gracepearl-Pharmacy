@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\Sales;
 use Illuminate\Http\Request;
+use App\UserMaintenance;
 
 class SalesCtr extends Controller
 {
@@ -12,14 +13,33 @@ class SalesCtr extends Controller
     private $table_prod = "tblproduct";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
+    private $table_emp = "tblemployee";
+    private $this_module = "Sales";
 
     public function index()
     {
+        $this->isUserAuthorize();
         //session()->forget('cart');
         //dd(session()->get('cart'));
         $getCurrenTransNo = $this->getCurrentTransacNo();
         return view('/sales/cashiering', ['getTransNo' => $getCurrenTransNo]);
    
+    }
+    
+
+    public function isUserAuthorize(){
+        $emp = DB::table($this->table_emp)
+        ->where([
+            ['username', session()->get('emp-username')],
+        ])
+        ->value('auth_modules');
+
+        $modules = explode(" ",$emp);
+
+        if (!(in_array($this->this_module, $modules)))
+        {
+            dd('Access denied!');
+        }
     }
 
     public function store(Request $request)

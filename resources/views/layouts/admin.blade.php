@@ -145,20 +145,15 @@
                         <li>
                             <a href="{{ url('maintenance/category') }}" ><i class="fas fa-dollar-sign"></i> Shipping Fee</a>
                         </li>
-                    </ul>
-                </li>   
-                <li>
-                    <a href="#utility-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-user-cog"></i> Utility</a>
-                    <ul class="collapse list-unstyled" id="utility-menu">
                         <li>
-                            <a ><i class="fas fa-user"></i> User Maintenance</a>
+                            <a href="{{ url('maintenance/user') }}"><i class="fas fa-user"></i> User</a>
                         </li>
                     </ul>
-                </li>
-
+                </li>   
+                
                 <li>
-                    <a href="{{ url('login-backend') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
-
+                    <a href="{{ url('admin-login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
             </ul>
         </nav>
         <div id="body" class="active">
@@ -190,7 +185,7 @@
                                         <li><a href="" class="dropdown-item"><i class="fas fa-envelope"></i> Messages</a></li>
                                         <li><a href="" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a></li>
                                         <div class="dropdown-divider"></div>
-                                        <li><a href="{{ url('login-backend') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                        <li><a href="{{ url('admin-login') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -222,6 +217,7 @@
           <script src="{{asset('js/maintenance/supplier_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/unit_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/company_maintenance.js')}}"></script>
+          <script src="{{asset('js/maintenance/user_maintenance.js')}}"></script>
 
           <!-- sales -->
           <script src="{{asset('js/sales/cashiering.js')}}"></script>

@@ -45,7 +45,7 @@ body{
 	width: 500px;
 }
 
-form{
+.form{
 	width: 380px;
 	margin-left: 50px;
 	background-color: #fff;
@@ -54,7 +54,7 @@ form{
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-form .input-div{
+.form .input-div{
 	margin-left: 20px;
 }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTbldrugDisposal extends Migration
+class CreateTblemployee extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class CreateTbldrugDisposal extends Migration
      */
     public function up()
     {
-        Schema::create('tbldrug_disposal', function (Blueprint $table) {
+        Schema::create('tblemployee', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('id');
+            $table->string('_prefix');
+            $table->string('name');
+            $table->string('username');
+            $table->string('position');
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -27,6 +32,6 @@ class CreateTbldrugDisposal extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbldrug_disposal');
+        Schema::dropIfExists('tblemployee');
     }
 }

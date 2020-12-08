@@ -14,9 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/login-backend', 'LoginCtr@index');
+Route::get('/admin-login', 'AdminLoginCtr@index');
+Route::post('/admin-login/login', 'AdminLoginCtr@login');
 
-Route::get('/dashboard', 'DashboardCtr@index');
+//User
+Route::get('/maintenance/user', 'UserMaintenanceCtr@index');
+Route::post('/maintenance/user/store', 'UserMaintenanceCtr@store');
+
+Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');
 
 Route::resource('/products', 'ProductSearch');
 

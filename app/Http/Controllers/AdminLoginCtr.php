@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 
 class AdminLoginCtr extends Controller
 {
-    public function index(){
+    private $table_emp = "tblemployee";
 
+    public function index(){
+      //  dd(session()->get('emp-username') . session()->get('is-login'));
         return view('/admin-login');
     }
 
@@ -18,14 +20,29 @@ class AdminLoginCtr extends Controller
         $username = Input::input('username');
         $password = Input::input('password');
 
-        session()->get('admin-username');
-        session()->put('admin-username', $username);
+        $emp = DB::table($this->table_emp)
+        ->where([
+            ['username', $username],
+            ['password', $password]
+        ])
+        ->get();
+        
+        
 
-        if($username == 'admin' && $password == 'admin'){
+        if($emp->count() > 0){
+            session()->get('emp-username');
+            session()->put('emp-username', $username);
+            session()->put('is-login', 'yes');
             return 'success';
         }
         else{
             return 'invalid';
         }
     }
+
+    public function logout(){
+        session()->forget('emp-username');
+        session()->forget('is-login');
+    }
+    
 }

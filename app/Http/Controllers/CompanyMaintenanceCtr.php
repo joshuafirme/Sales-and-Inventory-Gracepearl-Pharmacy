@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use App\CompanyMaintenance;
-use Illuminate\Support\Facades\Input;
+use Input;
 use Illuminate\Http\Request;
 
 class CompanyMaintenanceCtr extends Controller
@@ -48,7 +48,7 @@ class CompanyMaintenanceCtr extends Controller
 
     public function update($id)
     {
-        $company_name = Input::get('company_name');
+        $company_name = Input::input('company_name');
         $markup = Input::get('markup');
 
         DB::update('UPDATE '. $this->table_name .' 

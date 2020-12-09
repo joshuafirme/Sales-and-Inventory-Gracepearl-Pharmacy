@@ -15,6 +15,8 @@ class ProductMaintenanceCtr extends Controller
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
+    private $table_emp = "tblemployee";
+    private $this_module = "Maintenance";
     /**
      * Display a listing of the resource.
      *
@@ -22,6 +24,10 @@ class ProductMaintenanceCtr extends Controller
      */
     public function index(Request $request)
     {
+        if(!($this->isUserAuthorize())){
+            dd('You are not authorized to access this module, please ask the administrator');
+        }
+
         $category_param = $request->category;
         $product = $this->getAllProduct(); 
         $unit = DB::table($this->table_unit)->get();
@@ -59,6 +65,24 @@ class ProductMaintenanceCtr extends Controller
            
         }
         return view('maintenance/product/product', ['product' => $product, 'unit' => $unit, 'category' => $category, 'suplr' => $suplr]);
+    }
+
+    public function isUserAuthorize(){
+        $emp = DB::table($this->table_emp)
+        ->where([
+            ['username', session()->get('emp-username')],
+        ])
+        ->value('auth_modules');
+
+        $modules = explode(", ",$emp);
+
+        if (!(in_array($this->this_module, $modules)))
+        {
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
     public function getAllProduct(){
@@ -180,9 +204,9 @@ class ProductMaintenanceCtr extends Controller
             ]);
 
         
-        Storage::disk('local')->put($image, 'Contents');
-        $img_path = substr($image, 12);
-        $this->updateImage($product_code,$img_path);
+     //   Storage::disk('local')->put($image, 'Contents');
+     //   $img_path = substr($image, 12);
+     //   $this->updateImage($product_code,$img_path);
            
     }
 

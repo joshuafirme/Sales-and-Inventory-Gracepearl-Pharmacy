@@ -18,9 +18,10 @@ class SalesCtr extends Controller
 
     public function index()
     {
-        $this->isUserAuthorize();
-        //session()->forget('cart');
-        //dd(session()->get('cart'));
+        if(!($this->isUserAuthorize())){
+            dd('You are not authorized to access this module, please ask the administrator');
+        }
+
         $getCurrenTransNo = $this->getCurrentTransacNo();
         return view('/sales/cashiering', ['getTransNo' => $getCurrenTransNo]);
    
@@ -34,11 +35,14 @@ class SalesCtr extends Controller
         ])
         ->value('auth_modules');
 
-        $modules = explode(" ",$emp);
+        $modules = explode(", ",$emp);
 
         if (!(in_array($this->this_module, $modules)))
         {
-            dd('Access denied!');
+            return false;
+        }
+        else{
+            return true;
         }
     }
 

@@ -11,6 +11,8 @@ class SupplierMaintenanceCtr extends Controller
 {
     private $table_name = "tblsupplier";
     private $table_company = "tblcompany";
+    private $table_emp = "tblemployee";
+    private $this_module = "Maintenance";
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +20,9 @@ class SupplierMaintenanceCtr extends Controller
      */
     public function index()
     { 
+        if(!($this->isUserAuthorize())){
+            dd('You are not authorized to access this module, please ask the administrator');
+        }
         $company = DB::table($this->table_company)->get();
         $suplr = DB::table($this->table_name)
         ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID, company_name'))
@@ -25,6 +30,24 @@ class SupplierMaintenanceCtr extends Controller
         ->paginate(10);
 
         return view('maintenance/supplier/supplier', ['suplr' => $suplr, 'company' => $company]);
+    }
+
+    public function isUserAuthorize(){
+        $emp = DB::table($this->table_emp)
+        ->where([
+            ['username', session()->get('emp-username')],
+        ])
+        ->value('auth_modules');
+
+        $modules = explode(", ",$emp);
+
+        if (!(in_array($this->this_module, $modules)))
+        {
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
    

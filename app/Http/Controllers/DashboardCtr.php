@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardCtr extends Controller
 {
-    public function index()
+
+    private $table_emp = "tblemployee";
+
+    public function __construct()
     {
-        if(session()->get('position') == 'owner'){
-           
-        }
-        else{
-            dd('nyaa no no no!');
-        }
+     
+    }
+
+    public function index(){
+          $this->isLoggedIn();
+
         return view('/dashboard');
     }
+
+    public function isLoggedIn(){
+        if(session()->get('is-login') !== 'yes'){
+   
+           return redirect()->to('/admin-login')->send();
+        }
+    }
+
 }

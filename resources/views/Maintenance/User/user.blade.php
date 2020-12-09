@@ -38,13 +38,15 @@
           <div class="col-md-12 col-lg-12 mt-3">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-hover" id="user-table">
+                    <table class="table table-hover" id="emp-table-table">
                         <thead>
                             <tr>
                                 <th>Employee ID</th>
                                 <th>Name</th>
-                                <th>Username</th>
                                 <th>Position</th>
+                                <th>Username</th>
+                                <th>Authorized Modules</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
            

@@ -51,8 +51,7 @@ $(document).ready(function(){
     function searchSalesInvoice(){
           var sales_inv_no = $('#rc_sales_inv_no').val();
        //   var product_code = $('#rc_prouct_code').val();
-          
-          if(sales_inv_no == '' || product_code == ''){
+          if(sales_inv_no == ''){
              clear();    
           }
           else{

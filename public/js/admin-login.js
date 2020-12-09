@@ -5,6 +5,17 @@ $(document).ready(function(){
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
+
+      function logout(){
+        console.log('logout');
+        $.ajax({
+          url:"/admin-login/logout",
+          type:"POST",
+          success:function(){
+          }
+           
+         });
+      }
       
    $('#btn-admin-login').click(function(){
     var username = $('#admin-username').val();

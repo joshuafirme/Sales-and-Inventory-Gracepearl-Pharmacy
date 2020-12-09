@@ -11,7 +11,7 @@
     <link href="{{asset('components/css/master.css')}}" rel="stylesheet">
     <link href="{{asset('components/vendor/chartsjs/Chart.min.css')}}" rel="stylesheet">
  <!--   <link href="asset('components/vendor/flagiconcss3/css/flag-icon.min.css')}}" rel="stylesheet">-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
 
@@ -152,7 +152,7 @@
                 </li>   
                 
                 <li>
-                    <a href="{{ url('admin-login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a href="{{ url('admin-login') }}" onclick="logout();"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </li>
             </ul>
         </nav>
@@ -197,6 +197,18 @@
                 <div class="container-fluid">               
                     @yield('content')
           </div>
+          <script>
+          function logout(){
+            console.log('logout');
+            $.ajax({
+            url:"/admin-login/logout",
+            type:"GET",
+            success:function(){
+            }
+            
+          });
+      }
+            </script>
 
           <!-- components -->
           <script src="{{asset('components/vendor/jquery3/jquery.min.js')}}"></script>
@@ -229,6 +241,7 @@
           <script src="{{asset('js/inventory/notification.js')}}"></script>
           <script src="{{asset('js/inventory/supplier_delivery.js')}}"></script>
           <script src="{{asset('js/inventory/return.js')}}"></script>
+
 
           <!-- count all notif -->
           <script src="{{asset('js/count_all_notif.js')}}"></script>

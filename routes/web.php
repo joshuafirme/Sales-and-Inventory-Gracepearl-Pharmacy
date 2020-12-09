@@ -16,10 +16,13 @@ Route::get('/', function () {
 });
 Route::get('/admin-login', 'AdminLoginCtr@index');
 Route::post('/admin-login/login', 'AdminLoginCtr@login');
+Route::get('/admin-login/logout', 'AdminLoginCtr@logout');
 
 //User
 Route::get('/maintenance/user', 'UserMaintenanceCtr@index');
+Route::get('/maintenance/user/displayuser', 'UserMaintenanceCtr@displayUsers');
 Route::post('/maintenance/user/store', 'UserMaintenanceCtr@store');
+Route::post('/maintenance/user/show/{empID}', 'UserMaintenanceCtr@show');
 
 Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');
 

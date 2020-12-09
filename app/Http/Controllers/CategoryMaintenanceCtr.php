@@ -9,17 +9,36 @@ use Illuminate\Http\Request;
 class CategoryMaintenanceCtr extends Controller
 {
     private $table_name = "tblcategory";
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
+    private $table_emp = "tblemployee";
+    private $this_module = "Maintenance";
+
+    public function index(){
+        if(!($this->isUserAuthorize())){
+            dd('You are not authorized to access this module, please ask the administrator');
+        }
+    
         $category = DB::table($this->table_name)
         ->paginate(10);
 
         return view('maintenance/category/category', ['category' => $category]);
+    }
+
+    public function isUserAuthorize(){
+        $emp = DB::table($this->table_emp)
+        ->where([
+            ['username', session()->get('emp-username')],
+        ])
+        ->value('auth_modules');
+
+        $modules = explode(", ",$emp);
+
+        if (!(in_array($this->this_module, $modules)))
+        {
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 

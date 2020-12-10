@@ -38,7 +38,7 @@
           <div class="col-md-12 col-lg-12 mt-3">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-hover" id="emp-table-table">
+                    <table class="table table-hover" id="emp-table">
                         <thead>
                             <tr>
                                 <th>Employee ID</th>

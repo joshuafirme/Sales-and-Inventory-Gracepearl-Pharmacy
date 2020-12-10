@@ -60,6 +60,25 @@ class UserMaintenanceCtr extends Controller
         return redirect('/maintenance/user');
     }
 
+    public function update(){
+      $empID = Input::input('empID');
+      $emp_name = Input::input('emp_name');
+      $position = Input::input('position');
+      $username = Input::input('username');
+      $password = Input::input('password');
+      $modules = Input::input('modules');
+
+        DB::table($this->table_emp)
+        ->where('id', $empID)
+        ->update([
+            'name' => $emp_name,
+            'position' => $position,
+            'username' => $username,
+            'password' => $password,
+            'auth_modules' => $modules
+        ]);
+    }
+
     public function displayUsers(){
         
         if(request()->ajax())
@@ -94,5 +113,11 @@ class UserMaintenanceCtr extends Controller
         ->get();
 
         return $emp;
+    }
+    public function destroy($empID)
+    {
+        $user = UserMaintenance::findOrFail($empID);
+        $user->delete();
+        return $user;
     }
 }

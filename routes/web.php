@@ -23,6 +23,8 @@ Route::get('/maintenance/user', 'UserMaintenanceCtr@index');
 Route::get('/maintenance/user/displayuser', 'UserMaintenanceCtr@displayUsers');
 Route::post('/maintenance/user/store', 'UserMaintenanceCtr@store');
 Route::post('/maintenance/user/show/{empID}', 'UserMaintenanceCtr@show');
+Route::post('/maintenance/user/update', 'UserMaintenanceCtr@update');
+Route::delete('/maintenance/user/delete/{empID}', 'UserMaintenanceCtr@destroy');
 
 Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');
 

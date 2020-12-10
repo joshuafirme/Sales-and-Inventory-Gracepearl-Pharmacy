@@ -112,7 +112,6 @@
         </button>
       </div>
       <div class="modal-body">
-      <form method="POST" action="{{action('UserMaintenanceCtr@store')}}">
          <div class="row">
           {{ csrf_field() }}
 
@@ -130,12 +129,9 @@
 
               <div class="col-md-4 mb-2">    
                 <label class="col-form-label">Position</label>
-                <select class="form-control" name="position" id="edit_position">
-                    <option value="Cashier">Cashier</option>
-                    <option value="Cashier">Purchaser</option>
-                    <option value="Pharmacy Assistant">Pharmacy Assistant</option>
-                    <option value="Certified Pharmacy Assistant">Certified Pharmacy Assistant</option>
-                    <option value="Administrator">Administrator</option>
+                <select class="form-control edit_position" name="edit_position">
+                  <option id="edit_position"></option>
+                  
                 </select>
               </div>
 
@@ -201,9 +197,15 @@
          
       </div>
       <div class="modal-footer">
+
+        <div class="update-success-validation mr-auto ml-3" style="display: none">
+          <label class="label text-success">User information is updated successfully</label>    
+        </div> 
+        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
+
         <button class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-sm btn-success" id="btn-update-user">Update</button>
-      </form>
+        <button class="btn btn-sm btn-success" id="btn-update-user">Update</button>
+
       </div>
     </form>
     </div>
@@ -225,12 +227,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <p class="delete-unit-message"></p>
+        <p class="delete-user-message"></p>
       </div>
       <div class="modal-footer">
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-        <button class="btn btn-sm btn-outline-dark" type="button" name="ok_button" id="ok_button">Yes</button>
-        <button class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-sm btn-outline-dark" type="button" name="ok_button" id="btn-delete-user">Yes</button>
+        <button class="btn btn-sm btn-danger btn-cancel" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>

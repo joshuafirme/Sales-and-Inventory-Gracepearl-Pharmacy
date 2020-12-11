@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Sales;
+
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Input;
 use App\Sales;
 use Illuminate\Http\Request;
-use App\UserMaintenance;
 
 class SalesCtr extends Controller
 {

@@ -10,7 +10,7 @@
         </button>
       </div>
       <div class="modal-body">
-      <form method="POST" action="{{action('UserMaintenanceCtr@store')}}">
+      <form method="POST" action="{{action('Maintenance\UserMaintenanceCtr@store')}}">
          <div class="row">
           {{ csrf_field() }}
             <div class="col-md-4">
@@ -130,7 +130,11 @@
               <div class="col-md-4 mb-2">    
                 <label class="col-form-label">Position</label>
                 <select class="form-control edit_position" name="edit_position">
-                  <option id="edit_position"></option>
+                  <option id="edit_position" selected></option>
+                  <option value="Cashier">Cashier</option>
+                  <option value="Purchaser">Purchaser</option>
+                  <option value="Certified Pharmacy Assistant">Certified Pharmacy Assistant</option>
+                  <option value="Pharmacy Assistant">Pharmacy Assistant</option>
                   
                 </select>
               </div>

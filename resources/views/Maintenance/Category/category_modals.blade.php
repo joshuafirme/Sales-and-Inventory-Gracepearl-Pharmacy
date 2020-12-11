@@ -11,7 +11,7 @@
       </div>
       <div class="modal-body">
 
-      <form action="{{ action('CategoryMaintenanceCtr@store') }}" method="POST">
+      <form action="{{ action('Maintenance\CategoryMaintenanceCtr@store') }}" method="POST">
         {{ csrf_field() }}
           <div class="form-group">
             <label class="col-form-label">Category Name</label>

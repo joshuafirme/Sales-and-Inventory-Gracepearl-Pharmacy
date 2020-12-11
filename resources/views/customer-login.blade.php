@@ -15,7 +15,7 @@
 		<div class="login-container">
 			<div class="form">
 				<img class="avatar" src="assets/avatar.svg">
-				<h2>Admin</h2>
+			
 
 				<div class="input-div">
 					<div class="i">
@@ -38,6 +38,8 @@
 				</div>
 				
 				<input type="button" class="btn" id="btn-admin-login" value="Login">	
+				<p>or</p>
+				<button type="button" class="btn-google">Sign in with Google</button>
 
 			</div>	
 		</div>

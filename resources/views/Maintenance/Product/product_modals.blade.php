@@ -11,7 +11,7 @@
       </div>
       <div class="modal-body">
 
-        <form action="{{ action('ProductMaintenanceCtr@store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ action('Maintenance\ProductMaintenanceCtr@store') }}" method="POST" enctype="multipart/form-data">
 
           <div class="row">
             {{ csrf_field() }}

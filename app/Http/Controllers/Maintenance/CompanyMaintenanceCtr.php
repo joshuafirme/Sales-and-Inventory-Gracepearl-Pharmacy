@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Maintenance;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\DB;
 use App\CompanyMaintenance;
@@ -59,5 +61,12 @@ class CompanyMaintenanceCtr extends Controller
             $markup,
             $id
         ]);
+    }
+
+    public function destroy($id)
+    {
+        $com = CompanyMaintenance::findOrFail($id);
+        $com->delete();
+        return $com;
     }
 }

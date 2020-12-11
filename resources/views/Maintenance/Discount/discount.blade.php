@@ -33,7 +33,7 @@
                     {{ \Session::get('success') }}
                   </div>
                   @endif
-                <form method="POST" action="{{ action('DiscountCtr@activate') }}">
+                <form method="POST" action="{{ action('Maintenance\DiscountCtr@activate') }}">
                     {{ csrf_field() }}
                         <div class="form-group">
                           <label for="discount">Discount Percentage</label>

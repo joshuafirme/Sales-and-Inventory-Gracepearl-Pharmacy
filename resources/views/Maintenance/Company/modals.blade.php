@@ -13,7 +13,7 @@
       </div>
       <div class="modal-body">
 
-      <form action="{{ action('CompanyMaintenanceCtr@store') }}" method="POST">
+      <form action="{{ action('Maintenance\CompanyMaintenanceCtr@store') }}" method="POST">
         {{ csrf_field() }}
           <div class="form-group">
             <label class="col-form-label">Company Name</label>

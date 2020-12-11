@@ -1,7 +1,8 @@
 
 
 $(document).ready(function(){
- // delete category alert
+  
+ // delete 
  var company_id, company_name;
  $(document).on('click', '#deleteCompany', function(){
   company_id = $(this).attr('delete-id');

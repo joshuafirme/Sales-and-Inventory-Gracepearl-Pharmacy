@@ -14,121 +14,128 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+//Admin
 Route::get('/admin-login', 'AdminLoginCtr@index');
 Route::post('/admin-login/login', 'AdminLoginCtr@login');
 Route::get('/admin-login/logout', 'AdminLoginCtr@logout');
 
-//User
-Route::get('/maintenance/user', 'UserMaintenanceCtr@index');
-Route::get('/maintenance/user/displayuser', 'UserMaintenanceCtr@displayUsers');
-Route::post('/maintenance/user/store', 'UserMaintenanceCtr@store');
-Route::post('/maintenance/user/show/{empID}', 'UserMaintenanceCtr@show');
-Route::post('/maintenance/user/update', 'UserMaintenanceCtr@update');
-Route::delete('/maintenance/user/delete/{empID}', 'UserMaintenanceCtr@destroy');
+//Customer
+Route::get('/customer-login', 'Customer\CustomerLoginCtr@index');
+Route::get('/homepage', 'Customer\HomePageCtr@index');
+
 
 Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');
 
 Route::resource('/products', 'ProductSearch');
 
-// category
-Route::get('/maintenance/category', 'CategoryMaintenanceCtr@index');
-Route::post('/maintenance/category', 'CategoryMaintenanceCtr@store');
-Route::post('/maintenance/category/edit/{id}', 'CategoryMaintenanceCtr@edit');
-Route::post('/maintenance/category/update/{category_id}', 'CategoryMaintenanceCtr@updateCategory');
-Route::delete('/maintenance/category/{id}', 'CategoryMaintenanceCtr@destroy');
+
+//SALES---------------------------------------------------------------------------------------------------------------
 
 // Cashiering
-Route::get('/sales/cashiering', 'SalesCtr@index');
-Route::post('/sales/cashiering/{search_key}', 'SalesCtr@search');
-Route::get('/sales/cashiering/addToCart', 'SalesCtr@addToCart');
-Route::get('/sales/cashiering/process', 'SalesCtr@process');
-Route::get('/sales/cashiering/getTransNo', 'SalesCtr@getCurrentTransacNo');
-Route::get('/sales/cashiering/getSalesInvNo', 'SalesCtr@getSalesInvNo');
-Route::get('/sales/cashiering/isInvoiceExist/{sales_inv_no}', 'SalesCtr@isInvoiceExist');
+Route::get('/sales/cashiering', 'Sales\SalesCtr@index');
+Route::post('/sales/cashiering/{search_key}', 'Sales\SalesCtr@search');
+Route::get('/sales/cashiering/addToCart', 'Sales\SalesCtr@addToCart');
+Route::get('/sales/cashiering/process', 'Sales\SalesCtr@process');
+Route::get('/sales/cashiering/getTransNo', 'Sales\SalesCtr@getCurrentTransacNo');
+Route::get('/sales/cashiering/getSalesInvNo', 'Sales\SalesCtr@getSalesInvNo');
+Route::get('/sales/cashiering/isInvoiceExist/{sales_inv_no}', 'Sales\SalesCtr@isInvoiceExist');
+
 // Sales report
-Route::get('/sales/salesreport', 'SalesReportCtr@index');
-Route::get('/sales/displaySales', 'SalesReportCtr@displaySales');
-//Route::get('/sales/displaySalesByDate', 'SalesReportCtr@displaySalesByDate');
+Route::get('/sales/salesreport', 'Sales\SalesReportCtr@index');
+Route::get('/sales/displaySales', 'Sales\SalesReportCtr@displaySales');
+
+//MAINTENANCE---------------------------------------------------------------------------------------------------------------
 
 // Supplier
-Route::get('maintenance/supplier/', 'SupplierMaintenanceCtr@index');
-Route::post('/maintenance/supplier/store', 'SupplierMaintenanceCtr@store');
-Route::post('/maintenance/supplier/update', 'SupplierMaintenanceCtr@update');
-Route::post('/maintenance/supplier/edit/{id}', 'SupplierMaintenanceCtr@edit');
-Route::delete('/maintenance/supplier/{supplierID}', 'SupplierMaintenanceCtr@destroy');
-Route::post('/maintenance/supplier/action', 'SupplierMaintenanceCtr@action');
-Route::post('/getCompanyID/{supplierID}', 'SupplierMaintenanceCtr@getCompanyID');
+Route::get('maintenance/supplier/', 'Maintenance\SupplierMaintenanceCtr@index');
+Route::post('/maintenance/supplier/store', 'Maintenance\SupplierMaintenanceCtr@store');
+Route::post('/maintenance/supplier/update', 'Maintenance\SupplierMaintenanceCtr@update');
+Route::post('/maintenance/supplier/edit/{id}', 'Maintenance\SupplierMaintenanceCtr@edit');
+Route::delete('/maintenance/supplier/{supplierID}', 'Maintenance\SupplierMaintenanceCtr@destroy');
+Route::post('/maintenance/supplier/action', 'Maintenance\SupplierMaintenanceCtr@action');
+Route::post('/getCompanyID/{supplierID}', 'Maintenance\SupplierMaintenanceCtr@getCompanyID');
 
 // Product
-Route::resource('/maintenance/product', 'ProductMaintenanceCtr');
-Route::post('/maintenance/product/store', 'ProductMaintenanceCtr@store');
-Route::post('/maintenance/updateproduct/{id}', 'ProductMaintenanceCtr@updateProduct')->name('updateProduct');
-Route::post('/maintenance/product/show/{productCode}', 'ProductMaintenanceCtr@show');
-Route::delete('/maintenance/product/delete/{productCode}', 'ProductMaintenanceCtr@destroy');
-// Filter Product
-Route::get('/maintenance/product/search', 'ProductMaintenanceCtr@search');
-Route::get('/maintenance/product/filterByCategory', 'ProductMaintenanceCtr@filterByCategory');
-// PDF Product
-Route::get('/maintenance/product/pdf/{filter_category}', 'ProductMaintenanceCtr@pdf');
-Route::post('/maintenance/product/getCategoryParam/{category_param}', 'ProductMaintenanceCtr@getCategoryParam');
+Route::resource('/maintenance/product', 'Maintenance\ProductMaintenanceCtr');
+Route::post('/maintenance/product/store', 'Maintenance\ProductMaintenanceCtr@store');
+Route::post('/maintenance/updateproduct/{id}', 'Maintenance\ProductMaintenanceCtr@updateProduct')->name('updateProduct');
+Route::post('/maintenance/product/show/{productCode}', 'Maintenance\ProductMaintenanceCtr@show');
+Route::delete('/maintenance/product/delete/{productCode}', 'Maintenance\ProductMaintenanceCtr@destroy');
 
 //Unit 
-Route::resource('/maintenance/unit', 'UnitMaintenanceCtr');
-Route::post('/maintenance/unit/edit/{id}', 'UnitMaintenanceCtr@edit');
-Route::post('/maintenance/unit/update/{id}', 'UnitMaintenanceCtr@update');
-Route::delete('/maintenance/unit/{id}', 'UnitMaintenanceCtr@destroy');
+Route::resource('/maintenance/unit', 'Maintenance\UnitMaintenanceCtr');
+Route::post('/maintenance/unit/edit/{id}', 'Maintenance\UnitMaintenanceCtr@edit');
+Route::post('/maintenance/unit/update/{id}', 'Maintenance\UnitMaintenanceCtr@update');
+Route::delete('/maintenance/unit/{id}', 'Maintenance\UnitMaintenanceCtr@destroy');
 
 //Company
-Route::resource('/maintenance/company', 'CompanyMaintenanceCtr');
-Route::post('/maintenance/company/edit/{id}', 'CompanyMaintenanceCtr@edit');
-Route::post('/maintenance/company/update/{id}', 'CompanyMaintenanceCtr@update');
-Route::delete('/maintenance/company/destroy/{id}', 'CompanyMaintenanceCtr@destroy');
-Route::post('/maintenance/company/getCompanyMarkup/{companyID}', 'CompanyMaintenanceCtr@getCompanyMarkup');
+Route::resource('/maintenance/company', 'Maintenance\CompanyMaintenanceCtr');
+Route::post('/maintenance/company/edit/{id}', 'Maintenance\CompanyMaintenanceCtr@edit');
+Route::post('/maintenance/company/update/{id}', 'Maintenance\CompanyMaintenanceCtr@update');
+Route::delete('/maintenance/company/destroy/{id}', 'Maintenance\CompanyMaintenanceCtr@destroy');
+Route::post('/maintenance/company/getCompanyMarkup/{companyID}', 'Maintenance\CompanyMaintenanceCtr@getCompanyMarkup');
 
 //Discount
-Route::resource('/maintenance/discount', 'DiscountCtr');
-Route::post('/maintenance/discount/activate', 'DiscountCtr@activate');
-Route::post('/maintenance/discount/getdiscount', 'DiscountCtr@getDiscount');
+Route::resource('/maintenance/discount', 'Maintenance\DiscountCtr');
+Route::post('/maintenance/discount/activate', 'Maintenance\DiscountCtr@activate');
+Route::post('/maintenance/discount/getdiscount', 'Maintenance\DiscountCtr@getDiscount');
 
+// category
+Route::get('/maintenance/category', 'Maintenance\CategoryMaintenanceCtr@index');
+Route::post('/maintenance/category', 'Maintenance\CategoryMaintenanceCtr@store');
+Route::post('/maintenance/category/edit/{id}', 'Maintenance\CategoryMaintenanceCtr@edit');
+Route::post('/maintenance/category/update/{category_id}', 'Maintenance\CategoryMaintenanceCtr@updateCategory');
+Route::delete('/maintenance/category/{id}', 'Maintenance\CategoryMaintenanceCtr@destroy');
+
+//User
+Route::get('/maintenance/user', 'Maintenance\UserMaintenanceCtr@index');
+Route::get('/maintenance/user/displayuser', 'Maintenance\UserMaintenanceCtr@displayUsers');
+Route::post('/maintenance/user/store', 'Maintenance\UserMaintenanceCtr@store');
+Route::post('/maintenance/user/show/{empID}', 'Maintenance\UserMaintenanceCtr@show');
+Route::post('/maintenance/user/update', 'Maintenance\UserMaintenanceCtr@update');
+Route::delete('/maintenance/user/delete/{empID}', 'Maintenance\UserMaintenanceCtr@destroy');
+
+//INVENTORY---------------------------------------------------------------------------------------------------------------
 
 //Stock Adjustment
-Route::resource('/inventory/stockadjustment', 'StockAdjustmentCtr');
-Route::post('/inventory/stockadjustment/show/{productCode}', 'StockAdjustmentCtr@show');
-Route::post('/inventory/stockadjustment/adjust', 'StockAdjustmentCtr@adjust');
+Route::resource('/inventory/stockadjustment', 'Inventory\StockAdjustmentCtr');
+Route::post('/inventory/stockadjustment/show/{productCode}', 'Inventory\StockAdjustmentCtr@show');
+Route::post('/inventory/stockadjustment/adjust', 'Inventory\StockAdjustmentCtr@adjust');
 
 //Purchase Order
-Route::resource('/inventory/purchaseorder', 'PurchaseOrderCtr');
-Route::post('/inventory/purchaseorder/show/{product_code}', 'PurchaseOrderCtr@show');
-Route::post('/inventory/purchaseorder/addToOrder', 'PurchaseOrderCtr@addToOrder');
-Route::get('/inventory/order/print', 'PurchaseOrderCtr@pdf');
-Route::get('/inventory/order/downloadOrderPDF', 'PurchaseOrderCtr@downloadOrderPDF');
+Route::resource('/inventory/purchaseorder', 'Inventory\PurchaseOrderCtr');
+Route::post('/inventory/purchaseorder/show/{product_code}', 'Inventory\PurchaseOrderCtr@show');
+Route::post('/inventory/purchaseorder/addToOrder', 'Inventory\PurchaseOrderCtr@addToOrder');
+Route::get('/inventory/order/print', 'Inventory\PurchaseOrderCtr@pdf');
+Route::get('/inventory/order/downloadOrderPDF', 'Inventory\PurchaseOrderCtr@downloadOrderPDF');
 Route::get('/sendorder', 'PurchaseOrderCtr@sendMail');
-Route::post('/getSupplierEmail/{supplier_id}', 'PurchaseOrderCtr@getSupplierEmail');
-Route::post('/filterSupplier/{supplier_id}', 'PurchaseOrderCtr@filterSupplier');
-Route::post('/inventory/addRecord', 'PurchaseOrderCtr@recordOrder');
-Route::get('/inventory/displayReorders', 'PurchaseOrderCtr@displayReorders');
-Route::get('/inventory/displayOrders', 'PurchaseOrderCtr@displayOrders');
+Route::post('/getSupplierEmail/{supplier_id}', 'Inventory\PurchaseOrderCtr@getSupplierEmail');
+Route::post('/filterSupplier/{supplier_id}', 'Inventory\PurchaseOrderCtr@filterSupplier');
+Route::post('/inventory/addRecord', 'Inventory\PurchaseOrderCtr@recordOrder');
+Route::get('/inventory/displayReorders', 'Inventory\PurchaseOrderCtr@displayReorders');
+Route::get('/inventory/displayOrders', 'Inventory\PurchaseOrderCtr@displayOrders');
 
 //Supplier Delivery
-Route::get('/inventory/delivery', 'SupplierDeliveryCtr@index');
-Route::get('/inventory/delivery/displayPO', 'SupplierDeliveryCtr@displayPurchaseOrder');
-Route::get('/inventory/delivery/show', 'SupplierDeliveryCtr@show');
-Route::get('/inventory/delivered', 'SupplierDeliveryCtr@displayDelivered');
-Route::post('/inventory/delivery/recordDelivery', 'SupplierDeliveryCtr@recordDelivery');
+Route::get('/inventory/delivery', 'Inventory\SupplierDeliveryCtr@index');
+Route::get('/inventory/delivery/displayPO', 'Inventory\SupplierDeliveryCtr@displayPurchaseOrder');
+Route::get('/inventory/delivery/show', 'Inventory\SupplierDeliveryCtr@show');
+Route::get('/inventory/delivered', 'Inventory\SupplierDeliveryCtr@displayDelivered');
+Route::post('/inventory/delivery/recordDelivery', 'Inventory\SupplierDeliveryCtr@recordDelivery');
 
 //Return
-Route::get('/inventory/return', 'ReturnCtr@index');
-Route::post('/inventory/return/searchSalesInvoice', 'ReturnCtr@searchSalesInvoice');
-Route::post('/inventory/return/searchProdAndInv', 'ReturnCtr@searchProdAndInv');
-Route::post('/inventory/return/store', 'ReturnCtr@returnItem');
-Route::get('/inventory/return/displayreturn', 'ReturnCtr@displayReturns');
+Route::get('/inventory/return', 'Inventory\ReturnCtr@index');
+Route::post('/inventory/return/searchSalesInvoice', 'Inventory\ReturnCtr@searchSalesInvoice');
+Route::post('/inventory/return/searchProdAndInv', 'Inventory\ReturnCtr@searchProdAndInv');
+Route::post('/inventory/return/store', 'Inventory\ReturnCtr@returnItem');
+Route::get('/inventory/return/displayreturn', 'Inventory\ReturnCtr@displayReturns');
 
 //pay
 Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');
 
 //Notification
-Route::resource('/inventory/notification', 'NotificationCtr');
-Route::get('/getAllNotif', 'NotificationCtr@getAllNotif');
+Route::resource('/inventory/notification', 'Inventory\NotificationCtr');
+Route::get('/getAllNotif', 'Inventory\NotificationCtr@getAllNotif');
 
 
 

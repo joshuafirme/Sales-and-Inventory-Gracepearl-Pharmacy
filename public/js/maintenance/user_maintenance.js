@@ -77,10 +77,11 @@ $(document).ready(function(){
   $(document).on('click', '#btn-edit-user', function(){
     var empID = $(this).attr('emp-id');
 
-    $("select[name='edit_position']").val('');
-    $("select[name='edit_position']").text('');
+    $("#edit_position").val('');
+    $("#edit_position").text('');
        
-    populateCheckbox();
+ 
+   // populateCheckbox();
     uncheckCheckboxModules(); 
     
     $.ajax({
@@ -93,9 +94,11 @@ $(document).ready(function(){
         $('#edit_empID').val(response[0].empID);
         $('#edit_employee_name').val(response[0].name);
        
-        $('select[name="edit_position"] option:selected').text(response[0].position);
-        $(".edit_position option[value="+response[0].position+"]").remove();
-        
+      //  $('#edit_position').text(response[0].position);
+     //  $("select[name='edit_position'] option:selected").text(response[0].position);
+        $("select[name='edit_position'] option[value="+response[0].position+"]").remove();
+        $("select[name='edit_position'] option:selected").text(response[0].position);
+
         $('#edit_username').val(response[0].username);
         $('#edit_password').val(response[0].password);
 

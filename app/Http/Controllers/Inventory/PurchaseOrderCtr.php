@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Inventory;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -57,7 +59,7 @@ class PurchaseOrderCtr extends Controller
            // if($request->supplier){
                 return datatables()->of($this->getReorderBySupplier())
                 ->addColumn('action', function($product){
-                    $button = '<a class="btn" id="btn-add-order" product-code='. $product->id .' data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>';
+                    $button = '<a class="btn btn-sm" id="btn-add-order" product-code='. $product->id .' data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>';
     
                     return $button;
                 })

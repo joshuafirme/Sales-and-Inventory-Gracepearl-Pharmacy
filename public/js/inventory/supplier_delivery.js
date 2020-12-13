@@ -54,7 +54,7 @@ $(document).ready(function(){
        order: [[1, 'asc']],
 
         columns:[       
-         {data: 'product_code', name: 'product_code'},
+         {data: 'del_num', name: 'del_num'},
          {data: 'del_num', name: 'del_num'},
          {data: 'po_num', name: 'po_num'},
          {data: 'product_code', name: 'product_code'},
@@ -73,7 +73,7 @@ $(document).ready(function(){
 
        
         // Handle click on "Select all" control
-   $('#example-select-all').on('click', function(){
+   $('#select-all').on('click', function(){
     // Get all rows with search applied
     var rows = suplr_del_tbl.rows({ 'search': 'applied' }).nodes();
     // Check/uncheck checkboxes for all rows in the table
@@ -84,7 +84,7 @@ $(document).ready(function(){
     $('#po-table tbody').on('change', 'input[type="checkbox"]', function(){
       // If checkbox is not checked
       if(!this.checked){
-         var el = $('#example-select-all').get(0);
+         var el = $('#select-all').get(0);
          // If "Select all" control is checked and has 'indeterminate' property
          if(el && el.checked && ('indeterminate' in el)){
             // Set visual state of "Select all" control
@@ -176,6 +176,42 @@ $(document).on('click', '#btn-add', function(){
      });
   });
 
+
+  $('#btn-mark-as-completed').click(function(){
+    var del_nums = [];
+    $(':checkbox:checked').each(function(i){
+      del_nums[i] = $(this).val();
+    });
+
+    if($('#select-all').is(":checked")){
+      //used slice method to start index at 1, so the value of sellect_all checkbox is not included
+      del_nums = del_nums.slice(1).join(", ");
+      console.log(del_nums);
+    }
+    else{
+      del_nums = del_nums.join(", ");
+      console.log(del_nums);
+    }
+
+    $.ajax({
+      url:"/inventory/delivery/markascompleted/"+del_nums,
+      type:"POST",
+      beforeSend:function(){
+        $('.loader').css('display', 'inline');
+      },
+      success:function(){
+
+        setTimeout(function(){
+          $('#supplier-delivery-table').DataTable().ajax.reload();
+          $('.loader').css('display', 'none');
+          },1000);
+      
+      }
+     });
+    
+  });
+
+ 
 
 });
     

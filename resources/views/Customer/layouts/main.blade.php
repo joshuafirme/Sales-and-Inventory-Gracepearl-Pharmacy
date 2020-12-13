@@ -7,13 +7,12 @@
     <title>Gracepearl Pharmacy</title>
     <link href="{{asset('components/vendor/bootstrap4/css/bootstrap.min.css')}}" rel="stylesheet"> 
     <link href="{{asset('components/vendor/DataTables/datatables.min.css')}}" rel="stylesheet">
-    <link href="{{asset('components/vendor/summernote/summernote-bs4.css')}}" rel="stylesheet">
     <link href="{{asset('components/css/master.css')}}" rel="stylesheet">
-    <link href="{{asset('components/vendor/chartsjs/Chart.min.css')}}" rel="stylesheet">
- <!--   <link href="asset('components/vendor/flagiconcss3/css/flag-icon.min.css')}}" rel="stylesheet">-->
+    <link href="{{asset('components/css/homepage.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+    
 
    
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -24,24 +23,38 @@
     <div class="wrapper">
         <div id="body" class="active">
             <nav class="navbar navbar-expand-lg navbar-white bg-white">
-                <div class="sidebar-header" style="margin-left:-16px;  background-color:#2A2F6E">
-                    <img src="../../assets/slogo.jpg" alt="bootraper logo" class="app-logo">
-                    </div>
+           
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ml-auto">
-
+                    <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
-                                <a href="" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown"><i class="fas fa-bell"></i><span class="badge badge-pill badge-danger" id="count-all-notif-bell"></span> </a>
-                                <div class="dropdown-menu dropdown-menu-right nav-link-menu">
-                                    <ul class="nav-list">
-                                        <li><a href="{{ url('/inventory/notification') }}" class="dropdown-item"> Reorder <span class="badge badge-pill badge-success" id="count-reorder-notif"></span> </a></li>
-                                        <div class="dropdown-divider"></div>
-                                        <li><a href="{{ url('/inventory/notification') }}" class="dropdown-item"> Near Expiry <span class="badge badge-pill badge-warning" id="count-expiry-notif"></span></a></li>
-                                        <div class="dropdown-divider"></div>
-                                        <li><a href="{{ url('/inventory/notification') }}" class="dropdown-item"> Expired <span class="badge badge-pill badge-danger" id="count-expired-notif"></span></a></li>
-                                    </ul>
-                                </div>
+                                <a href="{{ url('/homepage') }}" class="nav-item nav-link dropdown-toggle text-success"><b style="font-size: 18px">Gracepearl Pharmacy</b></a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                            <a href="{{ url('/homepage') }}" class="nav-item nav-link dropdown-toggle text-secondary">Home</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                                <a href="" class="nav-item nav-link dropdown-toggle text-secondary">About us</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                                <a href="" class="nav-item nav-link dropdown-toggle text-secondary">Contact us</a>
+                            </div>
+                        </li>
+          
+                    </ul>
+                    <ul class="nav navbar-nav ml-auto">
+                    
+                        <li class="nav-item dropdown">
+                            <div class="nav-dropdown">
+                            <a href="{{ url('/cart')}}" class="nav-item nav-link dropdown-toggle text-secondary">  <i class="fas fa-shopping-cart"></i>
+                                    <span class='badge-cart badge-warning' id='lblCartCount'>5</span> </a>
+                        
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -49,9 +62,8 @@
                                 <a href="" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown"><i class="fas fa-user"></i> <span> Joshua Firme</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right nav-link-menu">
                                     <ul class="nav-list">
-                                        <li><a href="" class="dropdown-item"><i class="fas fa-address-card"></i> Profile</a></li>
+                                        <li><a href="" class="dropdown-item"><i class="fas fa-cube"></i> My Orders</a></li>
                                         <li><a href="" class="dropdown-item"><i class="fas fa-envelope"></i> Messages</a></li>
-                                        <li><a href="" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a></li>
                                         <div class="dropdown-divider"></div>
                                         <li><a href="{{ url('admin-login') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
@@ -90,40 +102,9 @@
           <script src="{{asset('components/jquery-tabledit-master/jquery.tabledit.min.js')}}"></script>
           <script src="{{asset('components/vendor/summernote/summernote-bs4.min.js')}}"></script>
           <script src="{{asset('components/js/initiate-summernote.js')}}"></script>
-    
-          <!-- maintenance -->
-          <script src="{{asset('js/maintenance/product_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/category_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/supplier_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/unit_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/company_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/user_maintenance.js')}}"></script>
-
-          <!-- sales -->
-          <script src="{{asset('js/sales/cashiering.js')}}"></script>
-          <script src="{{asset('js/sales/sales_report.js')}}"></script>
-
-          <!-- inventory -->
-          <script src="{{asset('js/inventory/stockadjustment.js')}}"></script>
-          <script src="{{asset('js/inventory/purchase_order.js')}}"></script>
-          <script src="{{asset('js/inventory/notification.js')}}"></script>
-          <script src="{{asset('js/inventory/supplier_delivery.js')}}"></script>
-          <script src="{{asset('js/inventory/return.js')}}"></script>
-
-
-          <!-- count all notif -->
-          <script src="{{asset('js/count_all_notif.js')}}"></script>
-
-          <script src="{{asset('js/products.js')}}"></script>
 
           <script src="{{asset('components/vendor/DataTables/datatables.min.js')}}"></script>
-          <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/dataTables.buttons.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.flash.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-          <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.html5.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.print.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
+
 
       </body>
       

@@ -16,16 +16,40 @@ class HomePageCtr extends Controller
     private $table_unit = "tblunit";
 
     public function index(){
-        return view('/customer/homepage', ['products' => $this->getAllProduct()]);
+        return view('/customer/homepage', 
+        [
+          'products' => $this->getAllProduct(),
+          'maxPrice' => $this->getMaxPrice()
+          ]);
       }
 
-      public function getAllProduct(){
-        $product = DB::table($this->table_prod)
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->get();
+    public function getAllProduct(){
+      $product = DB::table($this->table_prod)
+      ->select('description', 'selling_price', 'unit', 'image')  
+      ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
+      ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+      ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+      ->whereRaw('exp_date >= CURDATE()')
+      ->get();
 
-        return $product;
-    }
+      return $product;      
+    }  
+    
+    public function getMaxPrice(){
+      $price = DB::table($this->table_prod)
+      ->max('selling_price');
+
+      return $price;      
+    } 
+
+    public function getPriceFilter($min_price, $max_price){
+      $price = DB::table($this->table_prod)
+      ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
+      ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
+      ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+      ->whereBetween('selling_price', [$min_price, $max_price])
+      ->get();
+
+      return $price;      
+    } 
 }

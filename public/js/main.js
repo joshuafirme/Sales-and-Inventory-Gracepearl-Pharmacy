@@ -1,5 +1,8 @@
 
 $(document).ready(function(){
+
+    getName();
+
     getAllNotif();
 
     setInterval(function(){
@@ -9,7 +12,7 @@ $(document).ready(function(){
 
       function getAllNotif(){
         $.ajax({
-          url:"/getAllNotif",
+          url:"/notification/getAllNotif",
           type:"GET",
           success:function(response){
             console.log(response);
@@ -22,6 +25,17 @@ $(document).ready(function(){
         
       }    
 
+      function getName(){
+        $.ajax({
+          url:"/maintenance/user/getname",
+          type:"GET",
+          success:function(response){
+            console.log(response);
+            $("#auth-name").text(response);
+          }
+         });
+        
+      }    
       
 
 });

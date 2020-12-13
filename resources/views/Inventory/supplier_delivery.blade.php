@@ -56,7 +56,7 @@
                           <thead>
                             <tr>
 
-                              <th>PO#</th>
+                              <th>Invoice #</th>
                               <th>Product Code</th>     
                               <th>Description</th>   
                               <th>Supplier</th> 
@@ -79,9 +79,9 @@
                         <table class="table responsive  table-hover" id="supplier-delivery-table" width="100%">       
                           <thead>
                             <tr>
-                                <th><input type="checkbox" name="select_all" value="1" id="example-select-all"></th>
+                                <th><input type="checkbox" name="select_all" value="1" id="select-all"></th>
                                 <th>Delivery #</th>
-                                <th>PO #</th>
+                                <th>Invoice #</th>
                                 <th>Product Code</th>     
                                 <th>Description</th>   
                                 <th>Supplier</th> 
@@ -101,7 +101,8 @@
                         </table> 
                         <img src="../../assets/arrow_ltr.png" class="ml-2">
                         
-                        <button class="btn btn-success btn-sm"> Mark as Completed</button>  
+                        <button class="btn btn-success btn-sm mr-2" id="btn-mark-as-completed"> Mark as Completed</button> 
+                        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none"> 
                       </div>
 
                 </div>

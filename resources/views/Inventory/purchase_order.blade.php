@@ -109,7 +109,7 @@
                         <table class="table responsive  table-hover" id="ord-table" width="100%">       
                           <thead>
                             <tr>
-                                <th>PO#</th>
+                                <th>Invoice #</th>
                                 <th>Product Code</th>     
                                 <th>Description</th>   
                                 <th>Supplier</th> 

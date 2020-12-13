@@ -20,9 +20,11 @@ Route::get('/admin-login', 'AdminLoginCtr@index');
 Route::post('/admin-login/login', 'AdminLoginCtr@login');
 Route::get('/admin-login/logout', 'AdminLoginCtr@logout');
 
-//Customer
+//CUSTOMER---------------------------------------------------------------------------------------------------------------
 Route::get('/customer-login', 'Customer\CustomerLoginCtr@index');
 Route::get('/homepage', 'Customer\HomePageCtr@index');
+Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
+Route::get('/cart', 'Customer\CartCtr@index');
 
 
 Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');
@@ -91,6 +93,7 @@ Route::delete('/maintenance/category/{id}', 'Maintenance\CategoryMaintenanceCtr@
 //User
 Route::get('/maintenance/user', 'Maintenance\UserMaintenanceCtr@index');
 Route::get('/maintenance/user/displayuser', 'Maintenance\UserMaintenanceCtr@displayUsers');
+Route::get('/maintenance/user/getname', 'Maintenance\UserMaintenanceCtr@getName');
 Route::post('/maintenance/user/store', 'Maintenance\UserMaintenanceCtr@store');
 Route::post('/maintenance/user/show/{empID}', 'Maintenance\UserMaintenanceCtr@show');
 Route::post('/maintenance/user/update', 'Maintenance\UserMaintenanceCtr@update');
@@ -122,6 +125,10 @@ Route::get('/inventory/delivery/displayPO', 'Inventory\SupplierDeliveryCtr@displ
 Route::get('/inventory/delivery/show', 'Inventory\SupplierDeliveryCtr@show');
 Route::get('/inventory/delivered', 'Inventory\SupplierDeliveryCtr@displayDelivered');
 Route::post('/inventory/delivery/recordDelivery', 'Inventory\SupplierDeliveryCtr@recordDelivery');
+Route::post('/inventory/delivery/markascompleted/{del_nums}', 'Inventory\SupplierDeliveryCtr@markAsCompleted');
+
+//Stock Entry
+Route::get('/inventory/stockentry', 'Inventory\StockEntryCtr@index');
 
 //Return
 Route::get('/inventory/return', 'Inventory\ReturnCtr@index');
@@ -135,7 +142,7 @@ Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');
 
 //Notification
 Route::resource('/inventory/notification', 'Inventory\NotificationCtr');
-Route::get('/getAllNotif', 'Inventory\NotificationCtr@getAllNotif');
+Route::get('/notification/getAllNotif', 'Inventory\NotificationCtr@getAllNotif');
 
 
 

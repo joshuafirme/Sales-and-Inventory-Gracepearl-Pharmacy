@@ -108,6 +108,22 @@ class UserMaintenanceCtr extends Controller
         return $emp;
     }
 
+    public function getName(){
+        $emp = DB::table($this->table_emp)
+        ->where('username', session()->get('emp-username'))
+        ->value('name');
+
+        return $emp;
+    }
+
+    public function getPosition(){
+        $emp = DB::table($this->table_emp)
+        ->where('username', session()->get('emp-username'))
+        ->value('position');
+
+        return $emp;
+    }
+
     public function show($empID){
         $emp = DB::table($this->table_emp)
         ->select($this->table_emp.".*", DB::raw('CONCAT('.$this->table_emp.'._prefix, '.$this->table_emp.'.id) AS empID'))

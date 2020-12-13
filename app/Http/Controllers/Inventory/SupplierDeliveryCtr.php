@@ -167,6 +167,28 @@ class SupplierDeliveryCtr extends Controller
              return $po;
      }
 
+    public function markAsCompleted($del_nums){
+
+        $del_num_arr = explode(", ",$del_nums);
+
+        for($i = 0; $i < count($del_num_arr); $i++) {
+
+            DB::table($this->table_delivery)
+            ->where(DB::raw('CONCAT('.$this->table_delivery.'._prefix, '.$this->table_delivery.'.delivery_num)'), $del_num_arr[$i])
+            ->update([
+                'remarks' => 'Completed',
+                'qty_delivered' => DB::raw('qty_ordered')
+                ]);
+        }
+    }
+
+    public function getQtyOrdered(){
+        $po_num = DB::table($this->table_po)
+        ->where('po_num');
+        $inc = ++ $po_num;
+        return $inc;
+    }
+
 
     public function getDeliveryNumPrefix(){
         return 'D' . $this->getMonth() . $this->getDay();

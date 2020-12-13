@@ -50,22 +50,20 @@ class PurchaseOrderCtr extends Controller
     }
 
     public function displayReorders(Request $request){
-        
-        $get_all_reorder = $this->getAllReorder();
-      // $get_reorderby_supplier = 
-        
+
         if(request()->ajax())
         {       
-           // if($request->supplier){
-                return datatables()->of($this->getReorderBySupplier())
+            if($request->supplier){
+                return datatables()->of($this->getReorderBySupplier($request->supplier))
                 ->addColumn('action', function($product){
-                    $button = '<a class="btn btn-sm" id="btn-add-order" product-code='. $product->id .' data-toggle="modal" data-target="#purchaseOrderModal"><i class="fa fa-cart-plus"></i></a>';
+                    $button = '<a class="btn btn-sm" id="btn-add-order" product-code='. $product->id .' data-toggle="modal" data-target="#purchaseOrderModal">
+                    <i class="fa fa-cart-plus"></i></a>';
     
                     return $button;
                 })
                 ->rawColumns(['action'])
                 ->make(true);   
-        //    }
+            }
                     
         }
     }
@@ -145,14 +143,14 @@ class PurchaseOrderCtr extends Controller
         return $product;
     }
 
-    public function getReorderBySupplier(){
+    public function getReorderBySupplier($supplier){
         $product = DB::table($this->table_prod)
         ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name'))
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
         ->whereColumn('tblproduct.re_order','>=', 'tblproduct.qty')
-      //  ->where('supplierName', $supplier)
+        ->where('supplierName', $supplier)
         ->get();
 
         return $product;
@@ -256,7 +254,7 @@ public function recordOrder(){
             $total_amount += $sub_total;
            
             $po = new PurchaseOrder;
-            $po->_prefix = 'PO' . $this->getPrefix();
+            $po->_prefix = 'INV' . $this->getPrefix();
             $po->po_num = $po_num;
             $po->product_code = $product_code;
             $po->qty_order = $data['qty_order'];

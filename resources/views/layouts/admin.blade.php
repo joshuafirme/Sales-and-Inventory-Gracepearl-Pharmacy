@@ -34,7 +34,7 @@
             </div>
             <div class="row mb-1">
               
-            <a style="color: #494F54; margin:auto"  href="#" class="text-secondary">{{ session()->get('emp-username')}}</a>
+            <a style="color: #494F54; margin:auto"  href="#" class="text-secondary">{{ session()->get('emp-username') }}</a>
                 </div>
 
             <div class="line"></div>
@@ -72,10 +72,13 @@
                             <a href="{{ url('/inventory/stockadjustment') }}"><i class="fas fa-sliders-h"></i> Stock Adjustment</a>
                         </li>
                         <li>
-                            <a href="{{ url('/inventory/purchaseorder') }}"><i class="fas fa-boxes"></i> Purchase Order </a>
+                            <a href="{{ url('/inventory/purchaseorder') }}"><i class="fas fa-cart-arrow-down"></i> Purchase Order </a>
                         </li>
                         <li>
                             <a href="{{ url('/inventory/delivery') }}"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/inventory/stockentry') }}"><i class="fas fa-dolly"></i> Stock Entry</a>
                         </li>
                         <li>
                             <a href="{{ url('/inventory/notification') }}"><i class="fas fa-bell"></i> Notification</a>
@@ -178,14 +181,15 @@
                         </li>
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
-                                <a href="" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown"><i class="fas fa-user"></i> <span> Joshua Firme</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i></a>
+                                <a href="" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown">
+                                    <i class="fas fa-user"></i> <span id="auth-name"> </span> <i style="font-size: .8em;" class="fas fa-caret-down"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right nav-link-menu">
                                     <ul class="nav-list">
                                         <li><a href="" class="dropdown-item"><i class="fas fa-address-card"></i> Profile</a></li>
                                         <li><a href="" class="dropdown-item"><i class="fas fa-envelope"></i> Messages</a></li>
                                         <li><a href="" class="dropdown-item"><i class="fas fa-cog"></i> Settings</a></li>
                                         <div class="dropdown-divider"></div>
-                                        <li><a href="{{ url('admin-login') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                        <li><a href="{{ url('admin-login') }}" onclick="logout()" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -242,9 +246,8 @@
           <script src="{{asset('js/inventory/supplier_delivery.js')}}"></script>
           <script src="{{asset('js/inventory/return.js')}}"></script>
 
-
-          <!-- count all notif -->
-          <script src="{{asset('js/count_all_notif.js')}}"></script>
+          <!-- main - count all notifs and get user's name--> 
+          <script src="{{asset('js/main.js')}}"></script>
 
           <script src="{{asset('js/products.js')}}"></script>
 

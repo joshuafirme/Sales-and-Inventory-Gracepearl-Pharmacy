@@ -2,16 +2,53 @@
 $(document).ready(function(){
 
     fetch_orders();
-    fetch_reorders();
+    initLoadData();
 
-    function loadData(){
+    function initLoadData(){
       supplier = $('#ro_supplier').val();
       console.log(supplier);
       $('#reorder-table').DataTable().destroy();
       fetch_reorders(supplier);
     }
 
+    function fetch_reorders(supplier){
+      $('#reorder-table').DataTable({
+     
+        processing: true,
+        serverSide: true,
+        
+       
+        ajax:{
+         url: "/inventory/displayReorders",
+         type:"GET",
+         data:{
+          supplier:supplier
+        }
+        }, 
+   
+        columns:[       
+         {data: 'productCode', name: 'productCode'},
+         {data: 'description', name: 'description'},
+         {data: 'unit', name: 'unit'},   
+         {data: 'category_name', name: 'category_name'},    
+         {data: 'supplierName', name: 'supplierName'},    
+         {data: 'qty', name: 'qty'},
+         {data: 're_order', name: 're_order'},
+         {data: 'action', name: 'action',orderable: false},
+        ]
+        
+       });
+       $('#ro_supplier').change(function(){
+        supplier = $(this).val();
+        console.log(supplier);
+        $('#reorder-table').DataTable().destroy();
+        fetch_reorders(supplier);
+    
+        });
+    }
 
+
+    
     function fetch_orders(){
       var order_tbl = $('#ord-table').DataTable({
      
@@ -47,42 +84,6 @@ $(document).ready(function(){
         });
 
         
-    }
-
-    function fetch_reorders($supplier){
-      var reoder_tbl = $('#reorder-table').DataTable({
-     
-        processing: true,
-        serverSide: true,
-        
-       
-        ajax:{
-         url: "/inventory/displayReorders",
-         type:"GET",
-         data:{
-          $supplier:$supplier
-        }
-        }, 
-   
-        columns:[       
-         {data: 'productCode', name: 'productCode'},
-         {data: 'description', name: 'description'},
-         {data: 'unit', name: 'unit'},   
-         {data: 'category_name', name: 'category_name'},    
-         {data: 'supplierName', name: 'supplierName'},    
-         {data: 'qty', name: 'qty'},
-         {data: 're_order', name: 're_order'},
-         {data: 'action', name: 'action',orderable: false},
-        ]
-        
-       });
-       $('#ro_supplier').change(function(){
-        var supplier = $(this).val();
-        reoder_tbl.column( $(this).data('column') )
-        .search( $(this).val() )
-        .draw();
-    
-        });
     }
 
     //show product details

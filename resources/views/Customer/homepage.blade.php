@@ -13,7 +13,7 @@
             <div class="ml-auto">
 
                 <div class="input-group">
-                    <input class="form-control border-secondary py-2" type="search" placeholder="Search...">
+                    <input class="form-control border-secondary py-2" type="search" id="search-product" placeholder="Search...">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">
                             <i class="fa fa-search"></i>
@@ -62,9 +62,9 @@
             <div class="card-product">
                 <div class="card__image-container">
                     @if(!$data->image)
-                    <img src="../assets/noimage.png">
+                    <img class="img-fluid w-100" src="../assets/noimage.png">
                     @else
-                    <img style="height:150px" src="../../storage/{{$data->image}}" class="card-img-top" alt="...">
+                    <img  src="../../storage/{{$data->image}}" class="img-fluid w-100" alt="...">
                     @endif
                 </div>
                 <div class="line ml-2 mr-2 mt-2"></div>
@@ -77,7 +77,7 @@
                     </p>
                     <div class="card__info">
                         <p class="mt-3 text-success">₱{{ $data->selling_price }}</p>
-                        <button class="btn btn-sm card__btn-add">Add to cart</button>
+                        <button class="btn btn-sm card__btn-add" product-code={{ $data->product_code }} id="btn-add-to-cart">Add to cart</button>
                     </div>
                 </div>	
             </div>
@@ -100,7 +100,22 @@
 
 </div>
 
+<!--loading Modal-->
+<div class="modal fade" id="loading-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content  bg-transparent border-0">
+  
+  
+          <div class="d-flex justify-content-center">
+            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+          </div>
+
+      </div>
+    </div>
+  </div>
+
 <script>
+
     var slider1 = document.getElementById("price_range_from");
     var output1 = document.getElementById("price_from");
     output1.innerHTML = slider1.value; 

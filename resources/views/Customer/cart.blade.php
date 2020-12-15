@@ -12,35 +12,47 @@
   
       <!--Grid column-->
       <div class="col-lg-8">
+
+       
+
+  
   
         <!-- Card -->
         <div class="card wish-list mb-3">
-          <div class="card-body">
+          <div class="card-body card-cart">
   
-            <h5 class="mb-4">Cart (<span>2</span> items)</h5>
+            <h5 class="mb-4">Cart (<span class="count-cart"></span> items)</h5>
   
+            @foreach($cart as $data)
             <div class="row mb-4">
               <div class="col-md-5 col-lg-3 col-xl-3">
                 <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
-                  <img class="img-fluid w-100"
-                    src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Vertical/12a.jpg" alt="Sample">
+                    @if(!$data->image)
+                    <img style="height:200px" src="../assets/noimage.png" class="img-fluid w-100">
+                    @else
+                    <img  src="../../storage/{{$data->image}}" class="card-img-top" alt="...">
+                    @endif
               
                 </div>
               </div>
+              
+           
               <div class="col-md-7 col-lg-9 col-xl-9">
                 <div>
+                  
                   <div class="d-flex justify-content-between">
                     <div>
-                      <h5>Blue denim shirt</h5>
-                      <p class="mb-3 text-muted text-uppercase small">Shirt - blue</p>
-                      <p class="mb-2 text-muted text-uppercase small">Color: blue</p>
-                      <p class="mb-3 text-muted text-uppercase small">Size: M</p>
+                      <h5>{{ $data->description }}</h5>
+                      <p class="mb-3 text-muted text-uppercase small">Category - {{ $data->category_name }}</p>
+                      <p class="mb-3 text-muted text-uppercase small">Unit type - {{ $data->unit }}</p>
                     </div>
                     <div>
                         <div class="def-number-input number-input safari_only mb-0 w-100">
                             <button class="btn btn-sm" onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
                               class="minus"><i class="fas fa-minus"></i></button>
-                            <input class="quantity" min="0" name="quantity" value="1" type="number" style="width: 40px">
+
+                            <input class="quantity" min="0" id="item-qty" name="quantity"  value={{ $data->qty }} product-code={{ $data->product_code }} type="number" style="width: 40px">
+
                             <button class="btn btn-sm" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
                               class="plus"><i class="fas fa-plus"></i></button>
                           </div>
@@ -48,15 +60,18 @@
                   </div>
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
-                      <a href="#!" type="button" class="card-link-secondary small text-uppercase mr-3"><i
-                          class="fas fa-trash-alt mr-1"></i> Remove item </a>
+                      <a href='#' id="btn-remove-from-cart" product-code={{ $data->product_code }}  type="button"
+                        data-toggle="modal" data-target="#loading-Modal" class="card-link-secondary small text-uppercase mr-3">
+                        <i class="fas fa-trash-alt mr-1"></i> Remove item </a>
                     </div>
-                    <p class="mb-0"><span><strong>$17.99</strong></span></p>
+                    <p class="mb-0 mr-5"><span class="text-success">₱{{ $data->amount }}</span></p>
                   </div>
                 </div>
               </div>
-            </div>
+            </div>      
             <hr class="mb-4">
+            @endforeach
+
             <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Do not delay the purchase, adding
               items to your cart does not mean booking them.</p>
   
@@ -90,9 +105,7 @@
             <img class="mr-2" width="45px"
               src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
               alt="Mastercard">
-            <img class="mr-2" width="45px"
-              src="https://z9t4u9f6.stackpathcdn.com/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.png"
-              alt="PayPal acceptance mark">
+         
           </div>
         </div>
         <!-- Card -->
@@ -112,7 +125,7 @@
             <ul class="list-group list-group-flush">
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                 Total amount
-                <span>₱25.98</span>
+                <span class="cart-total-amount"></span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                 Shipping Fee
@@ -167,5 +180,19 @@
   <!--Section: Block Content-->
 
 </div>
+
+       <!--loading Modal-->
+       <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content  bg-transparent border-0">
+      
+      
+              <div class="d-flex justify-content-center">
+                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+              </div>
+  
+          </div>
+        </div>
+      </div>
 
 @endsection

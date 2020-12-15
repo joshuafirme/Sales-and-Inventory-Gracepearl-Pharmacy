@@ -50,22 +50,24 @@
                     </ul>
                     <ul class="nav navbar-nav ml-auto">
                     
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown cart">
                             <div class="nav-dropdown">
                             <a href="{{ url('/cart')}}" class="nav-item nav-link dropdown-toggle text-secondary">  <i class="fas fa-shopping-cart"></i>
-                                    <span class='badge-cart badge-warning' id='lblCartCount'>5</span> </a>
+                                    <span class='badge-cart badge-warning count-cart' id='lblCartCount'></span> </a>
                         
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
-                                <a href="" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown"><i class="fas fa-user"></i> <span> Joshua Firme</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i></a>
+                                <a href="" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown">
+                                    <img class="google-avatar" src="{{ session()->get('avatar')}}" alt="avatar"> 
+                                    <span>{{ session()->get('name')}}</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right nav-link-menu">
                                     <ul class="nav-list">
                                         <li><a href="" class="dropdown-item"><i class="fas fa-cube"></i> My Orders</a></li>
                                         <li><a href="" class="dropdown-item"><i class="fas fa-envelope"></i> Messages</a></li>
                                         <div class="dropdown-divider"></div>
-                                        <li><a href="{{ url('admin-login') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                        <li><a href="{{ url('customer-login') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -81,7 +83,7 @@
           function logout(){
             console.log('logout');
             $.ajax({
-            url:"/admin-login/logout",
+            url:"/customer/logout",
             type:"GET",
             success:function(){
             }
@@ -95,15 +97,14 @@
           <script src="{{asset('components/vendor/bootstrap4/js/bootstrap.bundle.min.js')}}"></script>
           <script src="{{asset('components/vendor/fontawesome5/js/solid.min.js')}}"></script>
           <script src="{{asset('components/vendor/fontawesome5/js/fontawesome.min.js')}}"></script>
-          <script src="{{asset('components/vendor/chartsjs/Chart.min.js')}}"></script>
-          <script src="{{asset('components/js/dashboard-charts.js')}}"></script>
           <script src="{{asset('components/js/script.js')}}"></script>
           <script src="{{asset('components/js/alert-auto-close.js')}}"></script>
-          <script src="{{asset('components/jquery-tabledit-master/jquery.tabledit.min.js')}}"></script>
-          <script src="{{asset('components/vendor/summernote/summernote-bs4.min.js')}}"></script>
-          <script src="{{asset('components/js/initiate-summernote.js')}}"></script>
 
           <script src="{{asset('components/vendor/DataTables/datatables.min.js')}}"></script>
+
+          <script src="{{asset('js/homepage.js')}}"></script>
+          <script src="{{asset('js/cart.js')}}"></script>
+
 
 
       </body>

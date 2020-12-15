@@ -21,10 +21,21 @@ Route::post('/admin-login/login', 'AdminLoginCtr@login');
 Route::get('/admin-login/logout', 'AdminLoginCtr@logout');
 
 //CUSTOMER---------------------------------------------------------------------------------------------------------------
+//login
 Route::get('/customer-login', 'Customer\CustomerLoginCtr@index');
+Route::get('/customer-login/google', 'Customer\CustomerLoginCtr@redirectToGoogle');
+Route::get('/customer-login/google/callback', 'Customer\CustomerLoginCtr@handleGoogleCallback');
+Route::get('/customer/logout', 'Customer\CustomerLoginCtr@logout');
+//homepage
 Route::get('/homepage', 'Customer\HomePageCtr@index');
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
+//cart
+Route::post('/homepage/addtocart', 'Customer\CartCtr@addToCart');
 Route::get('/cart', 'Customer\CartCtr@index');
+Route::post('/cart/remove', 'Customer\CartCtr@removeFromCart');
+Route::post('/cart/updateQtyAndAmount', 'Customer\CartCtr@updateQtyAndAmount');
+Route::get('/cart/countcart', 'Customer\CartCtr@countCart');
+Route::get('/cart/gettotal', 'Customer\CartCtr@getTotalAmount');
 
 
 Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');

@@ -39,7 +39,7 @@
 				
 				<input type="button" class="btn" id="btn-admin-login" value="Login">	
 				<p>or</p>
-				<button type="button" class="btn-google">Sign in with Google</button>
+				<button onclick="location.href = 'customer-login/google';" type="button" class="btn-google">Sign in with Google</button>
 
 			</div>	
 		</div>

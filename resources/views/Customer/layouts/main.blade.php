@@ -12,11 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700;900&display=swap" rel="stylesheet">
-    
-
    
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+ 
 </head>
 
 <body>
@@ -59,15 +57,15 @@
                         </li>
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
-                                <a href="" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown">
-                                    <img class="google-avatar" src="{{ session()->get('avatar')}}" alt="avatar"> 
+                                <a href="" id="login-url" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown">
+                                    <img  class="google-avatar" id="user-profile" src="{{ session()->get('avatar')}}" alt="avatar"> 
                                     <span>{{ session()->get('name')}}</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i></a>
-                                <div class="dropdown-menu dropdown-menu-right nav-link-menu">
+                                <div class="dropdown-menu dropdown-menu-right nav-link-menu" id="dropdown-items">
                                     <ul class="nav-list">
                                         <li><a href="" class="dropdown-item"><i class="fas fa-cube"></i> My Orders</a></li>
                                         <li><a href="" class="dropdown-item"><i class="fas fa-envelope"></i> Messages</a></li>
                                         <div class="dropdown-divider"></div>
-                                        <li><a href="{{ url('customer-login') }}" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                        <li><a href="{{ url('customer-login') }}" onclick="logout()" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -81,11 +79,11 @@
           </div>
           <script>
           function logout(){
-            console.log('logout');
             $.ajax({
             url:"/customer/logout",
             type:"GET",
             success:function(){
+                console.log('cust log')
             }
             
           });
@@ -102,9 +100,11 @@
 
           <script src="{{asset('components/vendor/DataTables/datatables.min.js')}}"></script>
 
-          <script src="{{asset('js/homepage.js')}}"></script>
-          <script src="{{asset('js/cart.js')}}"></script>
-
+          <script src="{{asset('js/customer/homepage.js')}}"></script>
+          <script src="{{asset('js/customer/cart.js')}}"></script>
+          
+        <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+          <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 
       </body>

@@ -16,7 +16,7 @@ class CustomerLoginCtr extends Controller
 
     public function index(){
     
-   
+  // dd(session()->get('is-customer-logged'));
         return view('/customer-login');
     }
 
@@ -44,8 +44,10 @@ class CustomerLoginCtr extends Controller
 
         if($finduser)
         {
+            session()->put('email', $google_email);
             session()->put('name', $name);
             session()->put('avatar', $avatar);
+            session()->put('is-customer-logged', 'yes');
             return redirect('/homepage')->send();
         }
         else
@@ -53,6 +55,7 @@ class CustomerLoginCtr extends Controller
             DB::table($this->tbl_google_id)->insert(
                 ['email' => $google_email]
             );
+            session()->put('email', $google_email);
             session()->put('name', $name);
             session()->put('avatar', $name);
             return redirect('/homepage')->send();
@@ -60,8 +63,20 @@ class CustomerLoginCtr extends Controller
     }
 
     public function logout(){
+        session()->forget('email');
         session()->forget('name');
         session()->forget('avatar');
+        session()->put('is-customer-logged', 'no');
+    }
+
+    public function isLoggedIn(){
+        if(session()->get('is-customer-logged') == 'yes'){
+   
+           return 'yes';
+        }
+        else{
+            return 'no';
+        }
     }
 
 }

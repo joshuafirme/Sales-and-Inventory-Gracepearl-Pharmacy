@@ -10,3 +10,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+database/migrations/2020_12_11_134303_create_tblstock_entry.php

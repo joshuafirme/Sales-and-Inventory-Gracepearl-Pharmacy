@@ -17,6 +17,7 @@ class CartCtr extends Controller
   private $tbl_unit = "tblunit";
 
     public function index(){
+        $this->isLoggedIn();
 
         $cart = $this->getCartItems();
 
@@ -26,6 +27,13 @@ class CartCtr extends Controller
           'totalAmount' => $this->getTotalAmount()
           ]);
       }
+
+      public function isLoggedIn(){
+        if(session()->get('is-customer-logged') !== 'yes'){
+   
+           return redirect()->to('/customer-login')->send();
+        }
+    }
 
       public function countCart(){
         $cart = $this->getCartItems();
@@ -40,6 +48,7 @@ class CartCtr extends Controller
           ->leftJoin($this->tbl_prod,  DB::raw('CONCAT('.$this->tbl_prod.'._prefix, '.$this->tbl_prod.'.id)'), '=', $this->tbl_cart . '.product_code')
           ->leftJoin($this->tbl_cat, $this->tbl_cat . '.id', '=', $this->tbl_prod . '.categoryID')
           ->leftJoin($this->tbl_unit, $this->tbl_unit . '.id', '=', $this->tbl_prod . '.unitID')
+          ->where('customerID', session()->get('email'))
           ->orderBy('tblcart.id')
           ->get();
 
@@ -51,12 +60,12 @@ class CartCtr extends Controller
         $product_code = Input::input('product_code');
         $price = $this->getPrice($product_code);
   
-        if($this->isProductExists('CUST2012-0001', $product_code) == true)
+        if($this->isProductExists($product_code) == true)
         {
           // add amount and qty by 1
           DB::table($this->tbl_cart)
           ->where([
-            ['customerID',  'CUST2012-0001'],
+            ['customerID', session()->get('email')],
             ['product_code', $product_code]
           ])
             ->update(array(
@@ -69,7 +78,7 @@ class CartCtr extends Controller
         {
           DB::table($this->tbl_cart)->insert(
             [
-            'customerID' => 'CUST2012-0001',
+            'customerID' => session()->get('email'),
             'product_code' => $product_code, 
             'qty' => 1,
             'amount' => $price
@@ -79,10 +88,10 @@ class CartCtr extends Controller
      
       }
   
-      public function isProductExists($custumerID, $product_code){
+      public function isProductExists($product_code){
           $cart = DB::table($this->tbl_cart)
           ->where([
-            ['customerID',  $custumerID],
+            ['customerID',  session()->get('email')],
             ['product_code', $product_code]
           ])->get();
   
@@ -105,7 +114,7 @@ class CartCtr extends Controller
       public function getTotalAmount()
       {
         $amount = DB::table($this->tbl_cart)
-          ->where('customerID', '=', 'CUST2012-0001')
+          ->where('customerID', '=', session()->get('email'))
           ->sum('amount');
          
 
@@ -118,7 +127,7 @@ class CartCtr extends Controller
 
         DB::table($this->tbl_cart) 
           ->where([
-            ['customerID', 'CUST2012-0001'],
+            ['customerID', session()->get('email')],
             ['product_code', $product_code]
           ])->delete();
       }
@@ -131,7 +140,7 @@ class CartCtr extends Controller
         // compute amount and increment qty
         DB::table($this->tbl_cart)
         ->where([
-          ['customerID',  'CUST2012-0001'],
+          ['customerID',  session()->get('email')],
           ['product_code', $product_code]
         ])
         ->update(array(

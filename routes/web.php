@@ -26,6 +26,7 @@ Route::get('/customer-login', 'Customer\CustomerLoginCtr@index');
 Route::get('/customer-login/google', 'Customer\CustomerLoginCtr@redirectToGoogle');
 Route::get('/customer-login/google/callback', 'Customer\CustomerLoginCtr@handleGoogleCallback');
 Route::get('/customer/logout', 'Customer\CustomerLoginCtr@logout');
+Route::get('/customer/islogged', 'Customer\CustomerLoginCtr@isLoggedIn');
 //homepage
 Route::get('/homepage', 'Customer\HomePageCtr@index');
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
@@ -36,8 +37,11 @@ Route::post('/cart/remove', 'Customer\CartCtr@removeFromCart');
 Route::post('/cart/updateQtyAndAmount', 'Customer\CartCtr@updateQtyAndAmount');
 Route::get('/cart/countcart', 'Customer\CartCtr@countCart');
 Route::get('/cart/gettotal', 'Customer\CartCtr@getTotalAmount');
+//Stripe payment
+Route::get('stripe', 'Customer\StripePaymentCtr@stripe');
+Route::post('stripe', 'Customer\StripePaymentCtr@stripePost')->name('stripe.post');
 
-
+//
 Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');
 
 Route::resource('/products', 'ProductSearch');

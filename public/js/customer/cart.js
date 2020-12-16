@@ -79,6 +79,22 @@ $(document).ready(function(){
         
       });
 
+      
+      $(document).on('click', '#btn-inc', function(){
+        var qty = $(this).attr('qty');
+        var product_code = $(this).attr('product-code');
+        process(product_code, qty);
+
+        console.log(qty);
+        console.log(product_code);
+      });
+
+      $(document).on('click', '#btn-dec', function(){
+        var qty = $(this).attr('qty');
+        var product_code = $(this).attr('product-code');
+        process(product_code, qty);
+        
+      });
    
       function process(product_code, qty){
         if(qty){

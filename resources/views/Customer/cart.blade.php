@@ -48,12 +48,14 @@
                     </div>
                     <div>
                         <div class="def-number-input number-input safari_only mb-0 w-100">
-                            <button class="btn btn-sm" onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                            <button class="btn btn-sm" id="btn-dec" product-code={{ $data->product_code }} qty={{ $data->qty-1 }} 
+                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
                               class="minus"><i class="fas fa-minus"></i></button>
 
                             <input class="quantity" min="0" id="item-qty" name="quantity"  value={{ $data->qty }} product-code={{ $data->product_code }} type="number" style="width: 40px">
 
-                            <button class="btn btn-sm" onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                            <button class="btn btn-sm" id="btn-inc" product-code={{ $data->product_code }} qty={{ $data->qty+1 }} 
+                              onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
                               class="plus"><i class="fas fa-plus"></i></button>
                           </div>
                     </div>
@@ -79,23 +81,15 @@
         </div>
         <!-- Card -->
   
-        <!-- Card -->
-        <div class="card mb-3">
-          <div class="card-body">
-  
-            <h5 class="mb-4">Expected shipping delivery</h5>
-  
-            <p class="mb-0"> Thu., 12.03. - Mon., 16.03.</p>
-          </div>
-        </div>
-        <!-- Card -->
   
         <!-- Card -->
         <div class="card mb-3">
           <div class="card-body">
   
             <h5 class="mb-4">We accept</h5>
-  
+            <img class="mr-2" width="40px"
+              src="{{asset('assets/gcash-logo.png')}}"
+              alt="Gcash">
             <img class="mr-2" width="45px"
               src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
               alt="Visa">

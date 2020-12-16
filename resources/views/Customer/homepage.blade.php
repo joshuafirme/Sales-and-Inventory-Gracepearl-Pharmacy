@@ -83,23 +83,23 @@
             </div>
     
             @endforeach  
+               
         </section>
-
-  
-
-       
-  
   </main>
-    
-
-
-
+ 
 
     </div>
-</div>
+ 
 
 </div>
+<div class="row">
+    <div class="mt-5 ml-auto" style="margin-right: 292px;">
+        {{ $products->links() }}
+    </div>
+</div>
+   
 
+      
 <!--loading Modal-->
 <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -113,6 +113,8 @@
       </div>
     </div>
   </div>
+
+  
 
 <script>
 

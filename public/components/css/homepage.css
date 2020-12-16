@@ -258,3 +258,18 @@ margin-bottom: 0px;
 	}
   }
   
+
+
+
+  .card-header .icons .fa-cc-visa{
+	color: #FFB85F;	
+}
+.card-header .icons .fa-cc-discover{
+	color: #027878;
+}
+.card-header .icons .fa-cc-amex{
+	color: #EB4960;
+}
+.card-body label{
+	font-size: 14px;
+}

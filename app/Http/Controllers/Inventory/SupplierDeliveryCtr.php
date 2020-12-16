@@ -176,8 +176,7 @@ class SupplierDeliveryCtr extends Controller
             DB::table($this->table_delivery)
             ->where(DB::raw('CONCAT('.$this->table_delivery.'._prefix, '.$this->table_delivery.'.delivery_num)'), $del_num_arr[$i])
             ->update([
-                'remarks' => 'Completed',
-                'qty_delivered' => DB::raw('qty_ordered')
+                'remarks' => 'Completed'
                 ]);
         }
     }

@@ -16,7 +16,6 @@ class CustomerLoginCtr extends Controller
 
     public function index(){
     
-  // dd(session()->get('is-customer-logged'));
         return view('/customer-login');
     }
 

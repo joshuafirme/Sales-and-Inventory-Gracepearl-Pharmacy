@@ -20,11 +20,10 @@ class CartCtr extends Controller
         $this->isLoggedIn();
 
         $cart = $this->getCartItems();
-
-        session()->forget('countCart');
+        
         return view('/customer/cart',[
           'cart' => $cart, 
-          'totalAmount' => $this->getTotalAmount()
+          'subtotalAmount' => $this->getSubtotalAmount()
           ]);
       }
 
@@ -111,7 +110,7 @@ class CartCtr extends Controller
           return $price;
       }
 
-      public function getTotalAmount()
+      public function getSubtotalAmount()
       {
         $amount = DB::table($this->tbl_cart)
           ->where('customerID', '=', session()->get('email'))

@@ -36,7 +36,9 @@ Route::get('/cart', 'Customer\CartCtr@index');
 Route::post('/cart/remove', 'Customer\CartCtr@removeFromCart');
 Route::post('/cart/updateQtyAndAmount', 'Customer\CartCtr@updateQtyAndAmount');
 Route::get('/cart/countcart', 'Customer\CartCtr@countCart');
-Route::get('/cart/gettotal', 'Customer\CartCtr@getTotalAmount');
+Route::get('/cart/getsubtotal', 'Customer\CartCtr@getSubtotalAmount');
+
+Route::get('/checkout', 'Customer\CheckoutCtr@index');
 //Stripe payment
 Route::get('stripe', 'Customer\StripePaymentCtr@stripe');
 Route::post('stripe', 'Customer\StripePaymentCtr@stripePost')->name('stripe.post');

@@ -19,18 +19,19 @@ $(document).ready(function(){
            });
       }
 
-      getTotalAmount();
+      getSubtotal();
 
-      function getTotalAmount(){
+      function getSubtotal(){
         $.ajax({
-            url:"/cart/gettotal",
+            url:"/cart/getsubtotal",
             type:"GET",
             success:function(response){
-                $('.cart-total-amount').text('₱'+convertToMoneyFormat(response));
-            }
-             
+                $('.cart-subtotal').text('₱'+convertToMoneyFormat(response));
+            }         
            });
       }
+
+  
 
       function convertToMoneyFormat(total)
       {
@@ -48,7 +49,7 @@ $(document).ready(function(){
         var product_code = $(this).attr('product-code');
         removeFromCart(product_code);
         countCart();
-        getTotalAmount();
+        getSubtotal();
      
     });
 
@@ -107,7 +108,7 @@ $(document).ready(function(){
   
           $('#loading-modal').modal('toggle');
           updateQtyAndAmount(product_code, qty);
-          getTotalAmount();
+          getSubtotal();
           countCart();
         }
       }

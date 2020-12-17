@@ -102,6 +102,7 @@
 
           <script src="{{asset('js/customer/homepage.js')}}"></script>
           <script src="{{asset('js/customer/cart.js')}}"></script>
+          <script src="{{asset('js/customer/checkout.js')}}"></script>
           
         <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
           <script type="text/javascript" src="https://js.stripe.com/v2/"></script>

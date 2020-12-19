@@ -85,7 +85,7 @@
       <!--Grid column-->
   
       <!--Grid column-->
-      <div class="col-lg-4">
+      <div class="col-lg-4 card-proceed-checkout">
   
         <!-- Card -->
         <div class="card mb-3">

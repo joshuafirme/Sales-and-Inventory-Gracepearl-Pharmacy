@@ -16,11 +16,10 @@ class CheckoutCtr extends Controller
     private $tbl_unit = "tblunit";
 
     public function index(){
-
+        $this->isLoggedIn();
         $cart = $this->getCartItems();
         return view('/customer/checkout',[
             'cart' => $cart, 
-            'totalAmount' => $this->getTotalAmount()
         ]);
     }
 
@@ -51,13 +50,14 @@ class CheckoutCtr extends Controller
         return $cart;
       }
 
-      public function getTotalAmount()
+      public function getSubtotalAmount()
       {
         $amount = DB::table($this->tbl_cart)
           ->where('customerID', '=', session()->get('email'))
-          ->sum('amount');
-         
+          ->sum('amount');  
 
+        session()->put('checkout-total', $amount);
+        
         return $amount;
       }
 

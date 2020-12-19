@@ -14,9 +14,26 @@ $(document).ready(function(){
             type:"GET",
             success:function(response){
                 $('.count-cart').text(response);
+                return response;
             }
              
            });
+      }
+
+      removeProceedToCheckout();
+
+      function removeProceedToCheckout(){
+        $.ajax({
+          url:"/cart/countcart",
+          type:"GET",
+          success:function(response){
+            if(response == 0){
+              $('.card-proceed-checkout').css('display', 'none');
+          }
+          }
+           
+         });
+      
       }
 
       getSubtotal();
@@ -30,8 +47,6 @@ $(document).ready(function(){
             }         
            });
       }
-
-  
 
       function convertToMoneyFormat(total)
       {
@@ -50,7 +65,7 @@ $(document).ready(function(){
         removeFromCart(product_code);
         countCart();
         getSubtotal();
-     
+        removeProceedToCheckout();//if cart is equal to 0
     });
 
     function removeFromCart(product_code){
@@ -127,7 +142,7 @@ $(document).ready(function(){
               $('#loading-modal').modal('toggle');
               $( ".card-cart" ).load( "cart .card-cart" );
               countCart();
-            },1500);
+            },1000);
            
           }
            

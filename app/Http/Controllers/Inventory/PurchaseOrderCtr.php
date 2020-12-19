@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use Mail;
 use App\Mail\MyMail;
-use Luigel\Paymongo\Facades\Paymongo;
-use Illuminate\Support\Str;
 use App\ProductMaintenance;
 use App\PurchaseOrder;
 
@@ -94,22 +92,6 @@ class PurchaseOrderCtr extends Controller
         }
     }
 
-    public function pay(){
-
-     /*   $source = Paymongo::source()->create([
-            'type' => 'gcash',
-            'amount' => 100.00,
-            'currency' => 'PHP',
-            'redirect' => [
-                'success' => route('pay'),
-                'failed' => route('pay')
-            ]
-        ]);
-       // dd($source);
-      //  dd($source->getRedirect()['checkout_url']);
-        return redirect($source->getRedirect()['checkout_url']);
-        */
-    }
 
 
     public function sendMail(){

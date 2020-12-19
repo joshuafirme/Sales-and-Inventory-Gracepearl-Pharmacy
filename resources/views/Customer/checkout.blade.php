@@ -90,6 +90,7 @@
                   <option value="Tuy">Tuy</option> 
                 </select>
                 <input type="text" class="form-control mb-3" placeholder="Street/Subd/Brgy.">
+                <textarea class="form-control mb-3" placeholder="note"></textarea>
                 <Label>Contact No.</Label>
                 <input type="text" class="form-control mb-3" id="contact-no" maxlength="11" placeholder="09xxxxxxxxx">
                 <Label>Email</Label>
@@ -97,7 +98,7 @@
 
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                 Subtotal
-                <span class="cart-total-amount"></span>
+                <span id="checkout-subtotal"></span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                 Shipping Fee
@@ -110,11 +111,11 @@
                     <p class="mb-0">(VAT Included)</p>
                   </strong>
                 </div>
-                <span><strong class="cart-total-amount">₱53.98</strong></span>
+                <span><strong>₱53.98</strong></span>
               </li>
             </ul>
   
-            <button type="button" class="btn btn-success btn-block waves-effect waves-light">Place Order</button>
+            <a href="{{ url('/payment') }}" class="btn btn-success btn-block waves-effect waves-light" style="color: #fff">Place Order</a>
   
           </div>
         </div>
@@ -167,5 +168,7 @@
           </div>
         </div>
       </div>
-
+      @extends('customer.layouts.loading_modal')
+      @section('modals')
+      @endsection
 @endsection

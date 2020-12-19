@@ -195,7 +195,7 @@ margin-bottom: 0px;
 	  margin-top: 5px;
   }
   
-
+ /* LOADING MODAL */
   #loading-modal{
 	  margin-top: 320px;
   }
@@ -259,17 +259,24 @@ margin-bottom: 0px;
   }
   
 
+.card-payment-method .btn{
+	margin: 5px;
+}
 
+.card-payment-method .btn-payment{
+	width: 130px;
+	height: 130px;
+	transition: 0.3s;
+}
+.card-payment-method .btn-payment:hover{
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	transform: translateY(-2px);
+}
 
-  .card-header .icons .fa-cc-visa{
-	color: #FFB85F;	
-}
-.card-header .icons .fa-cc-discover{
-	color: #027878;
-}
-.card-header .icons .fa-cc-amex{
-	color: #EB4960;
-}
-.card-body label{
+.card-payment-method .btn-payment img{
+	border-radius: 5px;
+	}
+
+.card-payment-method .btn-payment p{
 	font-size: 14px;
-}
+	}

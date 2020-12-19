@@ -55,7 +55,8 @@ $(document).ready(function(){
                 success:function(){
                     setTimeout(function(){
                         $('#loading-modal').modal('toggle');
-                    },1500);
+                        countCart();
+                    },500);
                   
                 }
                  
@@ -67,6 +68,20 @@ $(document).ready(function(){
          });
       
     });
+
+    countCart();
+
+    function countCart(){
+      $.ajax({
+          url:"/cart/countcart",
+          type:"GET",
+          success:function(response){
+              $('.count-cart').text(response);
+              return response;
+          }
+           
+         });
+    }
     
   
 });

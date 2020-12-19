@@ -37,8 +37,14 @@ Route::post('/cart/remove', 'Customer\CartCtr@removeFromCart');
 Route::post('/cart/updateQtyAndAmount', 'Customer\CartCtr@updateQtyAndAmount');
 Route::get('/cart/countcart', 'Customer\CartCtr@countCart');
 Route::get('/cart/getsubtotal', 'Customer\CartCtr@getSubtotalAmount');
-
+//checkout
 Route::get('/checkout', 'Customer\CheckoutCtr@index');
+Route::get('/checkout/getsubtotal', 'Customer\CheckoutCtr@getSubtotalAmount');
+//Payment
+Route::get('/payment', 'Customer\PaymentCtr@index');
+Route::post('/payment/cod', 'Customer\PaymentCtr@cashOnDelivery');   //COD
+Route::get('/customer/gcashpayment', 'Customer\PaymentCtr@gcashPayment')->name('gcashpayment');
+Route::get('/payment/afterpayment', 'Customer\PaymentCtr@afterPayment');
 //Stripe payment
 Route::get('stripe', 'Customer\StripePaymentCtr@stripe');
 Route::post('stripe', 'Customer\StripePaymentCtr@stripePost')->name('stripe.post');
@@ -153,9 +159,6 @@ Route::post('/inventory/return/searchSalesInvoice', 'Inventory\ReturnCtr@searchS
 Route::post('/inventory/return/searchProdAndInv', 'Inventory\ReturnCtr@searchProdAndInv');
 Route::post('/inventory/return/store', 'Inventory\ReturnCtr@returnItem');
 Route::get('/inventory/return/displayreturn', 'Inventory\ReturnCtr@displayReturns');
-
-//pay
-Route::post('/pay', 'PurchaseOrderCtr@pay')->name('pay');
 
 //Notification
 Route::resource('/inventory/notification', 'Inventory\NotificationCtr');

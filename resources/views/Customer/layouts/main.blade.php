@@ -62,7 +62,7 @@
                                     <span>{{ session()->get('name')}}</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right nav-link-menu" id="dropdown-items">
                                     <ul class="nav-list">
-                                        <li><a href="" class="dropdown-item"><i class="fas fa-cube"></i> My Orders</a></li>
+                                        <li><a href="{{ url('/myorders') }}" class="dropdown-item"><i class="fas fa-cube"></i> My Orders</a></li>
                                         <li><a href="" class="dropdown-item"><i class="fas fa-envelope"></i> Messages</a></li>
                                         <div class="dropdown-divider"></div>
                                         <li><a href="{{ url('customer-login') }}" onclick="logout()" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
@@ -97,14 +97,14 @@
           <script src="{{asset('components/vendor/fontawesome5/js/fontawesome.min.js')}}"></script>
           <script src="{{asset('components/js/script.js')}}"></script>
           <script src="{{asset('components/js/alert-auto-close.js')}}"></script>
-
           <script src="{{asset('components/vendor/DataTables/datatables.min.js')}}"></script>
-
+        
+          <!-- scripts -->
           <script src="{{asset('js/customer/homepage.js')}}"></script>
           <script src="{{asset('js/customer/cart.js')}}"></script>
           <script src="{{asset('js/customer/checkout.js')}}"></script>
+          <script src="{{asset('js/customer/payment.js')}}"></script>
           
-        <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
           <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
 

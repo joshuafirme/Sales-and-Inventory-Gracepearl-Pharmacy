@@ -33,6 +33,7 @@ class CartCtr extends Controller
            return redirect()->to('/customer-login')->send();
         }
     }
+    
 
       public function countCart(){
         $cart = $this->getCartItems();
@@ -114,9 +115,8 @@ class CartCtr extends Controller
       {
         $amount = DB::table($this->tbl_cart)
           ->where('customerID', '=', session()->get('email'))
-          ->sum('amount');
-         
-
+          ->sum('amount');  
+        session()->put('checkout-total', $amount);
         return $amount;
       }
 

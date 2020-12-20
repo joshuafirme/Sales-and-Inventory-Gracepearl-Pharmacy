@@ -40,6 +40,7 @@ Route::get('/cart/getsubtotal', 'Customer\CartCtr@getSubtotalAmount');
 //checkout
 Route::get('/checkout', 'Customer\CheckoutCtr@index');
 Route::get('/checkout/getsubtotal', 'Customer\CheckoutCtr@getSubtotalAmount');
+Route::post('/checkout/placeorder', 'Customer\CheckoutCtr@placeOrder');
 //Payment
 Route::get('/payment', 'Customer\PaymentCtr@index');
 Route::post('/payment/cod', 'Customer\PaymentCtr@cashOnDelivery');   //COD
@@ -48,6 +49,9 @@ Route::get('/payment/afterpayment', 'Customer\PaymentCtr@afterPayment');
 //Stripe payment
 Route::get('stripe', 'Customer\StripePaymentCtr@stripe');
 Route::post('stripe', 'Customer\StripePaymentCtr@stripePost')->name('stripe.post');
+
+//Stripe payment
+Route::get('myorders', 'Customer\MyOrdersCtr@index');
 
 //
 Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');

@@ -42,7 +42,13 @@
                   
                   <div class="d-flex justify-content-between">
                     <div>
-                      <h5>{{ $data->description }}</h5>
+                   
+                      @if(strlen($data->description) > 45)
+                      <h5>{{ substr_replace($data->description,"...",45) }}</h5>
+                      @else
+                        <h5>{{ $data->description }}</h5>
+                      @endif
+                      
                       <p class="mb-3 text-muted text-uppercase small">Category - {{ $data->category_name }}</p>
                       <p class="mb-3 text-muted text-uppercase small">Unit type - {{ $data->unit }}</p>
                     </div>
@@ -52,7 +58,8 @@
                               onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
                               class="minus"><i class="fas fa-minus"></i></button>
 
-                            <input class="quantity" min="0" id="item-qty" name="quantity"  value={{ $data->qty }} product-code={{ $data->product_code }} type="number" style="width: 40px">
+                            <input class="quantity" min="0" id="item-qty" name="quantity"  value={{ $data->qty }} product-code={{ $data->product_code }} type="number"
+                             style="width: 40px;">
 
                             <button class="btn btn-sm" id="btn-inc" product-code={{ $data->product_code }} qty={{ $data->qty+1 }} 
                               onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
@@ -153,17 +160,9 @@
 </div>
 
        <!--loading Modal-->
-       <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content  bg-transparent border-0">
-      
-      
-              <div class="d-flex justify-content-center">
-                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-              </div>
-  
-          </div>
-        </div>
-      </div>
+       @extends('customer.layouts.loading_modal')
+       @section('modals')
+       @endsection
 
+      
 @endsection

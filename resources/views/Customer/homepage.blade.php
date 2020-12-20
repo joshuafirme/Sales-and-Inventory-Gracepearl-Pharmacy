@@ -136,4 +136,7 @@
     
 </script>
 
+    @extends('customer.layouts.loading_modal')
+    @section('modals')
+    @endsection
 @endsection

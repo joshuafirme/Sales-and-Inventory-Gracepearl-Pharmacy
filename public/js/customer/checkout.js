@@ -1,5 +1,4 @@
 
-
 $(document).ready(function(){
     $.ajaxSetup({
         headers: {
@@ -28,39 +27,30 @@ $('#contact-no').keyup(function(e)
          });
     }
 
-    $('#btn-cash-on-delivery').click(function(){
-        cashOnDelivery();
-    });
+    function convertToMoneyFormat(total)
+    {
+    var round_off = Math.round((parseInt(total) + Number.EPSILON) * 100) / 100;
+    return money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
-    function cashOnDelivery(){
+    $('#btn-place-order').click(function(){
         $.ajax({
-            url:"/payment/cod",
+            url:"/checkout/placeorder",
             type:"POST",
             beforeSend:function(){
                 $('#loading-modal').modal('toggle');
-              },
+            },
             success:function(){
                 setTimeout(function(){
                     $('#loading-modal').modal('toggle');
-                },1000);   
-             
+                },1000);  
             }         
-           });
-      }
-
-    function convertToMoneyFormat(total)
-    {
-      var round_off = Math.round((parseInt(total) + Number.EPSILON) * 100) / 100;
-      return money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-    
-    $('#btn-stripe').click(function(){
-        var left  = ($(window).width()/2)-(400/2),
-        top   = ($(window).height()/2)-(600/2),
-        popup = window.open ("http://127.0.0.1:8000/stripe", "popup", "width=485, height=450, top="+top+", left="+left);
-        return popup;
     });
 
+    
+});
+
+  
 
 });
   

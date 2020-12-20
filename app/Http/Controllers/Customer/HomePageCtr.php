@@ -34,7 +34,7 @@ class HomePageCtr extends Controller
       ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
       ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
       ->whereRaw('exp_date >= CURDATE()')
-      ->paginate(10);
+      ->paginate(20);
 
       return $product;      
     }  

@@ -13,10 +13,6 @@
       <!--Grid column-->
       <div class="col-lg-8 mt-3">
 
-       
-
-  
-  
         <!-- Card -->
         <div class="card wish-list mb-3">
           <div class="card-body card-cart">
@@ -63,8 +59,6 @@
             </div>      
             <hr class="mb-4">
             @endforeach
-
-  
   
           </div>
         </div>
@@ -115,7 +109,8 @@
               </li>
             </ul>
   
-            <a href="{{ url('/payment') }}" class="btn btn-success btn-block waves-effect waves-light" style="color: #fff">Place Order</a>
+            <a href="{{ url('/payment') }}"
+            id="btn-place-order" class="btn btn-success btn-block waves-effect waves-light" style="color: #fff">Place Order</a>
   
           </div>
         </div>
@@ -155,19 +150,7 @@
 
 </div>
 
-       <!--loading Modal-->
-       <div class="modal fade" id="loading-modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content  bg-transparent border-0">
-      
-      
-              <div class="d-flex justify-content-center">
-                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-              </div>
-  
-          </div>
-        </div>
-      </div>
+
       @extends('customer.layouts.loading_modal')
       @section('modals')
       @endsection

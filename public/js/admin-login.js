@@ -6,16 +6,7 @@ $(document).ready(function(){
         }
       });
 
-      function logout(){
-        console.log('logout');
-        $.ajax({
-          url:"/admin-login/logout",
-          type:"POST",
-          success:function(){
-          }
-           
-         });
-      }
+     
       
    $('#btn-admin-login').click(function(){
     var username = $('#admin-username').val();

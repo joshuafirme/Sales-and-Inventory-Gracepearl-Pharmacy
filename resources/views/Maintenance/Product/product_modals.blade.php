@@ -97,21 +97,10 @@
               </div>
             </div>
             
-            <div class="container-fluid">
-              <div class="page-title  mt-3">
-                  <h5>Product Highlights</h5>
-              </div>
-
-              <div class="row">
-                  <div class="col-md-12 col-lg-12">
-                    <div id="summernote">
-
-              
-                  </div>        
-                  </div>
-
-              </div>
-          </div>
+            <div class="col-md-12 mt-3">
+              <label class="col-form-label">Highlights</label>
+              <textarea type="text" class="form-control" name="highlights" id="highlights"></textarea>
+            </div>
 
           </div>
 
@@ -166,20 +155,20 @@
         </button>
       </div>
       <div class="modal-body">
-
+        <form method="POST" action="{{ action('Maintenance\ProductMaintenanceCtr@updateProduct') }}" enctype="multipart/form-data">
           <div class="row">
             {{ csrf_field() }}
             <input type="hidden" id="edit_discount_hidden">
-            <input type="hidden" id="product_code_hidden">
+            <input type="hidden" name="product_code_hidden" id="product_code_hidden">
 
             <div class="col-md-4 mb-2">
               <label class="col-form-label">Product Code</label>
-              <input type="text" class="form-control"  name="product_code" id="product_code" readonly>
+              <input type="text" class="form-control"  name="edit_product_code" id="product_code" readonly>
             </div>
           
             <div class="col-md-4">
               <label class="col-form-label">Description</label>
-              <input type="text" class="form-control"  name="description" id="edit_description" required>
+              <input type="text" class="form-control"  name="edit_description" id="edit_description" required>
             </div>
 
             <div class="col-md-4 mb-2">    
@@ -233,7 +222,7 @@
               <input type="number" class="form-control" name="edit_orig_price" id="edit_orig_price" required>
             </div>
 
-            <input type="hidden" id="edit_discount_hidden">
+     
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
@@ -248,17 +237,17 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Update Photo</label>
-              <input  type="file" name="image" id="edit_image">
+              <input  type="file" name="image">
             <div>{{ $errors->first('image') }}</div>
             </div> 
             <div class="col-md-4 mt-3 with-prescription" style="display: none">
               <label for="">With Presciption?</label>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="with_prescription" id="with_prescription" value="yes">
+                <input class="form-check-input" type="radio" name="with_prescription" value="yes">
                 <label class="form-check-label" for="add">
                   Yes
                 </label>
-                <input class="form-check-input ml-2" type="radio" name="with_prescription" id="no_prescription" value="no" checked>
+                <input class="form-check-input ml-2" type="radio" name="with_prescription"  value="no" checked>
                 <label class="form-check-label ml-4" for="less">
                   No
                 </label>
@@ -266,25 +255,21 @@
             </div>
 
             <div class="col-md-4 mt-2">
+
               <img alt="no available image" style="width: 200px;"  name="img_view" id="img_view">
             <div>{{ $errors->first('image') }}</div>
             </div> 
 
+
+            <div class="col-md-12 mt-3">
+              <label class="col-form-label">Highlights</label>
+              <textarea type="text" class="form-control" name="edit_highlights" id="edit_highlights"></textarea>
+            </div>
            
         </div>
-        <label><b>Highlights:</b></label> 
+
         
-        <div class="product-highlights"> 
-        <ul>
-          <li>Paste images from clipboard</li>
-          <li>Saves images directly in the content of the field using base64 encoding.</li>
-          <li>Simple UI</li>
-          <li>Interactive WYSIWYG editing</li>
-          <li>Handy integration with server</li>
-          <li>Supports Bootstrap 3 and 4 integrities</li>
-          <li>Lots of plugins and connectors provided together</li>
-      </ul>
-    </div>
+        
 
       </div>
       <div class="modal-footer">
@@ -294,9 +279,9 @@
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
               <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
-              <button type="submit" id="update-product-maintenance" class="btn btn-sm btn-success">Update</button> 
+              <button type="submit"  class="btn btn-sm btn-success">Update</button> 
       </div>
-
+    </form>
     </div>
   </div>
 </div>

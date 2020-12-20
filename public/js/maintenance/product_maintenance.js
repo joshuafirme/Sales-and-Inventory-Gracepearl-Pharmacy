@@ -2,6 +2,9 @@
 $(document).ready(function(){
 
   fetch_data();
+  var highlights = CKEDITOR.replace( 'highlights' );
+  var edit_highlights = CKEDITOR.replace( 'edit_highlights' );
+  
 
   function fetch_data(category){
    var product_table = $('#product-table').DataTable({
@@ -51,6 +54,8 @@ $(document).ready(function(){
   //add product
   $('#btn-add-product').click(function(){
     var summernote_val = $('#summernote').summernote('code');
+    var image = $('#image')[0].files;
+    console.log(image);
     console.log(summernote_val);
     $.ajax({
       url:"/maintenance/product/store",
@@ -251,8 +256,15 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
       $('#edit_orig_price').val(response[0].orig_price);
       $('#edit_selling_price').val(response[0].selling_price);
       $('#edit_exp_date').val(response[0].exp_date);
+      edit_highlights.setData(response[0].highlights);
 
-      var img_source = '../../storage/'+response[0].image;
+      if(response[0].image){
+        var img_source = '../../storage/'+response[0].image;
+      }
+      else{
+        var img_source = '../../storage/uploads/noimage.png';
+      }
+    
       $('#img_view').attr('src', img_source);
     }
    });

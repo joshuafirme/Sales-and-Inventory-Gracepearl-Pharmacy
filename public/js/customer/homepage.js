@@ -82,6 +82,21 @@ $(document).ready(function(){
            
          });
     }
+
+
+    $('.div-product-details').click(function() {  
+      var product_code = $(this).attr('product-code');
+      
+      $.ajax({
+        url:"/productdetails/"+product_code,
+        type:"GET",
+        success:function(response){
+            
+            console.log(response); 
+        }
+         
+       });
+  });
     
   
 });

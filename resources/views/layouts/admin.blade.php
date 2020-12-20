@@ -226,6 +226,7 @@
           <script src="{{asset('components/jquery-tabledit-master/jquery.tabledit.min.js')}}"></script>
           <script src="{{asset('components/vendor/summernote/summernote-bs4.min.js')}}"></script>
           <script src="{{asset('components/js/initiate-summernote.js')}}"></script>
+          <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
     
           <!-- maintenance -->
           <script src="{{asset('js/maintenance/product_maintenance.js')}}"></script>

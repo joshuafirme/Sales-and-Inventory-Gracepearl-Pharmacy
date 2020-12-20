@@ -148,7 +148,7 @@ class ProductMaintenanceCtr extends Controller
         $product->selling_price = $request->get('selling_price');
         $product->exp_date = $request->input('exp_date');
         $product->with_prescription = $request->input('with_prescription');
-        $product->highlights = $summernote_val;
+        $product->highlights = $request->input('highlights');
 
         $product->save();
 
@@ -168,43 +168,57 @@ class ProductMaintenanceCtr extends Controller
         ->update();
     }
 
-    public function storeImage($product){
+    public function storeImage($product_code){
+      
         if(request()->has('image')){
-            $product->update([
+            ProductMaintenance::where('id', $product_code)
+       
+            ->update([
                 'image' => request()->image->store('uploads', 'public'),
             ]);
         }
     }
 
-    public function updateProduct($product_code)
+    public function updateProduct(Request $request)
     {
         $product = new ProductMaintenance;
-        $product->desciption = Input::input('description');
-        $product->unitID = Input::input('unit');
-        $product->categoryID = Input::input('category_name');
-        $product->supplierID = Input::input('supplier_name');
-        $product->re_order = Input::input('re_order');
-        $product->orig_price = Input::input('orig_price');
-        $product->selling_price = Input::input('selling_price');
-        $product->exp_date = Input::input('exp_date');
-        $image = Input::input('img_path');
-
-        DB::update('UPDATE '. $this->table_prod .' 
-        SET description = ?,  unitID = ?, categoryID = ?, supplierID = ?, re_order = ?, orig_price = ?, selling_price = ?, exp_date = ?
-        WHERE id = ?',
-        [
-            $product->desciption, 
-            $product->unitID, 
-            $product->categoryID, 
-            $product->supplierID, 
-            $product->re_order, 
-            $product->orig_price, 
-            $product->selling_price, 
-            $product->exp_date, 
-            $product_code
-            ]);
+        $product->id = $request->input('product_code_hidden');
+        $product->description = $request->input('edit_description');
+        $product->unitID = $request->input('edit_unit');
+        $product->categoryID = $request->input('edit_category_name');
+        $product->supplierID = $request->input('edit_supplier_name');
+        $product->qty = $request->input('edit_qty');
+        $product->re_order = $request->input('edit_re_order');
+        $product->orig_price = $request->input('edit_orig_price');
+        $product->selling_price = $request->input('edit_selling_price');
+        $product->exp_date = $request->input('edit_exp_date');
+        $product->with_prescription = $request->input('edit_with_prescription');
+        $product->highlights = $request->input('edit_highlights');
 
         
+        ProductMaintenance::where('id', $product->id)
+          ->update([
+              'description' => $product->description,
+              'unitID' => $product->unitID,
+              'categoryID' => $product->categoryID,
+              'supplierID' => $product->supplierID,
+              'qty' => $product->qty,
+              're_order' => $product->re_order,
+              'orig_price' => $product->orig_price,
+              'selling_price' => $product->selling_price,
+              'exp_date' => $product->exp_date,
+              'with_prescription' => $product->with_prescription,
+              'highlights' => $product->highlights
+               ]);
+
+            if(request()->hasFile('image')){
+                request()->validate([
+                    'image' => 'file|image|max:5000',
+                ]);
+            }
+            $this->storeImage($product->id);
+
+        return redirect('/maintenance/product')->with('success', 'Product was successfully updated');
      //   Storage::disk('local')->put($image, 'Contents');
      //   $img_path = substr($image, 12);
      //   $this->updateImage($product_code,$img_path);

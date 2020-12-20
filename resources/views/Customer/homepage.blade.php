@@ -60,7 +60,7 @@
           <section class="cards">
             @foreach ($products as $data)  
             <div class="card-product">
-                <div class="card__image-container">
+                <div class="card__image-container div-product-details" product-code={{ $data->product_code }}>
                     @if(!$data->image)
                     <img class="img-fluid w-100" src="../assets/noimage.png">
                     @else

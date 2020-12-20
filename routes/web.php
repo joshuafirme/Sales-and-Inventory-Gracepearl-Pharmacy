@@ -30,6 +30,9 @@ Route::get('/customer/islogged', 'Customer\CustomerLoginCtr@isLoggedIn');
 //homepage
 Route::get('/homepage', 'Customer\HomePageCtr@index');
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
+//product detail
+Route::get('/productdetail', 'Customer\ProductDetailCtr@index');
+Route::get('/productdetails/{product_code}', 'Customer\ProductDetailCtr@getProductDetails');
 //cart
 Route::post('/homepage/addtocart', 'Customer\CartCtr@addToCart');
 Route::get('/cart', 'Customer\CartCtr@index');
@@ -88,7 +91,7 @@ Route::post('/getCompanyID/{supplierID}', 'Maintenance\SupplierMaintenanceCtr@ge
 // Product
 Route::resource('/maintenance/product', 'Maintenance\ProductMaintenanceCtr');
 Route::post('/maintenance/product/store', 'Maintenance\ProductMaintenanceCtr@store');
-Route::post('/maintenance/updateproduct/{id}', 'Maintenance\ProductMaintenanceCtr@updateProduct')->name('updateProduct');
+Route::post('/maintenance/updateproduct', 'Maintenance\ProductMaintenanceCtr@updateProduct');
 Route::post('/maintenance/product/show/{productCode}', 'Maintenance\ProductMaintenanceCtr@show');
 Route::delete('/maintenance/product/delete/{productCode}', 'Maintenance\ProductMaintenanceCtr@destroy');
 

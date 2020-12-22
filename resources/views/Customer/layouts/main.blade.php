@@ -62,8 +62,8 @@
                                     <span>{{ session()->get('name')}}</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right nav-link-menu" id="dropdown-items">
                                     <ul class="nav-list">
+                                        <li><a href="{{ url('/account') }}" class="dropdown-item"><i class="fas fa-user"></i> My Account</a></li>
                                         <li><a href="{{ url('/myorders') }}" class="dropdown-item"><i class="fas fa-cube"></i> My Orders</a></li>
-                                        <li><a href="" class="dropdown-item"><i class="fas fa-envelope"></i> Messages</a></li>
                                         <div class="dropdown-divider"></div>
                                         <li><a href="{{ url('customer-login') }}" onclick="logout()" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
@@ -104,6 +104,7 @@
           <script src="{{asset('js/customer/cart.js')}}"></script>
           <script src="{{asset('js/customer/checkout.js')}}"></script>
           <script src="{{asset('js/customer/payment.js')}}"></script>
+          <script src="{{asset('js/customer/account.js')}}"></script>
           
           <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 

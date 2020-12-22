@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Input;
-use App\CustomerLogin;
+use App\CustomerAccount;
+use App\GoogleAccount;
 use Illuminate\Http\Request;
 use Socialite;
 
 class CustomerLoginCtr extends Controller
 {
     private $tbl_emp = "tblemployee";
-    private $tbl_google_id = "tblgoogle_id";
+    private $tbl_cust_acc = "tblcustomer_account";
 
     public function index(){
     
@@ -30,35 +31,40 @@ class CustomerLoginCtr extends Controller
   
             $user = Socialite::driver('google')->user();
            
-            $this->login($user->email, $user->name, $user->avatar);
+            $this->googleLogin($user->email, $user->name, $user->avatar);
   
         } catch (Exception $e) {
             return redirect('customer-login/google');
         }
     }
 
-    public function login($google_email, $name, $avatar){
+    public function googleLogin($email, $name, $avatar){
 
-        $finduser =  DB::table($this->tbl_google_id)->where('email', $google_email)->get();   
+        $account =  DB::table($this->tbl_cust_acc)->where('email', $email)->get();  
 
-        if($finduser)
+        if($account->count() > 0)
         {
-            session()->put('email', $google_email);
-            session()->put('name', $name);
-            session()->put('avatar', $avatar);
-            session()->put('is-customer-logged', 'yes');
+            $this->putToSession($email, $name, $avatar);
             return redirect('/homepage')->send();
         }
         else
         {
-            DB::table($this->tbl_google_id)->insert(
-                ['email' => $google_email]
-            );
-            session()->put('email', $google_email);
-            session()->put('name', $name);
-            session()->put('avatar', $name);
+            $this->putToSession($email, $name, $avatar);
+
+            $cust_acc = new CustomerAccount;
+            $cust_acc->fullname = $name;
+            $cust_acc->email = $email;
+            $cust_acc->save();
+            
             return redirect('/homepage')->send();
         }
+    }
+
+    public function putToSession($email, $name, $avatar){
+        session()->put('email', $email);
+        session()->put('name', $name);
+        session()->put('avatar', $avatar);
+        session()->put('is-customer-logged', 'yes');
     }
 
     public function logout(){

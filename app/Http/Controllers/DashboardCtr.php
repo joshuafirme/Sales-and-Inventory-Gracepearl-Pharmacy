@@ -35,14 +35,7 @@ class DashboardCtr extends Controller
         ->whereBetween('date', ['2020-11-30', '2020-12-30'])
         ->groupBy('date','amount')
         ->get();
-        $total = 0;
-        for($i = 0; $i < 30; $i++){
-            dd($product[++$i]->amount);
-              $total .=  $product[$i]->amount + $product[$i++]->amount; 
-           
-            dd($total);
-        }
-        dd($product);
+      
   
         return ;
       

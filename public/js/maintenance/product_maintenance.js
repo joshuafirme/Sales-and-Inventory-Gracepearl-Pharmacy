@@ -258,11 +258,11 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
       $('#edit_exp_date').val(response[0].exp_date);
       edit_highlights.setData(response[0].highlights);
 
-      if(response[0].image){
+      if(response[0].image !== null){
         var img_source = '../../storage/'+response[0].image;
       }
       else{
-        var img_source = '../../storage/uploads/noimage.png';
+        var img_source = '../assets/noimage.png';
       }
     
       $('#img_view').attr('src', img_source);

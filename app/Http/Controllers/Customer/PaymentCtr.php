@@ -36,14 +36,14 @@ class PaymentCtr extends Controller
         ->update([
             'payment_method' => 'COD',
             'status' => 'Processing'
-        ]);     
+        ]); 
+        session()->get('checkout-total');    
     }
 
     public function getOrderNo(){
         $order_no = DB::table($this->tbl_ol_order)
         ->max('order_no');
-        $inc = ++ $order_no;
-        return $inc;
+        return ++ $order_no;
     }
 
     public function gcashPayment(){
@@ -54,13 +54,10 @@ class PaymentCtr extends Controller
             'currency' => 'PHP',
             'redirect' => [
                 'success' => route('gcashpayment'),
-                'failed' => redirect('/payment')->send()
+                'failed' => route('gcashpayment')
             ]
         ]);
-       // dd($source);
-      //  dd($source->getRedirect()['checkout_url']);
-        return redirect($source->getRedirect()['checkout_url']);
-           
+        return redirect($source->getRedirect()['checkout_url']);       
        }
 
     public function isLoggedIn(){

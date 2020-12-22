@@ -19,6 +19,7 @@ class CheckoutCtr extends Controller
 
     public function index(){
         $this->isLoggedIn();
+        
         $cart = $this->getCartItems();
         return view('/customer/checkout',[
             'cart' => $cart, 
@@ -81,7 +82,10 @@ class CheckoutCtr extends Controller
 
               $ol_order->save();
           }
-          DB::table($this->tbl_cart)->delete();
+        //  DB::table($this->tbl_cart)->delete();
+        }
+        else{
+          
         }
       }
 
@@ -91,6 +95,11 @@ class CheckoutCtr extends Controller
         ->where('customerID', session()->get('email'))
         ->get();
         return $checkout_items;
+      }
+
+      public function buyNow($product_code)
+      {
+        session()->put('buy-now-pcode', $product_code);
       }
 
       public function getOrderNo(){

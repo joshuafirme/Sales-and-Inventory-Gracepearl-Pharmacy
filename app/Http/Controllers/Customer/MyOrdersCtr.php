@@ -41,7 +41,7 @@ class MyOrdersCtr extends Controller
 
     public function orderNo(){
         $order_no = DB::table($this->tbl_ol_order)
-        ->select('order_no')
+        ->select(DB::raw('CONCAT('.$this->tbl_ol_order.'._prefix, '.$this->tbl_ol_order.'.order_no) AS pr_order_no'), 'order_no')
         ->where('email', session()->get('email'))
         ->distinct('order_no')
         ->orderBy('order_no', 'desc')

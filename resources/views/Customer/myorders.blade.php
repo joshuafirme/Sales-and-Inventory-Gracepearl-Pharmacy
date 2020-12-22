@@ -30,14 +30,14 @@
             ->get();   
             ?>  
             <div class="row">
-                <h5 class="mb-0 ml-3">Order <span>{{date('ymd') . str_pad($o->order_no, 6, '0', STR_PAD_LEFT) }}</span></h5>
+                <h5 class="mb-0 ml-3">Order <span>{{ $o->pr_order_no }}</span></h5>
                 <?php 
                 $order_status = DB::table('tblonline_order')
                 ->where('order_no', $o->order_no)
                 ->value('status');
                  ?>
                 @if($order_status == 'Payment pending')
-                <button class="btn btn-sm btn-success ml-auto mr-3" order-number={{ $o->order_no }}>Pay now ></button>
+                <button class="btn btn-sm btn-success ml-auto mr-3" order-number={{ $o->order_no }}>Pay now ></button>             
                 @endif
 
                 <?php 
@@ -80,6 +80,7 @@
                     <div>
     
                         <a class="mr-2">{{ $data->status }} </a><br>
+                   
                         <a class="mr-2">Qty: {{ $data->qty }} </a>
                         <p class="mt-2"><span class="text-success">₱{{ $data->amount }}</span></p>       
                           

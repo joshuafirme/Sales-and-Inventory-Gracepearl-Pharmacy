@@ -60,25 +60,31 @@
           <section class="cards">
             @foreach ($products as $data)  
             <div class="card-product">
-                <div class="card__image-container div-product-details" product-code={{ $data->product_code }}>
+                <a class="card__image-container div-product-details" href="{{ url('productdetails/'. $data->product_code) }}">
                     @if(!$data->image)
                     <img class="img-fluid w-100" src="../assets/noimage.png">
                     @else
                     <img  src="../../storage/{{$data->image}}" class="img-fluid w-100" alt="...">
                     @endif
-                </div>
+                </a>
                 <div class="line ml-2 mr-2 mt-2"></div>
                 <div class="card__content">
                     <p class="card__description">
-                        {{ $data->description }}
+                        @if(strlen($data->description) > 27)
+                        {{ substr_replace($data->description,"...",27) }}
+                        @else
+                          {{ $data->description }}
+                        @endif
                     </p>
                     <p class="card__unit text-secondary">
                        Unit type: {{ $data->unit }}
                     </p>
                     <div class="card__info">
-                        <p class="mt-3 text-success">₱{{ $data->selling_price }}</p>
-                        <button class="btn btn-sm card__btn-add" product-code={{ $data->product_code }} id="btn-add-to-cart">Add to cart</button>
+                        <p class="mt-3 text-success">₱{{ number_format($data->selling_price) }}</p>
+                        <button class="btn btn-sm card__btn-add ml-auto" product-code={{ $data->product_code }} id="btn-add-to-cart">Add to cart</button><br>
+                        
                     </div>
+                  
                 </div>	
             </div>
     

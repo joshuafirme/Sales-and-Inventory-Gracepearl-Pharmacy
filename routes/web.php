@@ -27,11 +27,14 @@ Route::get('/customer-login/google', 'Customer\CustomerLoginCtr@redirectToGoogle
 Route::get('/customer-login/google/callback', 'Customer\CustomerLoginCtr@handleGoogleCallback');
 Route::get('/customer/logout', 'Customer\CustomerLoginCtr@logout');
 Route::get('/customer/islogged', 'Customer\CustomerLoginCtr@isLoggedIn');
+//customer account
+Route::get('/account', 'Customer\CustomerAccountCtr@index');
+Route::post('/account/update', 'Customer\CustomerAccountCtr@updateAccount');
 //homepage
 Route::get('/homepage', 'Customer\HomePageCtr@index');
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
 //product detail
-Route::get('/productdetail', 'Customer\ProductDetailCtr@index');
+Route::get('/productdetails', 'Customer\ProductDetailCtr@index');
 Route::get('/productdetails/{product_code}', 'Customer\ProductDetailCtr@getProductDetails');
 //cart
 Route::post('/homepage/addtocart', 'Customer\CartCtr@addToCart');
@@ -120,6 +123,9 @@ Route::post('/maintenance/category/edit/{id}', 'Maintenance\CategoryMaintenanceC
 Route::post('/maintenance/category/update/{category_id}', 'Maintenance\CategoryMaintenanceCtr@updateCategory');
 Route::delete('/maintenance/category/{id}', 'Maintenance\CategoryMaintenanceCtr@destroy');
 
+//shipping address
+Route::get('/maintenance/shippingadd', 'Maintenance\ShippingAddressMaintenanceCtr@index');
+
 //User
 Route::get('/maintenance/user', 'Maintenance\UserMaintenanceCtr@index');
 Route::get('/maintenance/user/displayuser', 'Maintenance\UserMaintenanceCtr@displayUsers');
@@ -128,6 +134,9 @@ Route::post('/maintenance/user/store', 'Maintenance\UserMaintenanceCtr@store');
 Route::post('/maintenance/user/show/{empID}', 'Maintenance\UserMaintenanceCtr@show');
 Route::post('/maintenance/user/update', 'Maintenance\UserMaintenanceCtr@update');
 Route::delete('/maintenance/user/delete/{empID}', 'Maintenance\UserMaintenanceCtr@destroy');
+
+//MANAGE ONLINE ORDER-----------------------------------------------------------------------------------------------------
+Route::get('/manageorder', 'ManageOnlineOrderCtr@index');
 
 //INVENTORY---------------------------------------------------------------------------------------------------------------
 

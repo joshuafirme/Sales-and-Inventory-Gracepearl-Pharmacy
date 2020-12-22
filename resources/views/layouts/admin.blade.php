@@ -61,7 +61,7 @@
                 </li>
 
                 <li>
-                    <a href="#orders-menu" ><i class="fas fa-shopping-cart"></i> Manage Online Orders</a>
+                    <a href="{{ url('/manageorder') }}" ><i class="fas fa-shopping-cart"></i> Manage Online Orders</a>
                
                 </li>
 
@@ -146,7 +146,7 @@
                             <a href="{{ url('maintenance/discount') }}" ><i class="fas fa-percentage"></i> Discount</a>
                         </li>
                         <li>
-                            <a href="{{ url('maintenance/category') }}" ><i class="fas fa-dollar-sign"></i> Shipping Fee</a>
+                            <a href="{{ url('maintenance/shipping') }}" ><i class="fas fa-dollar-sign"></i> Shipping Fee</a>
                         </li>
                         <li>
                             <a href="{{ url('maintenance/user') }}"><i class="fas fa-user"></i> User</a>

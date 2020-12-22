@@ -83,19 +83,19 @@ $(document).ready(function(){
          });
     }
 
+    if($('ul li').length > 3){
 
-    $('.div-product-details').click(function() {  
-      var product_code = $(this).attr('product-code');
-      
-      $.ajax({
-        url:"/productdetails/"+product_code,
-        type:"GET",
-        success:function(response){
-            
-            console.log(response); 
-        }
-         
-       });
+      $('ul li').length - 10;
+      var highlights = $('#highlights').text()
+      highlights.replace(50, '...');
+    }
+
+    $(document).on('click', '#btn-view-more', function(){
+
+     
+
+     
+    
   });
     
   

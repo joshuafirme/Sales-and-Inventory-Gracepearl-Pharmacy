@@ -88,7 +88,7 @@
                 <Label>Contact No.</Label>
                 <input type="text" class="form-control mb-3" id="contact-no" maxlength="11" placeholder="09xxxxxxxxx">
                 <Label>Email</Label>
-                <input type="text" class="form-control"><br>
+                <input type="text" class="form-control" value={{ session()->get('email') }}><br>
 
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                 Subtotal

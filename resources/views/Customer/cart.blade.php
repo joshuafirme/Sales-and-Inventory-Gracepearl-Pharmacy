@@ -22,7 +22,7 @@
           <div class="card-body card-cart">
   
             <h5 class="mb-4">Cart (<span class="count-cart"></span> items)</h5>
-  
+            @if(count($cart) > 0)
             @foreach($cart as $data)
             <div class="row mb-4">
               <div class="col-md-5 col-lg-3 col-xl-3">
@@ -54,14 +54,14 @@
                     </div>
                     <div>
                         <div class="def-number-input number-input safari_only mb-0 w-100">
-                            <button class="btn btn-sm" id="btn-dec" product-code={{ $data->product_code }} qty={{ $data->qty-1 }} 
+                            <button class="btn btn-sm" id="btn-dec" product-code={{ $data->product_code }} qty={{ $data->qty - 1 }} 
                               onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
                               class="minus"><i class="fas fa-minus"></i></button>
 
                             <input class="quantity" min="0" id="item-qty" name="quantity"  value={{ $data->qty }} product-code={{ $data->product_code }} type="number"
                              style="width: 40px;">
 
-                            <button class="btn btn-sm" id="btn-inc" product-code={{ $data->product_code }} qty={{ $data->qty+1 }} 
+                            <button class="btn btn-sm" id="btn-inc" product-code={{ $data->product_code }} qty={{ $data->qty + 1 }} 
                               onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
                               class="plus"><i class="fas fa-plus"></i></button>
                           </div>
@@ -80,7 +80,12 @@
             </div>      
             <hr class="mb-4">
             @endforeach
-
+            @else
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <h5> </h5>Your cart is empty
+            </div> 
+            @endif 
             <p class="text-primary mb-0"><i class="fas fa-info-circle mr-1"></i> Do not delay the purchase, adding
               items to your cart does not mean booking them.</p>
   

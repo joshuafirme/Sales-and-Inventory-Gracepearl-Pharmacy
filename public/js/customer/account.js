@@ -50,6 +50,74 @@ $(document).ready(function(){
     });
 
 
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+          $('#img-valid-id').attr('src', e.target.result);
+        }
+        
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+      }
+    }
+    
+    $("#file-valid-id").change(function() {
+      console.log('upload');
+      readURL(this);
+    });
+
+    isVerified();
+
+    function isVerified(){
+      $.ajax({
+        url:"/account/isforvalidation",
+        type:"GET",
+ 
+        success:function(response){
+          
+          if(response != '')
+          {
+            if(response == 'For validation') 
+            {
+              console.log('validation');
+              $('#verify-link').css('display', 'inline');
+              $('#verification-info').css('display', 'block');
+              disabledInputs();
+            }
+            else if(response == 'Verified')
+            {
+              console.log('verified');
+              $('#verify-link').css('display', 'none');
+              $('#verification-badge').toggleClass('badge-secondary badge-success');
+              $('#verification-badge').text('Verified');
+            }
+            else
+            {
+              console.log('senior');
+              $('#verify-link').css('display', 'none');
+              $('#verification-badge').toggleClass('badge-secondary badge-success');
+              $('#verification-badge').text('Verified Senior Citizen');
+            }
+          }
+          else{
+            // if no upload yet
+            console.log('no upload');
+            $('#verify-link').css('display', 'inline');
+          }
+            
+        }
+         
+       });
+    }
+
+    function disabledInputs(){
+      $("#id-type").attr('disabled', true);
+      $("#id-number").attr('disabled', true);
+      $("#file-valid-id").attr('disabled', true);
+      $("#btn-upload").attr('disabled', true);
+    }
+
 });
   
   

@@ -30,6 +30,8 @@ Route::get('/customer/islogged', 'Customer\CustomerLoginCtr@isLoggedIn');
 //customer account
 Route::get('/account', 'Customer\CustomerAccountCtr@index');
 Route::post('/account/update', 'Customer\CustomerAccountCtr@updateAccount');
+Route::post('/account/uploadID', 'Customer\CustomerAccountCtr@uploadID');
+Route::get('/account/isforvalidation', 'Customer\CustomerAccountCtr@isForValidation');
 //homepage
 Route::get('/homepage', 'Customer\HomePageCtr@index');
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');

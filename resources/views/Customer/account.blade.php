@@ -2,6 +2,14 @@
 
 @section('content')
 
+@if(\Session::has('success'))
+<div class="alert alert-success alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <h5><i class="icon fas fa-check"></i> </h5>
+  {{ \Session::get('success') }}
+</div>
+@endif
+
 <div class="container-fluid div-my-account">
 
     <!--Section: Block Content-->
@@ -22,7 +30,10 @@
             <div class="row">
             
             <div class="col-md-12 mb-2">
-                <h5>Basic Information</h5>
+                <h5 class="mb-0">Basic Information</h5>
+                <span class="badge badge-secondary" id="verification-badge">Not verified</span>
+                <a href="" class="text-primary label-small ml-2" style="display: none"
+                data-toggle="modal" data-target="#uploadIDModal" id="verify-link">Verify</a>
             </div>
 
             @foreach($account as $data)
@@ -77,9 +88,10 @@
             </div> 
 
 
-            <div class="col-md-12 mt-2">
-                <button class="btn btn-sm btn-success" data-toggle="modal" data-target="#editAccountModal"><i class="fas fa-edit"></i> Edit Profile</button>
+            <div class="col-md-6 mt-2">
+                <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#editAccountModal"><i class="fas fa-edit"></i> Edit Profile</button>
             </div>
+
 
             </div>
 

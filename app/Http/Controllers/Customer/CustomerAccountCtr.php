@@ -13,12 +13,17 @@ class CustomerAccountCtr extends Controller
 {
     private $tbl_cust_acc = "tblcustomer_account";
     private $tbl_cust_ver = "tblcustomer_verification";
+    private $tbl_ship_add = "tblshipping_add";
 
     public function index(){
 
         $acc_info = $this->getAccountInfo();
+        $verification_info = $this->getVerificationInfo();
+        $ship_info = $this->getShippingInfo();
         return view('/customer/account',[
-            'account' => $acc_info
+            'account' => $acc_info,
+            'verification' => $verification_info,
+            'shipping' => $ship_info
         ]);
     }
 
@@ -29,11 +34,30 @@ class CustomerAccountCtr extends Controller
         return $acc_info;
     }
 
+    public function getVerificationInfo(){
+        $user_id = $this->getUserID();
+        $verification_info = DB::table($this->tbl_cust_ver)->where('user_id', $user_id)->get(); 
+
+        return $verification_info;
+    }
+
+    public function getShippingInfo(){
+        $user_id = $this->getUserID();
+        $ship_info = DB::table($this->tbl_ship_add)->where('user_id', $user_id)->get(); 
+
+        return $ship_info;
+    }
+
     public function updateAccount(){
 
         $fullname = Input::input('fullname');
         $email = Input::input('email');
         $phone_no = Input::input('phone_no');
+
+        $flr_bldg_blk = Input::input('flr_bldg_blk');
+        $municipality = Input::input('municipality');
+        $brgy = Input::input('brgy');
+        $notes = Input::input('notes');
 
         CustomerAccount::where('email', $email)
         ->update([
@@ -42,6 +66,36 @@ class CustomerAccountCtr extends Controller
             'phone_no' => $phone_no
             ]);
 
+        $this->updateShippingAddress($flr_bldg_blk, $municipality, $brgy, $notes);
+    }
+
+    public function updateShippingAddress($flr_bldg_blk, $municipality, $brgy, $notes){
+
+        $user_id = $this->getUserID();
+       
+        $shipping_add =  DB::table($this->tbl_ship_add)
+        ->where('user_id', $user_id)->get();
+
+        if($shipping_add->count() > 0){
+            DB::table($this->tbl_ship_add)
+            ->where('user_id', $user_id)
+            ->update([
+                'flr_bldg_blk' => $flr_bldg_blk,
+                'municipality' => $municipality,
+                'brgy' => $brgy,
+                'note' => $notes
+            ]);
+        }
+        else{
+            DB::table($this->tbl_ship_add)
+            ->insert([
+                'user_id' => $user_id,
+                'flr_bldg_blk' => $flr_bldg_blk,
+                'municipality' => $municipality,
+                'brgy' => $brgy,
+                'note' => $notes
+            ]);
+        }
     }
 
     public function uploadID(Request $request){
@@ -75,7 +129,7 @@ class CustomerAccountCtr extends Controller
         }
     }
 
-    public function isForValidation(){
+    public function checkIfVerified(){
 
         $user_id = $this->getUserID();
         

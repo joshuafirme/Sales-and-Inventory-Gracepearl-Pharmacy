@@ -16,40 +16,40 @@
                 <div class="col-md-12">
                     <h5>Basic Information</h5>
                 </div>
-                @foreach($account as $data)
+
                 <div class="col-md-4">
                     <label class="label-small" >Full Name</label>
-                    <input type="text" class="form-control" value="{{ $data->fullname }}" id="fullname">
+                    <input type="text" class="form-control" id="fullname">
                 </div>
     
                 <div class="col-md-4">
                     <label class="label-small">Email Address</label>
-                    <input type="email" class="form-control" value="{{ $data->email }}" id="email">
+                    <input type="email" class="form-control" id="email">
                 </div>
     
                 <div class="col-md-4">
                     <label class="label-small">Phone Number</label>
-                    <input type="number" class="form-control" value="{{ $data->phone_no }}" id="phone_no">
+                    <input type="number" class="form-control" id="phone_no">
                 </div> 
     
                 <div class="col-md-12 mb-2 mt-2">
                     <hr>
                 </div>
 
-                @endforeach
+
     
                 <div class="col-md-12 mb-2">
                     <h5>Shipping Address</h5>
                 </div>
-    
+
                 <div class="col-md-6 mb-3">
                     <label class="label-small">House/Unit/Flr #, Bldg Name, Blk or Lot #</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="flr-bldg-blk">
                 </div> 
     
                 <div class="col-md-6">
                     <label class="label-small">Municipality</label>
-                    <select class="form-control" name="municipality">
+                    <select class="form-control" name="municipality" id="municipality">
                       <option>Nasugbu</option>
                       <option>Tuy</option>
                     </select>
@@ -57,13 +57,14 @@
     
                 <div class="col-md-6">
                     <label class="label-small">Barangay</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="brgy">
                 </div> 
     
                 <div class="col-md-6">
                     <label class="label-small">Notes</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" id="notes">
                 </div> 
+                
 
             </div>
 
@@ -108,10 +109,13 @@
               <div class="col-md-12">
                 <p>Upload atleast 1 valid ID</p>
               </div>
-
+              
+              @if(count($verification) > 0)
+              @foreach($verification as $data)
               <div class="col-md-4 mb-3">
                 <label class="label-small">Select ID Type</label>
                   <select class="form-control" name="id-type" id="id-type">
+                    <option value="{{ $data->id_type }}" selected>{{ $data->id_type }}</option>
                     <option value="Senior Citizen ID">Senior Citizen ID</option>
                     <option value="Passport">Passport</option>
                     <option value="Driver's license">Driver's license</option>
@@ -125,7 +129,7 @@
 
                 <div class="col-md-4 mb-3">
                   <label class="label-small">ID Number</label>
-                  <input type="text" class="form-control" name="id-number" id="id-number">
+                  <input type="text" class="form-control" name="id-number" id="id-number" value="{{ $data->id_number }}">
                 </div>
 
                 <div class="col-md-4 mb-5">
@@ -134,8 +138,40 @@
                 </div>
 
                 <div class="col-md-12 m-auto">
-                  <img width="600px;" id="img-valid-id" style="background: darkgray">
+                  <img class="responsive" id="img-valid-id" src="{{ asset('storage/'.$data->image) }}" style="border-style: dashed; border-color: #9E9E9E;">
                 </div>
+
+                @endforeach
+                @else
+                <div class="col-md-4 mb-3">
+                  <label class="label-small">Select ID Type</label>
+                    <select class="form-control" name="id-type" id="id-type">
+                      <option value="Senior Citizen ID">Senior Citizen ID</option>
+                      <option value="Passport">Passport</option>
+                      <option value="Driver's license">Driver's license</option>
+                      <option value="SSS UMID Card">SSS UMID Card</option>
+                      <option value="PhilHealth ID">PhilHealth ID</option>
+                      <option value="TIN">TIN</option>
+                      <option value="Postal ID">Postal ID</option>
+                      <option value="Voter's ID">Voter's ID</option>
+                    </select>
+                  </div> 
+  
+                  <div class="col-md-4 mb-3">
+                    <label class="label-small">ID Number</label>
+                    <input type="text" class="form-control" name="id-number" id="id-number">
+                  </div>
+  
+                  <div class="col-md-4 mb-5">
+                    <label class="label-small">Upload</label>
+                    <input type="file" id="file-valid-id" name="image">
+                  </div>
+  
+                  <div class="col-md-12 m-auto">
+                    <img class="responsive" id="img-valid-id" 
+                    style="border-style: dashed; border-color: #9E9E9E; background: #fff;">
+                  </div>
+                  @endif
 
             </div>
 

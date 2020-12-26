@@ -29,9 +29,11 @@ Route::get('/customer/logout', 'Customer\CustomerLoginCtr@logout');
 Route::get('/customer/islogged', 'Customer\CustomerLoginCtr@isLoggedIn');
 //customer account
 Route::get('/account', 'Customer\CustomerAccountCtr@index');
+Route::get('/account/getaccountinfo', 'Customer\CustomerAccountCtr@getAccountInfo');
+Route::get('/account/getshippinginfo', 'Customer\CustomerAccountCtr@getShippingInfo');
 Route::post('/account/update', 'Customer\CustomerAccountCtr@updateAccount');
 Route::post('/account/uploadID', 'Customer\CustomerAccountCtr@uploadID');
-Route::get('/account/isforvalidation', 'Customer\CustomerAccountCtr@isForValidation');
+Route::get('/account/checkifverified', 'Customer\CustomerAccountCtr@checkIfVerified');
 //homepage
 Route::get('/homepage', 'Customer\HomePageCtr@index');
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
@@ -153,7 +155,7 @@ Route::post('/inventory/purchaseorder/show/{product_code}', 'Inventory\PurchaseO
 Route::post('/inventory/purchaseorder/addToOrder', 'Inventory\PurchaseOrderCtr@addToOrder');
 Route::get('/inventory/order/print', 'Inventory\PurchaseOrderCtr@pdf');
 Route::get('/inventory/order/downloadOrderPDF', 'Inventory\PurchaseOrderCtr@downloadOrderPDF');
-Route::get('/sendorder', 'PurchaseOrderCtr@sendMail');
+Route::get('/sendorder', 'Inventory\PurchaseOrderCtr@sendMail');
 Route::post('/getSupplierEmail/{supplier_id}', 'Inventory\PurchaseOrderCtr@getSupplierEmail');
 Route::post('/filterSupplier/{supplier_id}', 'Inventory\PurchaseOrderCtr@filterSupplier');
 Route::post('/inventory/addRecord', 'Inventory\PurchaseOrderCtr@recordOrder');

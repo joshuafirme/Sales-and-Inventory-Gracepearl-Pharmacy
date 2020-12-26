@@ -6,12 +6,52 @@ $(document).ready(function(){
         }
       });
 
+    $('#btn-edit-account').click(function(){
+
+      fetchAccountInfo();
+      fetchShippingInfo();
+    });
+
+    function fetchAccountInfo(){
+      $.ajax({
+        url:"/account/getaccountinfo",
+        type:"GET",
+        success:function(data){  console.log(data);
+          $('#fullname').val(data[0].fullname);
+          $('#email').val(data[0].email);
+          $('#phone_no').val(data[0].phone_no);
+        }
+         
+       });
+    }
+
+    function fetchShippingInfo(){
+      $.ajax({
+        url:"/account/getshippinginfo",
+        type:"GET",
+        success:function(data){
+         if(data){
+          console.log(data);
+          $('#flr-bldg-blk').val(data[0].flr_bldg_blk);
+          $('#municipality').val(data[0].municipality);
+          $('#brgy').val(data[0].brgy);
+          $('#notes').val(data[0].note);
+         }
+        }
+         
+       });
+    }
+
     
     $('#btn-update-account').on('click', function(){
 
         var fullname = $('#fullname').val();
         var email = $('#email').val();
         var phone_no = $('#phone_no').val();
+        var flr_bldg_blk = $('#flr-bldg-blk').val();
+        var municipality = $('#municipality').val();
+        var brgy = $('#brgy').val();
+        var notes = $('#notes').val();
 
         if(!fullname){
             alert('Please enter your fullname');
@@ -23,7 +63,11 @@ $(document).ready(function(){
                 data: {
                     fullname:fullname,
                     email:email,
-                    phone_no:phone_no
+                    phone_no:phone_no,
+                    flr_bldg_blk:flr_bldg_blk,
+                    municipality:municipality,
+                    brgy:brgy,
+                    notes:notes
                 },
                 beforeSend:function(){
                     $('#btn-update-account').text('Saving...');
@@ -71,7 +115,7 @@ $(document).ready(function(){
 
     function isVerified(){
       $.ajax({
-        url:"/account/isforvalidation",
+        url:"/account/checkifverified",
         type:"GET",
  
         success:function(response){

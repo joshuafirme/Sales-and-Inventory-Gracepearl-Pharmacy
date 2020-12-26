@@ -67,29 +67,32 @@
                 <h5>Shipping Address</h5>
             </div>
 
+            @foreach($shipping as $data)
+
             <div class="col-md-6">
                 <label class="label-small text-muted">House/Unit/Flr #, Bldg Name, Blk or Lot #</label>
-                <p>Blk 4 lot 9 palm estate subd.</p>
+                <p>{{ $data->flr_bldg_blk }}</p>
             </div> 
 
             <div class="col-md-6">
                 <label class="label-small text-muted">Municipality</label>
-                <p>Nasugbu</p>
+                <p>{{ $data->municipality }}</p>
             </div> 
 
             <div class="col-md-6">
                 <label class="label-small text-muted">Barangay</label>
-                <p>brgy Cogunan</p>
+                <p>{{ $data->brgy }}</p>
             </div> 
 
             <div class="col-md-6">
                 <label class="label-small text-muted">Notes</label>
-                <p>unang bahay sa kaliwa</p>
+                <p>{{ $data->note }}</p>
             </div> 
 
+            @endforeach
 
             <div class="col-md-6 mt-2">
-                <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#editAccountModal"><i class="fas fa-edit"></i> Edit Profile</button>
+                <button id="btn-edit-account" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editAccountModal"><i class="fas fa-edit"></i> Edit Account</button>
             </div>
 
 

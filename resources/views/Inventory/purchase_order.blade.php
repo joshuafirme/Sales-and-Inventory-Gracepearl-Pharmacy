@@ -61,7 +61,7 @@
                     <select data-column="4" class=" form-control col-sm-2 ml-2" name="ro_supplier" id="ro_supplier">
                       
                       @foreach($suplr as $data)
-                    <option value={{ $data->supplierName }}>{{ $data->supplierName }}</option>
+                    <option value={{ $data->id }}>{{ $data->supplierName }}</option>
                       @endforeach
                     </select>
                   </div>

@@ -91,25 +91,24 @@ class SupplierDeliveryCtr extends Controller
 
     public function recordDelivery(){
  
-             $sd = new SupplierDelivery;
+        $sd = new SupplierDelivery;
  
-             $sd->_prefix = $this->getDeliveryNumPrefix();
-             $sd->po_num = Input::input('po_num');
-             $sd->product_code = Input::input('product_code');
-             $sd->qty_delivered = Input::input('qty_delivered');
-             $sd->exp_date = Input::input('exp_date');
-             $sd->date_recieved = Input::input('date_recieved');
+        $sd->_prefix = $this->getDeliveryNumPrefix();
+        $sd->po_num = Input::input('po_num');
+        $sd->product_code = Input::input('product_code');
+        $sd->qty_delivered = Input::input('qty_delivered');
+        $sd->exp_date = Input::input('exp_date');
+        $sd->date_recieved = Input::input('date_recieved');
 
-             $checked_result = $this->checkDeliveredQty($sd->product_code, $sd->qty_delivered );
-             $sd->remarks = $checked_result;
-             $sd->save();
+        $checked_result = $this->checkDeliveredQty($sd->product_code, $sd->qty_delivered );
+        $sd->remarks = $checked_result;
+        $sd->save();
 
-           //  $checked_result = $this->checkDeliveredQty($sd->product_code, $sd->remarks);
-             $this->updatePurchaseOrder($sd->po_num, $sd->product_code, $checked_result);
-     
-     }
+        $this->updatePurchaseOrder($sd->po_num, $sd->product_code, $checked_result);
+        $this->updateInventory($sd->product_code, $sd->qty_delivered);        
+    }
 
-     public function updatePurchaseOrder($po_num, $product_code, $remarks){
+    public function updatePurchaseOrder($po_num, $product_code, $remarks){
         DB::table($this->table_po)
             ->where('product_code', $product_code)
             ->update(['status' => $remarks]);
@@ -130,6 +129,13 @@ class SupplierDeliveryCtr extends Controller
             return $p;
     }
 
+    public function updateInventory($product_code, $qty_delivered){
+        DB::table($this->table_prod)
+        ->where(DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), $product_code)
+        ->update(array(
+            'qty' => DB::raw('qty + '. $qty_delivered .'')));
+    }
+
 
      public function getDelivery()
      {
@@ -142,6 +148,7 @@ class SupplierDeliveryCtr extends Controller
         ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+        ->orderBy($this->table_delivery.'.delivery_num', 'desc')
         ->get();
 
         return $product;

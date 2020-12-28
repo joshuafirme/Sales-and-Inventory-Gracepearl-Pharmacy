@@ -132,7 +132,7 @@ class PurchaseOrderCtr extends Controller
         ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
         ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
         ->whereColumn('tblproduct.re_order','>=', 'tblproduct.qty')
-        ->where('supplierName', $supplier)
+        ->where('tblproduct.supplierID', $supplier)
         ->get();
 
         return $product;

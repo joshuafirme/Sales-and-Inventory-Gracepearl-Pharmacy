@@ -30,17 +30,29 @@
 
                                     <li class="nav-item">
                                       <a class="nav-link  active" id="reorder-tab" data-toggle="tab" href="#reordertab" role="tab" aria-controls="contact" aria-selected="true">Reorder
-                                        <span class="badge badge-pill badge-success"> {{ $reorderCount }} </span>
+                                        @if($reorderCount > 0)
+                                        <span class="badge badge-pill badge-success"> 
+                                          {{ $reorderCount }} 
+                                        </span>
+                                        @endif
                                       </a>
                                      </li>
                                       <li class="nav-item">
                                           <a class="nav-link" id="expiry-tab" data-toggle="tab" href="#expirytab" role="tab" aria-controls="home" aria-selected="false">Near Expiry
-                                            <span class="badge badge-pill badge-warning" style="color: #fff">{{ $expiryCount }}</span>
+                                            @if($expiryCount > 0)
+                                            <span class="badge badge-pill badge-warning" style="color: #fff">
+                                              {{ $expiryCount }}
+                                            </span>
+                                            @endif
                                           </a>
                                       </li>
                                       <li class="nav-item">
                                           <a class="nav-link" id="expired-tab" data-toggle="tab" href="#expiredtab" role="tab" aria-controls="profile" aria-selected="false">Expired
-                                            <span class="badge badge-pill badge-danger">{{ $expiredCount }} </span>
+                                            @if($expiredCount > 0)
+                                            <span class="badge badge-pill badge-danger">
+                                              {{ $expiredCount }} 
+                                            </span>
+                                            @endif
                                           </a>
                                       </li>
                                      
@@ -126,6 +138,7 @@
                                               <tr>
                                                 <th>Product Code</th>
                                                 <th>Description</th> 
+                                                <th>Supplier</th>    
                                                 <th>Category</th>    
                                                 <th>Unit</th>   
                                                 <th>Quantity</th>  
@@ -138,6 +151,7 @@
                                                 @foreach ($reorderProduct as $data)                        
                                                 <td>{{ $data->productCode }}</td>
                                                 <td>{{ $data->description }}</td>
+                                                <td>{{ $data->supplierName }}</td>
                                                 <td>{{ $data->category_name }}</td>
                                                 <td>{{ $data->unit }}</td>      
                                                 <td>{{ $data->qty }}</td>      

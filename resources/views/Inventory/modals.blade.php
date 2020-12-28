@@ -401,7 +401,7 @@
               </select>
             </div>
 
-            <div class="col-md-12 mt-2 mb-2 line"></div>
+            <div class="col-md-12 mt-2 mb-2"><hr></div>
 
             <div class="col-md-4 mb-2">
               <label class="col-form-label">Description</label><br>
@@ -433,7 +433,7 @@
               <a class="form-control" id="rc_amount_purchased"></a>
             </div>
 
-            <div class="col-md-12 mt-2 mb-2 line"></div>
+            <div class="col-md-12 mt-2 mb-2"><hr></div>
 
             <div class="col-md-4 mb-2">
               <label class="col-form-label">Qty to Return</label><br>

@@ -13,7 +13,7 @@ class CustomerAccount extends Authenticatable
     protected $table = 'tblcustomer_account';
 
     protected $fillable = [
-        'id', 'fullname', 'phone_no', 'shipping_address_id', 'email'
+        'id', '_prefix', 'fullname', 'phone_no', 'shipping_address_id', 'email'
     ];
 
     protected $hidden = [

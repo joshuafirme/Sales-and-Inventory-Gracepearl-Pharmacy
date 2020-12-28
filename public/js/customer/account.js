@@ -155,6 +155,11 @@ $(document).ready(function(){
        });
     }
 
+    $('#btn-upload').click(function(){
+      $('#verify-customer-table').DataTable().ajax.reload();
+     
+    });
+
     function disabledInputs(){
       $("#id-type").attr('disabled', true);
       $("#id-number").attr('disabled', true);

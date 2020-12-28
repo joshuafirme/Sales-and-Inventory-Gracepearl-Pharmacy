@@ -471,7 +471,10 @@ flex-direction: row;
     margin: 10px 0 10px 5px;
   }
 
-
+  .label-small{
+	font-size: 14px;
+	margin-bottom: 4px;
+}
 
     .cashiering-table th{
         position: sticky;
@@ -561,3 +564,12 @@ flex-direction: row;
     .total-sales{
        margin-top: 40px; 
     }
+
+
+/* RESPONSIVE IMAGE */
+.responsive {
+	width: 100%;
+	min-width: 300px;
+	max-height: 600px;
+
+  }

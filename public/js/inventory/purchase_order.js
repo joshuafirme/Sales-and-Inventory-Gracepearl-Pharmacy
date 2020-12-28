@@ -41,6 +41,7 @@ $(document).ready(function(){
        $('#ro_supplier').change(function(){
         supplier = $(this).val();
         console.log(supplier);
+        console.log(supplier);
         $('#reorder-table').DataTable().destroy();
         fetch_reorders(supplier);
     

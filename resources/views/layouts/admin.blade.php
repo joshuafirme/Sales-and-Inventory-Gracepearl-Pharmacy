@@ -61,8 +61,10 @@
                 </li>
 
                 <li>
-                    <a href="{{ url('/manageorder') }}" ><i class="fas fa-shopping-cart"></i> Manage Online Orders</a>
-               
+                    <a href="{{ url('/manageorder') }}" ><i class="fas fa-shopping-cart"></i> Manage online orders</a>
+                </li>
+                <li>
+                    <a href="{{ url('/verifycustomer') }}" ><i class="fas fa-user-check"></i> Verify customer</a>
                 </li>
 
                 <li>
@@ -76,9 +78,6 @@
                         </li>
                         <li>
                             <a href="{{ url('/inventory/delivery') }}"><i class="fas fa-truck-loading"></i> Supplier Delivery</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('/inventory/stockentry') }}"><i class="fas fa-dolly"></i> Stock Entry</a>
                         </li>
                         <li>
                             <a href="{{ url('/inventory/notification') }}"><i class="fas fa-bell"></i> Notification</a>
@@ -106,9 +105,6 @@
                         </li>
                         <li>
                             <a href="500.html"><i class="fas fa-truck-moving"></i> Supplier Delivery</a>
-                        </li>
-                        <li>
-                            <a href="500.html"><i class="fas fa-dolly-flatbed"></i> Stock Entry</a>
                         </li>
                         <li>
                             <a href="500.html"><i class="fas fa-radiation-alt"></i> Expired Products</a>
@@ -239,6 +235,9 @@
           <!-- sales -->
           <script src="{{asset('js/sales/cashiering.js')}}"></script>
           <script src="{{asset('js/sales/sales_report.js')}}"></script>
+
+           <!-- sales -->
+           <script src="{{asset('js/verify_customer.js')}}"></script>
 
           <!-- inventory -->
           <script src="{{asset('js/inventory/stockadjustment.js')}}"></script>

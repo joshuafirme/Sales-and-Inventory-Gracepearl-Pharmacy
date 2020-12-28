@@ -149,6 +149,45 @@ $(document).ready(function(){
          });
     }
 
+    $(document).on('click', '#btn-proceed-checkout', function(){
+      isVerified();
+    });
+
+
+    function isVerified(){
+      $.ajax({
+        url:"/account/checkifverified",
+        type:"GET",
+ 
+        success:function(response){
+          
+          if(response != '')
+          {          
+            if(response == 'For validation') 
+            {
+              alert('Your account is not verified! \n Please verify your account before you proceed to checkout.');
+              window.location.href = "/account";
+            }
+            else if(response == 'Verified')
+            {
+              window.location.href = "/checkout";
+            }
+            else
+            {
+              window.location.href = "/checkout";
+ 
+            }
+          }
+          else{
+            alert('Your account is not verified! \n Please verify your account before you proceed to checkout.');
+            window.location.href = "/account";
+          }
+            
+        }
+         
+       });
+    }
+
 
 });
   

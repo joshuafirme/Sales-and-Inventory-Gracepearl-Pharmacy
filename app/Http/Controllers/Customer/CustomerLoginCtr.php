@@ -52,6 +52,7 @@ class CustomerLoginCtr extends Controller
             $this->putToSession($email, $name, $avatar);
 
             $cust_acc = new CustomerAccount;
+            $cust_acc->_prefix = 'CUST-'. date('yy').'-';
             $cust_acc->fullname = $name;
             $cust_acc->email = $email;
             $cust_acc->save();

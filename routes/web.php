@@ -144,6 +144,12 @@ Route::delete('/maintenance/user/delete/{empID}', 'Maintenance\UserMaintenanceCt
 //MANAGE ONLINE ORDER-----------------------------------------------------------------------------------------------------
 Route::get('/manageorder', 'ManageOnlineOrderCtr@index');
 
+//VERIFY CUSTOMER---------------------------------------------------------------------------------------------------------
+Route::get('/verifycustomer', 'VerifyCustomerCtr@index');
+Route::get('/verifycustomer/getverificationinfo/{cust_id}', 'VerifyCustomerCtr@getVerificationInfo');
+Route::post('/verifycustomer/approve/{cust_id}', 'VerifyCustomerCtr@approve');
+Route::post('/verifycustomer/decline/{cust_id}', 'VerifyCustomerCtr@decline');
+
 //INVENTORY---------------------------------------------------------------------------------------------------------------
 
 //Stock Adjustment

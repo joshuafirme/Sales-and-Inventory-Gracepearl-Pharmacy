@@ -35,14 +35,14 @@ class CustomerAccountCtr extends Controller
     }
 
     public function getVerificationInfo(){
-        $user_id = $this->getUserID();
+        $user_id = $this->getUserIDWithPrefix();
         $verification_info = DB::table($this->tbl_cust_ver)->where('user_id', $user_id)->get(); 
 
         return $verification_info;
     }
 
     public function getShippingInfo(){
-        $user_id = $this->getUserID();
+        $user_id = $this->getUserIDWithPrefix();
         $ship_info = DB::table($this->tbl_ship_add)->where('user_id', $user_id)->get(); 
 
         return $ship_info;
@@ -72,10 +72,11 @@ class CustomerAccountCtr extends Controller
     public function updateShippingAddress($flr_bldg_blk, $municipality, $brgy, $notes){
 
         $user_id = $this->getUserID();
-       
-        $shipping_add =  DB::table($this->tbl_ship_add)
-        ->where('user_id', $user_id)->get();
+        $user_id_prefix = $this->getUserIDWithPrefix();
 
+        $shipping_add =  DB::table($this->tbl_ship_add)
+        ->where('user_id', $user_id_prefix)->get();
+        
         if($shipping_add->count() > 0){
             DB::table($this->tbl_ship_add)
             ->where('user_id', $user_id)
@@ -89,7 +90,7 @@ class CustomerAccountCtr extends Controller
         else{
             DB::table($this->tbl_ship_add)
             ->insert([
-                'user_id' => $user_id,
+                'user_id' => $user_id_prefix,
                 'flr_bldg_blk' => $flr_bldg_blk,
                 'municipality' => $municipality,
                 'brgy' => $brgy,
@@ -99,7 +100,7 @@ class CustomerAccountCtr extends Controller
     }
 
     public function uploadID(Request $request){
-        $user_id = $this->getUserID();
+        $user_id = $this->getUserIDWithPrefix();
         $cust_verif = new CustomerVerification;
         $cust_verif->user_id = $user_id;
         $cust_verif->id_type = $request->input('id-type');
@@ -124,14 +125,14 @@ class CustomerAccountCtr extends Controller
             CustomerVerification::where('user_id', $user_id)
        
             ->update([
-                'image' => request()->image->store('uploads', 'public'),
+                'image' => request()->image->store('customer-id-uploads', 'public'),
             ]);
         }
     }
 
     public function checkIfVerified(){
 
-        $user_id = $this->getUserID();
+        $user_id = $this->getUserIDWithPrefix();
         
         if($user_id){
             $cust_ver =  DB::table($this->tbl_cust_ver)
@@ -146,16 +147,13 @@ class CustomerAccountCtr extends Controller
                     return 'Verified';
                 }
                 else{
-                    return 'Verified Senior Citizen';
+                    return 'Verified SC/PWD';
                 }
             }  
             else{
                 return null;
             } 
-        }
-     
-    
-       
+        }      
     }
 
     public function getUserID(){
@@ -165,4 +163,11 @@ class CustomerAccountCtr extends Controller
         return $id;
     }
 
+    public function getUserIDWithPrefix(){
+        $id =  DB::table($this->tbl_cust_acc)
+                    ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+                    ->where('email', session()->get('email'))
+                    ->first();  
+        return $id->user_id;
+    }
 }

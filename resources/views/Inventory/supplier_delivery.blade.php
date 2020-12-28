@@ -99,10 +99,7 @@
                        </tbody>
                         
                         </table> 
-                        <img src="../../assets/arrow_ltr.png" class="ml-2">
-                        
-                        <button class="btn btn-success btn-sm mr-2" id="btn-mark-as-completed"> Mark as Completed</button> 
-                        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none"> 
+                       
                       </div>
 
                 </div>

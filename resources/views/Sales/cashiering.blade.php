@@ -95,7 +95,7 @@
                             </div>
                           </div> 
 
-                          <button class="btn btn-primary btn-sm btn-addToCart" id="btn-addToCart"> Add to cart</button> 
+                          <button style="font-size: 12px;" class="btn btn-primary btn-sm btn-addToCart" id="btn-addToCart"> Add [F9]</button> 
 
                         </div>
              
@@ -126,7 +126,8 @@
                               </div>
 
                               <div class="form-group ml-auto">
-                                <button class="btn btn-success btn-sm btn-processs" data-toggle="modal" data-target="#processModal" id="btn-process">Process</button> 
+                                <button class="btn btn-success btn-sm btn-processs" style="font-size: 12px;" 
+                                data-toggle="modal" data-target="#processModal" id="btn-process">Process [F2]</button> 
                               </div>
 
                           </div> 
@@ -153,7 +154,6 @@
                           <th>Price</th>
                           <th>Qty</th>
                           <th>Amount</th>
-                          <th>Date</th>
                           <th>Action</th>
                       </tr>
                   </thead>
@@ -173,7 +173,6 @@
                         $total += $sub_total;
                          ?> 
                         <td>₱ {{ number_format($sub_total, 2, '.', '') }}</td>
-                        <td>{{ $details['date'] }}</td>
                           <td>
                             <a class="btn btn-sm" id="void" product-code="{{ $product_code }}" data-toggle="modal" data-target="#voidModal"><u style="color: #303E9F;">Void</u></a>
                           </td>

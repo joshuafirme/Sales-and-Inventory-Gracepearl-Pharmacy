@@ -71,7 +71,7 @@
           <label class="label text-success">Proccess completed</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-          <button type="submit" class="btn btn-sm btn-success" id="btn-confirm-inv">Confirm</button>
+          <button type="submit" class="btn btn-sm btn-success" id="btn-confirm-inv">Print Reciept</button>
 
       </div>
     </form>

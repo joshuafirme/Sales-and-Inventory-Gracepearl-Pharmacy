@@ -16,10 +16,18 @@ $(document).ready(function(){
           type:"GET",
           success:function(response){
             console.log(response);
-            $("#count-all-notif-bell").text(response[3]);
-            $("#count-reorder-notif").text(response[2]);
-            $("#count-expired-notif").text(response[1]);
-            $("#count-expiry-notif").text(response[0]);
+            if(response[3] > 0){
+              $("#count-all-notif-bell").text(response[3]);
+            }
+            if(response[2] > 0){
+              $("#count-reorder-notif").text(response[2]);
+            }
+            if(response[1] > 0){
+              $("#count-expired-notif").text(response[1]);
+            }
+            if(response[0] > 0){
+              $("#count-expiry-notif").text(response[0]);
+            }             
           }
          });
         

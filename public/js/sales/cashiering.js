@@ -61,48 +61,52 @@ $(document).ready(function(){
           
   }); 
 
+  $('#cashiering_search').keydown(function(e){
+      var code = e.keyCode || e.which;
+      if(code == 120) { //Enter keycode
+          addProduct();
+      }
+    
+  });
 
-          // Add to Cart
-          $('#btn-addToCart').click(function(){   
 
-       //     var product_code_hidden  = $('#product_code').val();
-            var product_code  = $('#product_code').val();
-            var description  = $('#description').val();
-            var qty_order  = $('#qty_order').val();
-            var price  = $('#price').val();
-            var total  = $('#total').val();                         
+   // Add to Cart
+   $('#btn-addToCart').click(function(){   
 
-              $.ajax({
-                url:"/sales/cashiering/addToCart",
-                type:"GET",
-                data:{
-                    product_code:product_code, 
-                    description:description,
-                    qty_order:qty_order, 
-                    price:price,
-                    total:total
-                  },
+    addProduct();
+    });  
+    
+    function addProduct(){
+      var product_code  = $('#product_code').val();
+      var qty_order  = $('#qty_order').val();
+      var price  = $('#price').val();
+      var total  = $('#total').val();                         
 
-                success:function(){
-           
-                  $('#cashiering_search').val('');
-                  $('#product_code').val('');
-                  $('#description').val('');
-                  $('#qty').val('');
-                  $('#price').val('');
-                  $('#qty_order').val('');
-                  $('#total').val(''); 
+        $.ajax({
+          url:"/sales/cashiering/addToCart",
+          type:"GET",
+          data:{
+              product_code:product_code, 
+              qty_order:qty_order, 
+              price:price,
+              total:total
+            },
 
-                  $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+          success:function(){
+    
+          clear();
 
-                  computeTotalAmountDue();
-                  getCurrentTransNo();  
-                }
-              });     
-              setTimeout(function(){
-                $('#total-amount-due').val();
-              },2000);
-        }); 
+            $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+
+            computeTotalAmountDue();
+            getCurrentTransNo();  
+          }
+        });     
+        setTimeout(function(){
+          $('#total-amount-due').val();
+        },2000);
+    }
+
 
         computeTotalAmountDue();
 
@@ -149,7 +153,7 @@ $(document).ready(function(){
       });
               
         //get sales inv and pass to input
-        function getSalesInv(){
+        function getSalesInvoice(){
           $.ajax({
             url:"/sales/cashiering/getSalesInvNo",
             type:"GET",
@@ -191,8 +195,10 @@ $(document).ready(function(){
         
         //proccess items
         $('#btn-process').click(function(){
-    
-          getSalesInv();
+          if($('#total-amount-due').val() == 0){
+            $('#btn-confirm-inv').attr('disabled', true);
+          }
+          getSalesInvoice();
       
         });
 
@@ -241,49 +247,73 @@ $(document).ready(function(){
                     },
                     success:function(){
       
-                      setTimeout(function(){
-      
-                        $('.loader').css('display', 'none');
-                        $('.update-success-validation').css('display', 'inline');
-                        $('#btn-confirm-inv').text('Confirm');
-      
-                        $('#cashiering_search').val('');
-                        $('#product_code').val('');
-                        $('#description').val('');
-                        $('#qty').val('');
-                        $('#price').val('');
-                        $('#qty_order').val('');
-                        $('#total').val(''); 
-      
-                        $('#total-amount-due').val('');
-                        $('#change').val('');
-                        $('#tendered').val('');
-                        $('#senior-chk').prop('checked', false);
-                        $('#senior-name').css('display', 'none');
-                        $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
-      
-                       setTimeout(function(){
-                          $('.update-success-validation').fadeOut('slow')
-      
-                          setTimeout(function(){
-                            $('#processModal').modal('hide');
-                          },1000);
-      
-                        },500);
-      
-                      },500);
+                      initComponents();
+                      clear();
                      
                     }
                   });   
                 }
               }
-            });
-          
-           
+            });          
           }
-        
-
     });
+
+    function initComponents(){
+      setTimeout(function(){
+      
+        $('.loader').css('display', 'none');
+        $('.update-success-validation').css('display', 'inline');
+        $('#btn-confirm-inv').text('Print Reciept');
+
+        
+        $('#senior-chk').prop('checked', false);
+        $('#senior-name').css('display', 'none');
+       
+       setTimeout(function(){
+          $('.update-success-validation').fadeOut('slow')
+
+          setTimeout(function(){
+            $('#processModal').modal('hide');
+
+            //generate sales invoice in new tab 
+            window.open('/cashiering/reciept/print', '_blank'); 
+            //then forget cart session
+            setTimeout(function() {
+              forgetCart();
+               $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+
+            },3000);
+
+          },1000);
+
+        },500);
+
+      },500);
+    }
+
+    function forgetCart() {
+      $.ajax({
+        url:"/cashiering/forgetcart",
+        type:"GET",
+        success:function(){
+        }
+      }); 
+    }
+
+    function clear(){
+      $('#cashiering_search').val('');
+      $('#product_code').val('');
+      $('#description').val('');
+      $('#qty').val('');
+      $('#price').val('');
+      $('#qty_order').val('');
+      $('#total').val(''); 
+
+      $('#total-amount-due').val('');
+      $('#change').val('');
+      $('#tendered').val('');
+    }
+
       
       function getCurrentTransNo(){
         $.ajax({

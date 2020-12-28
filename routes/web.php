@@ -79,6 +79,8 @@ Route::get('/sales/cashiering/process', 'Sales\SalesCtr@process');
 Route::get('/sales/cashiering/getTransNo', 'Sales\SalesCtr@getCurrentTransacNo');
 Route::get('/sales/cashiering/getSalesInvNo', 'Sales\SalesCtr@getSalesInvNo');
 Route::get('/sales/cashiering/isInvoiceExist/{sales_inv_no}', 'Sales\SalesCtr@isInvoiceExist');
+Route::get('/cashiering/reciept/print', 'Sales\SalesCtr@pdf');
+Route::get('/cashiering/forgetcart', 'Sales\SalesCtr@forgetCart');
 
 // Sales report
 Route::get('/sales/salesreport', 'Sales\SalesReportCtr@index');

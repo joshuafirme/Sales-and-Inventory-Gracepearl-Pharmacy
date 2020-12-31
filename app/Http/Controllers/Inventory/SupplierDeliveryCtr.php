@@ -139,16 +139,16 @@ class SupplierDeliveryCtr extends Controller
 
      public function getDelivery()
      {
-        $product = DB::table($this->table_delivery)
-        ->select("tblsupplier_delivery.*", 
-        DB::raw('CONCAT('.$this->table_delivery.'._prefix, '.$this->table_delivery.'.delivery_num) 
-        AS del_num, description, supplierName, category_name, unit, qty_order,  DATE_FORMAT(tblsupplier_delivery.exp_date,"%d-%m-%Y") as exp_date, DATE_FORMAT(date_recieved,"%d-%m-%Y") as date_recieved'))
-        ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_delivery. '.product_code')
-        ->leftJoin($this->table_po,  $this->table_po.'.product_code', '=', $this->table_delivery. '.product_code')
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->orderBy($this->table_delivery.'.delivery_num', 'desc')
+        $product = DB::table($this->table_delivery.' AS D')
+        ->select("D.*", 
+        DB::raw('CONCAT(D._prefix, D.delivery_num) 
+        AS del_num, description, supplierName, category_name, unit, qty_order,  DATE_FORMAT(D.exp_date,"%d-%m-%Y") as exp_date, DATE_FORMAT(date_recieved,"%d-%m-%Y") as date_recieved'))
+        ->leftJoin($this->table_prod.' AS P',  DB::raw('CONCAT(P._prefix, P.id)'), '=', 'D.product_code')
+        ->leftJoin($this->table_po.' AS PO', 'PO.product_code', '=', 'D.product_code')
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->orderBy('D.delivery_num', 'desc')
         ->get();
 
         return $product;

@@ -54,9 +54,10 @@ class PaymentCtr extends Controller
             'currency' => 'PHP',
             'redirect' => [
                 'success' => route('gcashpayment'),
-                'failed' => route('gcashpayment')
+                'failed' => dd('failed')
             ]
         ]);
+        dd($source);
         return redirect($source->getRedirect()['checkout_url']);       
        }
 

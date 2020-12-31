@@ -25,6 +25,11 @@
                 <p id="id-number"></p>
             </div>
 
+            <div class="col-md-4">
+              <label class="label-small text-muted" >Account Status</label>
+              <p id="acc-status"></p>
+          </div>
+
             <div class="col-md-12 m-auto">
                 <img class="responsive" id="img-valid-id" 
                 style="border-style: dashed; border-color: #9E9E9E; background: #fff;">

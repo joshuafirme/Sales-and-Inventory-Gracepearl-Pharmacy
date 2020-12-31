@@ -236,8 +236,11 @@
           <script src="{{asset('js/sales/cashiering.js')}}"></script>
           <script src="{{asset('js/sales/sales_report.js')}}"></script>
 
-           <!-- sales -->
+           <!-- verify cutomer -->
            <script src="{{asset('js/verify_customer.js')}}"></script>
+           
+           <!-- manage order -->
+           <script src="{{asset('js/manage_online_order.js')}}"></script>
 
           <!-- inventory -->
           <script src="{{asset('js/inventory/stockadjustment.js')}}"></script>

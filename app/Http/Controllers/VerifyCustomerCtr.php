@@ -13,14 +13,14 @@ class VerifyCustomerCtr extends Controller
 
     public function index(){
 
-        $customer = $this->getCustomer();
+        $fvc = $this->forValidationCustomer();
 
         if(request()->ajax())
         {
            
-                return datatables()->of($customer)
-                ->addColumn('action', function($customer){
-                    $button = '<a class="btn btn-sm" id="btn-view-upload" customer-id='. $customer->user_id .' data-toggle="modal" data-target="#verifyCustomerModal">
+                return datatables()->of($fvc)
+                ->addColumn('action', function($fvc){
+                    $button = '<a class="btn btn-sm" id="btn-view-upload" customer-id='. $fvc->user_id .' data-toggle="modal" data-target="#verifyCustomerModal">
                     <i class="fas fa-eye"></i></a>';
     
                     return $button;
@@ -32,21 +32,63 @@ class VerifyCustomerCtr extends Controller
         return view('verifycustomer/verify_customer');
     }
 
-    public function getCustomer(){
+    public function displayVerifiedCustomer(){
+        $vc = $this->verifiedCustomer();
 
-        $verification_info = DB::table($this->tbl_cust_ver)
-        ->select($this->tbl_cust_ver.'.*', 'fullname', 'phone_no', 'email',DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+        if(request()->ajax())
+        {
+           
+                return datatables()->of($vc)
+                ->addColumn('action', function($vc){
+                    $button = '<a class="btn btn-sm" id="btn-view-upload" customer-id='. $vc->user_id .' data-toggle="modal" data-target="#verifyCustomerModal">
+                    <i class="fas fa-eye"></i></a>';
+    
+                    return $button;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+           
+        }
+    }
+
+    public function forValidationCustomer(){
+
+        $fvc = DB::table($this->tbl_cust_ver.' as CV')
+        ->select('CV.*', 'fullname', 'phone_no', 'email',DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
         ->leftJoin($this->tbl_cust_acc, 
-        DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id)'), '=', $this->tbl_cust_ver . '.user_id')
+        DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id)'), '=', 'CV.user_id')
+        ->where('status', 'For validation')
+        ->orderBy('created_at', 'asc')
+        ->get(); 
+
+        return $fvc;
+    }
+
+    public function countValidationCustomer(){
+
+        $fvc = $this->forValidationCustomer();
+
+        return $fvc->count();
+    }
+
+    public function verifiedCustomer(){
+
+        $verification_info = DB::table($this->tbl_cust_ver.' as CV')
+        ->select('CV.*', 'fullname', 'phone_no', 'email',DB::raw('CONCAT(CA._prefix, CA.id) as user_id'))
+        ->leftJoin($this->tbl_cust_acc.' as CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'CV.user_id')
+        ->where('status', 'Verified')
+        ->orWhere('status', 'Verified SC/PWD')
+        ->orderBy('created_at', 'asc')
         ->get(); 
 
         return $verification_info;
     }
 
+
     public function getVerificationInfo($cust_id){
 
         $verification_info = DB::table($this->tbl_cust_ver)
-        ->select($this->tbl_cust_ver.'.*', 'fullname', 'phone_no', 'email')
+        ->select($this->tbl_cust_ver.'.*', 'fullname', 'phone_no', 'email', 'status')
         ->leftJoin($this->tbl_cust_acc, 
         DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id)'), '=', $this->tbl_cust_ver . '.user_id')
         ->where('user_id', $cust_id)
@@ -80,6 +122,21 @@ class VerifyCustomerCtr extends Controller
         DB::table($this->tbl_cust_ver)
         ->where('user_id', $cust_id)
         ->delete();                
+    }
+
+
+    public function bulkVerified($user_ids){
+
+        $user_ids_arr = explode(", ",$user_ids);
+
+        for($i = 0; $i < count($user_ids_arr); $i++) {
+
+            DB::table($this->tbl_cust_ver)
+            ->where('user_id', $user_ids_arr[$i])
+            ->update([
+                'status' => 'Verified'
+                ]);
+        }
     }
     
 }

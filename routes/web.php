@@ -54,7 +54,7 @@ Route::post('/checkout/placeorder', 'Customer\CheckoutCtr@placeOrder');
 //Payment
 Route::get('/payment', 'Customer\PaymentCtr@index');
 Route::post('/payment/cod', 'Customer\PaymentCtr@cashOnDelivery');   //COD
-Route::get('/customer/gcashpayment', 'Customer\PaymentCtr@gcashPayment')->name('gcashpayment');
+Route::post('/customer/gcashpayment', 'Customer\PaymentCtr@gcashPayment')->name('gcashpayment');
 Route::get('/payment/afterpayment', 'Customer\PaymentCtr@afterPayment');
 //Stripe payment
 Route::get('stripe', 'Customer\StripePaymentCtr@stripe');
@@ -143,12 +143,20 @@ Route::delete('/maintenance/user/delete/{empID}', 'Maintenance\UserMaintenanceCt
 
 //MANAGE ONLINE ORDER-----------------------------------------------------------------------------------------------------
 Route::get('/manageorder', 'ManageOnlineOrderCtr@index');
+Route::get('/manageorder/pending', 'ManageOnlineOrderCtr@displayPendingOrder');
+Route::get('/manageorder/processing', 'ManageOnlineOrderCtr@displayProcessingOrder');
+Route::get('/manageorder/showitems/{order_no}', 'ManageOnlineOrderCtr@showOrderItems');
+Route::get('/manageorder/salesinvoice', 'ManageOnlineOrderCtr@generateSalesInvoice');
 
 //VERIFY CUSTOMER---------------------------------------------------------------------------------------------------------
 Route::get('/verifycustomer', 'VerifyCustomerCtr@index');
+Route::get('/verifycustomer/verifiedcustomer', 'VerifyCustomerCtr@displayVerifiedCustomer');
+Route::get('/verifycustomer/countforvalidation', 'VerifyCustomerCtr@countValidationCustomer');
 Route::get('/verifycustomer/getverificationinfo/{cust_id}', 'VerifyCustomerCtr@getVerificationInfo');
 Route::post('/verifycustomer/approve/{cust_id}', 'VerifyCustomerCtr@approve');
 Route::post('/verifycustomer/decline/{cust_id}', 'VerifyCustomerCtr@decline');
+Route::post('/verifycustomer/checkifverified/{cust_id}', 'VerifyCustomerCtr@checkIfVerified');
+Route::post('/verifycustomer/bulkverified/{user_ids}', 'VerifyCustomerCtr@bulkVerified');
 
 //INVENTORY---------------------------------------------------------------------------------------------------------------
 

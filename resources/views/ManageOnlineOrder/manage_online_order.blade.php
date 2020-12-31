@@ -45,7 +45,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" id="ready-tab" data-toggle="tab" href="#ready_tab" role="tab" aria-controls="contact" aria-selected="true">Ready to ship
+                  <a class="nav-link" id="packed-tab" data-toggle="tab" href="#packed_tab" role="tab" aria-controls="contact" aria-selected="true">Packed
                   </a>
                 </li>
 
@@ -67,9 +67,9 @@
               </ul>   
 
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade active show" id="pendingtab" role="tabpanel" aria-labelledby="pending-tab">
+                <div class="tab-pane fade active show" id="pending_tab" role="tabpanel" aria-labelledby="pending-tab">
 
-                        <table class="table responsive table-hover" id="pening-table" width="100%">                               
+                        <table class="table responsive table-hover" id="pending-table" width="100%">                               
                           <thead>
                             <tr>
 
@@ -77,8 +77,6 @@
                               <th>Customer Name</th>                                                           
                               <th>Phone No</th>        
                               <th>Email</th>
-                              <th>Total Products</th>
-                              <th>Total amount</th>
                               <th>Payment method</th>
                               <th>Date placed</th>
                               <th>Status</th>
@@ -87,39 +85,29 @@
                             </tr>
                           </thead>
                         </table>
-                        </div>
 
-                  <div class="tab-pane fade" id="deliveredtab" role="tabpanel" aria-labelledby="delivered-tab">
+                </div>
 
+                  <div class="tab-pane fade" id="processing_tab" role="tabpanel" aria-labelledby="processing-tab">
 
-                        <table class="table responsive  table-hover" id="supplier-delivery-table" width="100%">       
-                          <thead>
-                            <tr>
-                                <th><input type="checkbox" name="select_all" value="1" id="select-all"></th>
-                                <th>Delivery #</th>
-                                <th>Invoice #</th>
-                                <th>Product Code</th>     
-                                <th>Description</th>   
-                                <th>Supplier</th> 
-                                <th>Category</th> 
-                                <th>Unit</th>      
-                                <th>Qty Ordered</th>                              
-                                <th>Qty Delivered</th>   
-                                <th>Expiration Date</th>  
-                                <th>Date Recieved</th>
-                                <th>Remarks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                                              
-                       </tbody>
+                    <table class="table responsive table-hover" id="processing-table" width="100%">                               
+                      <thead>
+                        <tr>
+
+                          <th>Order #</th>
+                          <th>Customer Name</th>                                                           
+                          <th>Phone No</th>        
+                          <th>Email</th>
+                          <th>Payment method</th>
+                          <th>Date placed</th>
+                          <th>Status</th>
+                          <th>Action</th>
                         
-                        </table> 
-                        <img src="../../assets/arrow_ltr.png" class="ml-2">
-                        
-                        <button class="btn btn-success btn-sm mr-2" id="btn-mark-as-completed"> Mark as Completed</button> 
-                        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none"> 
-                      </div>
+                        </tr>
+                      </thead>
+                    </table>
+
+                  </div>
 
                 </div>
                     

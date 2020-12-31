@@ -286,7 +286,7 @@ class SalesCtr extends Controller
 
     public function pdf(){
 
-        $output = $this->convertProductDataToHTML();
+        $output = $this->salesInvoice();
     
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($output);
@@ -294,7 +294,7 @@ class SalesCtr extends Controller
         return $pdf->stream('Sales Invoice');
     }
 
-    public function convertProductDataToHTML(){
+    public function salesInvoice(){
 
         $output = '
         <style>

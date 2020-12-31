@@ -25,7 +25,7 @@
                     <div class="card-title m-4"><h4>Select Payment Method</h4></div>
                           <div class="card-body">
       
-                              <form method="GET" action="{{ action('Customer\PaymentCtr@gcashPayment') }}">
+                              <form method="POST" action="{{ action('Customer\PaymentCtr@gcashPayment') }}">
                                   {{ csrf_field() }}
                               <div class="card-payment-method">
                                   <button type="submit" class="btn btn-payment">

@@ -10,7 +10,7 @@ use App\GoogleAccount;
 use Illuminate\Http\Request;
 use Socialite;
 
-class CustomerLoginCtr extends Controller
+class GoogleLoginCtr extends Controller
 {
     private $tbl_emp = "tblemployee";
     private $tbl_cust_acc = "tblcustomer_account";
@@ -44,12 +44,12 @@ class CustomerLoginCtr extends Controller
 
         if($account->count() > 0)
         {
-            $this->putToSession($email, $name, $avatar);
+            $this->putToSession($email, $avatar);
             return redirect('/homepage')->send();
         }
         else
         {
-            $this->putToSession($email, $name, $avatar);
+            $this->putToSession($email, $avatar);
 
             $cust_acc = new CustomerAccount;
             $cust_acc->_prefix = 'CUST-'. date('yy').'-';
@@ -61,19 +61,13 @@ class CustomerLoginCtr extends Controller
         }
     }
 
-    public function putToSession($email, $name, $avatar){
+    public function putToSession($email, $avatar){
         session()->put('email', $email);
-        session()->put('name', $name);
         session()->put('avatar', $avatar);
         session()->put('is-customer-logged', 'yes');
     }
 
-    public function logout(){
-        session()->forget('email');
-        session()->forget('name');
-        session()->forget('avatar');
-        session()->put('is-customer-logged', 'no');
-    }
+   
 
     public function isLoggedIn(){
         if(session()->get('is-customer-logged') == 'yes'){

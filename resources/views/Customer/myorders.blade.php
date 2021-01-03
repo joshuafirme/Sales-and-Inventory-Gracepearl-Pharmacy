@@ -30,7 +30,7 @@
             ->get();   
             ?>  
             <div class="row">
-                <h5 class="mb-0 ml-3">Order <span>{{ $o->pr_order_no }}</span></h5>
+                <h5 class="mb-0 ml-3">Order # <a href="" style="color: #4472C4;">{{ $o->pr_order_no }}</a></h5>
                 <?php 
                 $order_status = DB::table('tblonline_order')
                 ->where('order_no', $o->order_no)

@@ -54,6 +54,12 @@ body{
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.form .title{
+	font-size: 18px;
+	color: #3B3B3B;
+	font-style: bold;
+}
+
 .form .input-div{
 	margin-left: 20px;
 }
@@ -175,9 +181,6 @@ p{
 	transition: .3s;
 }
 
-a:hover{
-	color: #38d39f;
-}
 
 .btn{
 	display: block;
@@ -267,4 +270,10 @@ a:hover{
 	.login-content{
 		justify-content: center;
 	}
+}
+
+
+.signup-link{
+	text-align: center;
+	
 }

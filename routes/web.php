@@ -22,11 +22,18 @@ Route::get('/admin-login/logout', 'AdminLoginCtr@logout');
 
 //CUSTOMER---------------------------------------------------------------------------------------------------------------
 //login
-Route::get('/customer-login', 'Customer\CustomerLoginCtr@index');
-Route::get('/customer-login/google', 'Customer\CustomerLoginCtr@redirectToGoogle');
-Route::get('/customer-login/google/callback', 'Customer\CustomerLoginCtr@handleGoogleCallback');
-Route::get('/customer/logout', 'Customer\CustomerLoginCtr@logout');
-Route::get('/customer/islogged', 'Customer\CustomerLoginCtr@isLoggedIn');
+Route::get('/customer-login', 'Customer\LoginCtr@index');
+Route::post('customer-login/login', 'Customer\LoginCtr@login');
+Route::get('/customer/logout', 'Customer\LoginCtr@logout');
+//google login
+Route::get('/customer-login/google', 'Customer\GoogleLoginCtr@redirectToGoogle');
+Route::get('/customer-login/google/callback', 'Customer\GoogleLoginCtr@handleGoogleCallback');
+Route::get('/customer/islogged', 'Customer\GoogleLoginCtr@isLoggedIn');
+//sing up
+Route::get('/signup', 'Customer\SignUpCtr@index');
+Route::post('/signup/signup', 'Customer\SignUpCtr@signUp');
+Route::get('/signup/isexists', 'Customer\SignUpCtr@isPhoneNoExists');
+
 //customer account
 Route::get('/account', 'Customer\CustomerAccountCtr@index');
 Route::get('/account/getaccountinfo', 'Customer\CustomerAccountCtr@getAccountInfo');

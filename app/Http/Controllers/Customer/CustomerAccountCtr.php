@@ -27,9 +27,22 @@ class CustomerAccountCtr extends Controller
         ]);
     }
 
-    public function getAccountInfo(){
+    public function getAccountInfo()
+    {
+        $session_phone_no = session()->get('phone_no');
+        $session_email = session()->get('email');
 
-        $acc_info = DB::table($this->tbl_cust_acc)->where('email', session()->get('email'))->get(); 
+        if($session_phone_no){
+            $acc_info = DB::table($this->tbl_cust_acc)
+                    ->where('phone_no', session()->get('phone_no'))
+                    ->get(); 
+        }
+        else{
+            $acc_info = DB::table($this->tbl_cust_acc)
+            ->where('email', $session_email)
+            ->get(); 
+        }
+       
 
         return $acc_info;
     }
@@ -48,8 +61,9 @@ class CustomerAccountCtr extends Controller
         return $ship_info;
     }
 
-    public function updateAccount(){
-
+    public function updateAccount()
+    {
+        $user_id = $this->getUserID();
         $fullname = Input::input('fullname');
         $email = Input::input('email');
         $phone_no = Input::input('phone_no');
@@ -59,7 +73,7 @@ class CustomerAccountCtr extends Controller
         $brgy = Input::input('brgy');
         $notes = Input::input('notes');
 
-        CustomerAccount::where('email', $email)
+        CustomerAccount::where('id', $user_id)
         ->update([
             'fullname' => $fullname,
             'email' => $email,
@@ -79,7 +93,7 @@ class CustomerAccountCtr extends Controller
         
         if($shipping_add->count() > 0){
             DB::table($this->tbl_ship_add)
-            ->where('user_id', $user_id)
+            ->where('user_id', $user_id_prefix)
             ->update([
                 'flr_bldg_blk' => $flr_bldg_blk,
                 'municipality' => $municipality,
@@ -157,17 +171,42 @@ class CustomerAccountCtr extends Controller
     }
 
     public function getUserID(){
-        $id =  DB::table($this->tbl_cust_acc)
-                    ->where('email', session()->get('email'))
-                    ->value('id');  
-        return $id;
+        $session_phone_no = session()->get('phone_no');
+        $session_email = session()->get('email');
+
+        if($session_phone_no){
+            $id =  DB::table($this->tbl_cust_acc)
+            ->where('phone_no', $session_phone_no)
+            ->value('id');  
+            return $id;
+        }
+        else{
+            $id =  DB::table($this->tbl_cust_acc)
+            ->where('email', $session_email)
+            ->value('id');  
+            return $id;
+        }
+       
     }
 
-    public function getUserIDWithPrefix(){
-        $id =  DB::table($this->tbl_cust_acc)
-                    ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-                    ->where('email', session()->get('email'))
-                    ->first();  
-        return $id->user_id;
+    public function getUserIDWithPrefix()
+    {
+        $session_phone_no = session()->get('phone_no');
+        $session_email = session()->get('email');
+
+        if($session_phone_no){
+            $id =  DB::table($this->tbl_cust_acc)
+            ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+            ->where('phone_no', $session_phone_no)    
+            ->first();  
+            return $id->user_id;
+        }
+        else{
+          $id =  DB::table($this->tbl_cust_acc)
+          ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+          ->where('email', $session_email)    
+          ->first();  
+          return $id->user_id;
+        }
     }
 }

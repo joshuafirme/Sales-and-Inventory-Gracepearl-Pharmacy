@@ -93,7 +93,8 @@ $(document).ready(function(){
          }
       }
    });
-    }
+
+}
 
 //show
 $(document).on('click', '#btn-add-delivery', function(){

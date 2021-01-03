@@ -53,45 +53,63 @@ $(document).ready(function(){
         var brgy = $('#brgy').val();
         var notes = $('#notes').val();
 
-        if(!fullname){
-            alert('Please enter your fullname');
-        }
-        else{
-            $.ajax({
-                url:"/account/update",
-                type:"POST",
-                data: {
-                    fullname:fullname,
-                    email:email,
-                    phone_no:phone_no,
-                    flr_bldg_blk:flr_bldg_blk,
-                    municipality:municipality,
-                    brgy:brgy,
-                    notes:notes
-                },
-                beforeSend:function(){
-                    $('#btn-update-account').text('Saving...');
-                    $('.loader').css('display', 'inline');
-                  },
-                success:function(){
-               
+        var is_valid = validateInputs(
+          fullname,
+          phone_no,
+          brgy,
+          flr_bldg_blk
+        );
+
+        if(is_valid == true){
+          $.ajax({
+            url:"/account/update",
+            type:"POST",
+            data: {
+                fullname:fullname,
+                email:email,
+                phone_no:phone_no,
+                flr_bldg_blk:flr_bldg_blk,
+                municipality:municipality,
+                brgy:brgy,
+                notes:notes
+            },
+            beforeSend:function(){
+                $('#btn-update-account').text('Saving...');
+                $('.loader').css('display', 'inline');
+              },
+            success:function(){
+              
+              $( ".div-my-account" ).load( "account .div-my-account" );
+              isVerified();
+              
+                setTimeout(function(){
+                    $('.update-success-validation').css('display', 'inline');
+                    $('#btn-update-account').text('Save');
+                    $('.loader').css('display', 'none');
                     setTimeout(function(){
-                        $('.update-success-validation').css('display', 'inline');
-                        $('#btn-update-account').text('Save');
-                        $('.loader').css('display', 'none');
-                        setTimeout(function(){
-                          $( ".div-my-account" ).load( "account .div-my-account" );
-                          $('.update-success-validation').fadeOut('slow')
-                         
-                        },2000);
-                      
-                      },1000);
-                }
                  
-               });
+                      $('.update-success-validation').fadeOut('slow')
+                     
+                    },2000);
+                  
+                  },1000);
+            }
+             
+           });
         }
        
     });
+
+    function validateInputs(fullname, phone_no, brgy, flr_bldg_blk) {
+
+      if(fullname == '' || phone_no == '' || brgy == '' || flr_bldg_blk == ''){
+          alert('pls input all of your credentials!');
+      }
+      else{
+        return true;
+      }
+       
+  }
 
 
     function readURL(input) {

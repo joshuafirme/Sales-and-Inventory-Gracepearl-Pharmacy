@@ -15,6 +15,7 @@ class ManageOnlineOrderCtr extends Controller
     private $tbl_unit = "tblunit";
     private $tbl_ol_order = "tblonline_order";
     private $tbl_cust_acc = "tblcustomer_account";
+    private $tbl_ship_add = "tblshipping_add";
 
     public function index(){
        // session()->forget('order-total-amount');
@@ -78,7 +79,7 @@ class ManageOnlineOrderCtr extends Controller
         ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, O.email'))
         ->leftJoin($this->tbl_cust_acc.' AS CA', 'CA.email', '=', 'O.email')
         ->where('status', 'Processing')
-        ->orderBy('O.order_no', 'desc')
+        ->orderBy('O.id', 'desc')
         ->get();   
 
         return $orders->unique('order_no');    
@@ -309,6 +310,23 @@ class ManageOnlineOrderCtr extends Controller
 </div>';
     
         return $output;
+    }
+
+
+    public function getAccountInfo($user_id){
+
+        $acc_info = DB::table($this->tbl_cust_acc)
+                    ->where('email', session()->get('email'))->get(); 
+
+        return $acc_info;
+    }
+
+    public function getShippingInfo($user_id){
+        
+        $ship_info = DB::table($this->tbl_ship_add)
+        ->where('user_id', $user_id)->get(); 
+
+        return $ship_info;
     }
 
     public function getDate(){

@@ -14,61 +14,115 @@
         </div>
         <div class="modal-body">
 
-            <div class="container-fluid">
                 
                 <div class="row">
-               
-                    <table class="table responsive table-hover mt-4" id="cust-order-table">                               
-                      <thead>
-                        <tr>
-                            <th>Product Code</th>
-                            <th>Description</th>  
-                            <th>Category</th>           
-                            <th>Unit</th>     
-                            <th>Qty</th>      
-                            <th>Price</th>    
-                            <th>Amount</th>  
-                         
-                        </tr>
-                      </thead>
-        
-                        <tbody>
-                            @if(session('order'))
-                            @foreach(session('order') as $product_code => $data)
-                            <tr>
-                        
-                                <td>{{ $product_code }}</td>
-                                <td>{{ $data['description'] }}</td>
-                                <td>{{ $data['category'] }}</td>
-                                <td>{{ $data['unit'] }}</td>
-                                <td>{{ $data['qty'] }}</td>
-                                <td>₱ {{ number_format($data['unit_price'], 2, '.', '') }}</td>
-                                <td>₱ {{ number_format($data['amount'], 2, '.', '') }}</td>
-                                
-                            </tr>  
-                            @endforeach
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>Total:</td>
-                                <td>
-                                  <b>₱ {{ number_format(session('order-total-amount')) }}</b>
-                                </td>   
-                             </tr> 
-                            @endif
-                        </tbody>
-                        
-                    </thead>
+
+                    <div class="container-fluid">
+
+                        <table class="table responsive table-striped table-hover mt-2" id="cust-order-table">                               
+                            <thead>
+                              <tr>
+                                  <th>Product Code</th>
+                                  <th>Description</th>  
+                                  <th>Category</th>           
+                                  <th>Unit</th>     
+                                  <th>Qty</th>      
+                                  <th>Price</th>    
+                                  <th>Amount</th>  
+                               
+                              </tr>
+                            </thead>
+              
+                              <tbody>
+                                  @if(session('order'))
+                                  @foreach(session('order') as $product_code => $data)
+                                  <tr>
+                              
+                                      <td>{{ $product_code }}</td>
+                                      <td>{{ $data['description'] }}</td>
+                                      <td>{{ $data['category'] }}</td>
+                                      <td>{{ $data['unit'] }}</td>
+                                      <td>{{ $data['qty'] }}</td>
+                                      <td>₱ {{ number_format($data['unit_price'], 2, '.', '') }}</td>
+                                      <td>₱ {{ number_format($data['amount'], 2, '.', '') }}</td>
+                                      
+                                  </tr>  
+                                  @endforeach
+                                  <tr>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td>Total:</td>
+                                      <td>
+                                        <b>₱ {{ number_format(session('order-total-amount')) }}</b>
+                                      </td>   
+                                   </tr> 
+                                  @endif
+                              </tbody>
+                              
+                          </thead>
+                          
+                          </table>
+
+                    </div>
+
                     
-                    </table>
-                 
+                    <div class="col-md-12 mb-2"><hr></div>
+
+                    <div class="col-md-12">
+                        <h5>Customer Information</h5>
+                    </div>
+    
+                    <div class="col-md-4">
+                        <label class="label-small" >Full Name</label>
+                        <p id="fullname">Joshua Firme</p>
+                    </div>
+        
+                    <div class="col-md-4">
+                        <label class="label-small">Email Address</label>
+                        <p  id="email">joshuafirme1@gmail.com</p>
+                    </div>
+        
+                    <div class="col-md-4">
+                        <label class="label-small">Phone Number</label>
+                        <p  id="Phone number">09987878788</p>
+                    </div> 
+        
+                    <div class="col-md-12 mb-2"><hr></div>
+    
+    
+        
+                    <div class="col-md-12 mb-2">
+                        <h5>Shipping Address</h5>
+                    </div>
+    
+                    <div class="col-md-6 mb-3">
+                        <label class="label-small">House/Unit/Flr #, Bldg Name, Blk or Lot #</label>
+                        <input type="text" class="form-control" id="flr-bldg-blk">
+                    </div> 
+        
+                    <div class="col-md-6">
+                        <label class="label-small">Municipality</label>
+                        <select class="form-control" name="municipality" id="municipality">
+                          <option>Nasugbu</option>
+                          <option>Tuy</option>
+                        </select>
+                    </div> 
+        
+                    <div class="col-md-6">
+                        <label class="label-small">Barangay</label>
+                        <input type="text" class="form-control" id="brgy">
+                    </div> 
+        
+                    <div class="col-md-6">
+                        <label class="label-small">Notes</label>
+                        <input type="text" class="form-control" id="notes">
+                    </div> 
           
                   </div>
 
-            </div>
       
         </div>
   

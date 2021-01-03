@@ -83,6 +83,20 @@ $(document).ready(function(){
          });
     }
 
+    getCustomerName();
+
+    function getCustomerName(){
+     
+      $.ajax({
+        url:"/account/getaccountinfo",
+        type:"GET",
+        success:function(data){
+          $('#customer-name').text(data[0].fullname);
+        }
+         
+       });
+    }
+
     if($('ul li').length > 3){
 
       $('ul li').length - 10;

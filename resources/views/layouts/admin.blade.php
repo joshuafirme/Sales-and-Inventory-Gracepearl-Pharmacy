@@ -196,6 +196,7 @@
             <section class="content">
                 <div class="container-fluid">               
                     @yield('content')
+                    
           </div>
           <script>
           function logout(){
@@ -264,5 +265,7 @@
           <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
 
       </body>
+
+      
       
       </html>

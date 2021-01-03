@@ -41,12 +41,13 @@ class CheckoutCtr extends Controller
 
       public function getCartItems()
       {
+        $user_id_prefix = $this->getUserIDWithPrefix();
         $cart = DB::table($this->tbl_cart)
           ->select('tblcart.*','product_code', 'description', 'tblcart.qty', 'amount', 'unit', 'category_name', 'image')
           ->leftJoin($this->tbl_prod,  DB::raw('CONCAT('.$this->tbl_prod.'._prefix, '.$this->tbl_prod.'.id)'), '=', $this->tbl_cart . '.product_code')
           ->leftJoin($this->tbl_cat, $this->tbl_cat . '.id', '=', $this->tbl_prod . '.categoryID')
           ->leftJoin($this->tbl_unit, $this->tbl_unit . '.id', '=', $this->tbl_prod . '.unitID')
-          ->where('customerID', session()->get('email'))
+          ->where('customerID', $user_id_prefix)
           ->orderBy('tblcart.id')
           ->get();
 
@@ -55,8 +56,9 @@ class CheckoutCtr extends Controller
 
       public function getSubtotalAmount()
       {
+        $user_id_prefix = $this->getUserIDWithPrefix();
         $amount = DB::table($this->tbl_cart)
-          ->where('customerID', '=', session()->get('email'))
+          ->where('customerID', '=', $user_id_prefix)
           ->sum('amount');  
 
         session()->put('checkout-total', $amount);
@@ -91,8 +93,9 @@ class CheckoutCtr extends Controller
 
       public function getCheckoutItems()
       {
+        $user_id_prefix = $this->getUserIDWithPrefix();
         $checkout_items = DB::table($this->tbl_cart)
-        ->where('customerID', session()->get('email'))
+        ->where('customerID', $user_id_prefix)
         ->get();
         return $checkout_items;
       }
@@ -107,6 +110,14 @@ class CheckoutCtr extends Controller
         ->max('order_no');
         $inc = ++ $order_no;
         return $inc;
+    }
+
+    public function getUserIDWithPrefix(){
+      $id =  DB::table($this->tbl_cust_acc)
+                  ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+                  ->where('phone_no', session()->get('phone_email'))
+                  ->first();  
+      return $id->user_id;
     }
 
 }

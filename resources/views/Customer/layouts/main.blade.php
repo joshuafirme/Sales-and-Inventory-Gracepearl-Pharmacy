@@ -58,8 +58,13 @@
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
                                 <a href="" id="login-url" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown">
-                                    <img  class="google-avatar" id="user-profile" src="{{ session()->get('avatar')}}" alt="avatar"> 
-                                    <span>{{ session()->get('name')}}</span> <i style="font-size: .8em;" class="fas fa-caret-down"></i></a>
+                                    @if(session()->get('avatar'))
+                                    <img  class="google-avatar" id="user-profile" src="{{ session()->get('avatar') }}" alt="avatar">
+                                    @else
+                                    <img  class="google-avatar" id="user-profile" src="{{ asset('assets/male_user_50px.png') }}" alt="avatar">
+                                    @endif
+                                    <span id="customer-name"> </span> <i style="font-size: .8em;" class="fas fa-caret-down"></i>
+                                </a>
                                 <div class="dropdown-menu dropdown-menu-right nav-link-menu" id="dropdown-items">
                                     <ul class="nav-list">
                                         <li><a href="{{ url('/account') }}" class="dropdown-item"><i class="fas fa-user"></i> My Account</a></li>

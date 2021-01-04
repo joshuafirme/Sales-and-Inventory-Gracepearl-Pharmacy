@@ -13,7 +13,7 @@
             <div class="ml-auto">
 
                 <div class="input-group">
-                    <input class="form-control border-secondary py-2" type="search" id="search-product" placeholder="Search...">
+                    <input class="form-control border-secondary py-2" type="search" id="search-product" placeholder="Search Product...">
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button">
                             <i class="fa fa-search"></i>
@@ -36,12 +36,37 @@
                     <h5>Categories</h5>
 
                     <div class="text-muted small text-uppercase mb-3">
-                      <p class="mb-2"><a href="#!" class="card-link-secondary">Milk</a></p>
-                      <p class="mb-2"><a href="#!" class="card-link-secondary">Branded</a></p>
-                      <p class="mb-2"><a href="#!" class="card-link-secondary">Generic</a></p>
-                      <p class="mb-2"><a href="#!" class="card-link-secondary">Vitamins</a></p>
-                      <p class="mb-2"><a href="#!" class="card-link-secondary">Galenical</a></p>
-                      <p class="mb-2"><a href="#!" class="card-link-secondary">Cosmetic</a></p>
+
+                         <div class="form-check col-md-12 mt-2">
+                            <input type="checkbox" class="form-check-input" id="chk-pcategory" name="chk-category[]" value="Milk">
+                            <label class="form-check-label">Milk</label>
+                         </div>
+
+                         <div class="form-check col-md-12 mt-2">
+                            <input type="checkbox" class="form-check-input" id="chk-category" name="chk-category[]" value="Branded">
+                            <label class="form-check-label">Branded</label>
+                         </div>
+
+                         <div class="form-check col-md-12 mt-2">
+                            <input type="checkbox" class="form-check-input" id="chk-category" name="chk-category[]" value="Generic">
+                            <label class="form-check-label">Generic</label>
+                         </div>
+
+                         <div class="form-check col-md-12 mt-2">
+                            <input type="checkbox" class="form-check-input" id="chk-category" name="chk-category[]" value="Vitamins">
+                            <label class="form-check-label">Vitamins</label>
+                         </div>
+
+                         <div class="form-check col-md-12 mt-2">
+                            <input type="checkbox" class="form-check-input" id="chk-category" name="chk-category[]" value="Galenical">
+                            <label class="form-check-label">Galenical</label>
+                         </div>
+
+                         <div class="form-check col-md-12 mt-2">
+                            <input type="checkbox" class="form-check-input" id="chk-category" name="chk-category[]" value="Cosmetic">
+                            <label class="form-check-label">Cosmetic</label>
+                         </div>
+                
                     </div>
                 </div>
 
@@ -57,51 +82,23 @@
 
           </div>
 
-          <section class="cards">
-            @foreach ($products as $data)  
-            <div class="card-product">
-                <a class="card__image-container div-product-details" href="{{ url('productdetails/'. $data->product_code) }}">
-                    @if(!$data->image)
-                    <img class="img-fluid w-100" src="../assets/noimage.png">
-                    @else
-                    <img  src="../../storage/{{$data->image}}" class="img-fluid w-100" alt="...">
-                    @endif
-                </a>
-                <div class="line ml-2 mr-2 mt-2"></div>
-                <div class="card__content">
-                    <p class="card__description">
-                        @if(strlen($data->description) > 27)
-                        {{ substr_replace($data->description,"...",27) }}
-                        @else
-                          {{ $data->description }}
-                        @endif
-                    </p>
-                    <p class="card__unit text-secondary">
-                       Unit type: {{ $data->unit }}
-                    </p>
-                    <div class="card__info">
-                        <p class="mt-3 text-success">₱{{ number_format($data->selling_price) }}</p>
-                        <button class="btn btn-sm card__btn-add ml-auto" product-code={{ $data->product_code }} id="btn-add-to-cart">Add to cart</button><br>
-                        
-                    </div>
-                  
-                </div>	
-            </div>
-    
-            @endforeach  
-               
-        </section>
+          <section class="cards" id="homepage-cards">
+           <!-- load HTML and data here via ajax -->    
+           
+          </section>
+          <div class="card-product">
+
+            <button class="btn btn-sm btn-success m-auto" id="btn-viewmore"
+             style="border-radius: 20px; width:110px;">View more</button>
+        
+          </div>
   </main>
+  
  
 
     </div>
  
 
-</div>
-<div class="row">
-    <div class="mt-5 ml-auto" style="margin-right: 292px;">
-        {{ $products->links() }}
-    </div>
 </div>
    
 

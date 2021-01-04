@@ -17,7 +17,9 @@ class HomePageCtr extends Controller
     private $tbl_cart = "tblcart";
 
     public function index(){
-
+     // $str = "Hello, world, beautiful, day.";
+    //  $cat_arr = explode(', ',$str);
+    //  dd($cat_imp = implode('", "', $cat_arr));
         return view('/customer/homepage', 
         [
           'products' => $this->getAllProduct(),
@@ -26,18 +28,74 @@ class HomePageCtr extends Controller
       }
 
     
-
-    public function getAllProduct(){
-      $product = DB::table($this->table_prod)
-      ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS product_code, unit, category_name, supplierName'))
-      ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-      ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-      ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-      ->whereRaw('exp_date >= CURDATE()')
-      ->paginate(20);
+    public function getAllProduct()
+    {
+      $limit = Input::input('limit');
+      if($limit){
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereRaw('exp_date >= CURDATE()')
+        ->limit($limit)
+        ->get();
+      }
+      else{
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+          ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+          ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereRaw('exp_date >= CURDATE()')
+        ->limit(8)
+        ->get();
+      }
+     
 
       return $product;      
     }  
+
+    public function searchProduct($search_key)
+    {
+        $categories = Input::input('categories');
+        $limit = Input::input('limit');
+        $cat_arr = explode(', ',$categories);
+        $cat_imp = implode('", "', $cat_arr);
+
+        if($search_key){
+          $product = DB::table($this->table_prod.' AS P')
+          ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
+          ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+          ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+          ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+         ->whereRaw('exp_date >= CURDATE()')
+          ->where('description', 'LIKE', '%'.$search_key.'%')
+          ->whereRaw('C.category_name IN ("'.$cat_imp.'")')
+          ->limit($limit)
+          ->get();
+        }
+        else{
+          $product = DB::table($this->table_prod.' AS P')
+          ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
+          ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+          ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+          ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+          ->whereRaw('exp_date >= CURDATE()')
+          ->whereRaw('C.category_name IN ("'.$cat_imp.'")')
+          ->limit($limit)
+          ->get();
+        }
+
+       
+
+        return $product;         
+    } 
+    
+    public function filterProduct()
+    {
+     
+    } 
     
     public function getMaxPrice(){
       $price = DB::table($this->table_prod)

@@ -28,7 +28,7 @@
             </div>
 
             <div class="row mt-1">
-            <img src="../../assets/male_user_50px.png" style=" display: block;
+            <img src="{{asset('assets/male_user_50px.png')}}" style=" display: block;
             margin-left: auto;
             margin-right: auto;">
             </div>

@@ -44,6 +44,8 @@ Route::get('/account/checkifverified', 'Customer\CustomerAccountCtr@checkIfVerif
 //homepage
 Route::get('/homepage', 'Customer\HomePageCtr@index');
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
+Route::get('/homepage/allproduct', 'Customer\HomePageCtr@getAllProduct');
+Route::get('/homepage/searchproduct/{search_key}', 'Customer\HomePageCtr@searchProduct');
 //product detail
 Route::get('/productdetails', 'Customer\ProductDetailCtr@index');
 Route::get('/productdetails/{product_code}', 'Customer\ProductDetailCtr@getProductDetails');

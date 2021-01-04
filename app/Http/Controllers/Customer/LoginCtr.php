@@ -67,6 +67,7 @@ class LoginCtr extends Controller
 
     public function putToSession($phone_email){
         session()->put('phone_no', $phone_email);
+        session()->put('avatar', '');
         session()->put('is-customer-logged', 'yes');
     }
 

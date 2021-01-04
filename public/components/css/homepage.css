@@ -24,6 +24,7 @@ main {
 	display: grid;
 	grid-template-columns: repeat(16, minmax(auto,55px));
 	grid-gap: 15px;
+	max-height: 200px;
 }
 
 .card-product {

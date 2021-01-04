@@ -16,6 +16,7 @@ class CheckoutCtr extends Controller
     private $tbl_suplr = "tblsupplier";
     private $tbl_unit = "tblunit";
     private $tbl_ol_order = "tblonline_order";
+    private $tbl_cust_acc = "tblcustomer_account";
 
     public function index(){
         $this->isLoggedIn();
@@ -56,9 +57,12 @@ class CheckoutCtr extends Controller
 
       public function getSubtotalAmount()
       {
-        $user_id_prefix = $this->getUserIDWithPrefix();
-        $amount = DB::table($this->tbl_cart)
-          ->where('customerID', '=', $user_id_prefix)
+        $user_id = $this->getUserIDWithPrefix();
+        DB::table($this->tbl_ol_order)
+        ->where([
+            ['email',  $user_id],
+            ['order_no',  $this->getOrderNo() -1 ]
+        ])
           ->sum('amount');  
 
         session()->put('checkout-total', $amount);
@@ -113,11 +117,20 @@ class CheckoutCtr extends Controller
     }
 
     public function getUserIDWithPrefix(){
+      if(session()->get('phone_no')){
+        $id =  DB::table($this->tbl_cust_acc)
+        ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+        ->where('phone_no', session()->get('phone_no'))    
+        ->first();  
+        return $id->user_id;
+    }
+    else{
       $id =  DB::table($this->tbl_cust_acc)
-                  ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-                  ->where('phone_no', session()->get('phone_email'))
-                  ->first();  
+      ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+      ->where('email', session()->get('email'))    
+      ->first();  
       return $id->user_id;
+     }
     }
 
 }

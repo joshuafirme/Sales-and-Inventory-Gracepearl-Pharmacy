@@ -15,6 +15,7 @@ class PaymentCtr extends Controller
     private $tbl_prod = "tblproduct";
     private $tbl_cart = "tblcart";
     private $tbl_ol_order = "tblonline_order";
+    private $tbl_cust_acc = "tblcustomer_account";
 
     public function index()
     {
@@ -28,16 +29,16 @@ class PaymentCtr extends Controller
     }
 
     public function cashOnDelivery(){
+        $user_id = $this->getUserIDWithPrefix();
         DB::table($this->tbl_ol_order)
         ->where([
-            ['email',  session()->get('email')],
+            ['email',  $user_id],
             ['order_no',  $this->getOrderNo() -1 ]
         ])
         ->update([
             'payment_method' => 'COD',
             'status' => 'Processing'
-        ]); 
-        session()->get('checkout-total');    
+        ]);   
     }
 
     public function getOrderNo(){
@@ -67,4 +68,22 @@ class PaymentCtr extends Controller
            return redirect()->to('/customer-login')->send();
         }
     }
+
+    public function getUserIDWithPrefix(){
+        if(session()->get('phone_no')){
+          $id =  DB::table($this->tbl_cust_acc)
+          ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+          ->where('phone_no', session()->get('phone_no'))    
+          ->first();  
+          return $id->user_id;
+      }
+      else{
+        $id =  DB::table($this->tbl_cust_acc)
+        ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+        ->where('email', session()->get('email'))    
+        ->first();  
+        return $id->user_id;
+       }
+      }
+
 }

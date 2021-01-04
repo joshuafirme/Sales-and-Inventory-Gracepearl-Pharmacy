@@ -64,7 +64,7 @@ class ManageOnlineOrderCtr extends Controller
         $orders = DB::table($this->tbl_ol_order.' AS O')
         ->orderBy('created_at', 'asc')
         ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, O.email'))
-        ->leftJoin($this->tbl_cust_acc.' AS CA', 'CA.email', '=', 'O.email')
+        ->leftJoin($this->tbl_cust_acc.' AS CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'O.email')
         ->where('status', 'Payment pending')
         ->orderBy('O.order_no', 'desc')
         ->get();   
@@ -77,7 +77,7 @@ class ManageOnlineOrderCtr extends Controller
         $orders = DB::table($this->tbl_ol_order.' as O')
         ->orderBy('created_at', 'asc')
         ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, O.email'))
-        ->leftJoin($this->tbl_cust_acc.' AS CA', 'CA.email', '=', 'O.email')
+        ->leftJoin($this->tbl_cust_acc.' AS CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'O.email')
         ->where('status', 'Processing')
         ->orderBy('O.id', 'desc')
         ->get();   

@@ -15,6 +15,7 @@ class MyOrdersCtr extends Controller
     private $tbl_cat = "tblcategory";
     private $tbl_unit = "tblunit";
     private $tbl_ol_order = "tblonline_order";
+    private $tbl_cust_acc = "tblcustomer_account";
 
     public function index()
     {
@@ -23,7 +24,6 @@ class MyOrdersCtr extends Controller
         return view('customer/myorders',[
             'orders' => $this->getMyOrders(),
             'order_no' => $this->orderNo()
-          //  'placedOn' => $this->placedOn()
         ]);
     }
 
@@ -40,9 +40,10 @@ class MyOrdersCtr extends Controller
       }
 
     public function orderNo(){
+      $user_id = $this->getUserIDWithPrefix();
         $order_no = DB::table($this->tbl_ol_order)
         ->select(DB::raw('CONCAT('.$this->tbl_ol_order.'._prefix, '.$this->tbl_ol_order.'.order_no) AS pr_order_no'), 'order_no')
-        ->where('email', session()->get('email'))
+        ->where('email', $user_id)
         ->distinct('order_no')
         ->orderBy('order_no', 'desc')
         ->get();
@@ -50,23 +51,30 @@ class MyOrdersCtr extends Controller
       return $order_no;
     }
 
-    public function placedOn(){
-        $q = DB::table($this->tbl_ol_order)
-        ->select('created_at')
-        ->distinct('order_no')
-        ->orderBy('order_no', 'desc')
-        ->get();
-        dd($q);
-       return $q;
-    
 
- 
-  }
 
     public function isLoggedIn(){
         if(session()->get('is-customer-logged') !== 'yes'){
    
            return redirect()->to('/customer-login')->send();
         }
+    }
+
+
+    public function getUserIDWithPrefix(){
+      if(session()->get('phone_no')){
+        $id =  DB::table($this->tbl_cust_acc)
+        ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+        ->where('phone_no', session()->get('phone_no'))    
+        ->first();  
+        return $id->user_id;
+    }
+    else{
+      $id =  DB::table($this->tbl_cust_acc)
+      ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+      ->where('email', session()->get('email'))    
+      ->first();  
+      return $id->user_id;
+     }
     }
 }

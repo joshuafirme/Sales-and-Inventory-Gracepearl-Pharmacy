@@ -12,7 +12,6 @@
         "barryvdh/laravel-dompdf": "^0.8.7",
         "ferdous/laravel-otp-validate": "^1.2",
         "fideloper/proxy": "^4.0",
-        "haruncpi/laravel-id-generator": "^1.0",
         "laravel/framework": "6.0",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^1.0",
@@ -24,7 +23,6 @@
         "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
-        "laravel/ui": "^1.2",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^7.5"
@@ -48,7 +46,8 @@
         ],
         "classmap": [
             "database/seeds",
-            "database/factories"
+            "database/factories",
+            "app/Classes"
         ]
     },
     "autoload-dev": {

@@ -7,16 +7,21 @@ use Illuminate\Support\Facades\DB;
 use App\CategoryMaintenance;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Http\Request;
+use App\Classes\UserAccessRights;
 
 class CategoryMaintenanceCtr extends Controller
 {
     private $table_name = "tblcategory";
     private $table_emp = "tblemployee";
-    private $this_module = "Maintenance";
+    private $module = "Maintenance";
 
-    public function index(){
-        if(!($this->isUserAuthorize())){
-            dd('You are not authorized to access this module, please ask the administrator');
+    public function index()
+    {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
         }
     
         $category = DB::table($this->table_name)
@@ -25,23 +30,6 @@ class CategoryMaintenanceCtr extends Controller
         return view('maintenance/category/category', ['category' => $category]);
     }
 
-    public function isUserAuthorize(){
-        $emp = DB::table($this->table_emp)
-        ->where([
-            ['username', session()->get('emp-username')],
-        ])
-        ->value('auth_modules');
-
-        $modules = explode(", ",$emp);
-
-        if (!(in_array($this->this_module, $modules)))
-        {
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
 
 
     /**

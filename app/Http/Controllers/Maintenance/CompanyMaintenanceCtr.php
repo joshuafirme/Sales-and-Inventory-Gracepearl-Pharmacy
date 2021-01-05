@@ -8,13 +8,22 @@ use Illuminate\Support\Facades\DB;
 use App\CompanyMaintenance;
 use Input;
 use Illuminate\Http\Request;
+use App\Classes\UserAccessRights;
 
 class CompanyMaintenanceCtr extends Controller
 {
     private $table_name = 'tblcompany';
     private $table_suplr = 'tblsupplier';
+    private $module = "Maintenance";
 
-    public function index(){
+    public function index()
+    {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
 
         $company = DB::table($this->table_name)
         ->paginate(10);

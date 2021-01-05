@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Input;
 use App\SupplierDelivery;
+use App\Classes\UserAccessRights;
 
 class SupplierDeliveryCtr extends Controller
 {
@@ -17,10 +18,16 @@ class SupplierDeliveryCtr extends Controller
     private $table_stockad = "tblstockadjustment";
     private $table_po = "tblpurchaseorder";
     private $table_delivery = "tblsupplier_delivery";
+    private $module = "Inventory";
 
     public function index()
-    { 
+    {
+        $rights = new UserAccessRights;
 
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
         return view('inventory/supplier_delivery',['getCurrentDate' => date('yy-m-d')]);
     }
 

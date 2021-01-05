@@ -8,10 +8,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\Discount;
+use App\Classes\UserAccessRights;
 
 class DiscountCtr extends Controller
 {
-    public function index(){
+    private $module = "Maintenance";
+
+    public function index()
+    {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
 
         $discount = $this->discount();
         return view('/maintenance/discount/discount', ['discount' => $discount]);

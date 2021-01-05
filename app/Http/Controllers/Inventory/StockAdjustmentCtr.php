@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\ProductMaintenance;
 use App\StockAdjustment;
+use App\Classes\UserAccessRights;
 
 class StockAdjustmentCtr extends Controller
 {
@@ -17,10 +18,16 @@ class StockAdjustmentCtr extends Controller
     private $table_unit = "tblunit";
     private $table_stockad = "tblstockadjustment";
     private $table_emp = "tblemployee";
-    private $this_module = "Inventory";
+    private $module = "Inventory";
 
-    public function index(Request $request){
-        $this->validateUser();
+    public function index()
+    {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
 
         $product = $this->getAllProduct(); 
         $category = DB::table($this->table_cat)->get();
@@ -40,30 +47,6 @@ class StockAdjustmentCtr extends Controller
            
         
         return view('inventory/stockadjustment', ['product' => $product, 'category' => $category, 'suplr' => $suplr, 'getCurrentDate' => date('yy-m-d')]);
-    }
-
-    public function validateUser(){
-        if(!($this->isUserAuthorize())){
-            dd('You are not authorized to access this module, please ask the administrator');
-        }
-    }
-
-    public function isUserAuthorize(){
-        $emp = DB::table($this->table_emp)
-        ->where([
-            ['username', session()->get('emp-username')],
-        ])
-        ->value('auth_modules');
-
-        $modules = explode(", ",$emp);
-
-        if (!(in_array($this->this_module, $modules)))
-        {
-            return false;
-        }
-        else{
-            return true;
-        }
     }
 
     public function getAllProduct(){

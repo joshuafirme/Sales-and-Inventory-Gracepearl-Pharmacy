@@ -9,6 +9,7 @@ use App\SupplierMaintenance;
 use Illuminate\Http\Request;
 use PDF;
 use Storage;
+use App\Classes\UserAccessRights;
 
 class ProductMaintenanceCtr extends Controller
 {
@@ -17,16 +18,15 @@ class ProductMaintenanceCtr extends Controller
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
     private $table_emp = "tblemployee";
-    private $this_module = "Maintenance";
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Request $request)
+    private $module = "Maintenance";
+
+    public function index()
     {
-        if(!($this->isUserAuthorize())){
-            dd('You are not authorized to access this module, please ask the administrator');
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
         }
 
         $category_param = $request->category;
@@ -66,24 +66,6 @@ class ProductMaintenanceCtr extends Controller
            
         }
         return view('maintenance/product/product', ['product' => $product, 'unit' => $unit, 'category' => $category, 'suplr' => $suplr]);
-    }
-
-    public function isUserAuthorize(){
-        $emp = DB::table($this->table_emp)
-        ->where([
-            ['username', session()->get('emp-username')],
-        ])
-        ->value('auth_modules');
-
-        $modules = explode(", ",$emp);
-
-        if (!(in_array($this->this_module, $modules)))
-        {
-            return false;
-        }
-        else{
-            return true;
-        }
     }
 
     public function getAllProduct(){

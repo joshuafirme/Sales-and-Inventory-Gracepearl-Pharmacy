@@ -8,16 +8,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use App\ProductMaintenance;
+use App\Classes\UserAccessRights;
 
 class NotificationCtr extends Controller
 {
     private $table_prod = "tblproduct";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
-    private $table_unit = "tblunit";
+    private $module = "Inventory";
 
     public function index()
     {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
+
         $suplr = DB::table($this->table_suplr)->get();
 
         $near_expiry_product = $this->getAllNearExpiry(); 

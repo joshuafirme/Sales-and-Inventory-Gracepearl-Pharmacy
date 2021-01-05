@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\Sales;
 use Illuminate\Http\Request;
+use App\Classes\UserAccessRights;
 
 class SalesCtr extends Controller
 {
@@ -16,14 +17,17 @@ class SalesCtr extends Controller
     private $table_suplr = "tblsupplier";
     private $table_emp = "tblemployee";
     private $table_unit = "tblunit";
-    private $this_module = "Sales";
+    private $module = "Sales";
 
     public function index()
     {
-    //     session()->forget('cart');
-        if(!($this->isUserAuthorize())){
-            dd('You are not authorized to access this module, please ask the administrator');
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
         }
+        return view('/maintenance/user/user');
 
         $getCurrenTransNo = $this->getCurrentTransacNo();
         return view('/sales/cashiering', ['getTransNo' => $getCurrenTransNo]);

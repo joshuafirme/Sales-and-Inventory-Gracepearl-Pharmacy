@@ -9,6 +9,7 @@ use Input;
 use App\Sales;
 use App\ReturnChange;
 use Illuminate\Http\Request;
+use App\Classes\UserAccessRights;
 
 class ReturnCtr extends Controller
 {
@@ -18,8 +19,17 @@ class ReturnCtr extends Controller
     private $tbl_unit = "tblunit";
     private $tbl_sales = "tblsales";
     private $tbl_return = "tblreturn_change";
+    private $module = "Inventory";
 
-    public function index(){
+    public function index()
+    {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
+
         return  view('/inventory/return', ['getCurrentDate' => date('yy-m-d')]);
     }
 

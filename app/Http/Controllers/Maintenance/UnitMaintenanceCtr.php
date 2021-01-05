@@ -7,17 +7,23 @@ use Illuminate\Support\Facades\DB;
 use App\UnitMaintenance;
 use Input;
 use Illuminate\Http\Request;
+use App\Classes\UserAccessRights;
 
 class UnitMaintenanceCtr extends Controller
 {
     private $table_name = 'tblunit';
     private $table_emp = "tblemployee";
-    private $this_module = "Maintenance";
+    private $module = "Maintenance";
 
-    public function index(){
-        if(!($this->isUserAuthorize())){
-            dd('You are not authorized to access this module, please ask the administrator');
+    public function index()
+    {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
         }
+
         $unit = DB::table($this->table_name)->get();
         return view('/maintenance/unit/unit', ['unit' => $unit]);
     }

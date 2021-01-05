@@ -72,11 +72,7 @@ $(document).ready(function(){
       categories = categories.join(", ");
       console.log(categories);
 
-      if(categories.length == 0){
-        
-        console.log('length is 0');
-        displayAllProduct(limit);
-      }
+      
       console.log('length: '+categories.length)
       return categories
     }
@@ -85,7 +81,14 @@ $(document).ready(function(){
       var search_key = $('#search-product').val();
       var categories = getCategories();
 
-      searchProduct(search_key, categories, limit);
+      if(categories.length == 0){
+        
+        console.log('length is 0');
+        displayAllProduct(limit);
+      }
+      else{
+        searchProduct(search_key, categories, limit);
+      }
     });
 
     $('#search-product').blur(function() {

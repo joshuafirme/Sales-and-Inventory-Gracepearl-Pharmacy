@@ -11,6 +11,7 @@ use Mail;
 use App\Mail\MyMail;
 use App\ProductMaintenance;
 use App\PurchaseOrder;
+use App\Classes\UserAccessRights;
 
 class PurchaseOrderCtr extends Controller
 {
@@ -19,10 +20,17 @@ class PurchaseOrderCtr extends Controller
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
     private $table_po = "tblpurchaseorder";
+    private $module = "Inventory";
 
-    public function index(Request $request)
+    public function index()
     {
-        //session()->forget('orders');
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
+
         $category_param = $request->category;
         $get_all_reorder = $this->getAllReorder(); 
        

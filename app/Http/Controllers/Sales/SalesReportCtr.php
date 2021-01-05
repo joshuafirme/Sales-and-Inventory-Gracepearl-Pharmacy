@@ -6,20 +6,26 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\Sales;
 use Illuminate\Http\Request;
+use App\Classes\UserAccessRights;
 
 class SalesReportCtr extends Controller
 {
-    private $module = 'Sales Report';
 
     private $table_sales = "tblsales";
     private $table_prod = "tblproduct";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
+    private $module = "Sales";
 
- 
     public function index(Request $request)
     {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
                
         $category_name = DB::table($this->table_cat)->get();
         

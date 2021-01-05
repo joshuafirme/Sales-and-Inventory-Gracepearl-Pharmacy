@@ -8,23 +8,24 @@ use App\SupplierMaintenance;
 use App\MarkupMaintenance;
 use Illuminate\Http\Request;
 use Input;
+use App\Classes\UserAccessRights;
 
 class SupplierMaintenanceCtr extends Controller
 {
     private $table_name = "tblsupplier";
     private $table_company = "tblcompany";
     private $table_emp = "tblemployee";
-    private $this_module = "Maintenance";
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $module = "Maintenance";
+
     public function index()
-    { 
-        if(!($this->isUserAuthorize())){
-            dd('You are not authorized to access this module, please ask the administrator');
+    {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
         }
+
         $company = DB::table($this->table_company)->get();
         $suplr = DB::table($this->table_name)
         ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID, company_name'))

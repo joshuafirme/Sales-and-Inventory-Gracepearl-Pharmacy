@@ -8,16 +8,20 @@ use Illuminate\Support\Facades\DB;
 use App\UserMaintenance;
 use Illuminate\Http\Request;
 use Input;
-
+use App\Classes\UserAccessRights;
 
 class UserMaintenanceCtr extends Controller
 {
     private $table_emp = "tblemployee";
-    private $this_module = "Maintenance";
+    private $module = "Maintenance";
 
-    public function index(){
-        if(!($this->isUserAuthorize())){
-            dd('You are not authorized to access this module, please ask the administrator');
+    public function index()
+    {
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
         }
         return view('/maintenance/user/user');
     }

@@ -56,7 +56,7 @@
                           <thead>
                             <tr>
 
-                              <th>Invoice #</th>
+                              <th>PO #</th>
                               <th>Product Code</th>     
                               <th>Description</th>   
                               <th>Supplier</th> 
@@ -81,7 +81,7 @@
                             <tr>
                                 <th><input type="checkbox" name="select_all" value="1" id="select-all"></th>
                                 <th>Delivery #</th>
-                                <th>Invoice #</th>
+                                <th>PO #</th>
                                 <th>Product Code</th>     
                                 <th>Description</th>   
                                 <th>Supplier</th> 

@@ -110,7 +110,7 @@
             </ul>
   
             <a href="{{ url('/payment') }}"
-            id="btn-place-order" class="btn btn-success btn-block waves-effect waves-light" style="color: #fff">Place Order</a>
+            id="btn-place-order" class="btn btn-block waves-effect waves-light btn-blue-primary" style="color: #fff">Place Order</a>
   
           </div>
         </div>

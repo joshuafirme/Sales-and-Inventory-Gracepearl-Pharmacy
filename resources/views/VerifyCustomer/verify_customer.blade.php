@@ -58,12 +58,12 @@
                   </thead>
                   
                   </table> 
-                  <img src="{{asset('assets/arrow_ltr.png')}}" alt="">
+                 <!-- <img src="('assets/arrow_ltr.png')}}" alt="">
                   <button class="btn btn-sm btn-success mt-3" id="btn-bulk-verified">Mark as verified</button>
                   <div class="update-success-validation mr-auto ml-3" style="display: none">
                     <label class="label text-success">Customer is successfully added validate</label>    
                   </div> 
-                  <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
+                  <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">-->
 
                 </div>
 

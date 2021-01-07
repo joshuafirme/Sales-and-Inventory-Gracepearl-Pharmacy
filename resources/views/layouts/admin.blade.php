@@ -98,9 +98,6 @@
                             <a href="blank.html"><i class="fas fa-cube"></i> Inventory Report</a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-file-invoice-dollar"></i> Sales Report</a>
-                        </li>
-                        <li>
                             <a href="500.html"><i class="fas fa-file-invoice-dollar"></i> Stock Adjustment</a>
                         </li>
                         <li>
@@ -140,9 +137,6 @@
                         </li>
                         <li>
                             <a href="{{ url('maintenance/discount') }}" ><i class="fas fa-percentage"></i> Discount</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('maintenance/shipping') }}" ><i class="fas fa-dollar-sign"></i> Shipping Fee</a>
                         </li>
                         <li>
                             <a href="{{ url('maintenance/user') }}"><i class="fas fa-user"></i> User</a>

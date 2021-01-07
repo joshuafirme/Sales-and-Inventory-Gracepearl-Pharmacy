@@ -65,6 +65,7 @@ Route::get('/payment', 'Customer\PaymentCtr@index');
 Route::post('/payment/cod', 'Customer\PaymentCtr@cashOnDelivery');   //COD
 Route::post('/customer/gcashpayment', 'Customer\PaymentCtr@gcashPayment')->name('gcashpayment');
 Route::get('/payment/afterpayment', 'Customer\PaymentCtr@afterPayment');
+Route::get('/payment/afterpayment/forget', 'Customer\PaymentCtr@forgetOrder');
 //Stripe payment
 Route::get('stripe', 'Customer\StripePaymentCtr@stripe');
 Route::post('stripe', 'Customer\StripePaymentCtr@stripePost')->name('stripe.post');

@@ -125,7 +125,7 @@
               </li>
             </ul>
   
-            <a href="" id="btn-proceed-checkout" class="btn btn-success btn-block waves-effect waves-light">Proceed to Checkout</a>
+            <a  id="btn-proceed-checkout" class="btn  btn-block waves-effect waves-light btn-blue">Proceed to Checkout</a>
   
           </div>
         </div>

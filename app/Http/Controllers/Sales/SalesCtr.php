@@ -27,30 +27,10 @@ class SalesCtr extends Controller
         {
             $rights->notAuthMessage();
         }
-        return view('/maintenance/user/user');
 
         $getCurrenTransNo = $this->getCurrentTransacNo();
         return view('/sales/cashiering', ['getTransNo' => $getCurrenTransNo]);
    
-    }
-    
-
-    public function isUserAuthorize(){
-        $emp = DB::table($this->table_emp)
-        ->where([
-            ['username', session()->get('emp-username')],
-        ])
-        ->value('auth_modules');
-
-        $modules = explode(", ",$emp);
-
-        if (!(in_array($this->this_module, $modules)))
-        {
-            return false;
-        }
-        else{
-            return true;
-        }
     }
 
     public function store(Request $request)
@@ -132,6 +112,7 @@ class SalesCtr extends Controller
             $cart[$product_code] = [
                 "description" => $p->description,
                 "qty" => $qty_order,
+                "category" => $p->category_name,  
                 "unit" => $p->unit,  
                 "unit_price" => $p->selling_price,  
                 "amount" => $total,
@@ -295,7 +276,7 @@ class SalesCtr extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($output);
         $pdf->setPaper('A5', 'portrait');
-        return $pdf->stream('Sales Invoice');
+        return $pdf->stream('INV-#'.$this->getSalesInvNo().'.pdf');
     }
 
     public function salesInvoice(){

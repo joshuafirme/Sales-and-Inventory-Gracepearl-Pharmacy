@@ -57,11 +57,12 @@ class CheckoutCtr extends Controller
 
       public function getSubtotalAmount()
       {
+        $order_no = session()->get('order-no');
         $user_id = $this->getUserIDWithPrefix();
-        DB::table($this->tbl_ol_order)
+        $amount = DB::table($this->tbl_ol_order)
         ->where([
             ['email',  $user_id],
-            ['order_no',  $this->getOrderNo() -1 ]
+            ['order_no', $order_no]
         ])
           ->sum('amount');  
 
@@ -86,9 +87,11 @@ class CheckoutCtr extends Controller
               $ol_order->status = 'Payment pending';
               $ol_order->shippingID = 'S001';
 
+              session()->put('order-no', $order_no);
+
               $ol_order->save();
           }
-        //  DB::table($this->tbl_cart)->delete();
+          DB::table($this->tbl_cart)->delete();
         }
         else{
           

@@ -45,6 +45,13 @@
                             </div>
                           </div>
 
+                        <div class="form-group row">
+                          <label for="inputEmail3" class="col-sm-3 col-form-label">Qty</label>
+                          <div class="col-sm-8">
+                            <input type="number" min="1" class="form-control" id="qty_order" >
+                          </div>
+                        </div> 
+
                           <input type="hidden" id="product_code_hidden">
 
                         <div class="form-group row">
@@ -81,21 +88,13 @@
                           </div> 
 
                           <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Qty</label>
-                            <div class="col-sm-7">
-                              <input type="number" min="1" class="form-control" id="qty_order" >
-                            </div>
-                          </div> 
-
-
-                          <div class="form-group row">
                             <label for="inputEmail3" class="col-sm-2 col-form-label">Total</label>
                             <div class="col-sm-7">
                               <input type="number" class="form-control" id="total" readonly>
                             </div>
                           </div> 
 
-                          <button style="font-size: 12px;" class="btn btn-primary btn-sm btn-addToCart" id="btn-addToCart"> Add [F9]</button> 
+                          <button style="font-size: 12px;" class="btn btn-primary btn-sm btn-addToCart" id="btn-addToCart"> ADD [F9]</button> 
 
                         </div>
              
@@ -126,8 +125,8 @@
                               </div>
 
                               <div class="form-group ml-auto">
-                                <button class="btn btn-success btn-sm btn-processs" style="font-size: 12px;" 
-                                data-toggle="modal" data-target="#processModal" id="btn-process">Process [F2]</button> 
+                                <button class="btn btn-success btn-sm btn-processs" style="font-size: 14px; width: 100px;" 
+                                data-toggle="modal" data-target="#processModal" id="btn-process"><u>P</u>AY</button> 
                               </div>
 
                           </div> 

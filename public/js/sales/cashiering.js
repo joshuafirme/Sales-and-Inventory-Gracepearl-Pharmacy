@@ -72,8 +72,13 @@ $(document).ready(function(){
 
    // Add to Cart
    $('#btn-addToCart').click(function(){   
-
-    addProduct();
+    if($('#cashiering_search').val() == ''){
+      alert('Enter product code or product description');
+    }
+    else{
+      addProduct();
+    }
+    
     });  
     
     function addProduct(){
@@ -139,7 +144,7 @@ $(document).ready(function(){
                     
           }); 
 
-        $('#senior-chk').click(function(){
+     /*   $('#senior-chk').click(function(){
 
           if($('#senior-chk').prop('checked') == true)
           {
@@ -150,7 +155,8 @@ $(document).ready(function(){
             $('#senior-name').css('display','none');
           }    
       
-      });
+      }); 
+      */
               
         //get sales inv and pass to input
         function getSalesInvoice(){

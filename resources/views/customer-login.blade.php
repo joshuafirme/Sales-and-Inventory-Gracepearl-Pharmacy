@@ -44,7 +44,7 @@
 				<p>or</p>
 				<button onclick="location.href = 'customer-login/google';" type="button" class="btn-google">Sign in with Google</button>
 
-				<a class="signup-link" href="{{ url('/signup') }}">Don't have an account? <span style="color:#37CE9C;">Sign up</span></a>
+				<a class="signup-link" href="{{ url('/signup') }}">Don't have an account? <span style="color:#30377A;">Sign up</span></a>
 			</div>	
 		</div>
 

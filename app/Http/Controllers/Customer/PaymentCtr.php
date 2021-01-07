@@ -24,8 +24,12 @@ class PaymentCtr extends Controller
     }
 
     public function afterPayment(){
-      
+       
         return view('customer/layouts/after_payment');
+    }
+
+    public function forgetOrder(){
+        session()->forget('order-no');
     }
 
     public function cashOnDelivery(){

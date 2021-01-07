@@ -110,7 +110,7 @@ body{
 	top: 50%;
 	transform: translateY(-50%);
 	color: #999;
-	font-size: 18px;
+	font-size: 15px;
 	transition: .3s;
 }
 
@@ -120,7 +120,7 @@ body{
 	bottom: -2px;
 	width: 0%;
 	height: 2px;
-	background-color: #38d39f;
+	background-color: #30377A;
 	transition: .4s;
 }
 
@@ -138,11 +138,11 @@ body{
 
 .input-div.focus > div > h5{
 	top: -5px;
-	font-size: 15px;
+	font-size: 13px;
 }
 
 .input-div.focus > .i > i{
-	color: #38d39f;
+	color: #30377A;
 }
 
 .input-div > div > input{
@@ -189,7 +189,7 @@ p{
 	border-radius: 25px;
 	outline: none;
 	border: none;
-	background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+	background-image: linear-gradient(to right, #30377A, #30377A, #30377A);
 	background-size: 200%;
 	font-size: 11pt;
 	color: #fff;
@@ -209,9 +209,9 @@ p{
 	border-radius: 25px;
 	outline: none;
 	color: black;
-	border: 2px solid #32be8f; /* Green */
+	border: 2px solid #30377A;
 	font-size: 11pt;
-	color: #32be8f;
+	color: #30377A;
 	font-family: 'Poppins', sans-serif;
 	margin: 1rem 0;
 	cursor: pointer;

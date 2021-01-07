@@ -10,6 +10,22 @@ $(document).ready(function(){
         cashOnDelivery();
     });
 
+
+    window.top.close();
+
+    getSubtotal();
+
+    function getSubtotal(){
+      $.ajax({
+          url:"/checkout/getsubtotal",
+          type:"GET",
+          success:function(response){
+              $('#lbl-payment-total').text('₱'+convertToMoneyFormat(response));
+              $('#lbl-after-payment').text('₱'+convertToMoneyFormat(response));
+          }         
+         });
+    }
+
     function cashOnDelivery(){
         $.ajax({
             url:"/payment/cod",

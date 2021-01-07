@@ -96,7 +96,7 @@ $(document).ready(function(){
        
       //  $('#edit_position').text(response[0].position);
      //  $("select[name='edit_position'] option:selected").text(response[0].position);
-        $("select[name='edit_position'] option[value="+response[0].position+"]").remove();
+     //   $("select[name='edit_position'] option[value="+response[0].position+"]").remove();
         $("select[name='edit_position'] option:selected").text(response[0].position);
 
         $('#edit_username').val(response[0].username);

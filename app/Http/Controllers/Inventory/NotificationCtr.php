@@ -15,6 +15,7 @@ class NotificationCtr extends Controller
     private $table_prod = "tblproduct";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
+    private $table_unit = "tblunit";
     private $module = "Inventory";
 
     public function index()
@@ -72,12 +73,12 @@ class NotificationCtr extends Controller
 
     public function getAllNearExpiry()
     {
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode,  unit, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->whereRaw('tblproduct.exp_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 3 MONTH)')
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode,  unit, category_name, supplierName, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereRaw('P.exp_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 3 MONTH)')
         ->paginate(10);
 
         return $product;
@@ -86,12 +87,12 @@ class NotificationCtr extends Controller
 
     public function getAllExpired()
     {
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, category_name'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->whereRaw('tblproduct.exp_date <= CURDATE()')
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, category_name, supplierName'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereRaw('P.exp_date <= CURDATE()')
         ->paginate(10);
 
         return $product;
@@ -99,12 +100,12 @@ class NotificationCtr extends Controller
 
     public function getAllReOrder()
     {
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, category_name, supplierName'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->whereRaw('tblproduct.qty <= tblproduct.re_order')
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, category_name, supplierName'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereRaw('P.qty <= P.re_order')
         ->paginate(10);
 
         return $product;

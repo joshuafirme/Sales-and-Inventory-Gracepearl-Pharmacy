@@ -22,7 +22,7 @@ class PurchaseOrderCtr extends Controller
     private $table_po = "tblpurchaseorder";
     private $module = "Inventory";
 
-    public function index()
+    public function index(Request $request)
     {
         $rights = new UserAccessRights;
 
@@ -122,37 +122,37 @@ class PurchaseOrderCtr extends Controller
     }
 
     public function getAllReorder(){
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->whereColumn('tblproduct.re_order','>=', 'tblproduct.qty')
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereColumn('P.re_order','>=', 'P.qty')
         ->get();
 
         return $product;
     }
 
     public function getReorderBySupplier($supplier){
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->whereColumn('tblproduct.re_order','>=', 'tblproduct.qty')
-        ->where('tblproduct.supplierID', $supplier)
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereColumn('P.re_order','>=', 'P.qty')
+        ->where('P.supplierID', $supplier)
         ->get();
 
         return $product;
     }
     
     public function getAllOrders(){
-        $product = DB::table($this->table_po)
-        ->select("tblpurchaseorder.*", DB::raw('CONCAT('.$this->table_po.'._prefix, '.$this->table_po.'.po_num) AS po_num, DATE_FORMAT(date,"%d-%m-%Y") as date, description, unit, supplierName, category_name'))
-        ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_po . '.product_code')
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+        $product = DB::table($this->table_po.' AS PO')
+        ->select("PO.*", DB::raw('CONCAT(PO._prefix, PO.po_num) AS po_num, DATE_FORMAT(date,"%d-%m-%Y") as date, description, unit, supplierName, category_name'))
+        ->leftJoin($this->table_prod.' AS P',  DB::raw('CONCAT(P._prefix, P.id)'), '=', 'PO.product_code')
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
         ->orderBy('date', 'desc')
         ->get();
 
@@ -160,12 +160,12 @@ class PurchaseOrderCtr extends Controller
     }
 
     public function show($product_code){
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->where('tblproduct.id', $product_code)
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->where('P.id', $product_code)
         ->get();
  
 
@@ -244,7 +244,7 @@ public function recordOrder(){
             $total_amount += $sub_total;
            
             $po = new PurchaseOrder;
-            $po->_prefix = 'INV' . $this->getPrefix();
+            $po->_prefix = 'PO' . $this->getPrefix();
             $po->po_num = $po_num;
             $po->product_code = $product_code;
             $po->qty_order = $data['qty_order'];

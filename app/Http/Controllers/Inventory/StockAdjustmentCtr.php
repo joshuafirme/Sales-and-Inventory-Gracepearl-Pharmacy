@@ -50,12 +50,12 @@ class StockAdjustmentCtr extends Controller
     }
 
     public function getAllProduct(){
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, supplierName, category_name, unit'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->get();
+        $product = DB::table($this->table_prod.' AS P')
+            ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, supplierName, category_name, unit'))
+            ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+            ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+            ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+            ->get();
 
         return $product;
     }
@@ -104,12 +104,12 @@ class StockAdjustmentCtr extends Controller
 
     public function show($productCode)
     {
-        $product = DB::table($this->table_prod)
-            ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, supplierName, category_name, unit'))
-            ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-            ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-            ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-            ->where('tblproduct.id', $productCode)
+        $product = DB::table($this->table_prod.' AS P')
+            ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, supplierName, category_name, unit'))
+            ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+            ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+            ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+            ->where('P.id', $productCode)
             ->get();
 
             return $product;

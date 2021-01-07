@@ -67,7 +67,7 @@ body{
 	height: 45px;
 	outline: none;
 	border: none;
-	background-image: linear-gradient(to right, #32be8f, #38d39f, #32be8f);
+	background-image: linear-gradient(to right, #30377A, #30377A, #30377A);
 	background-size: 200%;
 	font-size: 11pt;
 	color: #fff;
@@ -87,9 +87,9 @@ body{
 	height: 50px;
 	outline: none;
 	color: black;
-	border: 2px solid #32be8f; /* Green */
+	border: 2px solid #30377A;
 	font-size: 11pt;
-	color: #32be8f;
+	color: #30377A;
 	font-family: 'Poppins', sans-serif;
 	margin: 1rem 0;
 	cursor: pointer;
@@ -118,9 +118,9 @@ body{
 	height: 50px;
 	outline: none;
 	color: black;
-	border: 2px solid #32be8f; /* Green */
+	border: 2px solid #30377A;
 	font-size: 11pt;
-	color: #32be8f;
+	color: #30377A;
 	font-family: 'Poppins', sans-serif;
 	margin: 1rem 0;
 	cursor: pointer;

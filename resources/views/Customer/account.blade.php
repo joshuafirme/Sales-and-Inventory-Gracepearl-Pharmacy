@@ -92,7 +92,7 @@
             @endforeach
 
             <div class="col-md-6 mt-2">
-                <button id="btn-edit-account" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editAccountModal"><i class="fas fa-edit"></i> Edit Account</button>
+                <button id="btn-edit-account" class="btn btn-sm btn-blue-primary" data-toggle="modal" data-target="#editAccountModal"><i class="fas fa-edit"></i> Edit Account</button>
             </div>
 
 

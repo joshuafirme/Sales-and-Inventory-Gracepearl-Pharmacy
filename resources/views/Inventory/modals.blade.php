@@ -171,7 +171,7 @@
   <div class="modal-dialog modal-lg order-modal" role="document">
     <div class="modal-content lg">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Request Order</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Orders</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -179,10 +179,6 @@
       <div class="modal-body">
 
         <div class="row">
-
-        
-
-       
   
           <div class="ml-auto mr-3">
             <button class="btn btn-outline-danger btn-sm mt-2 mb-2" id="btn-download-order" ><span class='fas fa-download'></span> Download PDF</button> 

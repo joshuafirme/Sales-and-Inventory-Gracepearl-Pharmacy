@@ -23,7 +23,7 @@
         <div class="row">
         
           <div class="col-sm-6  col-lg-12 mb-2">
-            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal" id="btn-show-orders"><span class='fas fa-cart-arrow-down' ></span> Request Orders</button>
+            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ordersModal" id="btn-show-orders"><span class='fas fa-cart-arrow-down' ></span> Orders</button>
            
             </div>
           <!--  <form method="POST" action="//action('PurchaseOrderCtr@pay')">
@@ -109,7 +109,7 @@
                         <table class="table responsive  table-hover" id="ord-table" width="100%">       
                           <thead>
                             <tr>
-                                <th>Invoice #</th>
+                                <th>PO #</th>
                                 <th>Product Code</th>     
                                 <th>Description</th>   
                                 <th>Supplier</th> 

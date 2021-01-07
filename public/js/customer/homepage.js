@@ -28,18 +28,10 @@ $(document).ready(function(){
          
        });
     }
-  
-    var limit = 8;
 
-    $('#btn-viewmore').click(function () {
-        limit += 8;
-        console.log(limit);
-        var search_key = $('#search-product').val();
-        var categories = getCategories();
-  
-        searchProduct(search_key, categories, limit);
-    });
-    
+
+    var limit = 8;
+    // display product limit by 8 entries
     displayAllProduct(limit);
 
     function displayAllProduct(limit) {
@@ -63,6 +55,29 @@ $(document).ready(function(){
          
        });
     }
+  
+
+    $('#btn-viewmore').click(function () {
+        limit += 8;
+        console.log(limit);
+        var search_key = $('#search-product').val();
+        var categories = getCategories();
+  
+        filter(search_key, categories, limit);
+    });
+
+    // filter by category, search, limit
+    function filter(search_key, categories, limit) {
+      if(categories.length == 0)
+      {
+        displayAllProduct(limit);
+      }
+      else
+      {
+        searchProduct(search_key, categories, limit);
+      }
+    }
+    
 
     function getCategories() {
       var categories = [];
@@ -71,9 +86,6 @@ $(document).ready(function(){
       });
       categories = categories.join(", ");
       console.log(categories);
-
-      
-      console.log('length: '+categories.length)
       return categories
     }
 
@@ -81,21 +93,21 @@ $(document).ready(function(){
       var search_key = $('#search-product').val();
       var categories = getCategories();
 
-      if(categories.length == 0){
-        
-        console.log('length is 0');
-        displayAllProduct(limit);
-      }
-      else{
-        searchProduct(search_key, categories, limit);
-      }
+      filter(search_key, categories, limit);
     });
 
     $('#search-product').blur(function() {
         var search_key = $(this).val();
         var categories = getCategories();
 
-        searchProduct(search_key, categories, limit);
+        if(search_key){
+          console.log('search');
+          searchProduct(search_key, categories, limit);
+        }
+        else{
+          filter(search_key, categories, limit);
+        }
+
     });
 
     function searchProduct(search_key, categories, limit) {

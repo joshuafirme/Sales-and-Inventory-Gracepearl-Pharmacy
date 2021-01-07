@@ -57,7 +57,7 @@
                           <div class="card-body">
                             <h4>Order Summary</h4>
                             <p>Total Amount</p>
-                            <h5 class="text-success">₱{{ number_format(session()->get('checkout-total')) }}</h5>
+                            <h5 class="text-success" id="lbl-payment-total"></h5>
       
                               </div>
                           </div>

@@ -63,13 +63,17 @@ class HomePageCtr extends Controller
         $cat_arr = explode(', ',$categories);
         $cat_imp = implode('", "', $cat_arr);
 
+        if(strlen($cat_imp) == 0 || strlen($cat_imp) == null){
+          $cat_imp = 'Milk", "Branded", "Generic", "Vitamins", "Galenical", "Cosmetic';
+        }
+
         if($search_key){
           $product = DB::table($this->table_prod.' AS P')
           ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
           ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
           ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
           ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-         ->whereRaw('exp_date >= CURDATE()')
+          ->whereRaw('exp_date >= CURDATE()')
           ->where('description', 'LIKE', '%'.$search_key.'%')
           ->whereRaw('C.category_name IN ("'.$cat_imp.'")')
           ->limit($limit)
@@ -86,9 +90,6 @@ class HomePageCtr extends Controller
           ->limit($limit)
           ->get();
         }
-
-       
-
         return $product;         
     } 
     
@@ -105,10 +106,10 @@ class HomePageCtr extends Controller
     } 
 
     public function getPriceFilter($min_price, $max_price){
-      $price = DB::table($this->table_prod)
-      ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-      ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-      ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+      $price = DB::table($this->table_prod.' AS P')
+      ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+      ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+      ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
       ->whereBetween('selling_price', [$min_price, $max_price])
       ->get();
 

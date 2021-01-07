@@ -20,7 +20,7 @@ class ProductMaintenanceCtr extends Controller
     private $table_emp = "tblemployee";
     private $module = "Maintenance";
 
-    public function index()
+    public function index(Request $request)
     {
         $rights = new UserAccessRights;
 
@@ -69,25 +69,27 @@ class ProductMaintenanceCtr extends Controller
     }
 
     public function getAllProduct(){
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", 
-        DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", 
+        DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->orderBy('P.id', 'desc')
         ->get();
 
         return $product;
     }
 
     public function filterByCategory($category_param){
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", 
-        DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", 
+        DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
         ->where('categoryID', $category_param)
+        ->orderBy('P.id', 'desc')
         ->get();
 
         return $product;
@@ -97,12 +99,13 @@ class ProductMaintenanceCtr extends Controller
 
     public function show($productCode)
     {
-        $product = DB::table($this->table_prod)
-            ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode, category_name, supplierName, unit, category_name'))
-            ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-            ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-            ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-            ->where('tblproduct.id', $productCode)
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("P.*", 
+        DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
+            ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+            ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+            ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+            ->where('P.id', $productCode)
             ->get();
 
             return $product;
@@ -251,13 +254,13 @@ class ProductMaintenanceCtr extends Controller
 
     public function getAllProductData($category_param)
     {
-        $product = DB::table($this->table_prod)
-        ->select("*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) AS productCode'))
-            ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-            ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-            ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-            ->where('category_name',  $category_param)
-            ->get();
+        $product = DB::table($this->table_prod.' AS P')
+        ->select("*", DB::raw('CONCAT(P._prefix, P.id) AS productCode'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->where('category_name',  $category_param)
+        ->get();
 
         return $product;
     }

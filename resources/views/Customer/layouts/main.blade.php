@@ -26,7 +26,7 @@
                     <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
-                                <a href="{{ url('/homepage') }}" class="nav-item nav-link dropdown-toggle text-success"><b style="font-size: 18px">Gracepearl Pharmacy</b></a>
+                                <a href="{{ url('/homepage') }}" class="nav-item nav-link dropdown-toggle"><b style="font-size: 18px; color:#30377A;">Gracepearl Pharmacy</b></a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -50,7 +50,8 @@
                     
                         <li class="nav-item dropdown cart">
                             <div class="nav-dropdown">
-                            <a href="{{ url('/cart')}}" class="nav-item nav-link dropdown-toggle text-secondary">  <i class="fas fa-shopping-cart"></i>
+                            <a href="{{ url('/cart')}}" class="nav-item nav-link dropdown-toggle text-secondary">
+                                  <i class="fas fa-shopping-cart" style="color: #30377A;"></i>
                                     <span class='badge-cart badge-warning count-cart' id='lblCartCount'></span> </a>
                         
                             </div>

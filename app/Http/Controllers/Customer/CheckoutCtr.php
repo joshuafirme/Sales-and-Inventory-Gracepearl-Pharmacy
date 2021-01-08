@@ -49,7 +49,6 @@ class CheckoutCtr extends Controller
           ->leftJoin($this->tbl_cat, $this->tbl_cat . '.id', '=', $this->tbl_prod . '.categoryID')
           ->leftJoin($this->tbl_unit, $this->tbl_unit . '.id', '=', $this->tbl_prod . '.unitID')
           ->where('customerID', $user_id_prefix)
-          ->orderBy('tblcart.id')
           ->get();
 
         return $cart;

@@ -107,16 +107,16 @@
                             <a href="{{ url('/reports/supplierdelivery')}}"><i class="fas fa-truck-moving"></i> Supplier Delivery</a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-radiation-alt"></i> Expired Products</a>
+                            <a href="{{ url('/reports/expired')}}"><i class="fas fa-radiation-alt"></i> Expired Products</a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-list-ul"></i> Reorder List</a>
+                            <a href="{{ url('/reports/reorder')}}"><i class="fas fa-list-ul"></i> Reorder List</a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-chart-bar"></i> Fast and Slow Moving</a>
+                            <a href="{{ url('/reports/fastAndSlowMoving')}}"><i class="fas fa-chart-bar"></i> Fast and Slow Moving</a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-hand-holding"></i> Returns</a>
+                            <a href="{{ url('/reports/returns')}}"><i class="fas fa-hand-holding"></i> Returns</a>
                         </li>
                     </ul>
                 </li>
@@ -193,7 +193,13 @@
             <section class="content">
                 <div class="container-fluid">               
                     @yield('content')
-                    
+                    <footer>
+                        <div class="container-fluid">
+                            <div class="row mt-4">
+                                <p class="ml-auto label-small text-muted mr-4">© 2021 Gracepearl Pharmacy. All Rights Reserved</p>
+                            </div>
+                        </div>
+                    </footer>
           </div>
           <script>
           function logout(){
@@ -252,6 +258,10 @@
            <script src="{{asset('js/reports/stockadjustment_report.js')}}"></script>
            <script src="{{asset('js/reports/purchasedorder_report.js')}}"></script>
            <script src="{{asset('js/reports/supplierdelivery_report.js')}}"></script>
+           <script src="{{asset('js/reports/returns_report.js')}}"></script>
+           <script src="{{asset('js/reports/reorder_report.js')}}"></script>
+           <script src="{{asset('js/reports/fast_slow_moving_report.js')}}"></script>
+           <script src="{{asset('js/reports/expired_report.js')}}"></script>
 
           <!-- main - count all notifs and get user's name--> 
           <script src="{{asset('js/main.js')}}"></script>
@@ -266,7 +276,7 @@
           <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.html5.min.js"></script>
           <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.print.min.js"></script>
           <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
-
+ 
       </body>
 
       

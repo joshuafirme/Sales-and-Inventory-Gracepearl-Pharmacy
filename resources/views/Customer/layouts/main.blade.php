@@ -51,7 +51,7 @@
                         <li class="nav-item dropdown cart">
                             <div class="nav-dropdown">
                             <a href="{{ url('/cart')}}" class="nav-item nav-link dropdown-toggle text-secondary">
-                                  <i class="fas fa-shopping-cart" style="color: #30377A;"></i>
+                                  <i class="fas fa-shopping-cart"></i>
                                     <span class='badge-cart badge-warning count-cart' id='lblCartCount'></span> </a>
                         
                             </div>
@@ -82,7 +82,25 @@
             <section class="content">
                 <div class="container-fluid">               
                     @yield('content')
+
+                    
+
+                    <footer>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <p class="ml-auto label-small text-muted">© 2021 Gracepearl Pharmacy. All Rights Reserved</p>
+                            </div>
+                        </div>
+                    </footer>
           </div>
+
+              
+    <div class="row">
+
+        <button class="btn btn-sm btn-success m-auto" id="btn-viewmore"
+         style="border-radius: 20px; width:110px;">View more</button>
+    
+      </div>
           <script>
           function logout(){
             $.ajax({

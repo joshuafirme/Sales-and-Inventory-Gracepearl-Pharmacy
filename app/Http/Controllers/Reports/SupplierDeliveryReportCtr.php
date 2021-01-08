@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Reports;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Classes\UserAccessRights;
 
 class SupplierDeliveryReportCtr extends Controller
 {
@@ -17,7 +18,12 @@ class SupplierDeliveryReportCtr extends Controller
     private $module = "Reports";
 
     public function index(){
+        $rights = new UserAccessRights;
 
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
         $stock_ad = $this->getSupplierDelivery();
 
         if(request()->ajax())

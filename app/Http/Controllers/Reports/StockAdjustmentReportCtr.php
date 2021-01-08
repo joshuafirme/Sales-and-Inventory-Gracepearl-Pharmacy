@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Reports;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Classes\UserAccessRights;
 
 class StockAdjustmentReportCtr extends Controller
 {
@@ -13,10 +14,15 @@ class StockAdjustmentReportCtr extends Controller
     private $tbl_suplr = "tblsupplier";
     private $tbl_unit = "tblunit";
     private $tbl_stockad = "tblstockadjustment";
-    private $module = "Inventory";
+    private $module = "Reports";
 
     public function index(){
+        $rights = new UserAccessRights;
 
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
         $stock_ad = $this->getStockAdjustment();
 
         if(request()->ajax())

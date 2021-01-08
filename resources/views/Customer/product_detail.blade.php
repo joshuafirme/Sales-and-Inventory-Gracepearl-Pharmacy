@@ -31,10 +31,13 @@
                             
                             <div class="col-12 mb-0">
                             <figure class="view overlay rounded z-depth-1 main-img">
-                               
+                               @if($data->image)
                                 <img src="../../storage/{{ $data->image }}"
                                     class="img-fluid z-depth-1">
-                              
+                              @else
+                              <img src="{{ asset('assets/noimage.png') }}"
+                              class="img-fluid z-depth-1">
+                              @endif
                             </figure>       
                             </div>
                         

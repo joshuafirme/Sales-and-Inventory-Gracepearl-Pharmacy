@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Reports;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use App\Classes\UserAccessRights;
 
 class InventoryReportCtr extends Controller
 {
@@ -15,6 +16,12 @@ class InventoryReportCtr extends Controller
     private $module = "Reports";
 
     public function index(){
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
 
         $inv = $this->getInventory();
 

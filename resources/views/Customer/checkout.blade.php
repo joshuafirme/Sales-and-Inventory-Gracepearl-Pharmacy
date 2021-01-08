@@ -90,10 +90,7 @@
                 <Label>Email</Label>
                 <input type="text" class="form-control" value={{ session()->get('email') }}><br>
 
-              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                Subtotal
-                <span id="checkout-subtotal"></span>
-              </li>
+          
               <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                 Shipping Fee
                 <span class="text-success">Free</span>
@@ -105,7 +102,7 @@
                     <p class="mb-0">(VAT Included)</p>
                   </strong>
                 </div>
-                <span><strong>₱53.98</strong></span>
+                <span><strong id="cart-total"></strong></span>
               </li>
             </ul>
   

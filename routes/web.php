@@ -213,9 +213,20 @@ Route::get('/notification/getAllNotif', 'Inventory\NotificationCtr@getAllNotif')
 
 //REPORTS---------------------------------------------------------------------------------------------------------------
 Route::get('/reports/inventory', 'Reports\InventoryReportCtr@index');
+
 Route::get('/reports/stockadjustment', 'Reports\StockAdjustmentReportCtr@index');
-Route::get('/reports/purchasedorder', 'Reports\PurchasedOrderReportCtr@index');\
+
+Route::get('/reports/purchasedorder', 'Reports\PurchasedOrderReportCtr@index');
+
 Route::get('/reports/supplierdelivery', 'Reports\SupplierDeliveryReportCtr@index');
+
+Route::get('/reports/returns', 'Reports\ReturnsReportCtr@index');
+
+Route::get('/reports/reorder', 'Reports\ReOrderReportCtr@index');
+
+Route::get('/reports/expired', 'Reports\ExpiredProductReportCtr@index');
+
+Route::get('/reports/fastAndSlowMoving', 'Reports\FastAndSlowMovingReOrderReportCtr@index');
 
 
 

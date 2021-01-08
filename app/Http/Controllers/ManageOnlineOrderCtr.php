@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Input;
 use App\OnlineOrder;
+use App\Classes\UserAccessRights;
 
 class ManageOnlineOrderCtr extends Controller
 {

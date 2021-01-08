@@ -6,6 +6,21 @@ $(document).ready(function(){
         }
       });
 
+   //   forgetPayment();
+
+      function forgetPayment() {
+        $.ajax({
+          url:"/payment/afterpayment/forget",
+          type:"GET",
+          
+          success:function(){
+           
+          }
+           
+         });
+    
+      } 
+
     checkIfLoggedIn();
 
     function checkIfLoggedIn(){
@@ -30,7 +45,7 @@ $(document).ready(function(){
     }
 
 
-    var limit = 8;
+    var limit = 12;
     // display product limit by 8 entries
     displayAllProduct(limit);
 
@@ -58,7 +73,7 @@ $(document).ready(function(){
   
 
     $('#btn-viewmore').click(function () {
-        limit += 8;
+        limit += 4;
         console.log(limit);
         var search_key = $('#search-product').val();
         var categories = getCategories();

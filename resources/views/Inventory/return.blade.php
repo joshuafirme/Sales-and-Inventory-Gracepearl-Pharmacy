@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="page-header">
-  <h3 class="mt-2" id="page-title">Customer Return</h3>
+  <h3 class="mt-2" id="page-title">Product Return</h3>
           <hr>
       </div>
 

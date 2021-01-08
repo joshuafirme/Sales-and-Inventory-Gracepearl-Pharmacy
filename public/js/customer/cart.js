@@ -6,6 +6,8 @@ $(document).ready(function(){
         }
       });
 
+     // forgetPayment();
+
       countCart();
 
       function countCart(){
@@ -57,8 +59,8 @@ $(document).ready(function(){
 
     $(document).on('click', '#btn-add-to-cart', function(){
         countCart();
-    });
-
+        
+      });
     $(document).on('click', '#btn-remove-from-cart', function(){
 
         var product_code = $(this).attr('product-code');
@@ -188,6 +190,18 @@ $(document).ready(function(){
        });
     }
 
+    function forgetPayment() {
+      $.ajax({
+        url:"/payment/afterpayment/forget",
+        type:"GET",
+        
+        success:function(){
+         
+        }
+         
+       });
+  
+    } 
 
 });
   

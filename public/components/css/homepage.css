@@ -3,6 +3,11 @@ main {
 	width: 1200px;
 	margin: auto;
 	margin-top: 20px;
+
+}
+
+.container-fluid{
+	margin-bottom: 200px;
 }
 
 .label-small{
@@ -24,8 +29,34 @@ main {
 	display: grid;
 	grid-template-columns: repeat(16, minmax(auto,55px));
 	grid-gap: 15px;
-	max-height: 200px;
 }
+
+@media only screen and (max-width: 1200px) {
+.cards {
+	grid-column: 2 / span 16;
+	display: grid;
+	grid-template-columns: repeat(12, minmax(auto,55px));
+	grid-gap: 15px;
+	}
+}
+
+@media only screen and (max-width: 930px) {
+	.cards {
+		grid-column: 2 / span 16;
+		display: grid;
+		grid-template-columns: repeat(10, minmax(auto,55px));
+		grid-gap: 15px;
+		}
+		.topnav {
+			border-radius: 10px;
+			background-color:#fff;
+			padding: 3px;
+			max-width: 930px;
+			margin: auto;
+			margin-top: 20px;
+			box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.10);
+		  }
+	}
 
 .card-product {
 	grid-column-end: span 4;
@@ -37,6 +68,7 @@ main {
 	cursor: pointer;
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.10);
 	transition: .3s;
+
 }
 
 .card-product:hover{
@@ -149,6 +181,8 @@ align-items: center;
   .badge-warning[href] {
 	background-color: #c67605;
   }
+
+    /* CART LABEL */
   #lblCartCount {
 	  font-size: 13px;
 	  background: #5CB85C;
@@ -197,7 +231,7 @@ align-items: center;
 	border-radius: 10px;
 	background-color:#fff;
 	padding: 3px;
-	width: 1200px;
+	max-width: 1200px;
 	margin: auto;
 	margin-top: 20px;
 	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.10);
@@ -336,4 +370,14 @@ align-items: center;
 	color: #fff;	
 }
 
+#btn-viewmore{
+	z-index: 999;
+}
 
+
+#search-product{
+	width: 250px;
+	border-radius: 20px;
+	border-color: #5CB85C;
+	border-width: 1px;
+}

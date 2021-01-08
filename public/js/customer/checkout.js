@@ -6,6 +6,19 @@ $(document).ready(function(){
         }
       });
 
+      getCarttotal();
+
+      function getCarttotal(){
+        $.ajax({
+            url:"/cart/getsubtotal",
+            type:"GET",
+            success:function(response){
+                console.log('cart total');
+                $('#cart-total').text('₱'+convertToMoneyFormat(response));
+            }         
+           });
+      }
+
 
 $('#contact-no').keyup(function(e)
 {

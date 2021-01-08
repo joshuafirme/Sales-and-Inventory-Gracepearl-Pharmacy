@@ -2,21 +2,19 @@
 
 @section('content')
 
-<div class="container-fluid center-items">
-
 <div class="container-fluid">
 
     <div class="topnav">
         <div class="row m-2">
-            <div class="product-category">All Products</div>
+            <div class="product-category">Products</div>
 
             <div class="ml-auto">
 
                 <div class="input-group">
-                    <input class="form-control border-secondary py-2" type="search" id="search-product" placeholder="Search Product...">
+                    <input class="form-control" type="search" id="search-product" placeholder="Search Product...">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">
-                            <i class="fa fa-search"></i>
+                        <button class="btn" type="button">
+                            <i class="fa fa-search" style="color:#5CB85C;"></i>
                         </button>
                     </div>
                 </div>
@@ -70,13 +68,19 @@
                     </div>
                 </div>
 
-                <div class="line"></div>
+                <div class="line mt-4 mb-3"></div>
 
                 
-                <label class="mt-3">Price range</label>
-                 <input type="range" class="custom-range" max={{ $maxPrice }} step="0.01" id="price_range_from">
-                 <input type="range" class="custom-range" max={{ $maxPrice }} step="0.01" id="price_range_to">
-                 <p> ₱ <span id="price_from"></span> - ₱ <span id="price_to"></span></p>
+                <label class="text-muted">Price Range</label>
+                <div class="d-flex align-items-center mt-0 pb-1">
+                   
+                      <input id="from" type="number" class="form-control mb-0" placeholder="min">         
+                   
+                    <p class="px-2 mb-0 text-muted"> - </p>
+                  
+                      <input id="to" type="number" class="form-control mb-0" placeholder="max">
+                 
+                </div>
 
              </div>
 
@@ -84,23 +88,15 @@
 
           <section class="cards" id="homepage-cards">
            <!-- load HTML and data here via ajax -->    
-           
+       
           </section>
-          <div class="card-product">
-
-            <button class="btn btn-sm btn-success m-auto" id="btn-viewmore"
-             style="border-radius: 20px; width:110px;">View more</button>
-        
-          </div>
+          
   </main>
   
  
 
     </div>
- 
 
-</div>
-   
 
       
 <!--loading Modal-->

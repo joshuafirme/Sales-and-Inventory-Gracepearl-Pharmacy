@@ -71,6 +71,8 @@ $(document).ready(function(){
     $('#edit_chk-Reports').prop('checked', false);
     $('#edit_chk-Maintenance').prop('checked', false);
     $('#edit_chk-User').prop('checked', false);
+    $('#edit_chk-manageorder').prop('checked', false);
+    $('#edit_chk-verifycustomer').prop('checked', false);
    }
 
   //edit show
@@ -107,7 +109,7 @@ $(document).ready(function(){
 
         for(var i = 0; i < modules_arr.length; i++)
         {
-          $('#edit_chk-'+modules_arr[i]).prop('checked', true);  
+          $('#edit_chk-'+modules_arr[i].replace(/\s/g, '')).prop('checked', true);  
         }    
       }
     });
@@ -133,6 +135,8 @@ $(document).ready(function(){
       modules[i] = $(this).val();
     });
     modules = modules.join(", ");
+
+    console.log(modules);
     
     $.ajax({
       url:"/maintenance/user/update",

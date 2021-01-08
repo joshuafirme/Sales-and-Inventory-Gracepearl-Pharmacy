@@ -90,6 +90,7 @@ Route::get('/sales/cashiering/getTransNo', 'Sales\SalesCtr@getCurrentTransacNo')
 Route::get('/sales/cashiering/getSalesInvNo', 'Sales\SalesCtr@getSalesInvNo');
 Route::get('/sales/cashiering/isInvoiceExist/{sales_inv_no}', 'Sales\SalesCtr@isInvoiceExist');
 Route::get('/cashiering/reciept/print', 'Sales\SalesCtr@pdf');
+Route::get('/cashiering/updateqty', 'Sales\SalesCtr@updateQty');
 Route::get('/cashiering/forgetcart', 'Sales\SalesCtr@forgetCart');
 
 // Sales report
@@ -210,7 +211,16 @@ Route::get('/inventory/return/displayreturn', 'Inventory\ReturnCtr@displayReturn
 Route::resource('/inventory/notification', 'Inventory\NotificationCtr');
 Route::get('/notification/getAllNotif', 'Inventory\NotificationCtr@getAllNotif');
 
+//REPORTS---------------------------------------------------------------------------------------------------------------
+Route::get('/reports/inventory', 'Reports\InventoryReportCtr@index');
+Route::get('/reports/stockadjustment', 'Reports\StockAdjustmentReportCtr@index');
+Route::get('/reports/purchasedorder', 'Reports\PurchasedOrderReportCtr@index');\
+Route::get('/reports/supplierdelivery', 'Reports\SupplierDeliveryReportCtr@index');
 
+
+
+
+Route::get('/pages/404', 'Pages@index');
 
 Auth::routes();
 

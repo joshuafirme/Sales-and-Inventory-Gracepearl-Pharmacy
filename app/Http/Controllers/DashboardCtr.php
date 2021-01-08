@@ -14,19 +14,10 @@ class DashboardCtr extends Controller
     private $table_unit = "tblunit";
 
     public function index(){
-        $this->isLoggedIn();
         
         $this->getSales();
         return view('/dashboard');
     }
-
-    public function isLoggedIn(){
-        if(session()->get('is-login') !== 'yes'){
-   
-           return redirect()->to('/admin-login')->send();
-        }
-    }
-
 
     public function getSales(){
 

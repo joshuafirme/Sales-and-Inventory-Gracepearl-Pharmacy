@@ -36,7 +36,7 @@
               <ul class="nav nav-tabs" id="myTab" role="tablist">
 
                 <li class="nav-item">
-                  <a class="nav-link  active" id="po-tab" data-toggle="tab" href="#potab" role="tab" aria-controls="contact" aria-selected="true">Purchase Orders   
+                  <a class="nav-link  active" id="po-tab" data-toggle="tab" href="#potab" role="tab" aria-controls="contact" aria-selected="true">Purchased Orders   
 
                   </a>
                 </li>

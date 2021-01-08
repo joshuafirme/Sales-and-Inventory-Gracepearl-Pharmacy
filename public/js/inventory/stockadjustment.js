@@ -61,7 +61,7 @@ $(document).on('click', '#btn-stockad', function(){
 
   //adjust
   $(document).on('click', '#btn-adjust', function(){
-    var product_code = $('#product_code_hidden').val();
+    var product_code = $('#product_code').text();
     var qty_to_adjust = $('#qty_to_adjust').val();
     var remarks = $('#remarks').val();
     var rdo_addless = $("input[name='rdo-addless']:checked").val();

@@ -95,13 +95,16 @@
                     <a href="#reports-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-file-contract"></i> Reports</a>
                     <ul class="collapse list-unstyled" id="reports-menu">
                         <li>
-                            <a href="blank.html"><i class="fas fa-cube"></i> Inventory Report</a>
+                            <a href="{{ url('/reports/inventory')}}"><i class="fas fa-cube"></i> Inventory Report</a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-file-invoice-dollar"></i> Stock Adjustment</a>
+                            <a href="{{ url('/reports/stockadjustment')}}"><i class="fas fa-file-invoice-dollar"></i> Stock Adjustment</a>
                         </li>
                         <li>
-                            <a href="500.html"><i class="fas fa-truck-moving"></i> Supplier Delivery</a>
+                            <a href="{{ url('/reports/purchasedorder')}}"><i class="fas fa-cart-arrow-down"></i> Purchase Order</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('/reports/supplierdelivery')}}"><i class="fas fa-truck-moving"></i> Supplier Delivery</a>
                         </li>
                         <li>
                             <a href="500.html"><i class="fas fa-radiation-alt"></i> Expired Products</a>
@@ -243,6 +246,12 @@
           <script src="{{asset('js/inventory/notification.js')}}"></script>
           <script src="{{asset('js/inventory/supplier_delivery.js')}}"></script>
           <script src="{{asset('js/inventory/return.js')}}"></script>
+
+           <!-- reports -->
+           <script src="{{asset('js/reports/inventory_report.js')}}"></script>
+           <script src="{{asset('js/reports/stockadjustment_report.js')}}"></script>
+           <script src="{{asset('js/reports/purchasedorder_report.js')}}"></script>
+           <script src="{{asset('js/reports/supplierdelivery_report.js')}}"></script>
 
           <!-- main - count all notifs and get user's name--> 
           <script src="{{asset('js/main.js')}}"></script>

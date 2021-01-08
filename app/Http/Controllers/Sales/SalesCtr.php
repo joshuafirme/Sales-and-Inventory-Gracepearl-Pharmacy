@@ -21,6 +21,8 @@ class SalesCtr extends Controller
 
     public function index()
     {
+       // dd(session()->get('cart'));
+      //  session()->forget('cart');
         $rights = new UserAccessRights;
 
         if(!($rights->isUserAuthorize($this->module)))
@@ -136,12 +138,14 @@ class SalesCtr extends Controller
         return $product;
     }
 
+    public function updateQty()
+    {
+        $product_code = Input::input('product_code');
+        $qty = Input::input('qty');
 
-    // remove item from cart
-    public function void($product_code){
-        $cart[$product_code]['qty'] --;
+        $cart[$product_code]['qty'] += $qty;
         session()->put('cart', $cart);
-        return redirect()->back();
+        return $cart;
     }
 
     public function getCurrentTransacNo(){
@@ -161,8 +165,12 @@ class SalesCtr extends Controller
        return $date = $this->getYear() . $this->getMonth() . $this->getDay();
     }
 
+    public function getDate(){
+        return $date = $this->getYear().'-'.$this->getMonth().'-'.$this->getDay();
+    }
+     
     public function getYear(){
-        return $year = date('yy');
+        return $year = date('yy')-100;
     }
 
     public function getMonth(){
@@ -170,8 +178,9 @@ class SalesCtr extends Controller
     }
 
     public function getDay(){
-        return $month = date('d');
+        return $day = date('d');
     }
+
 
     public function getSalesInvNo(){
         $sales_inv_no = DB::table($this->table_sales)
@@ -196,12 +205,12 @@ class SalesCtr extends Controller
 
         $isSenior = Input::input('senior_chk');
         $sales_inv_no = Input::input('sales_inv_no');
-        $senior_name = Input::input('senior_name');
+    //    $senior_name = Input::input('senior_name');
       //  $sales_inv_no = $this->getSalesInvNo();
 
         if($isSenior == 'yes'){
             $this->updateSales($sales_inv_no);
-            $this->recordSeniorInfo($senior_name, $sales_inv_no);
+         //   $this->recordSeniorInfo($senior_name, $sales_inv_no);
         }
         else if($isSenior == 'no'){
             $this->updateSales($sales_inv_no);
@@ -276,7 +285,7 @@ class SalesCtr extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($output);
         $pdf->setPaper('A5', 'portrait');
-        return $pdf->stream('INV-#'.$this->getSalesInvNo().'.pdf');
+        return $pdf->stream('Invoice-#'.$this->getSalesInvNo().'.pdf');
     }
 
     public function salesInvoice(){
@@ -449,8 +458,5 @@ class SalesCtr extends Controller
         return $output;
     }
 
-    public function getDate(){
-        $date = date('yy-m-d');
-        return $date;
-    }
+
 }

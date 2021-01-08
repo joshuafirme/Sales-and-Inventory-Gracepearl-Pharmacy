@@ -153,7 +153,6 @@
                           <th>Price</th>
                           <th>Qty</th>
                           <th>Amount</th>
-                          <th>Action</th>
                       </tr>
                   </thead>
            
@@ -166,22 +165,23 @@
                         <td>{{ $product_code }}</td>
                         <td>{{ $details['description'] }}</td>
                         <td>₱ {{ number_format($details['unit_price'], 2, '.', '') }}</td>
-                        <td>{{ $details['qty'] }}</td>
+                        <td>
+                          <input type="number" value="{{ $details['qty'] }}" id="cashiering-qty"
+                           product-code={{ $product_code }} style="width: 50px;">
+                        </td>
                         <?php 
                         $sub_total = $details['qty'] * $details['unit_price'];
                         $total += $sub_total;
                          ?> 
                         <td>₱ {{ number_format($sub_total, 2, '.', '') }}</td>
-                          <td>
-                            <a class="btn btn-sm" id="void" product-code="{{ $product_code }}" data-toggle="modal" data-target="#voidModal"><u style="color: #303E9F;">Void</u></a>
-                          </td>
+                       
                       </tr>  
                                  
                       @endforeach
                       <td>
                         <input type="hidden" id="total_hidden" value={{ $total }}>
                       </td>
-                      <td></td>    <td></td>    <td></td>    <td></td>    <td></td>    <td></td>
+                      <td></td>    <td></td>    <td></td>    <td></td>
                       @endif                 
                   </tbody>
              

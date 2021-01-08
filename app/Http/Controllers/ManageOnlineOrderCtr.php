@@ -16,9 +16,15 @@ class ManageOnlineOrderCtr extends Controller
     private $tbl_ol_order = "tblonline_order";
     private $tbl_cust_acc = "tblcustomer_account";
     private $tbl_ship_add = "tblshipping_add";
+    private $module = "Manage Online Order";
 
     public function index(){
-       // session()->forget('order-total-amount');
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
         return view('/manageonlineorder/manage_online_order');
     }
 

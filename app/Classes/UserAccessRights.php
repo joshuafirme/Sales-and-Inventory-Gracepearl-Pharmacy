@@ -7,11 +7,17 @@ class UserAccessRights {
 
     private $table_emp = "tblemployee";
 
-    public function create() {
-     //   dd('hello!');
+    public function isLoggedIn(){
+        if(session()->get('is-login') !== 'yes'){
+   
+           return redirect()->to('/admin-login')->send();
+        }
     }
 
     public function isUserAuthorize($module){
+
+        $this->isLoggedIn();
+        
         $emp = DB::table($this->table_emp)
         ->where([
             ['username', session()->get('emp-username')],

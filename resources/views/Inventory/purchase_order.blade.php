@@ -45,7 +45,7 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orderstab" role="tab" aria-controls="contact" aria-selected="true">Purchase Orders   
+                  <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orderstab" role="tab" aria-controls="contact" aria-selected="true">Purchased Orders   
 
                   </a>
                 </li>

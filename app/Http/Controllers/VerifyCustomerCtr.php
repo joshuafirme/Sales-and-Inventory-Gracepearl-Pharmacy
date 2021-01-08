@@ -5,14 +5,21 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Input;
+use App\Classes\UserAccessRights;
 
 class VerifyCustomerCtr extends Controller
 {
     private $tbl_cust_ver = "tblcustomer_verification";
     private $tbl_cust_acc = "tblcustomer_account";
+    private $module = "Verify Customer";
 
     public function index(){
+        $rights = new UserAccessRights;
 
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
         $fvc = $this->forValidationCustomer();
 
         if(request()->ajax())

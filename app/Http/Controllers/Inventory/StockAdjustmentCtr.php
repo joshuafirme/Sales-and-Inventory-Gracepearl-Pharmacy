@@ -89,14 +89,14 @@ class StockAdjustmentCtr extends Controller
 
     public function updateStock($action, $product_code, $qtyAdjusted){
         if($action == 'add'){ 
-            DB::table($this->table_prod)
-            ->where('id', $product_code)
+            DB::table($this->table_prod.' AS P')
+            ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
             ->update(array(
                 'qty' => DB::raw('qty + '. $qtyAdjusted .'')));
         }
         else if($action == 'less'){
-            DB::table($this->table_prod)
-            ->where('id', $product_code)
+            DB::table($this->table_prod.' AS P')
+            ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
             ->update(array(
                 'qty' => DB::raw('qty - '. $qtyAdjusted .'')));
         }

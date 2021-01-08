@@ -65,6 +65,16 @@
                  </div>
 
                  <div class="form-check col-md-4">
+                  <input type="checkbox" class="form-check-input" id="chk-sales" name="chk-module[]" value="Manage Online Order">
+                  <label class="form-check-label">Manage Online Order</label>
+                 </div>
+
+                <div class="form-check col-md-4">
+                  <input type="checkbox" class="form-check-input" id="chk-sales" name="chk-module[]" value="Verify Customer">
+                  <label class="form-check-label">Verify Customer</label>
+                </div>
+
+                 <div class="form-check col-md-4">
                     <input type="checkbox" class="form-check-input" id="chk-inventory" name="chk-module[]" value="Inventory">
                     <label class="form-check-label">Inventory</label>
                  </div>
@@ -173,6 +183,16 @@
                     <input type="checkbox" class="form-check-input" id="edit_chk-Sales" name="chk-module[]" value="Sales">
                     <label class="form-check-label">Sales</label>
                  </div>
+
+                 <div class="form-check col-md-4">
+                  <input type="checkbox" class="form-check-input" id="edit_chk-ManageOnlineOrder" name="chk-module[]" value="Manage Online Order">
+                  <label class="form-check-label">Manage Online Order</label>
+                 </div>
+
+                <div class="form-check col-md-4">
+                  <input type="checkbox" class="form-check-input" id="edit_chk-VerifyCustomer" name="chk-module[]" value="Verify Customer">
+                  <label class="form-check-label">Verify Customer</label>
+                </div>
 
                  <div class="form-check col-md-4">
                     <input type="checkbox" class="form-check-input" id="edit_chk-Inventory" name="chk-module[]" value="Inventory">

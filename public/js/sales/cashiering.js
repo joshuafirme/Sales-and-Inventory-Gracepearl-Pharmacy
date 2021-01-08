@@ -124,9 +124,24 @@ $(document).ready(function(){
          
         }
 
-        $('#void').click(function(){
+        $('#cashiering-qty').change(function()
+        {
+          qty = $(this).val();
           product_code = $(this).attr('product-code');
-          console.log(product_code);
+          console.log(product_code +' and '+qty);
+          $.ajax({
+            url:"/cashiering/updateqty",
+            type:"GET",
+            data:{
+              product_code:product_code,
+              qty:qty
+            },
+            success:function(response){
+              console.log(response);
+            //  $('#sales-invoice-no').val(response);
+              
+            }
+          });
        
         });
        
@@ -213,11 +228,11 @@ $(document).ready(function(){
    
         var senior_chk = $('#senior-chk').val();
         var sales_inv_no= $('#sales-invoice-no').val();
-        var senior_name = $('#senior-name').val();
+    //    var senior_name = $('#senior-name').val();
 
         console.log(senior_chk);
         console.log(sales_inv_no);
-        console.log(senior_name);
+     //   console.log(senior_name);
 
         if($('#senior-chk').prop('checked') == true){
           senior_chk = 'yes';
@@ -244,7 +259,7 @@ $(document).ready(function(){
                     type:"GET",
                     data:{
                       sales_inv_no:sales_inv_no,
-                      senior_name:senior_name,
+                   //   senior_name:senior_name,
                       senior_chk:senior_chk
                     },
                     beforeSend:function(){

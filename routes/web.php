@@ -211,6 +211,9 @@ Route::get('/inventory/return/displayreturn', 'Inventory\ReturnCtr@displayReturn
 Route::resource('/inventory/notification', 'Inventory\NotificationCtr');
 Route::get('/notification/getAllNotif', 'Inventory\NotificationCtr@getAllNotif');
 
+//Drug Disposal
+Route::get('/inventory/drugdisposal', 'Inventory\DrugDisposalCtr@index');
+
 //REPORTS---------------------------------------------------------------------------------------------------------------
 Route::get('/reports/inventory', 'Reports\InventoryReportCtr@index');
 

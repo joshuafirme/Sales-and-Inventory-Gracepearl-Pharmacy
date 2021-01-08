@@ -193,13 +193,7 @@
             <section class="content">
                 <div class="container-fluid">               
                     @yield('content')
-                    <footer>
-                        <div class="container-fluid">
-                            <div class="row mt-4">
-                                <p class="ml-auto label-small text-muted mr-4">© 2021 Gracepearl Pharmacy. All Rights Reserved</p>
-                            </div>
-                        </div>
-                    </footer>
+                
           </div>
           <script>
           function logout(){
@@ -252,6 +246,7 @@
           <script src="{{asset('js/inventory/notification.js')}}"></script>
           <script src="{{asset('js/inventory/supplier_delivery.js')}}"></script>
           <script src="{{asset('js/inventory/return.js')}}"></script>
+          <script src="{{asset('js/inventory/drug_disposal.js')}}"></script>
 
            <!-- reports -->
            <script src="{{asset('js/reports/inventory_report.js')}}"></script>

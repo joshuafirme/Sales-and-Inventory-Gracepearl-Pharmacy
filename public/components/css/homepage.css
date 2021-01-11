@@ -29,6 +29,7 @@ main {
 	display: grid;
 	grid-template-columns: repeat(16, minmax(auto,55px));
 	grid-gap: 15px;
+	max-height: 300px;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -38,6 +39,9 @@ main {
 	grid-template-columns: repeat(12, minmax(auto,55px));
 	grid-gap: 15px;
 	}
+	.topnav {		
+		width: 1095px;		
+	  }
 }
 
 @media only screen and (max-width: 930px) {
@@ -47,14 +51,8 @@ main {
 		grid-template-columns: repeat(10, minmax(auto,55px));
 		grid-gap: 15px;
 		}
-		.topnav {
-			border-radius: 10px;
-			background-color:#fff;
-			padding: 3px;
-			max-width: 930px;
-			margin: auto;
-			margin-top: 20px;
-			box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 0 0 0 rgba(0, 0, 0, 0.10);
+		.topnav {		
+			width: 825px;		
 		  }
 	}
 
@@ -372,6 +370,9 @@ align-items: center;
 
 #btn-viewmore{
 	z-index: 999;
+	margin-bottom: 100px;
+	margin-top: 30px;
+	margin-left: 405px;
 }
 
 

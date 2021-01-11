@@ -188,7 +188,7 @@
         </div>
        
         <?php $subtotal = 0; $total = 0; ?>
-        @if(session('orders')) 
+        @if(session('purchase-orders')) 
         <table class="table responsive table-hover" id="order-table">                               
           <thead>
             <tr>
@@ -207,7 +207,7 @@
             <tbody>
               <tr>
               
-                        @foreach(session('orders') as $product_code => $details)
+                        @foreach(session('purchase-orders') as $product_code => $details)
                         <td>{{ $product_code }}</td>
                         <td>{{ $details['description'] }}</td>
                         <td>{{ $details['supplier'] }}</td>
@@ -489,8 +489,8 @@
       </div>
       <div class="modal-footer">
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-        <button class="btn btn-sm btn-outline-dark" type="button" name="ok_button" id="ok_button">Yes</button>
-        <button class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+        <button class="btn btn-sm btn-outline-dark" type="button" name="ok_button" id="ok-button">Yes</button>
+        <button class="btn btn-sm btn-danger" data-dismiss="modal" id="cancel-delete">Cancel</button>
       </div>
     </div>
   </div>

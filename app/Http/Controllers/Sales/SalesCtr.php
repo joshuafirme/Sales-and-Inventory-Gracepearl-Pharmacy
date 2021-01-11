@@ -138,14 +138,38 @@ class SalesCtr extends Controller
         return $product;
     }
 
-    public function updateQty()
+    public function void()
     {
         $product_code = Input::input('product_code');
-        $qty = Input::input('qty');
-
-        $cart[$product_code]['qty'] += $qty;
+        $cart = session()->get('cart');
+        if(isset($cart[$product_code])){
+            unset($cart[$product_code]);  
+        }
         session()->put('cart', $cart);
-        return $cart;
+        return redirect()->back();
+    }
+
+    public function credentialBeforeVoid(){
+
+        $username = Input::input('username');
+        $password = Input::input('password');
+
+        $emp = DB::table($this->table_emp)
+        ->where([
+            ['username', $username],
+            ['password', $password],
+            ['position', 'Administrator']
+        ])
+        ->get();
+        
+        
+
+        if($emp->count() > 0){
+            return 'success';
+        }
+        else{
+            return 'invalid';
+        }
     }
 
     public function getCurrentTransacNo(){

@@ -18,7 +18,9 @@
           <div class="card-body card-cart">
   
             <h5 class="mb-4">Checkout (<span class="count-cart"></span> items)</h5>
-  
+            
+            <!-- check is cart is empty -->
+            @if($cart !== null)
             @foreach($cart as $data)
             <div class="row mb-4">
               <div class="col-md-5 col-lg-3 col-xl-3">
@@ -56,9 +58,56 @@
                   </div>
                 </div>
               </div>
-            </div>      
+            </div>  
+            
             <hr class="mb-4">
             @endforeach
+
+            @else
+            <!-- if cart is empty, then fetch session array -->
+            @if(session('buynow-item'))
+            @foreach(session('buynow-item') as $product_code => $details)
+            <div class="row mb-4">
+              <div class="col-md-5 col-lg-3 col-xl-3">
+                <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                    @if(!$details['image'])
+                    <img src="../assets/noimage.png" class="img-fluid w-50">
+                    @else
+                    <img  src="../../storage/{{ $details['image'] }}" class="img-fluid w-50" alt="...">
+                    @endif
+              
+                </div>
+              </div>
+              
+           
+              <div class="col-md-7 col-lg-9 col-xl-9">
+                <div>
+                  
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <p>{{ $details['description'] }}</p>
+                      <p class="mb-3 text-muted text-uppercase small">Category - {{ $details['category'] }}</p>
+                      <p class="mb-3 text-muted text-uppercase small">Unit type - {{ $details['unit'] }}</p>
+                    </div>
+                    <div>
+                        <div class="def-number-input number-input safari_only mb-0 w-100">
+
+                            <a class="mr-2">Qty: {{ $details['qty'] }} </a>
+                            <p class="mt-2"><span class="text-success">₱{{ $details['amount'] }}</span></p>
+                          </div>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                
+                    
+                  </div>
+                </div>
+              </div>
+            </div> 
+            @endforeach
+            @endif
+            @endif
+           
   
           </div>
         </div>

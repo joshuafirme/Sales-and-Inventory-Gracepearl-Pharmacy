@@ -30,23 +30,25 @@
             ->get();   
             ?>  
             <div class="row">
-                <h5 class="mb-0 ml-3">Order # <a href="" style="color: #4472C4;">{{ $o->pr_order_no }}</a></h5>
+                <h5 class="mb-0 ml-3">Order # <span style="color: #2A2F6E;">{{ $o->pr_order_no }}</span></h5>
                 <?php 
                 $order_status = DB::table('tblonline_order')
                 ->where('order_no', $o->order_no)
                 ->value('status');
-                 ?>
-                @if($order_status == 'Payment pending')
-                <button class="btn btn-sm btn-success ml-auto mr-3" order-number={{ $o->order_no }}>Pay now ></button>             
-                @endif
 
-                <?php 
-                   $placed_on = DB::table('tblonline_order')
+                $p = DB::table('tblonline_order')
                     ->where('order_no', $o->order_no)
                     ->orderBy('order_no', 'desc')
                     ->first();
-                  ?>
-                <p class="col-12 m-0">Placed on {{$placed_on->created_at}}<span></span></p>
+                 ?>
+                @if($order_status == 'Payment pending')
+                <button class="btn btn-sm btn-success ml-auto mr-3" order-number={{ $o->order_no }}>Pay now ></button> 
+                @else
+                
+                <p class="ml-auto mr-3 label-small" style="color: #2A2F6E;">Payment Method: {{ $p->payment_method }}</p>         
+                @endif
+
+                <p class="col-12 mt-0 label-small">Placed on {{ $p->created_at }}<span></span></p>
           
             </div>
            
@@ -82,7 +84,7 @@
                         <a class="mr-2">{{ $data->status }} </a><br>
                    
                         <a class="mr-2">Qty: {{ $data->qty }} </a>
-                        <p class="mt-2"><span class="text-success">₱{{ $data->amount }}</span></p>       
+                        <p class="mt-2"><span class="text-success">₱{{ $data->amount }}</span></p>    
                           
                     </div>
                   </div>

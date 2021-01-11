@@ -33,6 +33,39 @@
   
           <div class="card">
             <div class="card-body">
+
+              <div class="row">
+
+                <div class="mt-2 ml-3">
+                   Date Delivered
+                  </div>              
+                
+                <div class="col-sm-2 mb-3">
+                  <input data-column="9" type="date" class="form-control" name="sales_date_from" id="sales_date_from" value="">
+                  </div>
+
+                  <div class="mt-2">
+                    -
+                    </div>
+      
+                  <div class="col-sm-2 mb-3">
+                    <input data-column="9" type="date" class="form-control" name="sales_date_to" id="sales_date_to" value="">
+                    </div>
+
+                    <div class="mt-2 ml-4">
+                      Supplier
+                    </div>
+
+                    <div class="col-sm-2 mb-3">
+                      <select data-column="4" class=" form-control col-sm-12" name="sales_category" id="sales_category">
+                        <option value="All">All</option>
+                  
+                      </select>
+                      </div>
+
+
+               </div>
+
                 <table class="table responsive table-hover" id="supplierdelivery-report-table" width="100%">                               
                     <thead>
                       <tr>

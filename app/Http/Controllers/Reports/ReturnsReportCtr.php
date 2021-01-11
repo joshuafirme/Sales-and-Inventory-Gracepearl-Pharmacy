@@ -16,7 +16,7 @@ class ReturnsReportCtr extends Controller
     private $tbl_return = "tblreturn_change";
     private $module = "Reports";
 
-    public function index(){
+    public function index(Request $request){
         $rights = new UserAccessRights;
 
         if(!($rights->isUserAuthorize($this->module)))
@@ -24,7 +24,7 @@ class ReturnsReportCtr extends Controller
             $rights->notAuthMessage();
         }
 
-        $get_returns = $this->getReturns();
+        $get_returns = $this->getReturns($request->date_from, $request->date_to);
         
         if(request()->ajax())
         {       
@@ -32,19 +32,36 @@ class ReturnsReportCtr extends Controller
             ->make(true);            
         }
         
-        return view('reports/returns_report');
+        return view('reports/returns_report',['currentDate' => $this->getDate()]);
     }
 
 
-    public function getReturns(){
-        $ret = DB::table($this->tbl_return)
-        ->select($this->tbl_return.".*", DB::raw('CONCAT('.date('y').', '.$this->tbl_return.'.id) AS returnID, DATE_FORMAT(date,"%d-%m-%Y") as date, description, unit, supplierName, category_name'))
-        ->leftJoin($this->tbl_prod,  DB::raw('CONCAT('.$this->tbl_prod.'._prefix, '.$this->tbl_prod.'.id)'), '=', $this->tbl_return . '.product_code')
-        ->leftJoin($this->tbl_suplr, $this->tbl_suplr . '.id', '=', $this->tbl_prod . '.supplierID')
-        ->leftJoin($this->tbl_cat, $this->tbl_cat . '.id', '=', $this->tbl_prod . '.categoryID')
-        ->leftJoin($this->tbl_unit, $this->tbl_unit . '.id', '=', $this->tbl_prod . '.unitID')
+    public function getReturns($date_from, $date_to){
+        $ret = DB::table($this->tbl_return.' AS R')
+        ->select("R.*", DB::raw('CONCAT('.date('y').', R.id) AS returnID, DATE_FORMAT(date,"%d-%m-%Y") as date, description, unit, supplierName, category_name'))
+        ->leftJoin($this->tbl_prod.' AS P',  DB::raw('CONCAT(P._prefix, P.id)'), '=', 'R.product_code')
+        ->leftJoin($this->tbl_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->tbl_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->tbl_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereBetween('R.created_at', [$date_from, $date_to])
         ->get();
 
         return $ret;
+    }
+
+    public function getDate(){
+        return $date = $this->getYear().'-'.$this->getMonth().'-'.$this->getDay();
+    }
+     
+    public function getYear(){
+        return $year = date('yy')-100;
+    }
+
+    public function getMonth(){
+        return $month = date('m');
+    }
+
+    public function getDay(){
+        return $month = date('d');
     }
 }

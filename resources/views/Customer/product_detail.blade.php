@@ -50,11 +50,27 @@
                     
                     <h5 class="mt-3" id="details-description">{{ $data->description }}</h5>
                
-                    <p><h4 class="mr-1 text-success">₱{{ number_format($data->selling_price) }}</h4></p>
-                    <button type="button" class="btn btn-sm card__btn-buy mr-1 mb-2">Buy now</button>
+                    <p><h4 class="mr-1 text-success">₱<span id="price-buynow">{{ number_format($data->selling_price) }}</span></h4></p>
+                    <button type="button" class="btn btn-sm card__btn-buy mr-1 mb-2" id="btn-buynow" product-code={{ $data->product_code }}>Buy now</button>
                     <button type="button" class="btn btn-sm card__btn-buy-now mr-1 mb-2" id="btn-add-to-cart" product-code={{ $data->product_code }}>
                         <i class="fas fa-cart-plus"></i> Add to cart</button>
+                    
+                        <!-- QTY -->
+                        <div class="def-number-input number-input safari_only mt-2 w-100">
+                            <button class="btn btn-sm"
+                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                              class="minus"><i class="fas fa-minus"></i></button>
+
+                            <input class="quantity" min="1" id="qty-buynow" value="1" type="number"
+                             style="width: 40px;">
+
+                            <button class="btn btn-sm"
+                              onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                              class="plus"><i class="fas fa-plus"></i></button>
+                          </div>
+                        <!-- END QTY -->
                         <hr>
+                        
                         <div class="table-responsive pt-1">
                             <table class="table table-sm table-borderless mb-0">
                                 <tbody>

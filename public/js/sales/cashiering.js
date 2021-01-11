@@ -124,32 +124,17 @@ $(document).ready(function(){
          
         }
 
-        $('#cashiering-qty').change(function()
-        {
-          qty = $(this).val();
-          product_code = $(this).attr('product-code');
-          console.log(product_code +' and '+qty);
-          $.ajax({
-            url:"/cashiering/updateqty",
-            type:"GET",
-            data:{
-              product_code:product_code,
-              qty:qty
-            },
-            success:function(response){
-              console.log(response);
-            //  $('#sales-invoice-no').val(response);
-              
-            }
-          });
        
-        });
        
         //compute change
         function computeChange(){
           var tendered  =  $('#tendered').val();
           var total_amount_due  = $('#total-amount-due').val();                         
           var change = parseFloat(tendered) - parseFloat(total_amount_due);
+          if(change == 0 || change == undefined){
+            change = 0;
+            console.log('change');
+          }
           $('#change').val(change.toFixed(2));
         }
 
@@ -172,6 +157,80 @@ $(document).ready(function(){
       
       }); 
       */
+
+
+     $('#show-void-modal').click(function()
+     {   
+      $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+
+        var product_code = $(this).attr('product-code');
+        console.log(product_code);
+        $('#product-code-hidden').val(product_code);
+    
+      });  
+
+          // void product
+      $('#btn-void').click(function()
+      {   
+      //  $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+          credentialBeforeVoid();
+      });
+      
+      function voidItem() {
+        var product_code = $('#product-code-hidden').val();
+        console.log(product_code);
+        $.ajax({
+          url:"/cashiering/void",
+          type:"GET",
+          data:{
+            product_code:product_code
+          },
+          beforeSend:function(){
+            $('#btn-void').text('Please wait...');
+            $('.loader').css('display', 'inline');
+          },
+          success:function(){
+            setTimeout(function () {
+              $('.update-success-validation').css('display', 'inline');
+              $('#btn-void').text('Void');
+              $('.loader').css('display', 'none');
+              $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+
+              
+              computeTotalAmountDue();
+              computeChange();
+            },500);
+          }
+        });
+      }
+
+      function credentialBeforeVoid() {
+        var username = $('#admin-username').val();
+        var password = $('#admin-password').val();
+        if(username == '' || password == ''){
+          alert('Please input admin credential!');
+        }
+        else{
+          $.ajax({
+            url:"/cashiering/credential",
+            type:"POST",
+            data:{
+              username:username,
+              password:password
+            },
+            success:function(response){
+              console.log(response);
+                if(response == 'success'){
+                  voidItem();
+                }
+                else{
+                  alert('Invalid credential!');
+                }
+            }
+          });
+        }
+        
+      }
               
         //get sales inv and pass to input
         function getSalesInvoice(){

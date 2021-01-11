@@ -24,6 +24,7 @@ class PurchaseOrderCtr extends Controller
 
     public function index(Request $request)
     {
+
         $rights = new UserAccessRights;
 
         if(!($rights->isUserAuthorize($this->module)))
@@ -108,7 +109,6 @@ class PurchaseOrderCtr extends Controller
         $email = Input::input('supplier_email');
         Mail::to($email)
         ->send(new MyMail($data));
-        
         // after email sent, it will automatically save orders to database
         $this->recordOrder();
     }
@@ -192,7 +192,7 @@ class PurchaseOrderCtr extends Controller
         $price = Input::input('price');
         $amount = Input::input('amount');
 
-        $orders = session()->get('orders');
+        $orders = session()->get('purchase-orders');
         if(!$orders) {
             $orders = [
                 $product_code => [
@@ -206,13 +206,13 @@ class PurchaseOrderCtr extends Controller
                     ]
             ];
             
-            session()->put('orders', $orders);
+            session()->put('purchase-orders', $orders);
             return redirect()->back()->with('success', 'Product added to order successfully!');
         }
 
         if(isset($orders[$product_code])) {
             $orders[$product_code]['qty_order'] += $qty_order;
-            session()->put('orders', $orders);
+            session()->put('purchase-orders', $orders);
             return redirect()->back()->with('success', 'Product added to orders successfully!');
         }
         
@@ -227,7 +227,7 @@ class PurchaseOrderCtr extends Controller
             "amount" => $amount
         ];
     
-        session()->put('orders', $orders);
+        session()->put('purchase-orders', $orders);
 
 
         return redirect()->back()->with('success', 'Product added to cart successfully!');
@@ -237,8 +237,8 @@ public function recordOrder(){
     $sub_total = 0;
     $total_amount = 0;
     $po_num = $this->getPONum();
-    if(session()->get('orders')){
-        foreach (session()->get('orders') as $product_code => $data) {
+    if(session()->get('purchase-orders')){
+        foreach (session()->get('purchase-orders') as $product_code => $data) {
 
             $sub_total = $data['qty_order'] * $data['price'];
             $total_amount += $sub_total;
@@ -249,13 +249,13 @@ public function recordOrder(){
             $po->product_code = $product_code;
             $po->qty_order = $data['qty_order'];
             $po->amount = $sub_total;       
-            $po->date = date('yy-m-d');  
+            $po->date = $this->getDate();  
             $po->status = 'Pending';    
             $po->save();     
         } 
     }
     // remove request orders after save to PO database
-    session()->forget('orders');
+    session()->forget('purchase-orders');
 }
 
 public function getPONum(){
@@ -269,17 +269,21 @@ public function getPrefix(){
     return $date = $this->getMonth() . $this->getDay();
  }
 
- public function getYear(){
-     return $year = date('y');
- }
+ public function getDate(){
+    return $date = $this->getYear().'-'.$this->getMonth().'-'.$this->getDay();
+}
+ 
+public function getYear(){
+    return $year = date('yy')-100;
+}
 
- public function getMonth(){
-     return $month = date('m');
- }
+public function getMonth(){
+    return $month = date('m');
+}
 
- public function getDay(){
-     return $month = date('d');
- }
+public function getDay(){
+    return $month = date('d');
+}
 
 public function pdf(){
 
@@ -309,7 +313,7 @@ public function convertProductDataToHTML(){
     <div style="width:100%">
     <p style="text-align:right;">Date: '. $this->getDate() .'</p>
     
-    <h2 style="text-align:center;">Request Order</h2>
+    <h2 style="text-align:center;">Purchase Order</h2>
 
     <table width="100%" style="border-collapse:collapse; border: 1px solid;">
                   
@@ -327,8 +331,8 @@ public function convertProductDataToHTML(){
     ';
     $total_amount = 0;
     $sub_total = 0;
-    if(session()->get('orders')){
-        foreach (session()->get('orders') as $product_code => $data) {
+    if(session()->get('purchase-orders')){
+        foreach (session()->get('purchase-orders') as $product_code => $data) {
         
             $sub_total = $data['qty_order'] * $data['price'];
             $total_amount += $sub_total;
@@ -361,9 +365,6 @@ public function convertProductDataToHTML(){
     return $output;
 }
 
-public function getDate(){
-    $date = date('m-d-yy');
-    return $date;
-}
+
 
 }

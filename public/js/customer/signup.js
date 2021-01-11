@@ -17,6 +17,7 @@ $(document).ready(function(){
         if(is_valid){
             signUp(fullname, phone_no, password);
         }
+      
     });
 
     function validateInputs(fullname, phone_no, password, confirm_password) {

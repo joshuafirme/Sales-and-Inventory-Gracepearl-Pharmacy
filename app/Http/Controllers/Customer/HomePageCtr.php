@@ -23,7 +23,8 @@ class HomePageCtr extends Controller
         return view('/customer/homepage', 
         [
           'products' => $this->getAllProduct(),
-          'maxPrice' => $this->getMaxPrice()
+          'maxPrice' => $this->getMaxPrice(),
+          'minPrice' => $this->getMinPrice()
           ]);
       }
 
@@ -45,8 +46,8 @@ class HomePageCtr extends Controller
         $product = DB::table($this->table_prod.' AS P')
         ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
         ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-          ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-          ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
         ->whereRaw('exp_date >= CURDATE()')
         ->limit(8)
         ->get();
@@ -59,6 +60,8 @@ class HomePageCtr extends Controller
     public function searchProduct($search_key)
     {
         $categories = Input::input('categories');
+        $min_price = Input::input('min_price');
+        $max_price = Input::input('max_price');
         $limit = Input::input('limit');
         $cat_arr = explode(', ',$categories);
         $cat_imp = implode('", "', $cat_arr);
@@ -76,6 +79,7 @@ class HomePageCtr extends Controller
           ->whereRaw('exp_date >= CURDATE()')
           ->where('description', 'LIKE', '%'.$search_key.'%')
           ->whereRaw('C.category_name IN ("'.$cat_imp.'")')
+          ->whereBetween('selling_price', [$min_price, $max_price])
           ->limit($limit)
           ->get();
         }
@@ -101,6 +105,13 @@ class HomePageCtr extends Controller
     public function getMaxPrice(){
       $price = DB::table($this->table_prod)
       ->max('selling_price');
+
+      return $price;      
+    } 
+
+    public function getMinPrice(){
+      $price = DB::table($this->table_prod)
+      ->min('selling_price');
 
       return $price;      
     } 

@@ -52,7 +52,7 @@ $(document).ready(function(){
    
    $('#ok-button').click(function(){
        $.ajax({
-           url: '/inventory/dispose/'+ id,
+           url: '/inventory/drugdisposal/dispose/'+ id,
            type: 'DELETE',
          
            beforeSend:function(){

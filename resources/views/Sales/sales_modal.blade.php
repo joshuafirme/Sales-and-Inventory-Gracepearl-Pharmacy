@@ -11,27 +11,30 @@
       </div>
       <div class="modal-body">
 
-        <form action="" method="POST">
         <div class="container-fluid">
           <div class="row">
-            {{ csrf_field() }}
+
+              <input type="hidden" id="product-code-hidden">
 
               <label class="col-form-label">Username</label>
-              <input type="text" class="form-control mb-2" n required>
+              <input type="text" class="form-control mb-2" id="admin-username">
             
               <label class="col-form-label">Password</label>
-              <input type="text" class="form-control"  required>
+              <input type="password" class="form-control" id="admin-password">
             
           </div>
         </div>  
 
       </div>
       <div class="modal-footer">
+          <div class="update-success-validation mr-auto ml-3" style="display: none">
+            <label class="label text-success">Product is successfully voided</label>    
+          </div> 
+          <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
 
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-sm btn-danger" id="btn-void">Void</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-sm btn-danger" id="btn-void">Void</button>
       </div>
-    </form>
     </div>
   </div>
 </div>

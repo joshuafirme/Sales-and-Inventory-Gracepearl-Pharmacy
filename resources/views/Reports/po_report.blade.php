@@ -33,6 +33,40 @@
   
           <div class="card">
             <div class="card-body">
+
+              <div class="row">
+
+                <div class="mt-2 ml-3">
+                   Date Purchased
+                  </div>              
+                
+                <div class="col-sm-2 mb-3">
+                  <input data-column="9" type="date" class="form-control" id="date_from" value="{{ $currentDate }}">
+                  </div>
+
+                  <div class="mt-2">
+                    -
+                    </div>
+      
+                  <div class="col-sm-2 mb-3">
+                    <input data-column="9" type="date" class="form-control" id="date_to" value="{{ $currentDate }}">
+                    </div>
+
+                    <div class="mt-2 ml-4">
+                      Supplier
+                    </div>
+
+                    <div class="col-sm-2 mb-3">
+                      <select class=" form-control col-sm-12" name="supplier" id="supplier">
+                          <option value="All Supplier">All Supplier</option>
+                          @foreach($suplr as $data)
+                          <option value={{ $data->supplierName }}>{{ $data->supplierName }}</option>
+                          @endforeach
+                      </select>
+                    </div>
+
+               </div>
+
                 <table class="table responsive table-hover" id="po-report-table" width="100%">                               
                     <thead>
                       <tr>

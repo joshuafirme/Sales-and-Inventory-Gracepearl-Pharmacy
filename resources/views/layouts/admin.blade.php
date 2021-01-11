@@ -118,6 +118,9 @@
                         <li>
                             <a href="{{ url('/reports/returns')}}"><i class="fas fa-hand-holding"></i> Returns</a>
                         </li>
+                        <li>
+                            <a href="{{ url('/reports/audittrail')}}"><i class="fas fa-clipboard-list"></i> Audit Trail</a>
+                        </li>
                     </ul>
                 </li>
                 <li>
@@ -257,6 +260,7 @@
            <script src="{{asset('js/reports/reorder_report.js')}}"></script>
            <script src="{{asset('js/reports/fast_slow_moving_report.js')}}"></script>
            <script src="{{asset('js/reports/expired_report.js')}}"></script>
+           <script src="{{asset('js/reports/audit_report.js')}}"></script>
 
           <!-- main - count all notifs and get user's name--> 
           <script src="{{asset('js/main.js')}}"></script>

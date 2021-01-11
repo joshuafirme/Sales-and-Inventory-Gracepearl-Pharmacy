@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use PDF;
 use Storage;
 use App\Classes\UserAccessRights;
+use App\Classes\AuditTrailHelper;
 
 class ProductMaintenanceCtr extends Controller
 {
@@ -119,7 +120,8 @@ class ProductMaintenanceCtr extends Controller
      */
     public function store(Request $request)
     {
-        $summernote_val = Input::input('summernote_val');
+        $audit = new AuditTrailHelper;
+        $audit->recordAction($this->module, 'Add product');
         $product = new ProductMaintenance;
 
         $product->_prefix = $this->getPrefix();
@@ -166,6 +168,8 @@ class ProductMaintenanceCtr extends Controller
 
     public function updateProduct(Request $request)
     {
+        $audit = new AuditTrailHelper;
+        $audit->recordAction($this->module, 'Update product');
         $product = new ProductMaintenance;
         $product->id = $request->input('product_code_hidden');
         $product->description = $request->input('edit_description');
@@ -235,6 +239,8 @@ class ProductMaintenanceCtr extends Controller
      */
     public function destroy($id)
     {
+        $audit = new AuditTrailHelper;
+        $audit->recordAction($this->module, 'Delete product');
         $product = DB::table($this->table_prod)->where('id', $id)->delete();
         return $product;
     }

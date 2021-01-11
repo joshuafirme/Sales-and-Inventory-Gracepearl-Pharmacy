@@ -171,7 +171,6 @@ class CartCtr extends Controller
           ->first();  
           return $id->user_id;
         }
-
-        
+       
       }
 }

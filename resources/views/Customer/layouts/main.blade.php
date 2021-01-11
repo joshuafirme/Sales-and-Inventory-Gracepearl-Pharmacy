@@ -26,7 +26,9 @@
                     <ul class="nav navbar-nav mr-auto">
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
-                                <a href="{{ url('/homepage') }}" class="nav-item nav-link dropdown-toggle"><b style="font-size: 18px; color:#30377A;">Gracepearl Pharmacy</b></a>
+                                <div class="sidebar-header" style="margin-left:-16px;  background-color:#2A2F6E">
+                                    <img src="../../assets/slogo.jpg" alt="bootraper logo" class="app-logo">
+                                    </div>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -83,24 +85,11 @@
                 <div class="container-fluid">               
                     @yield('content')
 
-                    
-
-                    <footer>
-                        <div class="container-fluid">
-                            <div class="row">
-                                <p class="ml-auto label-small text-muted">© 2021 Gracepearl Pharmacy. All Rights Reserved</p>
-                            </div>
-                        </div>
-                    </footer>
+                  
           </div>
 
               
-    <div class="row">
-
-        <button class="btn btn-sm btn-success m-auto" id="btn-viewmore"
-         style="border-radius: 20px; width:110px;">View more</button>
     
-      </div>
           <script>
           function logout(){
             $.ajax({

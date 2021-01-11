@@ -8,6 +8,7 @@ $(document).ready(function(){
 
      // forgetPayment();
 
+
       countCart();
 
       function countCart(){
@@ -152,6 +153,7 @@ $(document).ready(function(){
     }
 
     $(document).on('click', '#btn-proceed-checkout', function(){
+      forgetBuyNow()
       isVerified();
     });
 
@@ -185,6 +187,17 @@ $(document).ready(function(){
             window.location.href = "/account";
           }
             
+        }
+         
+       });
+    }
+
+    function forgetBuyNow() 
+    {
+      $.ajax({
+        url:"/productdetails/buynow/forget",
+        type:"GET",
+        success:function(){
         }
          
        });

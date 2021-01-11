@@ -4,12 +4,14 @@ $(document).ready(function(){
     load_data();
  
     function load_data()  {
-       var category = $('select[name=sales_category] option').filter(':selected').text();
+       var supplier = $('select[name=supplier] option').filter(':selected').text();
+       var date_from = $('#date_from').val()
+       var date_to = $('#date_to').val();
  
-       fetchInventory(category);
+       fetchPO(date_from, date_to, supplier);
     }  
  
-    function fetchInventory(category){
+    function fetchPO(date_from, date_to, supplier){
  
      $('#po-report-table').DataTable({
      
@@ -27,7 +29,9 @@ $(document).ready(function(){
          url: "/reports/purchasedorder",
          type:"GET",
          data:{
-           category:category
+           date_from:date_from,
+           date_to:date_to,
+           supplier:supplier
          },
         }, 
         
@@ -91,6 +95,36 @@ $(document).ready(function(){
  
   //end of fetch_sales
     }
+
+    $('#date_from').change(function()
+    {
+        var date_from = $('#date_from').val()
+        var date_to = $('#date_to').val();
+        var supplier = $('select[name=supplier] option').filter(':selected').text();
+
+        $('#po-report-table').DataTable().destroy();
+        fetchPO(date_from, date_to, supplier);
+    });
+
+   $('#date_to').change(function()
+   {
+      var date_from = $('#date_from').val()
+      var date_to = $('#date_to').val();
+      var supplier = $('select[name=supplier] option').filter(':selected').text();
+
+      $('#po-report-table').DataTable().destroy();
+      fetchPO(date_from, date_to, supplier);
+   });
+
+   $('#supplier').change(function()
+   {
+      var date_from = $('#date_from').val()
+      var date_to = $('#date_to').val();
+      var supplier = $('select[name=supplier] option').filter(':selected').text();
+
+      $('#po-report-table').DataTable().destroy();
+      fetchPO(date_from, date_to, supplier);
+   });
  
    function getDate() {
      var d = new Date();

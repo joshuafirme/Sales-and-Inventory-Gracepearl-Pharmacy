@@ -72,14 +72,10 @@
 
                 
                 <label class="text-muted">Price Range</label>
-                <div class="d-flex align-items-center mt-0 pb-1">
-                   
-                      <input id="from" type="number" class="form-control mb-0" placeholder="min">         
-                   
+                <div class="d-flex align-items-center mt-0 pb-1"> 
+                    <input type="number" class="form-control mb-0" placeholder="min" id="input-minprice" value={{ $minPrice }}>          
                     <p class="px-2 mb-0 text-muted"> - </p>
-                  
-                      <input id="to" type="number" class="form-control mb-0" placeholder="max">
-                 
+                    <input type="number" class="form-control mb-0" placeholder="max" id="input-maxprice" value={{ $maxPrice }}> 
                 </div>
 
              </div>
@@ -89,31 +85,15 @@
           <section class="cards" id="homepage-cards">
            <!-- load HTML and data here via ajax -->    
        
+           
+
           </section>
-          
+       
   </main>
   
  
 
     </div>
-
-
-      
-<!--loading Modal-->
-<div class="modal fade" id="loading-modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content  bg-transparent border-0">
-  
-  
-          <div class="d-flex justify-content-center">
-            <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
-          </div>
-
-      </div>
-    </div>
-  </div>
-
-  
 
 <script>
 

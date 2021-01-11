@@ -49,6 +49,8 @@ Route::get('/homepage/searchproduct/{search_key}', 'Customer\HomePageCtr@searchP
 //product detail
 Route::get('/productdetails', 'Customer\ProductDetailCtr@index');
 Route::get('/productdetails/{product_code}', 'Customer\ProductDetailCtr@getProductDetails');
+Route::post('/productdetails/buynow', 'Customer\ProductDetailCtr@buyNow');
+Route::get('/productdetails/buynow/forget', 'Customer\ProductDetailCtr@forgetBuyNow');
 //cart
 Route::post('/homepage/addtocart', 'Customer\CartCtr@addToCart');
 Route::get('/cart', 'Customer\CartCtr@index');
@@ -90,8 +92,9 @@ Route::get('/sales/cashiering/getTransNo', 'Sales\SalesCtr@getCurrentTransacNo')
 Route::get('/sales/cashiering/getSalesInvNo', 'Sales\SalesCtr@getSalesInvNo');
 Route::get('/sales/cashiering/isInvoiceExist/{sales_inv_no}', 'Sales\SalesCtr@isInvoiceExist');
 Route::get('/cashiering/reciept/print', 'Sales\SalesCtr@pdf');
-Route::get('/cashiering/updateqty', 'Sales\SalesCtr@updateQty');
+Route::get('/cashiering/void', 'Sales\SalesCtr@void');
 Route::get('/cashiering/forgetcart', 'Sales\SalesCtr@forgetCart');
+Route::post('/cashiering/credential', 'Sales\SalesCtr@credentialBeforeVoid');
 
 // Sales report
 Route::get('/sales/salesreport', 'Sales\SalesReportCtr@index');
@@ -213,6 +216,7 @@ Route::get('/notification/getAllNotif', 'Inventory\NotificationCtr@getAllNotif')
 
 //Drug Disposal
 Route::get('/inventory/drugdisposal', 'Inventory\DrugDisposalCtr@index');
+Route::delete('/inventory/drugdisposal/dispose/{id}', 'Inventory\DrugDisposalCtr@dispose');
 
 //REPORTS---------------------------------------------------------------------------------------------------------------
 Route::get('/reports/inventory', 'Reports\InventoryReportCtr@index');
@@ -230,6 +234,8 @@ Route::get('/reports/reorder', 'Reports\ReOrderReportCtr@index');
 Route::get('/reports/expired', 'Reports\ExpiredProductReportCtr@index');
 
 Route::get('/reports/fastAndSlowMoving', 'Reports\FastAndSlowMovingReOrderReportCtr@index');
+
+Route::get('/reports/audittrail', 'Reports\AuditTrailCtr@index');
 
 
 

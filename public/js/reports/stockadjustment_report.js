@@ -4,12 +4,13 @@ $(document).ready(function(){
    load_data();
 
    function load_data()  {
-      var category = $('select[name=sales_category] option').filter(':selected').text();
+      var date_from = $('#date_from').val()
+      var date_to = $('#date_to').val();
 
-      fetchStockAdjustment(category);
+      fetchStockAdjustment(date_from, date_to);
    }  
 
-   function fetchStockAdjustment(category){
+   function fetchStockAdjustment(date_from, date_to){
 
     $('#stockadjustment-report-table').DataTable({
     
@@ -27,7 +28,8 @@ $(document).ready(function(){
         url: "/reports/stockadjustment",
         type:"GET",
         data:{
-          category:category
+          date_from:date_from,
+          date_to:date_to,
         },
        }, 
        
@@ -90,6 +92,24 @@ $(document).ready(function(){
 
  //end of fetch_sales
    }
+
+   $('#date_from').change(function()
+   {
+      var date_from = $('#date_from').val()
+      var date_to = $('#date_to').val();
+
+      $('#stockadjustment-report-table').DataTable().destroy();
+      fetchStockAdjustment(date_from, date_to);
+   });
+
+   $('#date_to').change(function()
+   {
+      var date_from = $('#date_from').val()
+      var date_to = $('#date_to').val();
+
+      $('#stockadjustment-report-table').DataTable().destroy();
+      fetchStockAdjustment(date_from, date_to);
+   });
 
   function getDate() {
     var d = new Date();

@@ -33,6 +33,28 @@
   
           <div class="card">
             <div class="card-body">
+
+              <div class="row">
+
+                <div class="mt-2 ml-3">
+                   Date Adjusted
+                  </div>              
+                
+                <div class="col-sm-2 mb-3">
+                  <input data-column="9" type="date" class="form-control" name="date_from" id="date_from" value="{{ $currentDate }}">
+                  </div>
+
+                  <div class="mt-2">
+                    -
+                    </div>
+      
+                  <div class="col-sm-2 mb-3">
+                    <input data-column="9" type="date" class="form-control" name="date_to" id="date_to" value="{{ $currentDate }}">
+                    </div>                 
+
+
+               </div>
+
                 <table class="table responsive table-hover" id="stockadjustment-report-table" width="100%">                               
                     <thead>
                       <tr>
@@ -45,7 +67,7 @@
                         <th>Qty Adjusted</th>         
                         <th>Action</th>
                         <th>Remarks</th>
-                        <th>Date Time Adjusted</th>
+                        <th>Date Adjusted</th>
                       
                       </tr>
                     </thead>

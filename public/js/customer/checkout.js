@@ -53,7 +53,8 @@ $('#contact-no').keyup(function(e)
             beforeSend:function(){
                 $('#loading-modal').modal('toggle');
             },
-            success:function(){
+            success:function(response){
+                alert(response);
                 setTimeout(function(){
                     $('#loading-modal').modal('toggle');
                 },1000);  

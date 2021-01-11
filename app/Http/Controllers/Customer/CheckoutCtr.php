@@ -19,9 +19,17 @@ class CheckoutCtr extends Controller
     private $tbl_cust_acc = "tblcustomer_account";
 
     public function index(){
+     // session()->forget('buynow-item');
+     //   dd(session()->get('buynow-item'));
         $this->isLoggedIn();
         
         $cart = $this->getCartItems();
+
+        $item_session = session()->get('buynow-item');
+        if($item_session){
+          $cart = null;
+        }
+ 
         return view('/customer/checkout',[
             'cart' => $cart, 
         ]);
@@ -72,17 +80,19 @@ class CheckoutCtr extends Controller
 
       public function placeOrder()
       {
-        if($this->getCheckoutItems()){
-          $order_no = $this->getOrderNo();
-          foreach ($this->getCheckoutItems() as $data)
-          {
+        $order_no = $this->getOrderNo();
+
+        $item = session()->get('buynow-item');
+        if($item)
+        {
+          foreach ($item as $product_code => $data) {
               $ol_order = new OnlineOrder;
               $ol_order->_prefix = 'O'.date('ymd');
               $ol_order->order_no = $order_no;
-              $ol_order->email = $data->customerID;
-              $ol_order->product_code = $data->product_code;
-              $ol_order->qty = $data->qty;
-              $ol_order->amount = $data->amount;
+              $ol_order->email = $this->getUserIDWithPrefix();
+              $ol_order->product_code = $product_code;
+              $ol_order->qty = $data['qty'];
+              $ol_order->amount = $data['amount'];
               $ol_order->status = 'Payment pending';
               $ol_order->shippingID = 'S001';
 
@@ -90,11 +100,30 @@ class CheckoutCtr extends Controller
 
               $ol_order->save();
           }
-          DB::table($this->tbl_cart)->delete();
         }
-        else{
-          
+        else
+        {
+          if($this->getCheckoutItems()){
+            
+            foreach ($this->getCheckoutItems() as $data){
+                $ol_order = new OnlineOrder;
+                $ol_order->_prefix = 'O'.date('ymd');
+                $ol_order->order_no = $order_no;
+                $ol_order->email = $data->customerID;
+                $ol_order->product_code = $data->product_code;
+                $ol_order->qty = $data->qty;
+                $ol_order->amount = $data->amount;
+                $ol_order->status = 'Payment pending';
+                $ol_order->shippingID = 'S001';
+  
+                session()->put('order-no', $order_no);
+  
+                $ol_order->save();
+            }
+            DB::table($this->tbl_cart)->delete();
+          }
         }
+       
       }
 
       public function getCheckoutItems()
@@ -104,11 +133,6 @@ class CheckoutCtr extends Controller
         ->where('customerID', $user_id_prefix)
         ->get();
         return $checkout_items;
-      }
-
-      public function buyNow($product_code)
-      {
-        session()->put('buy-now-pcode', $product_code);
       }
 
       public function getOrderNo(){

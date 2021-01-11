@@ -177,6 +177,7 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
+        Ferdous\OtpValidator\OtpValidatorServiceProvider::class,
 
     ],
 
@@ -232,6 +233,7 @@ return [
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Paymongo' => Luigel\Paymongo\Facade::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'OtpValidator' => Ferdous\OtpValidator\OtpValidatorServiceProvider::class
 
     ],
 

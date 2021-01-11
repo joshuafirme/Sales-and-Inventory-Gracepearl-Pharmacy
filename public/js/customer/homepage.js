@@ -72,24 +72,26 @@ $(document).ready(function(){
     }
   
 
-    $('#btn-viewmore').click(function () {
+    $(document).on('click', '#btn-viewmore', function(){
         limit += 4;
         console.log(limit);
         var search_key = $('#search-product').val();
         var categories = getCategories();
+        var min_price = $('#input-minprice').val();
+        var max_price = $('#input-maxprice').val();
   
-        filter(search_key, categories, limit);
+        filter(search_key, categories, min_price, max_price, limit);
     });
 
     // filter by category, search, limit
-    function filter(search_key, categories, limit) {
+    function filter(search_key, categories, min_price, max_price, limit) {
       if(categories.length == 0)
       {
         displayAllProduct(limit);
       }
       else
       {
-        searchProduct(search_key, categories, limit);
+        searchProduct(search_key, categories, min_price, max_price, limit);
       }
     }
     
@@ -107,25 +109,49 @@ $(document).ready(function(){
     $('[name="chk-category[]"]').click(function () {
       var search_key = $('#search-product').val();
       var categories = getCategories();
+      var min_price = $('#input-minprice').val();
+      var max_price = $('#input-maxprice').val();
 
-      filter(search_key, categories, limit);
+      filter(search_key, categories, min_price, max_price, limit);
+    });
+
+    $('#input-minprice').blur(function () {
+      var search_key = $('#search-product').val();
+      var categories = getCategories();
+      var min_price = $('#input-minprice').val();
+      var max_price = $('#input-maxprice').val();
+
+      filter(search_key, categories, min_price, max_price, limit);
+    });
+
+    $('#input-maxprice').blur(function () {
+      var search_key = $('#search-product').val();
+      var categories = getCategories();
+      var min_price = $('#input-minprice').val();
+      var max_price = $('#input-maxprice').val();
+
+      filter(search_key, categories, min_price, max_price, limit);
     });
 
     $('#search-product').blur(function() {
         var search_key = $(this).val();
         var categories = getCategories();
+        var min_price = $('#input-minprice').val();
+        var max_price = $('#input-maxprice').val();
+
+        console.log(min_price+' and '+max_price);
 
         if(search_key){
           console.log('search');
-          searchProduct(search_key, categories, limit);
+          searchProduct(search_key, categories, min_price, max_price, limit);
         }
         else{
-          filter(search_key, categories, limit);
+          filter(search_key, categories, min_price, max_price, limit);
         }
 
     });
 
-    function searchProduct(search_key, categories, limit) {
+    function searchProduct(search_key, categories, min_price, max_price, limit) {
       if(search_key == ''){
         search_key = ' ';
       }
@@ -134,6 +160,8 @@ $(document).ready(function(){
         type:"GET",
         data:{
           categories:categories,
+          min_price:min_price,
+          max_price:max_price,
           limit:limit
         },
           beforeSend:function(){
@@ -153,37 +181,52 @@ $(document).ready(function(){
 
       $('#homepage-cards').html('');
       
-      for (var i = 0; i < data.length; i++) {
+      if(data.length > 0){
+        for (var i = 0; i < data.length; i++) {
         
-        var cards = ' <div class="card-product"><a class="card__image-container div-product-details" href="/productdetails/'+data[i].product_code+' ">';
-        if(data[i].image){           
-          cards += '<img  src="../../storage/'+data[i].image+'" class="img-fluid w-100" alt="..."></a>'
+          var cards = ' <div class="card-product"><a class="card__image-container div-product-details" href="/productdetails/'+data[i].product_code+' ">';
+          if(data[i].image){           
+            cards += '<img  src="../../storage/'+data[i].image+'" class="img-fluid w-100" alt="..."></a>'
+          }
+          else{
+            cards += '<img class="img-fluid w-100" src="../assets/noimage.png"></a>';
+          }
+  
+          cards +='<div class="line ml-2 mr-2 mt-2"></div>';
+          cards +='<div class="card__content">';
+  
+          if(data[i].description.length > 28){
+            cards += '<p class="card__description">'+data[i].description.slice(0,28)+'...';
+          }
+          else{
+            cards += '<p class="card__description">'+data[i].description+'';
+          }
+  
+          cards += '</p>';
+          cards += ' <p class="card__unit text-secondary">    Unit type: '+data[i].unit+'';
+          cards += '</p>';
+          cards += ' <div class="card__info">';
+          cards += '<p class="mt-3 text-success">₱ '+data[i].selling_price+'</p>';
+          cards += '<button class="btn btn-sm card__btn-add ml-auto" product-code='+data[i].product_code+' id="btn-add-to-cart">Add to cart</button><br>';      
+          cards += '</div></div></div>';    
+          console.log(i);
+          if(i == data.length -1){
+            console.log('true');
+            cards += '<div class="row">';
+            cards += '<div class="col-12">';
+            cards += '<button class="btn btn-sm btn-success" id="btn-viewmore"';
+            cards += 'style="border-radius: 20px; width:110px; ">View more</button>';
+            cards += '</div></div>';
+          }
+         $('#homepage-cards').append(cards);
         }
-        else{
-          cards += '<img class="img-fluid w-100" src="../assets/noimage.png"></a>';
-        }
-
-        cards +='<div class="line ml-2 mr-2 mt-2"></div>';
-        cards +='<div class="card__content">';
-
-        if(data[i].description.length > 28){
-          cards += '<p class="card__description">'+data[i].description.slice(0,28)+'...';
-        }
-        else{
-          cards += '<p class="card__description">'+data[i].description+'';
-        }
-
-        cards += '</p>';
-        cards += ' <p class="card__unit text-secondary">    Unit type: '+data[i].unit+'';
-        cards += '</p>';
-        cards += ' <div class="card__info">';
-        cards += '<p class="mt-3 text-success">₱ '+data[i].selling_price+'</p>';
-        cards += '<button class="btn btn-sm card__btn-add ml-auto" product-code='+data[i].product_code+' id="btn-add-to-cart">Add to cart</button><br>';      
-        cards += '</div></div></div>';    
-        
-       $('#homepage-cards').append(cards);
+       
+      } 
+      else{
+        var cards = ' <div class="row"><a class="m-auto">No product found.</a></div>';
+        $('#homepage-cards').html(cards);
       }
-      
+     
     }
     
 
@@ -198,7 +241,7 @@ $(document).ready(function(){
           success:function(response){
               
             if(response !== 'yes'){
-              window.location.href = "http://127.0.0.1:8000/customer-login";
+              window.location.href = "/customer-login";
             }
             else{
               $.ajax({
@@ -255,21 +298,35 @@ $(document).ready(function(){
        });
     }
 
-    if($('ul li').length > 3){
+    //buy now 
+    $(document).on('click', '#btn-buynow', function(){
+      
+      var product_code = $(this).attr('product-code');
+      var qty = $('#qty-buynow').val();   
+      var txt_price = $('#price-buynow').text();
+      var price = txt_price.replace(/,/g, ''); // remove commas
+      var amount = price * qty;
 
-      $('ul li').length - 10;
-      var highlights = $('#highlights').text()
-      highlights.replace(50, '...');
+      buyNow(product_code, qty, amount);
+      
+    });
+
+    function buyNow(product_code, qty, amount) 
+    {
+      $.ajax({
+        url:"/productdetails/buynow",
+        type:"POST",
+        data: {
+          product_code:product_code,
+          qty:qty,
+          amount:amount
+      },
+        success:function(){
+          window.location.href = "/checkout";
+        }
+         
+       });
     }
-
-    $(document).on('click', '#btn-view-more', function(){
-
-     
-
-     
-    
-  });
-    
   
 });
   

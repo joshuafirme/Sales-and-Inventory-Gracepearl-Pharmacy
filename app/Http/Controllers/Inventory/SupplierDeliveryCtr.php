@@ -82,13 +82,13 @@ class SupplierDeliveryCtr extends Controller
 
     public function getPurchaseOrder()
      {
-        $product = DB::table($this->table_po)
-        ->select("tblpurchaseorder.*", 
-        DB::raw('CONCAT('.$this->table_po.'._prefix, '.$this->table_po.'.po_num) AS po_num, description, unit, supplierName, category_name, DATE_FORMAT(date,"%d-%m-%Y") as date'))
-        ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_po . '.product_code')
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+        $product = DB::table($this->table_po.' as PO')
+        ->select("PO.*", 
+        DB::raw('CONCAT(PO._prefix, PO.po_num) AS po_num, description, unit, supplierName, category_name, DATE_FORMAT(date,"%d-%m-%Y") as date'))
+        ->leftJoin($this->table_prod.' as P',  DB::raw('CONCAT(P._prefix, P.id)'), '=', 'PO.product_code')
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
         ->where('status', ['Pending'])
         ->get();
 
@@ -166,15 +166,16 @@ class SupplierDeliveryCtr extends Controller
      {
          $product_code = Input::input('product_code');
          $po_num = Input::input('po_num');
-         $po = DB::table($this->table_po)
-             ->select("tblpurchaseorder.*", DB::raw('CONCAT(tblpurchaseorder._prefix, tblpurchaseorder.po_num) AS po_num, description, supplierName, category_name, unit'))
-             ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_po . '.product_code')
-             ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-             ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
+
+         $po = DB::table($this->table_po.' as PO')
+             ->select("PO.*", DB::raw('CONCAT(PO._prefix, PO.po_num) AS po_num, description, supplierName, category_name, unit'))
+             ->leftJoin($this->table_prod.' as P',  DB::raw('CONCAT(P._prefix, P.id)'), '=', 'PO.product_code')
+             ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+             ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+             ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
              ->where([
-                 ['tblpurchaseorder.product_code', $product_code],
-                 [DB::raw('CONCAT(tblpurchaseorder._prefix, tblpurchaseorder.po_num)'), $po_num]
+                 ['PO.product_code', $product_code],
+                 [DB::raw('CONCAT(PO._prefix, PO.po_num)'), $po_num]
                  ])
              ->get();
  
@@ -207,19 +208,5 @@ class SupplierDeliveryCtr extends Controller
         return 'D' . $this->getMonth() . $this->getDay();
     }
 
-    public function getDate(){
-        return $date = $this->getYear() . $this->getMonth() . $this->getDay();
-    }
-
-    public function getYear(){
-        return $year = date('y');
-    }
-
-    public function getMonth(){
-        return $month = date('m');
-    }
-
-    public function getDay(){
-        return $month = date('d');
-    }
+    
 }

@@ -127,7 +127,10 @@
                     <a href="#tools-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-tools"></i> Maintenance</a>
                     <ul class="collapse list-unstyled" id="tools-menu">
                         <li>
-                            <a href="{{ url('maintenance/product') }}"><i class="fas fa-boxes"></i> Product</a>
+                            <a href="{{ url('maintenance/user') }}"><i class="fas fa-user"></i> User</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('maintenance/company') }}" ><i class="fas fa-chart-line"></i> Company</a>
                         </li>
                         <li>
                             <a href="{{ url('maintenance/supplier') }}" ><i class="fas fa-warehouse"></i> Supplier</a>
@@ -139,13 +142,10 @@
                             <a href="{{ url('maintenance/unit') }}"><i class="fas fa-box"></i> Unit</a>
                         </li>
                         <li>
-                            <a href="{{ url('maintenance/company') }}" ><i class="fas fa-chart-line"></i> Company</a>
+                            <a href="{{ url('maintenance/product') }}"><i class="fas fa-boxes"></i> Product</a>
                         </li>
                         <li>
                             <a href="{{ url('maintenance/discount') }}" ><i class="fas fa-percentage"></i> Discount</a>
-                        </li>
-                        <li>
-                            <a href="{{ url('maintenance/user') }}"><i class="fas fa-user"></i> User</a>
                         </li>
                     </ul>
                 </li>   

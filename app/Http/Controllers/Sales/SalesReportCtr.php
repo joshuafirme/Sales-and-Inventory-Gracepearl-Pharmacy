@@ -101,7 +101,7 @@ class SalesReportCtr extends Controller
          return $product;
      }
 
-     public function getDate(){
+    public function getDate(){
         return $date = $this->getYear().'-'.$this->getMonth().'-'.$this->getDay();
     }
      

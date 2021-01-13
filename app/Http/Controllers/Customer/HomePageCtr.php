@@ -96,12 +96,7 @@ class HomePageCtr extends Controller
         }
         return $product;         
     } 
-    
-    public function filterProduct()
-    {
-     
-    } 
-    
+
     public function getMaxPrice(){
       $price = DB::table($this->table_prod)
       ->max('selling_price');
@@ -115,17 +110,5 @@ class HomePageCtr extends Controller
 
       return $price;      
     } 
-
-    public function getPriceFilter($min_price, $max_price){
-      $price = DB::table($this->table_prod.' AS P')
-      ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-      ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-      ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-      ->whereBetween('selling_price', [$min_price, $max_price])
-      ->get();
-
-      return $price;      
-    } 
-
-    
+   
 }

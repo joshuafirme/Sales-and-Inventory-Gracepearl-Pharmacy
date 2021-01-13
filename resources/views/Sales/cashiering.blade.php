@@ -119,14 +119,31 @@
                               <label>Change</label>
                               <input type="text" class="form-control" id="change" value="₱0" readonly>
 
-                              <div class="form-check mt-1 mr-2  mb-2">
-                                <input type="checkbox" class="form-check-input chk-senior" id="senior-chk">
-                                <label class="form-check-label" for="exampleCheck1">Senior Citizen</label>
+                              <div class="form-check mt-1 mr-4  mb-2">
+                                <input type="checkbox" class="form-check-input chk-discount" id="discount-chk">
+                                <label class="form-check-label" for="exampleCheck1">Discount</label>
                               </div>
 
                               <div class="form-group ml-auto">
                                 <button class="btn btn-success btn-sm btn-processs" style="font-size: 14px; width: 100px;" 
                                 data-toggle="modal" data-target="#processModal" id="btn-process"><u>P</u>AY</button> 
+                              </div>
+
+                              <div class="discount-option" style="display: none;">
+                                <div class="form-check ml-2 mr-2 mt-1">
+                                  <input class="form-check-input" type="radio" name="radio-discount" id="radio-sc" value="sc" checked required>
+                                  <label class="form-check-label" for="add">
+                                    SC
+                                  </label>
+                                </div>
+                                <div class="form-check mt-1 ml-2">
+                                  <input class="form-check-input" type="radio" name="radio-discount" id="radio-pwd" value="pwd" required>
+                                  <label class="form-check-label" for="less">
+                                    PWD
+                                  </label>
+                                </div>
+
+                              <p class="mt-1 ml-2">Less: ₱<span id="less-discount"></span></p>
                               </div>
 
                           </div> 

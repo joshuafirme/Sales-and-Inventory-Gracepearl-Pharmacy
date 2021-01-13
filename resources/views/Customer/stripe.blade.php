@@ -88,7 +88,7 @@
                             </div>
       
                             <div class='form-row row'>
-                                <div class='col-md-12 error form-group hide'>
+                                <div class='col-md-12 error form-group hide' id="error-contr">
                                     <div class='alert-danger alert'>Please correct the errors and try
                                         again.</div>
                                 </div>
@@ -96,7 +96,8 @@
       
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <button class="btn btn-success btn-block" type="submit">Pay Now</button>
+                                    <button class="btn btn-success btn-block"  id="btn-stripe-pay" type="submit">Pay 
+                                        <span>₱{{ number_format(session()->get('checkout-total')) }}</span></button>
                                 </div>
                             </div>
                               
@@ -113,7 +114,7 @@
 
   
 </body>
-  
+
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
   
 <script type="text/javascript">
@@ -165,6 +166,12 @@ $(function() {
             $form.find('input[type=text]').empty();
             $form.append("<input type='hidden' name='stripeToken' value='" + token + "'/>");
             $form.get(0).submit();
+           
+            setTimeout(function(){
+            //    window.close();
+            window.location.href = "/stripe/success_payment";
+           
+            },3500);
         }
     }
   

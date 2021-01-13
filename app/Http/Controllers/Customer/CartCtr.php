@@ -118,12 +118,49 @@ class CartCtr extends Controller
       public function getSubtotalAmount()
       {
         $user_id_prefix = $this->getUserIDWithPrefix();
+
         $amount = DB::table($this->tbl_cart)
           ->where('customerID', $user_id_prefix)
           ->sum('amount');  
         session()->put('checkout-total', $amount);
+
         return $amount;
       }
+
+      public function getTotalDueWithDiscount()
+      {
+        $user_id_prefix = $this->getUserIDWithPrefix();
+
+        $amount = DB::table($this->tbl_cart)
+          ->where('customerID', $user_id_prefix)
+          ->sum('amount');  
+        session()->put('checkout-total', $amount);
+
+        $discount = $this->computeGenericItemDiscount();
+        return $amount - $discount;
+      }
+
+      public function computeGenericItemDiscount()
+      {
+        $user_id_prefix = $this->getUserIDWithPrefix();
+        $discount_percentage = $this->getDiscount();
+
+        $amount = DB::table($this->tbl_cart.' as CART')
+          ->leftJoin($this->tbl_prod.' as P',  DB::raw('CONCAT(P._prefix, P.id)'), '=', 'CART.product_code')
+          ->leftJoin($this->tbl_cat.' as C', 'C.id', '=', 'P.categoryID')
+          ->where([
+            ['CART.customerID', $user_id_prefix],
+            ['C.category_name', 'Generic']
+          ])
+          ->sum('CART.amount');
+        $discount = $discount_percentage * $amount;  
+        return $discount;
+      }
+
+      public function getDiscount(){
+        $discount = DB::table('tbldiscount')->first();
+        return $discount->discount;
+    }
 
       public function removeFromCart()
       {

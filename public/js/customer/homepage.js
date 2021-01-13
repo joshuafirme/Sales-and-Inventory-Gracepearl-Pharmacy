@@ -209,9 +209,8 @@ $(document).ready(function(){
           cards += '<p class="mt-3 text-success">₱ '+data[i].selling_price+'</p>';
           cards += '<button class="btn btn-sm card__btn-add ml-auto" product-code='+data[i].product_code+' id="btn-add-to-cart">Add to cart</button><br>';      
           cards += '</div></div></div>';    
-          console.log(i);
+
           if(i == data.length -1){
-            console.log('true');
             cards += '<div class="row">';
             cards += '<div class="col-12">';
             cards += '<button class="btn btn-sm btn-success" id="btn-viewmore"';

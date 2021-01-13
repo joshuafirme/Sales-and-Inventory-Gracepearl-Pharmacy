@@ -11,7 +11,9 @@ $(document).ready(function(){
     });
 
 
-    window.top.close();
+   // window.top.close();
+
+
 
     getSubtotal();
 
@@ -22,6 +24,24 @@ $(document).ready(function(){
           success:function(response){
               $('#lbl-payment-total').text('₱'+convertToMoneyFormat(response));
               $('#lbl-after-payment').text('₱'+convertToMoneyFormat(response));
+              
+          }         
+         });
+     
+    }
+  
+
+    $(window).on('load', function() {
+      setTimeout(function(){
+        forgetOrder();
+      },3500)
+     });
+    
+    function forgetOrder(){
+      $.ajax({
+          url:"/payment/afterpayment/forget",
+          type:"GET",
+          success:function(response){
           }         
          });
     }
@@ -47,12 +67,17 @@ $(document).ready(function(){
       var round_off = Math.round((parseInt(total) + Number.EPSILON) * 100) / 100;
       return money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
-    
+
+    var stripe_window;
     $('#btn-stripe').click(function(){
         var left  = ($(window).width()/2)-(400/2),
-        top   = ($(window).height()/2)-(600/2),
-        popup = window.open ("http://127.0.0.1:8000/stripe", "popup", "width=485, height=450, top="+top+", left="+left);
-        return popup;
+        top   = ($(window).height()/2)-(600/2);
+        stripe_window = window.open ("/stripe", "popup", "width=485, height=450, top="+top+", left="+left);
+        
+    });
+    $('#btn-stripe-pay').click(function(){
+      alert('yay');
+      stripe_window.close();
     });
 
 

@@ -57,11 +57,52 @@ $(document).ready(function(){
     $(document).on('click', '#btn-show-items', function(){
     
       var order_no = $(this).attr('order-no');
-      console.log(order_no);
+      var user_id = $(this).attr('user-id');
+
       $('#showItemsModal').modal('toggle');
+      console.log(user_id+' userID');
       getOrderItems(order_no);
+      fetchAccountInfo(user_id);
+      fetchShippingInfo(user_id);
 
     });
+
+    function fetchAccountInfo(user_id){
+      $.ajax({
+        url:"/manageorder/customerinfo/"+user_id,
+        type:"GET",
+        success:function(data){  
+          console.log(data);
+          if(data){
+            $('#fullname').text(data[0].fullname);
+            $('#email').text(data[0].email);
+            $('#phone-no').text(data[0].phone_no);
+          }
+         
+        }
+         
+       });
+    }
+
+    function fetchShippingInfo(user_id){
+      $.ajax({
+        url:"/manageorder/shippinginfo/"+user_id,
+        type:"GET",
+        success:function(data){
+         if(data){
+          $('#flr-bldg-blk').text(data[0].flr_bldg_blk);
+          $('#brgy').text(data[0].brgy);
+          $('#note').text(data[0].note);
+         }
+         else{
+          $('#flr-bldg-blk').text('-');
+          $('#brgy').text('-');
+          $('#note').text('-');
+         }
+        }
+         
+       });
+    }
 
     $(document).on('click', '#btn-gen-sales-inv', function(){
       window.open('/manageorder/salesinvoice', '_blank'); 

@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Discount extends Model
 {
     protected $table = 'tbldiscount';
-    protected $fillable = ['id', 'discount'];
+    protected $fillable = ['id', 'pwd_discount', 'sc_discount'];
 }

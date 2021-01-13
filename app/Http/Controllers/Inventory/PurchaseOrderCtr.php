@@ -12,6 +12,7 @@ use App\Mail\MyMail;
 use App\ProductMaintenance;
 use App\PurchaseOrder;
 use App\Classes\UserAccessRights;
+use App\Classes\Date;
 
 class PurchaseOrderCtr extends Controller
 {
@@ -233,6 +234,11 @@ class PurchaseOrderCtr extends Controller
         return redirect()->back()->with('success', 'Product added to cart successfully!');
 }
 
+public function getDate(){   
+    $d = new Date;
+    return $d->getDate();
+}
+
 public function recordOrder(){
     $sub_total = 0;
     $total_amount = 0;
@@ -268,22 +274,6 @@ public function getPONum(){
 public function getPrefix(){
     return $date = $this->getMonth() . $this->getDay();
  }
-
- public function getDate(){
-    return $date = $this->getYear().'-'.$this->getMonth().'-'.$this->getDay();
-}
- 
-public function getYear(){
-    return $year = date('yy')-100;
-}
-
-public function getMonth(){
-    return $month = date('m');
-}
-
-public function getDay(){
-    return $month = date('d');
-}
 
 public function pdf(){
 

@@ -65,7 +65,8 @@ $(document).ready(function(){
             success:function(){
                 $('#alert-acc-success').css('display', 'block');
                 $('#alert-acc-success').addClass('alert-success');
-                $('#alert-acc-success').html('You have successfully created your account! <a href="/customer-login">Login</a> here');
+                $('#alert-acc-success')
+                .html('You have successfully created your account! <a href="/customer-login">Login</a> here');
                 $('#loading-modal').modal('toggle');
             }         
            });      
@@ -96,7 +97,8 @@ $(document).ready(function(){
                     {
                         $('#loading-modal').modal('toggle');
                         $("#pn-validation").remove();
-                        $('#phone_no').after('<span class="label-small text-danger" id="pn-validation">Phone number is already taken!</div>');
+                        $('#phone_no')
+                        .after('<span class="label-small text-danger" id="pn-validation">Phone number is already exists.</div>');
                         $('#phone_no').val('');
                     }
                     else{
@@ -114,7 +116,8 @@ $(document).ready(function(){
         if(phone_no.replace(/ /g,'').length > 11 || phone_no.replace(/ /g,'').length < 11){
             $('#loading-modal').modal('toggle');
             $("#pn-validation").remove();
-            $('#phone_no').after('<span class="label-small text-danger" id="pn-validation">Please enter a valid phone number!</div>');
+            $('#phone_no')
+            .after('<span class="label-small text-danger" id="pn-validation">Please enter a valid phone number!</div>');
         }
         else{
             $('#loading-modal').modal('toggle');

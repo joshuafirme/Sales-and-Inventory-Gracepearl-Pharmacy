@@ -21,6 +21,7 @@ class CheckoutCtr extends Controller
     public function index(){
      // session()->forget('buynow-item');
      //   dd(session()->get('buynow-item'));
+    
         $this->isLoggedIn();
         
         $cart = $this->getCartItems();
@@ -64,19 +65,45 @@ class CheckoutCtr extends Controller
 
       public function getSubtotalAmount()
       {
-        $order_no = session()->get('order-no');
-        $user_id = $this->getUserIDWithPrefix();
-        $amount = DB::table($this->tbl_ol_order)
-        ->where([
-            ['email',  $user_id],
-            ['order_no', $order_no]
-        ])
-          ->sum('amount');  
+        $buynow_items = session()->get('buynow-item');
 
-        session()->put('checkout-total', $amount);
+        if($buynow_items)
+        {
+          foreach($buynow_items as $product_code => $data)
+          {
+            $amount = $data['amount'];
+          }
+          session()->put('checkout-total', $amount);
+        }
+        else{
+          $order_no = session()->get('order-no');
+          $user_id = $this->getUserIDWithPrefix();
+
+          if($order_no)
+          {
+            $amount = DB::table($this->tbl_ol_order)
+            ->where([
+                ['email',  $user_id],
+                ['order_no', $order_no]
+            ])
+              ->sum('amount');  
+          }
+          else
+          {
+            $amount = DB::table($this->tbl_cart)
+            ->where([
+                ['customerID',  $user_id]
+            ])
+              ->sum('amount');  
+          }
+  
+          session()->put('checkout-total', $amount);
+        }
+       
         
         return $amount;
       }
+
 
       public function placeOrder()
       {

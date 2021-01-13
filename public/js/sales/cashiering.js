@@ -116,11 +116,10 @@ $(document).ready(function(){
         computeTotalAmountDue();
 
         function computeTotalAmountDue(){
-          setTimeout(function(){
             var total_hidden = $('#total_hidden').val();
             console.log(total_hidden);
             $('#total-amount-due').val(total_hidden);
-          },500);
+            return total_hidden;
          
         }
 
@@ -246,25 +245,14 @@ $(document).ready(function(){
         }
 
         //check if senior checkbox is cheked
-        $('#senior-chk').click(function(){
-          if($('#senior-chk').prop('checked') == true){
-            $.ajax({
-              url:"/maintenance/discount/getdiscount",
-              type:"POST",
-              success:function(data){
-                
-                var discount = data[0].discount;
-                var total = $('#total-amount-due').val();
-
-                console.log(discount);
-                var result = discount * total;
-                var nya = total - result;
-                $('#total-amount-due').val(nya);
-                computeChange();
-              }
-            });
+        $('#discount-chk').click(function(){
+          if($('#discount-chk').prop('checked') == true){
+            $('.discount-option').css('display', 'block');
+             
+            getDiscount();
           }
           else{
+            $('.discount-option').css('display', 'none');
             computeTotalAmountDue();
             setTimeout(function(){
               computeChange();
@@ -272,6 +260,53 @@ $(document).ready(function(){
      
           }
         });
+
+        $('#radio-sc').click(function () {
+            getDiscount();
+        });
+
+        $('#radio-pwd').click(function () {
+            getDiscount();
+        });
+
+      function getDiscount() {
+        if($('#radio-sc').is(':checked')){
+          $.ajax({
+            url:"/maintenance/discount/sc_discount",
+            type:"POST",
+            success:function(data){
+              
+              var discount = data;
+              var total = computeTotalAmountDue();  
+
+              console.log(total);
+              var result = discount * total;
+              var nya = total - result;
+              $('#less-discount').text(result);
+              $('#total-amount-due').val(nya);
+              computeChange();
+            }
+          });
+        }
+        if($('#radio-pwd').is(':checked')){
+          $.ajax({
+            url:"/maintenance/discount/pwd_discount",
+            type:"POST",
+            success:function(data){
+                
+              var discount = data;
+              var total = computeTotalAmountDue();
+
+              console.log(total);
+              var result = discount * total;
+              var nya = total - result;
+              $('#less-discount').text(result);
+              $('#total-amount-due').val(nya);
+              computeChange();
+            }
+          });
+        }
+      }
         
         //proccess items
         $('#btn-process').click(function(){

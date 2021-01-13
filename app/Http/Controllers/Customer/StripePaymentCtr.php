@@ -27,7 +27,6 @@ class StripePaymentCtr extends Controller
      */
     public function stripePost(Request $request)
     {
-
         if(session()->get('checkout-total'))
         {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
@@ -44,8 +43,11 @@ class StripePaymentCtr extends Controller
             
             return back();
         }
+   
+    }
 
-        
+    public function stripeSuccess(){
+        return view('customer/layouts/stripe_success_payment');
     }
 
     public function updateStatus($card_number){

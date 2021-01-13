@@ -17,7 +17,7 @@
                 
                 <div class="row">
 
-                    <div class="container-fluid">
+                  <div class="col-md-12">
 
                         <table class="table responsive table-striped table-hover mt-2" id="cust-order-table">                               
                             <thead>
@@ -66,7 +66,7 @@
                           
                           </table>
 
-                    </div>
+                  </div>
 
                     
                     <div class="col-md-12 mb-2"><hr></div>
@@ -77,17 +77,17 @@
     
                     <div class="col-md-4">
                         <label class="label-small" >Full Name</label>
-                        <p id="fullname">Joshua Firme</p>
+                        <p id="fullname"></p>
                     </div>
         
                     <div class="col-md-4">
                         <label class="label-small">Email Address</label>
-                        <p  id="email">joshuafirme1@gmail.com</p>
+                        <p  id="email"></p>
                     </div>
         
                     <div class="col-md-4">
                         <label class="label-small">Phone Number</label>
-                        <p  id="Phone number">09987878788</p>
+                        <p  id="phone-no"></p>
                     </div> 
         
                     <div class="col-md-12 mb-2"><hr></div>
@@ -98,27 +98,19 @@
                         <h5>Shipping Address</h5>
                     </div>
     
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-4 mb-3">
                         <label class="label-small">House/Unit/Flr #, Bldg Name, Blk or Lot #</label>
-                        <input type="text" class="form-control" id="flr-bldg-blk">
+                        <p id="flr-bldg-blk"></p>
                     </div> 
         
-                    <div class="col-md-6">
-                        <label class="label-small">Municipality</label>
-                        <select class="form-control" name="municipality" id="municipality">
-                          <option>Nasugbu</option>
-                          <option>Tuy</option>
-                        </select>
-                    </div> 
-        
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="label-small">Barangay</label>
-                        <input type="text" class="form-control" id="brgy">
+                        <p id="brgy"></p>
                     </div> 
         
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label class="label-small">Notes</label>
-                        <input type="text" class="form-control" id="notes">
+                        <p id="note"></p>
                     </div> 
           
                   </div>

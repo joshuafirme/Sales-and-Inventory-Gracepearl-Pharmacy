@@ -20,6 +20,7 @@ class CustomerAccountCtr extends Controller
         $acc_info = $this->getAccountInfo();
         $verification_info = $this->getVerificationInfo();
         $ship_info = $this->getShippingInfo();
+
         return view('/customer/account',[
             'account' => $acc_info,
             'verification' => $verification_info,

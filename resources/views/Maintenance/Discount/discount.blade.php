@@ -36,10 +36,15 @@
                 <form method="POST" action="{{ action('Maintenance\DiscountCtr@activate') }}">
                     {{ csrf_field() }}
                         <div class="form-group">
-                          <label for="discount">Discount Percentage</label>
-                          <input type="number" step="0.01" min="0.01" max="1.0" class="form-control" name="discount" id="discount" value={{ $discount->discount }}>
+                          <label for="discount">Senior Citizen</label>
+                          <input type="number" step="0.01" min="0.01" max="1.0" class="form-control" name="sc-discount" id="sc-discount" value={{ $sc_discount }}>
                           <small class="form-text text-muted">0.01 is equal to 1% discount.</small>
-                        </div>             
+                        </div> 
+                        
+                        <div class="form-group">
+                          <label for="discount">PWD</label>
+                          <input type="number" step="0.01" min="0.01" max="1.0" class="form-control" name="pwd-discount" id="pwd-discount" value={{ $pwd_discount }}>
+                        </div>  
                         <button type="submit" class="btn btn-sm btn-success" id="btn-activate">Activate</button>
                       </form>
                   

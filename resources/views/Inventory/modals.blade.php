@@ -350,7 +350,6 @@
               <select class="form-control" name="del_remarks" id="del_remarks">
               <option>Completed</option>
               <option>Partial</option>
-              <option>Damaged</option>
 
               </select>
             </div>

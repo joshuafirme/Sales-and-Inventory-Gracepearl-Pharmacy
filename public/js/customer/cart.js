@@ -46,15 +46,76 @@ $(document).ready(function(){
             url:"/cart/getsubtotal",
             type:"GET",
             success:function(response){
+              console.log('total = '+response);
                 $('.cart-subtotal').text('₱'+convertToMoneyFormat(response));
             }         
            });
       }
 
+      function getTotalDue(){
+        $.ajax({
+            url:"/cart/getsubtotal",
+            type:"GET",
+            success:function(response){
+              console.log('total = '+response);
+                $('#total-due').text('₱'+convertToMoneyFormat(response));
+            }         
+           });
+      }
+
+      function getTotalDueWithDiscount(){
+        $.ajax({
+            url:"/cart/total_due_discount",
+            type:"GET",
+            success:function(total){
+              
+                $('#total-due').text('₱'+convertToMoneyFormat(total));
+            }         
+           });
+      }
+
+      
+
+      function computeGenericItemDiscount(){
+        $.ajax({
+          url:"/cart/discount",
+          type:"GET",
+          success:function(discount){
+            $('#sc-pwd-discount').text('- '+parseFloat(discount).toFixed(2));
+          }
+           
+         });
+      
+      }
+
+      isQualifiedForDiscount();
+
+      function isQualifiedForDiscount(){
+        $.ajax({
+          url:"/account/checkifverified",
+          type:"GET",
+   
+          success:function(response){
+            
+            if(response == 'Verified SC/PWD')
+            {
+              getTotalDueWithDiscount();
+              computeGenericItemDiscount();
+            }
+            else{
+              $('#sc-pwd-discount').text('-');
+              getTotalDue()
+            }
+              
+          }
+           
+         });
+      }
+
       function convertToMoneyFormat(total)
       {
-        var round_off = Math.round((parseInt(total) + Number.EPSILON) * 100) / 100;
-        return money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        var round_off = Math.round((parseInt(parseFloat(total)) + Number.EPSILON) * 100) / 100;
+        return money_format = parseFloat(round_off).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
 
 
@@ -120,13 +181,15 @@ $(document).ready(function(){
           if(qty == 0){
             $('#loading-modal').modal('toggle');
             removeFromCart(product_code);
-            getTotalAmount();
+            getSubtotal();
+            isQualifiedForDiscount();
             countCart();
           }
   
           $('#loading-modal').modal('toggle');
           updateQtyAndAmount(product_code, qty);
           getSubtotal();
+          isQualifiedForDiscount();
           countCart();
         }
       }

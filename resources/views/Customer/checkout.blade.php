@@ -126,18 +126,23 @@
   
 
   
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" id="ship-info-contr">
+
                 <Label>Shipping Address</Label>
-                <select class="form-control mb-3">      
-                  <option value="Nasugbu">Nasugbu</option> 
-                  <option value="Tuy">Tuy</option> 
-                </select>
-                <input type="text" class="form-control mb-3" placeholder="Street/Subd/Brgy.">
-                <textarea class="form-control mb-3" placeholder="note"></textarea>
-                <Label>Contact No.</Label>
+
+                <input type="text" class="form-control mb-3" placeholder="flr/blk/bldg" id="flr-bldg-blk">
+
+                <Label class="label-small">Barangay</Label>
+                <input type="text" class="form-control mb-3" id="brgy">
+
+                <Label class="label-small">Note</Label>
+                <textarea class="form-control mb-3" id="note"></textarea>
+
+                <Label class="label-small">Contact No.</Label>
                 <input type="text" class="form-control mb-3" id="contact-no" maxlength="11" placeholder="09xxxxxxxxx">
-                <Label>Email</Label>
-                <input type="text" class="form-control" value={{ session()->get('email') }}><br>
+
+                <Label class="label-small">Email</Label>
+                <input type="text" class="form-control" id="email"><br>
 
           
               <li class="list-group-item d-flex justify-content-between align-items-center px-0">
@@ -155,8 +160,7 @@
               </li>
             </ul>
   
-            <a href="{{ url('/payment') }}"
-            id="btn-place-order" class="btn btn-block waves-effect waves-light btn-blue-primary" style="color: #fff">Place Order</a>
+            <a id="btn-place-order" class="btn btn-block waves-effect waves-light btn-blue-primary" style="color: #fff">Place Order</a>
   
           </div>
         </div>

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
-
+use App\Classes\UserAccessRights;
+use App\Classes\Date;
 
 class DashboardCtr extends Controller
 {
@@ -12,9 +13,16 @@ class DashboardCtr extends Controller
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
+    private $module = "Maintenance";
 
     public function index(){
-        
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize($this->module)))
+        {
+            $rights->notAuthMessage();
+        }
+
         $this->getSales();
         return view('/dashboard');
     }

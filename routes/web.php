@@ -20,6 +20,12 @@ Route::get('/admin-login', 'AdminLoginCtr@index');
 Route::post('/admin-login/login', 'AdminLoginCtr@login');
 Route::get('/admin-login/logout', 'AdminLoginCtr@logout');
 
+
+//DASHBOARD
+Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');
+
+Route::resource('/products', 'ProductSearch');
+
 //CUSTOMER---------------------------------------------------------------------------------------------------------------
 //login
 Route::get('/customer-login', 'Customer\LoginCtr@index');
@@ -58,6 +64,8 @@ Route::post('/cart/remove', 'Customer\CartCtr@removeFromCart');
 Route::post('/cart/updateQtyAndAmount', 'Customer\CartCtr@updateQtyAndAmount');
 Route::get('/cart/countcart', 'Customer\CartCtr@countCart');
 Route::get('/cart/getsubtotal', 'Customer\CartCtr@getSubtotalAmount');
+Route::get('/cart/discount', 'Customer\CartCtr@computeGenericItemDiscount');
+Route::get('/cart/total_due_discount', 'Customer\CartCtr@getTotalDueWithDiscount');
 //checkout
 Route::get('/checkout', 'Customer\CheckoutCtr@index');
 Route::get('/checkout/getsubtotal', 'Customer\CheckoutCtr@getSubtotalAmount');
@@ -71,14 +79,10 @@ Route::get('/payment/afterpayment/forget', 'Customer\PaymentCtr@forgetOrder');
 //Stripe payment
 Route::get('stripe', 'Customer\StripePaymentCtr@stripe');
 Route::post('stripe', 'Customer\StripePaymentCtr@stripePost')->name('stripe.post');
-
-//Stripe payment
+Route::get('stripe/success_payment', 'Customer\StripePaymentCtr@stripeSuccess');
+//my order
 Route::get('myorders', 'Customer\MyOrdersCtr@index');
 
-//
-Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');
-
-Route::resource('/products', 'ProductSearch');
 
 
 //SALES---------------------------------------------------------------------------------------------------------------
@@ -134,7 +138,8 @@ Route::post('/maintenance/company/getCompanyMarkup/{companyID}', 'Maintenance\Co
 //Discount
 Route::resource('/maintenance/discount', 'Maintenance\DiscountCtr');
 Route::post('/maintenance/discount/activate', 'Maintenance\DiscountCtr@activate');
-Route::post('/maintenance/discount/getdiscount', 'Maintenance\DiscountCtr@getDiscount');
+Route::post('/maintenance/discount/sc_discount', 'Maintenance\DiscountCtr@getSeniorCitizenDiscount');
+Route::post('/maintenance/discount/pwd_discount', 'Maintenance\DiscountCtr@getPWDDiscount');
 
 // category
 Route::get('/maintenance/category', 'Maintenance\CategoryMaintenanceCtr@index');
@@ -160,6 +165,8 @@ Route::get('/manageorder', 'ManageOnlineOrderCtr@index');
 Route::get('/manageorder/pending', 'ManageOnlineOrderCtr@displayPendingOrder');
 Route::get('/manageorder/processing', 'ManageOnlineOrderCtr@displayProcessingOrder');
 Route::get('/manageorder/showitems/{order_no}', 'ManageOnlineOrderCtr@showOrderItems');
+Route::get('/manageorder/customerinfo/{user_id}', 'ManageOnlineOrderCtr@getCustomerInfo');
+Route::get('/manageorder/shippinginfo/{user_id}', 'ManageOnlineOrderCtr@getShippingInfo');
 Route::get('/manageorder/salesinvoice', 'ManageOnlineOrderCtr@generateSalesInvoice');
 
 //VERIFY CUSTOMER---------------------------------------------------------------------------------------------------------

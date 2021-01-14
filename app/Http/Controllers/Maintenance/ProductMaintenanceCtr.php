@@ -5,12 +5,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Input;
 use App\ProductMaintenance;
-use App\SupplierMaintenance;
 use Illuminate\Http\Request;
 use PDF;
 use Storage;
 use App\Classes\UserAccessRights;
 use App\Classes\AuditTrailHelper;
+use App\Model\Maintenance\Product;
 
 class ProductMaintenanceCtr extends Controller
 {
@@ -70,46 +70,21 @@ class ProductMaintenanceCtr extends Controller
     }
 
     public function getAllProduct(){
-        $product = DB::table($this->table_prod.' AS P')
-        ->select("P.*", 
-        DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
-        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-        ->orderBy('P.id', 'desc')
-        ->get();
-
-        return $product;
+        $product = new Product;
+        return $product->getAllProduct();
     }
 
     public function filterByCategory($category_param){
-        $product = DB::table($this->table_prod.' AS P')
-        ->select("P.*", 
-        DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
-        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-        ->where('categoryID', $category_param)
-        ->orderBy('P.id', 'desc')
-        ->get();
-
-        return $product;
+        $product = new Product;
+        return $product->filterByCategory($category_param);
     }
 
     
 
     public function show($productCode)
     {
-        $product = DB::table($this->table_prod.' AS P')
-        ->select("P.*", 
-        DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
-            ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-            ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-            ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-            ->where('P.id', $productCode)
-            ->get();
-
-            return $product;
+        $product = new Product;
+        return $product->show($productCode);
     }
 
     /**
@@ -122,6 +97,7 @@ class ProductMaintenanceCtr extends Controller
     {
         $audit = new AuditTrailHelper;
         $audit->recordAction($this->module, 'Add product');
+        
         $product = new ProductMaintenance;
 
         $product->_prefix = $this->getPrefix();

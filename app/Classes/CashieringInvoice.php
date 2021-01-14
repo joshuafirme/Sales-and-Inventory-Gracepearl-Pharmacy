@@ -75,7 +75,7 @@ class CashieringInvoice {
         <p class="p-details address">F. Alix St., Cor. F. Castro St., Brgy III, Nasugbu, Batangas</p>
         <p class="p-details address">MARIA ALONA S. CALDERON - Prop.</p>
         <p class="p-details address">VAT Reg: TIN 912-068-468-002</p>
-        <h3 style="text-align:center;">SALES INVOICE</h3>
+        <h3 style="text-align:center;">RECEIPT</h3>
 
      
     
@@ -103,8 +103,8 @@ class CashieringInvoice {
                 <td>'. $data['qty'] .'</td>  
                 <td>'. $data['unit'] .'</td>  
                 <td>'. $data['description'] .'</td>
-                <td>'. number_format($data['unit_price']) .'</td>   
-                <td>'. number_format($data['amount']) .'</td>              
+                <td>'. number_format($data['unit_price'],2,',','.') .'</td>   
+                <td>'. number_format($data['amount'],2,',','.') .'</td>              
             </tr>
 
           
@@ -121,7 +121,7 @@ class CashieringInvoice {
      $output .='
         <tr>
             <td style="text-align:right;" colspan="4">Total Sales (VAT Inclusive) </td>
-            <td class="align-text">'. number_format($total_amount) .'</td>
+            <td class="align-text">'. number_format($total_amount,2,',','.') .'</td>
         </tr>
 
         <tr>

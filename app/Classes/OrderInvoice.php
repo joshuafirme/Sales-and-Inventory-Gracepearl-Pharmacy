@@ -100,8 +100,8 @@ class OrderInvoice {
                 <td>'. $data['qty'] .'</td>  
                 <td>'. $data['unit'] .'</td>  
                 <td>'. $data['description'] .'</td>
-                <td>'. number_format($data['unit_price']) .'</td>   
-                <td>'. number_format($data['amount']) .'</td>              
+                <td>'. number_format($data['unit_price'],2,'.',',') .'</td>   
+                <td>'. number_format($data['amount'],2,'.',',') .'</td>              
             </tr>
 
           
@@ -118,7 +118,7 @@ class OrderInvoice {
      $output .='
         <tr>
             <td style="text-align:right;" colspan="4">Total Sales (VAT Inclusive) </td>
-            <td class="align-text">'. number_format(session()->get('order-total-amount')) .'</td>
+            <td class="align-text">'. number_format(session()->get('order-total-amount'),2,'.',',') .'</td>
         </tr>
 
         <tr>
@@ -156,7 +156,7 @@ class OrderInvoice {
 
         <tr>
             <td style="text-align:right;" colspan="4">Total Amount Due </td>
-            <td class="align-text">'. number_format(session()->get('order-total-amount')) .'</td>
+            <td class="align-text">'. number_format(session()->get('order-total-amount'),2,'.',',') .'</td>
         </tr>
 
         </tbody>

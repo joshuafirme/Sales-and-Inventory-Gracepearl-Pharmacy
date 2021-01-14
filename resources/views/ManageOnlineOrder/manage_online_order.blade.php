@@ -77,7 +77,6 @@
                               <th>Customer Name</th>                                                           
                               <th>Phone No</th>        
                               <th>Email</th>
-                              <th>Payment method</th>
                               <th>Date placed</th>
                               <th>Status</th>
                               <th>Action</th>
@@ -91,6 +90,27 @@
                   <div class="tab-pane fade" id="processing_tab" role="tabpanel" aria-labelledby="processing-tab">
 
                     <table class="table responsive table-hover" id="processing-table" width="100%">                               
+                      <thead>
+                        <tr>
+
+                          <th>Order #</th>
+                          <th>Customer Name</th>                                                           
+                          <th>Phone No</th>        
+                          <th>Email</th>
+                          <th>Payment method</th>
+                          <th>Date placed</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        
+                        </tr>
+                      </thead>
+                    </table>
+
+                  </div>
+
+                  <div class="tab-pane fade" id="packed_tab" role="tabpanel" aria-labelledby="packed-tab">
+
+                    <table class="table responsive table-hover" id="packed-table" width="100%">                               
                       <thead>
                         <tr>
 

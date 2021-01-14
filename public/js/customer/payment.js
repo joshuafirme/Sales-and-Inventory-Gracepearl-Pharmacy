@@ -7,10 +7,46 @@ $(document).ready(function(){
       });
 
       $('#btn-cash-on-delivery').click(function(){
-        cashOnDelivery();
+        isVerified();
     });
 
+   
 
+    function isVerified(){
+      $.ajax({
+        url:"/account/checkifverified",
+        type:"GET",
+ 
+        success:function(response){
+          
+          if(response != '')
+          {          
+            if(response == 'For validation') 
+            {
+              alert('Your account is not verified! \n Please verify your account before you proceed to checkout.');
+              window.location.href = "/account";
+            }
+            else if(response == 'Verified')
+            {
+               cashOnDelivery();
+               window.location.href = "/payment/afterpayment";
+            }
+            else
+            {
+
+              cashOnDelivery();
+              window.location.href = "/payment/afterpayment";
+            }
+          }
+          else{
+            alert('Your account is not verified! \n Please verify your account before you proceed to checkout.');
+            window.location.href = "/account";
+          }
+            
+        }
+         
+       });
+    }
    // window.top.close();
 
 

@@ -155,15 +155,19 @@ class CustomerAccountCtr extends Controller
             ->value('status'); 
 
             if($cust_ver){
-                if($cust_ver == 'For validation'){
-                    return 'For validation';
-                }
-                else if($cust_ver == 'Verified'){
-                    return 'Verified';
-                }
-                else{
-                    return 'Verified SC/PWD';
-                }
+                switch ($cust_ver) {
+                    case 'Verified':
+                        return 'Verified';
+                        break;
+                    case 'Verified Senior Citizen':
+                        return 'Verified Senior Citizen';
+                        break; 
+                    case 'Verified PWD':
+                        return 'Verified PWD';
+                        break; 
+                    default:
+                      return 'For validation';
+                  }
             }  
             else{
                 return null;

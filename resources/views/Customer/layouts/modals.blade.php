@@ -117,6 +117,7 @@
                   <select class="form-control" name="id-type" id="id-type">
                     <option value="{{ $data->id_type }}" selected>{{ $data->id_type }}</option>
                     <option value="Senior Citizen ID">Senior Citizen ID</option>
+                    <option value="Senior Citizen ID">PWD ID/Booklet</option>
                     <option value="Passport">Passport</option>
                     <option value="Driver's license">Driver's license</option>
                     <option value="SSS UMID Card">SSS UMID Card</option>
@@ -146,7 +147,8 @@
                 <div class="col-md-4 mb-3">
                   <label class="label-small">Select ID Type</label>
                     <select class="form-control" name="id-type" id="id-type">
-                      <option value="Senior Citizen ID">Senior Citizen ID</option>
+                      <option value="Senior Citizen ID">Senior Citizen ID/Booklet</option>
+                      <option value="PWD ID">PWD ID</option>
                       <option value="Passport">Passport</option>
                       <option value="Driver's license">Driver's license</option>
                       <option value="SSS UMID Card">SSS UMID Card</option>

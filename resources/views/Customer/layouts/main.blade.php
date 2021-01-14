@@ -118,6 +118,7 @@
           <script src="{{asset('js/customer/checkout.js')}}"></script>
           <script src="{{asset('js/customer/payment.js')}}"></script>
           <script src="{{asset('js/customer/account.js')}}"></script>
+          <script src="{{asset('js/customer/myorder.js')}}"></script>
           
           <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 

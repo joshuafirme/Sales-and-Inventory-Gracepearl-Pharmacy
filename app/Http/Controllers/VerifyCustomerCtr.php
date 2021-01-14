@@ -83,8 +83,7 @@ class VerifyCustomerCtr extends Controller
         $verification_info = DB::table($this->tbl_cust_ver.' as CV')
         ->select('CV.*', 'fullname', 'phone_no', 'email',DB::raw('CONCAT(CA._prefix, CA.id) as user_id'))
         ->leftJoin($this->tbl_cust_acc.' as CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'CV.user_id')
-        ->where('status', 'Verified')
-        ->orWhere('status', 'Verified SC/PWD')
+        ->whereIn('status', ['Verified Senior Citizen', 'Verified PWD', 'Veried'])
         ->orderBy('created_at', 'asc')
         ->get(); 
 
@@ -108,11 +107,18 @@ class VerifyCustomerCtr extends Controller
 
         $id_type = Input::input('id_type');
 
-        if($id_type == 'Senior Citizen ID' || $id_type == 'PWD ID'){
+        if($id_type == 'Senior Citizen ID'){
             DB::table($this->tbl_cust_ver)
             ->where('user_id', $cust_id)
             ->update([
-                'status' => 'Verified SC/PWD'
+                'status' => 'Verified Senior Citizen'
+            ]);
+        }
+        else if($id_type == 'PWD ID'){
+            DB::table($this->tbl_cust_ver)
+            ->where('user_id', $cust_id)
+            ->update([
+                'status' => 'Verified PWD'
             ]);
         }
         else{

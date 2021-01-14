@@ -25,7 +25,7 @@
                     <div class="card-title m-4"><h4>Select Payment Method</h4></div>
                           <div class="card-body">
       
-                              <form method="POST" action="{{ action('Customer\PaymentCtr@gcashPayment') }}">
+                              <a href="/customer/gcashpayment">
                                   {{ csrf_field() }}
                               <div class="card-payment-method">
                                   <button type="submit" class="btn btn-payment">
@@ -33,7 +33,7 @@
                                       <p class="mt-1 mb-0">Gcash e-Wallet</p>
                                       <p class="text-secondary">GCash account required</p>
                                   </button>
-                              </form>
+                                </a>
       
                                   <a data-toggle="modal" data-target="#stripeModal" class="btn btn-payment" id="btn-stripe">
                                       <img src="{{asset('assets/card_payment_50px.png')}}" alt=""><br>

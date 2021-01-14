@@ -64,7 +64,8 @@ Route::post('/cart/remove', 'Customer\CartCtr@removeFromCart');
 Route::post('/cart/updateQtyAndAmount', 'Customer\CartCtr@updateQtyAndAmount');
 Route::get('/cart/countcart', 'Customer\CartCtr@countCart');
 Route::get('/cart/getsubtotal', 'Customer\CartCtr@getSubtotalAmount');
-Route::get('/cart/discount', 'Customer\CartCtr@computeGenericItemDiscount');
+Route::get('/cart/sc_discount', 'Customer\CartCtr@seniorGenericItemDiscount');
+Route::get('/cart/pwd_discount', 'Customer\CartCtr@pwdGenericItemDiscount');
 Route::get('/cart/total_due_discount', 'Customer\CartCtr@getTotalDueWithDiscount');
 //checkout
 Route::get('/checkout', 'Customer\CheckoutCtr@index');
@@ -73,8 +74,9 @@ Route::post('/checkout/placeorder', 'Customer\CheckoutCtr@placeOrder');
 //Payment
 Route::get('/payment', 'Customer\PaymentCtr@index');
 Route::post('/payment/cod', 'Customer\PaymentCtr@cashOnDelivery');   //COD
-Route::post('/customer/gcashpayment', 'Customer\PaymentCtr@gcashPayment')->name('gcashpayment');
+Route::get('/customer/gcashpayment', 'Customer\PaymentCtr@gcashPayment')->name('gcashpayment');
 Route::get('/payment/afterpayment', 'Customer\PaymentCtr@afterPayment');
+Route::get('/payment/paynow/{amount}', 'Customer\PaymentCtr@payNow');
 Route::get('/payment/afterpayment/forget', 'Customer\PaymentCtr@forgetOrder');
 //Stripe payment
 Route::get('stripe', 'Customer\StripePaymentCtr@stripe');

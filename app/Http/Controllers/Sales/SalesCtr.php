@@ -230,20 +230,9 @@ class SalesCtr extends Controller
 
     public function process(){
 
-        $isSenior = Input::input('senior_chk');
-        $sales_inv_no = Input::input('sales_inv_no');
-    //    $senior_name = Input::input('senior_name');
-      //  $sales_inv_no = $this->getSalesInvNo();
-
-        if($isSenior == 'yes'){
-            $this->updateSales($sales_inv_no);
-         //   $this->recordSeniorInfo($senior_name, $sales_inv_no);
-        }
-        else if($isSenior == 'no'){
-            $this->updateSales($sales_inv_no);
-        }
-       
-        
+        $sales_inv_no = Input::input('sales_inv_no'); 
+        $this->updateSales($sales_inv_no);
+ 
         return redirect()->back();
     }
 
@@ -282,16 +271,16 @@ class SalesCtr extends Controller
 
     public function updateInventory($product_code, $qty){
         
-        DB::table($this->table_prod)
-        ->where(DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), $product_code)
+        DB::table($this->table_prod.' as P')
+        ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
         ->update(array(
             'qty' => DB::raw('qty - '. $qty .'')));
     }
 
     public function checkQty($product_code){
         
-        $qty = DB::table($this->table_prod)
-        ->where(DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), $product_code)
+        $qty = DB::table($this->table_prod.' as P')
+        ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
         ->value('qty');
 
     }

@@ -28,6 +28,12 @@ class PaymentCtr extends Controller
         return view('customer/layouts/after_payment');
     }
 
+    public function getOrderNo(){
+        $order_no = DB::table($this->tbl_ol_order)
+        ->max('order_no');
+        return ++ $order_no;
+    }
+
     public function forgetOrder(){
         session()->forget('order-no');
     }
@@ -45,26 +51,62 @@ class PaymentCtr extends Controller
         ]);   
     }
 
-    public function getOrderNo(){
-        $order_no = DB::table($this->tbl_ol_order)
-        ->max('order_no');
-        return ++ $order_no;
-    }
-
-    public function gcashPayment(){
-
+    public function gcashPayment()
+    {     
+        $source_ss = session()->get('source');
+        $amount = session()->get('checkout-total');    
+        
+        if(!$source_ss) {
         $source = Paymongo::source()->create([
             'type' => 'gcash',
-            'amount' =>  session()->get('checkout-total'),
+            'amount' => $amount,
             'currency' => 'PHP',
             'redirect' => [
                 'success' => route('gcashpayment'),
-                'failed' => dd('failed')
+                'failed' => route('gcashpayment')
             ]
         ]);
-        dd($source);
-        return redirect($source->getRedirect()['checkout_url']);       
-       }
+            $source_ss = [
+                    'source_id' => $source->id,            
+                    'amount' => $source->amount,
+                    'status' => $source->status           
+            ];
+            
+            session()->put('source', $source_ss);
+        
+        return redirect($source->getRedirect()['checkout_url']);      
+        }
+        else{
+            Paymongo::payment()
+            ->create([
+                'amount' => $source_ss['amount'],
+                'currency' => 'PHP',
+                'description' => 'Gracepearl Test Payment',
+                'statement_descriptor' => 'Test',
+                'source' => [
+                    'id' => $source_ss['source_id'],
+                    'type' => 'source'
+                ]
+            ]);
+
+            $user_id = $this->getUserIDWithPrefix();
+            DB::table($this->tbl_ol_order)
+            ->where([
+                ['email',  $user_id],
+                ['order_no',  $this->getOrderNo() -1 ]
+            ])
+            ->update([
+            'payment_method' => 'GCash',
+            'status' => 'Processing'
+            
+            ]);   
+            return redirect('/homepage')->send();
+        }
+    }
+
+    public function payNow($amount){
+        session()->put('checkout-total', $amount);  
+    }
 
     public function isLoggedIn(){
         if(session()->get('is-customer-logged') !== 'yes'){

@@ -42,7 +42,7 @@
                     ->first();
                  ?>
                 @if($order_status == 'Payment pending')
-                <button class="btn btn-sm btn-success ml-auto mr-3" order-number={{ $o->order_no }}>Pay now ></button> 
+                <button class="btn btn-sm btn-success ml-auto mr-3 btn-pay-now" id="btn-pay-now" order-no={{ $o->order_no }}>Pay now ></button> 
                 @else
                 
                 <p class="ml-auto mr-3 label-small" style="color: #2A2F6E;">Payment Method: {{ $p->payment_method }}</p>         
@@ -54,10 +54,11 @@
            
             <div class="line mb-4"></div>
     
-            <?php   foreach($orders as $data){ ?>
-
-      
-            
+            <?php
+            $total_amount = 0;
+               foreach($orders as $data){ 
+            ?>
+              
             <div class="row mb-4">
               <div class="col-md-5 col-lg-3 col-xl-3">
             
@@ -84,7 +85,11 @@
                         <a class="mr-2">{{ $data->status }} </a><br>
                    
                         <a class="mr-2">Qty: {{ $data->qty }} </a>
-                        <p class="mt-2"><span class="text-success">₱{{ $data->amount }}</span></p>    
+                     
+                        <p class="mt-2"><span class="text-success">₱{{ $data->amount }}</span></p> 
+                        <?php
+                        $total_amount = $total_amount + $data->amount;
+                         ?>   
                           
                     </div>
                   </div>
@@ -95,12 +100,18 @@
             </div>      
            
             <?php }?>
-  
+            <div class="row">
+              <p class="ml-auto mr-3">Total Amount: ₱
+                <span id="pay-now-{{ $o->order_no }}">{{ $total_amount }}</span>
+              </p> 
+            </div>
+
           </div>
           
         </div>
-        <!-- Card -->
+        <!-- Card -->  
         @endforeach
+        
         @else
         <div class="alert alert-danger alert-dismissible">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

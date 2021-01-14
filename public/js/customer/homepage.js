@@ -206,17 +206,20 @@ $(document).ready(function(){
           cards += ' <p class="card__unit text-secondary">    Unit type: '+data[i].unit+'';
           cards += '</p>';
           cards += ' <div class="card__info">';
-          cards += '<p class="mt-3 text-success">₱ '+data[i].selling_price+'</p>';
+          cards += '<p class="mt-3 text-success">₱ '+moneyFormat(data[i].selling_price)+'</p>';
           cards += '<button class="btn btn-sm card__btn-add ml-auto" product-code='+data[i].product_code+' id="btn-add-to-cart">Add to cart</button><br>';      
           cards += '</div></div></div>';    
 
-          if(i == data.length -1){
-            cards += '<div class="row">';
-            cards += '<div class="col-12">';
-            cards += '<button class="btn btn-sm btn-success" id="btn-viewmore"';
-            cards += 'style="border-radius: 20px; width:110px; ">View more</button>';
-            cards += '</div></div>';
+          if(data.length >= 12){
+            if(i == data.length -1){
+              cards += '<div class="row">';
+              cards += '<div class="col-12">';
+              cards += '<button class="btn btn-sm btn-success" id="btn-viewmore"';
+              cards += 'style="border-radius: 20px; width:110px; ">View more</button>';
+              cards += '</div></div>';
+            }
           }
+          
          $('#homepage-cards').append(cards);
         }
        
@@ -228,7 +231,12 @@ $(document).ready(function(){
      
     }
     
-
+    function moneyFormat(total)
+    {
+      var decimal = (Math.round(total * 100) / 100).toFixed(2);
+     // var round_off = Math.round((parseInt(parseFloat(decimal)) + Number.EPSILON) * 100) / 100;
+      return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
     $(document).on('click', '#btn-add-to-cart', function(){
         var product_code = $(this).attr('product-code');

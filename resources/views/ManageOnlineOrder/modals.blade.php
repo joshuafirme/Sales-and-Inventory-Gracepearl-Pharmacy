@@ -43,8 +43,8 @@
                                       <td>{{ $data['category'] }}</td>
                                       <td>{{ $data['unit'] }}</td>
                                       <td>{{ $data['qty'] }}</td>
-                                      <td>₱ {{ number_format($data['unit_price'], 2, '.', '') }}</td>
-                                      <td>₱ {{ number_format($data['amount'], 2, '.', '') }}</td>
+                                      <td>₱ {{ number_format($data['unit_price'], 2, '.', ',') }}</td>
+                                      <td>₱ {{ number_format($data['amount'], 2, '.', ',') }}</td>
                                       
                                   </tr>  
                                   @endforeach
@@ -56,7 +56,7 @@
                                       <td></td>
                                       <td>Total:</td>
                                       <td>
-                                        <b>₱ {{ number_format(session('order-total-amount')) }}</b>
+                                        <b>₱ {{ number_format(session('order-total-amount'), 2, '.', ',') }}</b>
                                       </td>   
                                    </tr> 
                                   @endif
@@ -71,8 +71,9 @@
                     
                     <div class="col-md-12 mb-2"><hr></div>
 
-                    <div class="col-md-12">
+                    <div class="col-md-12 mb-2">
                         <h5>Customer Information</h5>
+                        <span class="badge badge-success">Verified</span>
                     </div>
     
                     <div class="col-md-4">

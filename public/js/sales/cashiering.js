@@ -116,12 +116,17 @@ $(document).ready(function(){
         computeTotalAmountDue();
 
         function computeTotalAmountDue(){
+          setTimeout(function () {
             var total_hidden = $('#total_hidden').val();
             console.log(total_hidden);
             $('#total-amount-due').val(total_hidden);
             return total_hidden;
+          },500);
+           
          
         }
+
+     
 
        
        
@@ -277,9 +282,8 @@ $(document).ready(function(){
             success:function(data){
               
               var discount = data;
-              var total = computeTotalAmountDue();  
-
-              console.log(total);
+              var total = getTotalDue();  
+              
               var result = discount * total;
               var nya = total - result;
               $('#less-discount').text(result);
@@ -295,9 +299,8 @@ $(document).ready(function(){
             success:function(data){
                 
               var discount = data;
-              var total = computeTotalAmountDue();
+              var total = getTotalDue();
 
-              console.log(total);
               var result = discount * total;
               var nya = total - result;
               $('#less-discount').text(result);
@@ -307,6 +310,13 @@ $(document).ready(function(){
           });
         }
       }
+
+      function getTotalDue(){
+        var total_hidden = $('#total_hidden').val();
+        console.log(total_hidden);
+        $('#total-amount-due').val(total_hidden);
+        return total_hidden;  
+    }
         
         //proccess items
         $('#btn-process').click(function(){

@@ -47,7 +47,7 @@ $(document).ready(function(){
             type:"GET",
             success:function(response){
               console.log('total = '+response);
-                $('.cart-subtotal').text('₱'+convertToMoneyFormat(response));
+                $('.cart-subtotal').text('₱'+moneyFormat(response));
             }         
            });
       }
@@ -58,7 +58,7 @@ $(document).ready(function(){
             type:"GET",
             success:function(response){
               console.log('total = '+response);
-                $('#total-due').text('₱'+convertToMoneyFormat(response));
+                $('#total-due').text('₱'+moneyFormat(response));
             }         
            });
       }
@@ -69,23 +69,31 @@ $(document).ready(function(){
             type:"GET",
             success:function(total){
               
-                $('#total-due').text('₱'+convertToMoneyFormat(total));
+                $('#total-due').text('₱'+moneyFormat(total));
             }         
            });
       }
 
-      
-
-      function computeGenericItemDiscount(){
+      function seniorGenericDiscount(){
         $.ajax({
-          url:"/cart/discount",
+          url:"/cart/sc_discount",
           type:"GET",
           success:function(discount){
-            $('#sc-pwd-discount').text('- '+parseFloat(discount).toFixed(2));
+            $('#sc-pwd-discount').text('- '+moneyFormat(discount));
           }
            
          });
-      
+      }
+
+      function pwdGenericDiscount(){
+        $.ajax({
+          url:"/cart/pwd_discount",
+          type:"GET",
+          success:function(discount){
+            $('#sc-pwd-discount').text('- '+moneyFormat(discount));
+          }
+           
+         });
       }
 
       isQualifiedForDiscount();
@@ -97,10 +105,16 @@ $(document).ready(function(){
    
           success:function(response){
             
-            if(response == 'Verified SC/PWD')
+            if(response == 'Verified Senior Citizen')
             {
+              console.log('verified seniorsdsa');
               getTotalDueWithDiscount();
-              computeGenericItemDiscount();
+              seniorGenericDiscount();
+            }
+            else if(response == 'Verified PWD'){
+              console.log('verified pwd');
+              getTotalDueWithDiscount();
+              pwdGenericDiscount();
             }
             else{
               $('#sc-pwd-discount').text('-');
@@ -112,10 +126,11 @@ $(document).ready(function(){
          });
       }
 
-      function convertToMoneyFormat(total)
+      function moneyFormat(total)
       {
-        var round_off = Math.round((parseInt(parseFloat(total)) + Number.EPSILON) * 100) / 100;
-        return money_format = parseFloat(round_off).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        var decimal = (Math.round(total * 100) / 100).toFixed(2);
+       // var round_off = Math.round((parseInt(parseFloat(decimal)) + Number.EPSILON) * 100) / 100;
+        return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
 
 
@@ -217,43 +232,9 @@ $(document).ready(function(){
 
     $(document).on('click', '#btn-proceed-checkout', function(){
       forgetBuyNow()
-      isVerified();
+      window.location.href = "/checkout";
     });
 
-
-    function isVerified(){
-      $.ajax({
-        url:"/account/checkifverified",
-        type:"GET",
- 
-        success:function(response){
-          
-          if(response != '')
-          {          
-            if(response == 'For validation') 
-            {
-              alert('Your account is not verified! \n Please verify your account before you proceed to checkout.');
-              window.location.href = "/account";
-            }
-            else if(response == 'Verified')
-            {
-              window.location.href = "/checkout";
-            }
-            else
-            {
-              window.location.href = "/checkout";
- 
-            }
-          }
-          else{
-            alert('Your account is not verified! \n Please verify your account before you proceed to checkout.');
-            window.location.href = "/account";
-          }
-            
-        }
-         
-       });
-    }
 
     function forgetBuyNow() 
     {

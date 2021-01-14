@@ -21,6 +21,7 @@ class CheckoutCtr extends Controller
     public function index(){
      // session()->forget('buynow-item');
      //   dd(session()->get('buynow-item'));
+        session()->forget('source');
     
         $this->isLoggedIn();
         
@@ -73,7 +74,10 @@ class CheckoutCtr extends Controller
           {
             $amount = $data['amount'];
           }
-          session()->put('checkout-total', $amount);
+          $discount = session()->get('checkout-discount');
+          $amount_discounted = $amount - $discount;
+          session()->put('checkout-total', $amount_discounted);
+          return $amount_discounted;
         }
         else{
           $order_no = session()->get('order-no');
@@ -96,12 +100,13 @@ class CheckoutCtr extends Controller
             ])
               ->sum('amount');  
           }
-  
-          session()->put('checkout-total', $amount);
+          $discount = session()->get('checkout-discount');
+          $amount_discounted = $amount - $discount;
+          session()->put('checkout-total', $amount_discounted);
         }
        
         
-        return $amount;
+        return $amount_discounted;
       }
 
 

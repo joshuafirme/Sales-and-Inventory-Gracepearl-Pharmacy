@@ -156,7 +156,7 @@
                     <p class="mb-0">(VAT Included)</p>
                   </strong>
                 </div>
-                <span><strong id="cart-total"></strong></span>
+                <span><strong id="cart-totalcsc">₱{{  number_format(session()->get('checkout-total'),2,".",",") }}</strong></span>
               </li>
             </ul>
   
@@ -170,7 +170,7 @@
         <div class="card mb-3">
             <div class="card-body">
 
-            <h5 class="mb-4">We accept</h5>
+            <h5 class="mb-4">Secure payment services by</h5>
             <img class="mr-2" width="33px"
                 src="{{asset('assets/gcash-logo.png')}}"
                 alt="Gcash">
@@ -182,6 +182,12 @@
                 alt="American Express">
             <img class="mr-2" width="45px"
                 src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                alt="Mastercard">
+            <img class="mr-2" width="45px"
+                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/discover.svg"
+                alt="Mastercard">
+            <img class="mr-2" width="45px"
+                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/jcb.svg"
                 alt="Mastercard">
         
             </div>

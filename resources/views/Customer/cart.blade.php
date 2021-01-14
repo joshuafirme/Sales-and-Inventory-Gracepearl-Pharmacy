@@ -73,7 +73,7 @@
                         data-toggle="modal" data-target="#loading-Modal" class="card-link-secondary small text-uppercase mr-3">
                         <i class="fas fa-trash-alt mr-1"></i> Remove item </a>
                     </div>
-                    <p class="mb-0 mr-5"><span class="text-success">₱{{ $data->amount }}</span></p>
+                    <p class="mb-0 mr-5"><span class="text-success">₱{{ number_format($data->amount,2, '.', '') }}</span></p>
                   </div>
                 </div>
               </div>

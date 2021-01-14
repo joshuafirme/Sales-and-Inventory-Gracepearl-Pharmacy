@@ -42,6 +42,59 @@ $(document).ready(function(){
        });
     }
 
+    $('#phone_no').blur(function() {
+      var phone_no = $('#phone_no').val();
+      isPhoneNumberExists(phone_no.replace(/\s/g, ''));
+  });
+
+  function isPhoneNumberExists(phone_no) {
+      $.ajax({
+          url:"/signup/isexists",
+          type:"GET",
+          data:{
+              phone_no:phone_no
+          },
+          beforeSend:function(){
+            $('#loading-modal').modal('toggle');
+          },
+          success:function(response){
+           
+           setTimeout(function() {
+              if(isPhoneNoValid(phone_no) == true)
+              {
+                  if(response == '1')
+                  {
+                      $('#loading-modal').modal('toggle');
+                      $("#pn-validation").remove();
+                      $('#phone_no')
+                      .after('<span class="label-small text-danger" id="pn-validation">Phone number is already exists.</div>');
+                      $('#phone_no').val('');
+                  }
+                  else{
+                      $('#loading-modal').modal('toggle');
+                      $("#pn-validation").remove();
+                  }
+                }
+           },500);
+            
+          }         
+         })
+  }
+
+  function isPhoneNoValid(phone_no) {
+      if(phone_no.replace(/ /g,'').length > 11 || phone_no.replace(/ /g,'').length < 11){
+          $('#loading-modal').modal('toggle');
+          $("#pn-validation").remove();
+          $('#phone_no')
+          .after('<span class="label-small text-danger" id="pn-validation">Please enter a valid phone number!</div>');
+      }
+      else{
+          $('#loading-modal').modal('toggle');
+          $("#pn-validation").remove();
+          return true;
+      }
+  }
+
     
     $('#btn-update-account').on('click', function(){
 
@@ -174,7 +227,7 @@ $(document).ready(function(){
     }
 
     $('#btn-upload').click(function(){
-      $('#verify-customer-table').DataTable().ajax.reload();
+      $('#verify-customer-table').load('verifycustomer #verify-customer-table');
      
     });
 

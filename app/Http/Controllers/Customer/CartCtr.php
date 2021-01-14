@@ -16,6 +16,7 @@ class CartCtr extends Controller
   private $tbl_suplr = "tblsupplier";
   private $tbl_unit = "tblunit";
   private $tbl_cust_acc = "tblcustomer_account";
+  private $tbl_cust_ver = "tblcustomer_verification";
 
     public function index(){
         $this->isLoggedIn();
@@ -122,7 +123,7 @@ class CartCtr extends Controller
         $amount = DB::table($this->tbl_cart)
           ->where('customerID', $user_id_prefix)
           ->sum('amount');  
-        session()->put('checkout-total', $amount);
+      //  session()->put('checkout-total', $amount);
 
         return $amount;
       }
@@ -134,19 +135,39 @@ class CartCtr extends Controller
         $amount = DB::table($this->tbl_cart)
           ->where('customerID', $user_id_prefix)
           ->sum('amount');  
-        session()->put('checkout-total', $amount);
 
-        $discount = $this->computeGenericItemDiscount();
-        return $amount - $discount;
+        $verification = $this->checkVerification();
+
+        if($verification == 'Verified Senior Citizen')
+        {
+          $discount = $this->seniorGenericItemDiscount();
+        }
+        else if($verification == 'Verified Senior PWD')
+        {
+          $discount = $this->pwdGenericItemDiscount();
+        }
+        else{
+          session()->put('checkout-total', $amount);
+          return $amount;
+        }
+       
+        $total = $amount - $discount;
+        session()->put('checkout-discount', $discount);
+
+        if($amount == 0){
+          session()->put('checkout-total', $total);
+        }
+        session()->put('checkout-total', $total);
+        return $total;
       }
 
-      public function computeGenericItemDiscount()
+      public function seniorGenericItemDiscount()
       {
         $user_id_prefix = $this->getUserIDWithPrefix();
-        $discount_percentage = $this->getDiscount();
+        $discount_percentage = $this->getSeniorCitizenDiscount();
 
         $amount = DB::table($this->tbl_cart.' as CART')
-          ->leftJoin($this->tbl_prod.' as P',  DB::raw('CONCAT(P._prefix, P.id)'), '=', 'CART.product_code')
+          ->leftJoin($this->tbl_prod.' as P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'CART.product_code')
           ->leftJoin($this->tbl_cat.' as C', 'C.id', '=', 'P.categoryID')
           ->where([
             ['CART.customerID', $user_id_prefix],
@@ -157,10 +178,62 @@ class CartCtr extends Controller
         return $discount;
       }
 
-      public function getDiscount(){
-        $discount = DB::table('tbldiscount')->first();
-        return $discount->discount;
+      public function pwdGenericItemDiscount()
+      {
+        $user_id_prefix = $this->getUserIDWithPrefix();
+        $discount_percentage = $this->getPWDDiscount();
+
+        $amount = DB::table($this->tbl_cart.' as CART')
+          ->leftJoin($this->tbl_prod.' as P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'CART.product_code')
+          ->leftJoin($this->tbl_cat.' as C', 'C.id', '=', 'P.categoryID')
+          ->where([
+            ['CART.customerID', $user_id_prefix],
+            ['C.category_name', 'Generic']
+          ])
+          ->sum('CART.amount');
+        $discount = $discount_percentage * $amount;  
+        return $discount;
+      }
+
+      public function getPWDDiscount(){
+        $discount = DB::table('tbldiscount')->value('pwd_discount');
+        return $discount;
     }
+
+    public function getSeniorCitizenDiscount(){
+        $discount = DB::table('tbldiscount')->value('sc_discount');
+        return $discount;
+    }
+
+    public function checkVerification(){
+
+      $user_id = $this->getUserIDWithPrefix();
+      
+      if($user_id){
+          $cust_ver =  DB::table($this->tbl_cust_ver)
+          ->where('user_id', $user_id)
+          ->value('status'); 
+
+          if($cust_ver){
+              switch ($cust_ver) {
+                  case 'Verified':
+                      return 'Verified';
+                      break;
+                  case 'Verified Senior Citizen':
+                      return 'Verified Senior Citizen';
+                      break; 
+                  case 'Verified PWD':
+                      return 'Verified PWD';
+                      break; 
+                  default:
+                    return 'For validation';
+                }
+          }  
+          else{
+              return null;
+          } 
+      }      
+  }
 
       public function removeFromCart()
       {

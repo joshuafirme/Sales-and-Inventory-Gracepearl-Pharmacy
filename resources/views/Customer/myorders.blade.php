@@ -42,7 +42,7 @@
                     ->first();
                  ?>
                 @if($order_status == 'Payment pending')
-                <button class="btn btn-sm btn-success ml-auto mr-3 btn-pay-now" id="btn-pay-now" order-no={{ $o->order_no }}>Pay now ></button> 
+                <button class="btn btn-sm btn-success ml-auto mr-3 btn-pay-now" order-no={{ $o->order_no }}>Pay now ></button> 
                 @else
                 
                 <p class="ml-auto mr-3 label-small" style="color: #2A2F6E;">Payment Method: {{ $p->payment_method }}</p>         

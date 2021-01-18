@@ -50,7 +50,7 @@ class Product extends Model
     {
         $product = DB::table($this->table_prod.' AS P')
         ->select("P.*", 
-        DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
+        DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name, exp_date'))
             ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
             ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
             ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')

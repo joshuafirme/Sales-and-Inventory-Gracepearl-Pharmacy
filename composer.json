@@ -12,6 +12,7 @@
         "barryvdh/laravel-dompdf": "^0.8.7",
         "ferdous/laravel-otp-validate": "^1.2",
         "fideloper/proxy": "^4.0",
+        "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "6.0",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^1.0",
@@ -47,8 +48,7 @@
         "classmap": [
             "database/seeds",
             "database/factories",
-            "app/Classes",
-            "app/Classes/Maintenance"
+            "app/Classes"
         ]
     },
     "autoload-dev": {

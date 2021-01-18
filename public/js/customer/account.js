@@ -33,14 +33,52 @@ $(document).ready(function(){
          if(data){
           console.log(data);
           $('#flr-bldg-blk').val(data[0].flr_bldg_blk);
-          $('#municipality').val(data[0].municipality);
-          $('#brgy').val(data[0].brgy);
+
+          $('#municipality-sel').text(data[0].municipality);
+
+          $("#municipality option[value="+data[0].municipality+"]").remove();
+
+          $('#municipality-sel').val(data[0].municipality);
+             
+          getBrgy(data[0].municipality, data[0].brgy);
+         
+          $("#brgy-selected").text(data[0].brgy);
+          $("#brgy-selected").val(data[0].brgy);
+          
+
           $('#notes').val(data[0].note);
          }
         }
          
        });
     }
+ 
+
+ $('#municipality').change(function () {
+    var municipality = $(this).val();
+    getBrgy(municipality, '');
+    
+});         
+     
+ function getBrgy(municipality, brgy) {
+
+  $('#barangay').empty(); 
+  $('#barangay').append('<option value="' + brgy + '">' + brgy  + '</option>');
+    $.ajax({
+        url: '/account/getBrgyList/'+municipality,
+        tpye: 'GET',
+        success:function(data){
+            for (var i = 0; i < data.length; i++) 
+            { 
+                $('#barangay').append('<option value="' + data[i].brgy + '">' + data[i].brgy  + '</option>');
+            }
+            
+    
+        }
+      });
+}
+
+
 
     $('#phone_no').blur(function() {
       var phone_no = $('#phone_no').val();

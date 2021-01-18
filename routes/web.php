@@ -47,11 +47,15 @@ Route::get('/account/getshippinginfo', 'Customer\CustomerAccountCtr@getShippingI
 Route::post('/account/update', 'Customer\CustomerAccountCtr@updateAccount');
 Route::post('/account/uploadID', 'Customer\CustomerAccountCtr@uploadID');
 Route::get('/account/checkifverified', 'Customer\CustomerAccountCtr@checkIfVerified');
+Route::get('/account/getBrgyList/{municipality}', 'Customer\CustomerAccountCtr@getBrgyList');
+
 //homepage
 Route::get('/homepage', 'Customer\HomePageCtr@index');
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
 Route::get('/homepage/allproduct', 'Customer\HomePageCtr@getAllProduct');
 Route::get('/homepage/searchproduct/{search_key}', 'Customer\HomePageCtr@searchProduct');
+Route::get('/terms_and_condition', 'Customer\HomePageCtr@termsAndCondition');
+
 //product detail
 Route::get('/productdetails', 'Customer\ProductDetailCtr@index');
 Route::get('/productdetails/{product_code}', 'Customer\ProductDetailCtr@getProductDetails');
@@ -76,7 +80,7 @@ Route::get('/payment', 'Customer\PaymentCtr@index');
 Route::post('/payment/cod', 'Customer\PaymentCtr@cashOnDelivery');   //COD
 Route::get('/customer/gcashpayment', 'Customer\PaymentCtr@gcashPayment')->name('gcashpayment');
 Route::get('/payment/afterpayment', 'Customer\PaymentCtr@afterPayment');
-Route::get('/payment/paynow/{amount}', 'Customer\PaymentCtr@payNow');
+Route::get('/payment/paynow/{order_no}', 'Customer\PaymentCtr@payNow');
 Route::get('/payment/afterpayment/forget', 'Customer\PaymentCtr@forgetOrder');
 //Stripe payment
 Route::get('stripe', 'Customer\StripePaymentCtr@stripe');
@@ -105,6 +109,7 @@ Route::post('/cashiering/credential', 'Sales\SalesCtr@credentialBeforeVoid');
 // Sales report
 Route::get('/sales/salesreport', 'Sales\SalesReportCtr@index');
 Route::get('/sales/displaySales', 'Sales\SalesReportCtr@displaySales');
+Route::get('/sales/salesreport/compute', 'Sales\SalesReportCtr@computeSales');
 
 //MAINTENANCE---------------------------------------------------------------------------------------------------------------
 
@@ -151,7 +156,9 @@ Route::post('/maintenance/category/update/{category_id}', 'Maintenance\CategoryM
 Route::delete('/maintenance/category/{id}', 'Maintenance\CategoryMaintenanceCtr@destroy');
 
 //shipping address
-Route::get('/maintenance/shippingadd', 'Maintenance\ShippingAddressMaintenanceCtr@index');
+Route::get('/maintenance/shippingadd', 'Maintenance\ShippingAddressCtr@index');
+Route::get('/maintenance/shippingadd/brgylist/{municipality_name}', 'Maintenance\ShippingAddressCtr@getBrgyList');
+Route::post('/maintenance/shippingadd/store', 'Maintenance\ShippingAddressCtr@store');
 
 //User
 Route::get('/maintenance/user', 'Maintenance\UserMaintenanceCtr@index');
@@ -166,10 +173,13 @@ Route::delete('/maintenance/user/delete/{empID}', 'Maintenance\UserMaintenanceCt
 Route::get('/manageorder', 'ManageOnlineOrderCtr@index');
 Route::get('/manageorder/pending', 'ManageOnlineOrderCtr@displayPendingOrder');
 Route::get('/manageorder/processing', 'ManageOnlineOrderCtr@displayProcessingOrder');
+Route::get('/manageorder/packed', 'ManageOnlineOrderCtr@displayPackedOrder');
+Route::post('/manageorder/pack_items/{order_no}', 'ManageOnlineOrderCtr@packItems');
 Route::get('/manageorder/showitems/{order_no}', 'ManageOnlineOrderCtr@showOrderItems');
 Route::get('/manageorder/customerinfo/{user_id}', 'ManageOnlineOrderCtr@getCustomerInfo');
 Route::get('/manageorder/shippinginfo/{user_id}', 'ManageOnlineOrderCtr@getShippingInfo');
 Route::get('/manageorder/salesinvoice', 'ManageOnlineOrderCtr@generateSalesInvoice');
+Route::get('/manageorder/verification_info/{user_id}', 'ManageOnlineOrderCtr@verificationInfo');
 
 //VERIFY CUSTOMER---------------------------------------------------------------------------------------------------------
 Route::get('/verifycustomer', 'VerifyCustomerCtr@index');

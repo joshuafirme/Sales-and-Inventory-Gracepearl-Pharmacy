@@ -8,23 +8,27 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\CustomerAccount;
 use App\CustomerVerification;
+use App\Classes\BrgyAPI;
 
 class CustomerAccountCtr extends Controller
 {
     private $tbl_cust_acc = "tblcustomer_account";
     private $tbl_cust_ver = "tblcustomer_verification";
     private $tbl_ship_add = "tblshipping_add";
+    private $tbl_ship_add_maintenance = "tblship_add_maintenance";
 
     public function index(){
-
         $acc_info = $this->getAccountInfo();
         $verification_info = $this->getVerificationInfo();
         $ship_info = $this->getShippingInfo();
+        $municipality = $this->getMunicipalityList();
+
 
         return view('/customer/account',[
             'account' => $acc_info,
             'verification' => $verification_info,
-            'shipping' => $ship_info
+            'shipping' => $ship_info,
+            'municipality' => $municipality
         ]);
     }
 
@@ -173,6 +177,22 @@ class CustomerAccountCtr extends Controller
                 return null;
             } 
         }      
+    }
+
+    
+    public function getMunicipalityList()
+    {
+        $municipality = DB::table($this->tbl_ship_add_maintenance)
+                ->get(); 
+        return $municipality->unique('municipality');
+    }
+
+    public function getBrgyList($municipality)
+    {
+        $brgy = DB::table($this->tbl_ship_add_maintenance)
+                ->where('municipality', $municipality)
+                ->get(); 
+        return $brgy;
     }
 
     public function getUserID(){

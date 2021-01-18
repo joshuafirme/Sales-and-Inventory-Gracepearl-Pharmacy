@@ -15,7 +15,7 @@
 		<div class="login-container">
 			<div class="form">
 				<img class="avatar" src="assets/avatar.svg">
-				<h2>Admin</h2>
+				<h2>Login</h2>
 
 				<div class="input-div">
 					<div class="i">

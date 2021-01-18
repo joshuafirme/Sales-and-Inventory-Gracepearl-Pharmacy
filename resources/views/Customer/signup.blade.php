@@ -52,7 +52,7 @@
                         <div class="col-md-6">
                             <input type="button" class="btn" id="btn-signup" value="SIGN UP">
                             <span class="label-small m-0">By clicking "SIGN UP"; I agree to Gracepearl Pharmacy's 
-                                <a href="">Terms of Use</a> and <a href="">Privacy Policy</a>
+                                <a href="{{ url('/terms_and_condition') }}">Terms of Use</a> and <a href="">Privacy Policy</a>
                             </span>	
                         </div>
 

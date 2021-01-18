@@ -19,6 +19,7 @@ class PaymentCtr extends Controller
 
     public function index()
     {
+      //  dd(session()->get('order-no'));
         $this->isLoggedIn();
         return view('customer/payment');
     }
@@ -39,16 +40,24 @@ class PaymentCtr extends Controller
     }
 
     public function cashOnDelivery(){
+
+        $order_no = session()->get('order-no');
+        //kung walang laman ang session
+        if(!$order_no){
+           $order_no = $this->getOrderNo() -1;
+        }
+
         $user_id = $this->getUserIDWithPrefix();
         DB::table($this->tbl_ol_order)
         ->where([
             ['email',  $user_id],
-            ['order_no',  $this->getOrderNo() -1 ]
+            ['order_no', $order_no]
         ])
         ->update([
             'payment_method' => 'COD',
             'status' => 'Processing'
-        ]);   
+        ]); 
+        $this->forgetOrder();  
     }
 
     public function gcashPayment()
@@ -73,7 +82,9 @@ class PaymentCtr extends Controller
             ];
             
             session()->put('source', $source_ss);
-        
+
+        $this->forgetOrder(); 
+
         return redirect($source->getRedirect()['checkout_url']);      
         }
         else{
@@ -88,24 +99,53 @@ class PaymentCtr extends Controller
                     'type' => 'source'
                 ]
             ]);
-
-            $user_id = $this->getUserIDWithPrefix();
-            DB::table($this->tbl_ol_order)
-            ->where([
-                ['email',  $user_id],
-                ['order_no',  $this->getOrderNo() -1 ]
-            ])
-            ->update([
-            'payment_method' => 'GCash',
-            'status' => 'Processing'
-            
-            ]);   
+            $this->updatePaymentToGcash();   
+                 
+            // kalimutan ang source at mag move on :)
+            session()->forget('source');
             return redirect('/homepage')->send();
         }
     }
 
-    public function payNow($amount){
-        session()->put('checkout-total', $amount);  
+    public function updatePaymentToGcash(){
+
+        $order_no = session()->get('order-no'); 
+
+        //kapag walang laman ang session
+        if(!$order_no){
+            $order_no = $this->getOrderNo() -1;
+        }
+        $user_id = $this->getUserIDWithPrefix();
+        DB::table($this->tbl_ol_order)
+        ->where([
+            ['email',  $user_id],
+            ['order_no', $order_no]
+        ])
+        ->update([
+        'payment_method' => 'GCash',
+        'status' => 'Processing'
+        
+        ]); 
+    }
+
+    public function payNow($order_no){
+        $amount = Input::input('amount');
+        session()->put('checkout-total', $amount); 
+        session()->put('order-no', $order_no); 
+    }
+
+    public function updatePayment(){
+        $user_id = $this->getUserIDWithPrefix();
+        DB::table($this->tbl_ol_order)
+        ->where([
+            ['email',  $user_id],
+            ['order_no',  $this->getOrderNo() -1 ]
+        ])
+        ->update([
+        'payment_method' => 'GCash',
+        'status' => 'Processing'
+        
+        ]);   
     }
 
     public function isLoggedIn(){

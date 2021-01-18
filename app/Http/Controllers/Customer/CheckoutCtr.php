@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Input;
 use App\OnlineOrder;
+use App\OrderDiscount;
 
 class CheckoutCtr extends Controller
 {
@@ -75,9 +76,16 @@ class CheckoutCtr extends Controller
             $amount = $data['amount'];
           }
           $discount = session()->get('checkout-discount');
-          $amount_discounted = $amount - $discount;
-          session()->put('checkout-total', $amount_discounted);
-          return $amount_discounted;
+          if($discount){
+            $amount_discounted = $amount - $discount;    
+            session()->put('checkout-total', $amount_discounted);        
+            return $amount_discounted;
+          }
+          else{
+            session()->put('checkout-total', $amount);
+            return $amount;
+          }
+
         }
         else{
           $order_no = session()->get('order-no');
@@ -104,7 +112,7 @@ class CheckoutCtr extends Controller
           $amount_discounted = $amount - $discount;
           session()->put('checkout-total', $amount_discounted);
         }
-       
+        
         
         return $amount_discounted;
       }
@@ -152,10 +160,28 @@ class CheckoutCtr extends Controller
   
                 $ol_order->save();
             }
-            DB::table($this->tbl_cart)->delete();
+            
           }
         }
-       
+        
+        session()->forget('buynow-item');
+        
+        $user_id = $this->getUserIDWithPrefix();
+        $session_discount = session()->get('checkout-discount');
+
+        if($session_discount){
+          $this->storeDiscount($user_id, $order_no, $session_discount);
+        }
+
+        DB::table($this->tbl_cart)->delete();
+      }
+
+      public function storeDiscount($user_id, $order_no, $discount){
+        $order_disc = new OrderDiscount;
+        $order_disc->user_id = $user_id;
+        $order_disc->order_no = $order_no;
+        $order_disc->discount_amount = $discount;
+        $order_disc->save();
       }
 
       public function getCheckoutItems()

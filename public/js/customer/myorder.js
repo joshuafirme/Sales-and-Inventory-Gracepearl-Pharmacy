@@ -5,11 +5,13 @@ $(document).ready(function () {
         }
       });
 
-    $('#btn-pay-now').click(function(){
+    $('.btn-pay-now').click(function(){
         var order_no = $(this).attr('order-no');
         var amount = $('#pay-now-'+order_no).text();
         console.log(amount+' '+order_no);
-     //   payNow(order_no, amount);
+        payNow(order_no, amount);
+
+        
     });
 
     function payNow(order_no, amount) {
@@ -19,7 +21,8 @@ $(document).ready(function () {
         data:{
           amount:amount
         },
-        success:function(){     
+        success:function(){ 
+          window.location.href = "/payment";
         }         
        });
     }

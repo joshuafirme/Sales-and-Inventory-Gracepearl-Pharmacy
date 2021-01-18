@@ -83,7 +83,7 @@ class VerifyCustomerCtr extends Controller
         $verification_info = DB::table($this->tbl_cust_ver.' as CV')
         ->select('CV.*', 'fullname', 'phone_no', 'email',DB::raw('CONCAT(CA._prefix, CA.id) as user_id'))
         ->leftJoin($this->tbl_cust_acc.' as CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'CV.user_id')
-        ->whereIn('status', ['Verified Senior Citizen', 'Verified PWD', 'Veried'])
+        ->whereIn('status', ['Verified Senior Citizen', 'Verified PWD', 'Verified'])
         ->orderBy('created_at', 'asc')
         ->get(); 
 

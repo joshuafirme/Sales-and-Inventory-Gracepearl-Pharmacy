@@ -32,7 +32,7 @@
                     <input type="number" class="form-control" id="phone_no">
                 </div> 
     
-                <div class="col-md-12 mb-2 mt-2">
+                <div class="col-md-12 mb-1 mt-2">
                     <hr>
                 </div>
 
@@ -50,15 +50,20 @@
                 <div class="col-md-6">
                     <label class="label-small">Municipality</label>
                     <select class="form-control" name="municipality" id="municipality">
-                      <option>Nasugbu</option>
-                      <option>Tuy</option>
-                    </select>
+                      <option id="municipality-sel" selected></option>
+                      @foreach($municipality as $data)
+                       <option value="{{ $data->municipality }}">{{ $data->municipality }}</option>
+                      @endforeach
+  
+                  </select>
                 </div> 
     
                 <div class="col-md-6">
-                    <label class="label-small">Barangay</label>
-                    <input type="text" class="form-control" id="brgy">
-                </div> 
+                  <label class="label-small">Barangay</label>
+                  <select class="form-control" name="barangay" id="barangay">
+                    <option id="brgy-selected" selected></option>
+                  </select>
+              </div> 
     
                 <div class="col-md-6">
                     <label class="label-small">Notes</label>

@@ -128,21 +128,25 @@
   
             <ul class="list-group list-group-flush" id="ship-info-contr">
 
-                <Label>Shipping Address</Label>
+                <div class="d-flex justify-content-between align-items-center px-0">
+                  <h5>Shipping Address</h5>
+                  <span class="text-success"><a href="{{ url('/account') }}" class="text-primary">Edit</a></span>
+                </div>
 
-                <input type="text" class="form-control mb-3" placeholder="flr/blk/bldg" id="flr-bldg-blk">
+                <Label class="label-small">Subd/Blk/Bldg</Label>
+                <input type="text" class="form-control mb-3" placeholder="flr/blk/bldg" id="flr-bldg-blk" readonly>
 
                 <Label class="label-small">Barangay</Label>
-                <input type="text" class="form-control mb-3" id="brgy">
+                <input type="text" class="form-control mb-3" id="brgy" readonly>
 
                 <Label class="label-small">Note</Label>
-                <textarea class="form-control mb-3" id="note"></textarea>
+                <textarea class="form-control mb-3" id="note" readonly></textarea>
 
                 <Label class="label-small">Contact No.</Label>
-                <input type="text" class="form-control mb-3" id="contact-no" maxlength="11" placeholder="09xxxxxxxxx">
+                <input type="text" class="form-control mb-3" id="contact-no" maxlength="11" placeholder="09xxxxxxxxx" readonly>
 
                 <Label class="label-small">Email</Label>
-                <input type="text" class="form-control" id="email"><br>
+                <input type="text" class="form-control" id="email" readonly><br>
 
           
               <li class="list-group-item d-flex justify-content-between align-items-center px-0">
@@ -171,9 +175,9 @@
             <div class="card-body">
 
             <h5 class="mb-4">Secure payment services by</h5>
-            <img class="mr-2" width="33px"
+            <img class="mr-2" width="32px"
                 src="{{asset('assets/gcash-logo.png')}}"
-                alt="Gcash">
+                alt="Gcash" style="border-radius: 3px;">
             <img class="mr-2" width="45px"
                 src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
                 alt="Visa">

@@ -147,6 +147,9 @@
                         <li>
                             <a href="{{ url('maintenance/discount') }}" ><i class="fas fa-percentage"></i> Discount</a>
                         </li>
+                        <li>
+                            <a href="{{ url('/maintenance/shippingadd') }}" ><i class="fas fa-location-arrow"></i> Shipping Address</a>
+                        </li>
                     </ul>
                 </li>   
                 
@@ -232,6 +235,7 @@
           <script src="{{asset('js/maintenance/unit_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/company_maintenance.js')}}"></script>
           <script src="{{asset('js/maintenance/user_maintenance.js')}}"></script>
+          <script src="{{asset('js/maintenance/shipping_maintenance.js')}}"></script>
 
           <!-- sales -->
           <script src="{{asset('js/sales/cashiering.js')}}"></script>

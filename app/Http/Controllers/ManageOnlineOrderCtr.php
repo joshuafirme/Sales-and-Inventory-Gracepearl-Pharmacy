@@ -17,6 +17,7 @@ class ManageOnlineOrderCtr extends Controller
     private $tbl_unit = "tblunit";
     private $tbl_ol_order = "tblonline_order";
     private $tbl_cust_acc = "tblcustomer_account";
+    private $tbl_cust_ver = "tblcustomer_verification";
     private $tbl_ship_add = "tblshipping_add";
     private $module = "Manage Online Order";
 
@@ -67,6 +68,26 @@ class ManageOnlineOrderCtr extends Controller
         }
     }
 
+    public function displayPackedOrder(){
+        $packed_order = $this->getPackedOrder();
+        
+        if(request()->ajax())
+        {
+            return datatables()->of($packed_order)
+            ->addColumn('action', function($packed_order){
+                $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $packed_order->order_num .' user-id='.$packed_order->user_id.'
+                 title="View order"><i class="fas fa-eye"></i></a>';
+
+                $button .= '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $packed_order->order_num .' 
+                title="Generate sales invoice"><i class="fas fa-print"></i></a>';
+
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);                         
+        }
+    }
+
     public function getPendingOrder(){
 
         $orders = DB::table($this->tbl_ol_order.' AS O')
@@ -87,6 +108,19 @@ class ManageOnlineOrderCtr extends Controller
         ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, CA.email, O.email as user_id'))
         ->leftJoin($this->tbl_cust_acc.' AS CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'O.email')
         ->where('status', 'Processing')
+        ->orderBy('O.id', 'desc')
+        ->get();   
+
+        return $orders->unique('order_no');    
+    }
+
+    public function getPackedOrder(){
+
+        $orders = DB::table($this->tbl_ol_order.' as O')
+        ->orderBy('created_at', 'asc')
+        ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, CA.email, O.email as user_id'))
+        ->leftJoin($this->tbl_cust_acc.' AS CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'O.email')
+        ->where('status', 'Packed')
         ->orderBy('O.id', 'desc')
         ->get();   
 
@@ -170,6 +204,35 @@ class ManageOnlineOrderCtr extends Controller
         return $acc_info;
     }
 
+    public function verificationInfo($user_id){
+
+        
+        if($user_id){
+            $cust_ver =  DB::table($this->tbl_cust_ver)
+            ->where('user_id', $user_id)
+            ->value('status'); 
+
+            if($cust_ver){
+                switch ($cust_ver) {
+                    case 'Verified':
+                        return 'Verified';
+                        break;
+                    case 'Verified Senior Citizen':
+                        return 'Verified Senior Citizen';
+                        break; 
+                    case 'Verified PWD':
+                        return 'Verified PWD';
+                        break; 
+                    default:
+                      return 'Not Verified';
+                  }
+            }  
+            else{
+                return null;
+            } 
+        }      
+    }
+
     public function getShippingInfo($user_id){
         
         $ship_info = DB::table($this->tbl_ship_add)
@@ -177,6 +240,20 @@ class ManageOnlineOrderCtr extends Controller
                     ->get(); 
 
         return $ship_info;
+    }
+
+
+    public function packItems($order_no){
+        $user_id = Input::input('user_id');
+        DB::table($this->tbl_ol_order.' as O')
+        ->where([
+            ['email',  $user_id],
+            [DB::raw('CONCAT(O._prefix, O.order_no)'),  $order_no]
+        ])
+        ->update([
+            'status' => 'Packed'
+        ]); 
+   
     }
 
     public function getDate(){

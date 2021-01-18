@@ -39,7 +39,7 @@ $(document).ready(function(){
             }
           }
           else{
-            alert('Your account is not verified! \n Please verify your account before you proceed to checkout.');
+            alert('Your account is not verified! \nPlease verify your account before you proceed to COD.');
             window.location.href = "/account";
           }
             
@@ -58,8 +58,8 @@ $(document).ready(function(){
           url:"/checkout/getsubtotal",
           type:"GET",
           success:function(response){
-              $('#lbl-payment-total').text('₱'+convertToMoneyFormat(response));
-              $('#lbl-after-payment').text('₱'+convertToMoneyFormat(response));
+              $('#lbl-payment-total').text('₱'+moneyFormat(response));
+              $('#lbl-after-payment').text('₱'+moneyFormat(response));
               
           }         
          });
@@ -98,11 +98,12 @@ $(document).ready(function(){
            });
       }
 
-    function convertToMoneyFormat(total)
-    {
-      var round_off = Math.round((parseInt(total) + Number.EPSILON) * 100) / 100;
-      return money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+      function moneyFormat(total)
+      {
+        var decimal = (Math.round(total * 100) / 100).toFixed(2);
+       // var round_off = Math.round((parseInt(parseFloat(decimal)) + Number.EPSILON) * 100) / 100;
+        return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
 
     var stripe_window;
     $('#btn-stripe').click(function(){

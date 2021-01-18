@@ -9,20 +9,15 @@ $(document).ready(function(){
       var category = $('select[name=sales_category] option').filter(':selected').text();
 
      fetch_sales(date_from, date_to, category);
+     computeSales(date_from, date_to, category);
    }  
+
+   
 
    function fetch_sales(date_from, date_to, category){
 
-    var d = new Date();
 
-    var month = d.getMonth()+1;
-    var day = d.getDate();
-    
-    var date = d.getFullYear() + '/' +
-        (month<10 ? '0' : '') + month + '/' +
-        (day<10 ? '0' : '') + day;
-
-    var sales_table = $('#sales-report-table').DataTable({
+    $('#sales-report-table').DataTable({
     
        processing: true,
        serverSide: true,
@@ -72,18 +67,18 @@ $(document).ready(function(){
          
             extend: 'excel', 
             text:'nya',       
-            title: 'Sales Report',
-            messageTop: date
+            title: 'Gracepearl Pharmacy <br> Sales Report',
+            messageTop: salesDate()
         },
         {
             extend: 'pdf',
-            title: 'Sales Report',
-            messageTop: date
+            title: 'Gracepearl Pharmacy <br> Sales Report',
+            messageTop: salesDate()
         },
         {
             extend: 'csv',
-            title: 'Sales Report',
-            messageTop: date
+            title: 'Gracepearl Pharmacy <br> Sales Report',
+            messageTop: salesDate()
         },
         {
             extend: 'print',
@@ -93,8 +88,8 @@ $(document).ready(function(){
                 altkey: true
             },
             
-            title: 'Sales Report',
-            messageTop: date,                
+            title: '<p>Gracepearl Pharmacy <br> Sales Report</p>',
+            messageTop: salesDate(),                
             customize: function (win){
               $(win.document.body).find('h1').css('text-align', 'center');
               $(win.document.body).css( 'font-size', '10pt' )
@@ -105,30 +100,80 @@ $(document).ready(function(){
        
       });
 
-    $('.btn-load-records').click(function(){
-
+      function salesDate() {
         var date_from = $('#sales_date_from').val()
         var date_to = $('#sales_date_to').val();
-        var category = $('select[name=sales_category] option').filter(':selected').text();
+      
+        return getSales() + ' as of ' + date_from +' to '+ date_to;
+       }
 
-        $('#sales-report-table').DataTable().destroy();
-        fetch_sales(date_from, date_to, category);
+      function getSales() {
+        $('#total-sales').text();
+        return $('#total-sales').text();
+      }
+      
+
+    $('.btn-load-records').click(function(){
+
       //  getTotalSales();
      });
      
      $('.btn-compute-sales').click(function(){
-
-        getTotalSales();
+      filterAndCompute();
      });
 
-     function getTotalSales(){
-       
-      var total_sales = sales_table.column(8).data().sum();
-      var round_off = Math.round((total_sales + Number.EPSILON) * 100) / 100;
-      var money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-      $('#total-sales').text(money_format);
+     $('#sales_date_from').change(function () {
+      filterAndCompute();
+     });
 
-      return money_format;
+     $('#sales_date_to').change(function () {
+      filterAndCompute();
+    });
+
+    $('#sales_category').change(function () {
+      filterAndCompute();
+    });
+
+    $('#btn-compute-sales').change(function () {
+      var date_from = $('#sales_date_from').val()
+      var date_to = $('#sales_date_to').val();
+      var category = $('select[name=sales_category] option').filter(':selected').text();
+      computeSales(date_from, date_to, category);
+    });
+    
+    function filterAndCompute() {
+      var date_from = $('#sales_date_from').val()
+      var date_to = $('#sales_date_to').val();
+      var category = $('select[name=sales_category] option').filter(':selected').text();
+
+      $('#sales-report-table').DataTable().destroy();
+      fetch_sales(date_from, date_to, category); 
+      computeSales(date_from, date_to, category);
+    }
+
+     function computeSales(date_from, date_to, category){
+
+      $.ajax({
+        url:"/sales/salesreport/compute",
+        type:"GET",
+        data:{
+          date_from:date_from,
+          date_to:date_to,
+          category:category
+        },
+        success:function(data){
+  
+          $('#total-sales').text(moneyFormat(data));
+
+        }
+      });
+     }
+
+     function moneyFormat(total)
+     {
+       var decimal = (Math.round(total * 100) / 100).toFixed(2);
+      // var round_off = Math.round((parseInt(parseFloat(decimal)) + Number.EPSILON) * 100) / 100;
+       return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
      }
 
   
@@ -136,7 +181,24 @@ $(document).ready(function(){
  //end of fetch_sales
    }
 
- 
+   function computeSales(date_from, date_to, category){
+
+    $.ajax({
+      url:"/sales/salesreport/compute",
+      type:"GET",
+      data:{
+        date_from:date_from,
+        date_to:date_to,
+        category:category
+      },
+      success:function(data){
+
+        $('#total-sales').text(moneyFormat(data));
+
+      }
+    });
+   }
+
    
 
   });

@@ -110,5 +110,9 @@ class HomePageCtr extends Controller
 
       return $price;      
     } 
+
+    public function termsAndCondition(){
+      return view('customer/layouts/terms_and_condition');
+    }
    
 }

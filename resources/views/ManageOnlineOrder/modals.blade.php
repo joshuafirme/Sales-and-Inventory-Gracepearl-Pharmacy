@@ -73,8 +73,11 @@
 
                     <div class="col-md-12 mb-2">
                         <h5>Customer Information</h5>
-                        <span class="badge badge-success">Verified</span>
+                        <span class="badge badge-success" id="verification-info"></span>
                     </div>
+                    
+                    <input type="hidden" id="order-no">
+                    <input type="hidden" id="user-id">
     
                     <div class="col-md-4">
                         <label class="label-small" >Full Name</label>
@@ -121,7 +124,7 @@
   
         <div class="modal-footer">
           <div class="update-success-validation mr-auto ml-3" style="display: none">
-            <label class="label text-success">Order sent successfully</label>    
+            <label class="label text-success">Items packed successfully</label>    
           </div> 
           <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
           <button class="btn btn-outline-dark btn-sm" id="btn-gen-sales-inv"><span class='fas fa-print'></span> Generate Sales Invoice</button> 

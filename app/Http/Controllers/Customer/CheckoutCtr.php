@@ -18,6 +18,7 @@ class CheckoutCtr extends Controller
     private $tbl_unit = "tblunit";
     private $tbl_ol_order = "tblonline_order";
     private $tbl_cust_acc = "tblcustomer_account";
+    private $tbl_ship_add_maintenance = "tblship_add_maintenance";
 
     public function index(){
      // session()->forget('buynow-item');
@@ -45,6 +46,10 @@ class CheckoutCtr extends Controller
         }
     }
 
+    public function forgetDiscount(){
+      session()->get('checkout-discount');
+    }
+
     public function countCart(){
         $cart = $this->getCartItems();
         return $count = $cart->count();
@@ -65,6 +70,18 @@ class CheckoutCtr extends Controller
         return $cart;
       }
 
+      public function getShippingFee(){
+        $municipality = Input::input('municipality');
+        $brgy = Input::input('brgy');
+        $fee = DB::table($this->tbl_ship_add_maintenance)
+                  ->where([
+                      ['municipality', $municipality],
+                      ['brgy', $brgy]
+                  ])
+                  ->value('shipping_fee');
+        return $fee;
+    }
+
       public function getSubtotalAmount()
       {
         $buynow_items = session()->get('buynow-item');
@@ -75,16 +92,9 @@ class CheckoutCtr extends Controller
           {
             $amount = $data['amount'];
           }
-          $discount = session()->get('checkout-discount');
-          if($discount){
-            $amount_discounted = $amount - $discount;    
-            session()->put('checkout-total', $amount_discounted);        
-            return $amount_discounted;
-          }
-          else{
-            session()->put('checkout-total', $amount);
-            return $amount;
-          }
+         
+          session()->put('checkout-total', $amount);
+          return $amount;
 
         }
         else{
@@ -120,6 +130,7 @@ class CheckoutCtr extends Controller
 
       public function placeOrder()
       {
+        $shipping_fee = Input::input('shipping_fee');
         $order_no = $this->getOrderNo();
 
         $item = session()->get('buynow-item');
@@ -165,6 +176,10 @@ class CheckoutCtr extends Controller
         }
         
         session()->forget('buynow-item');
+
+        if((float)$shipping_fee !== 0){
+          $this->storeShippingFee($order_no, $shipping_fee);
+        }
         
         $user_id = $this->getUserIDWithPrefix();
         $session_discount = session()->get('checkout-discount');
@@ -174,6 +189,14 @@ class CheckoutCtr extends Controller
         }
 
         DB::table($this->tbl_cart)->delete();
+      }
+
+      public function storeShippingFee($order_no, $shipping_fee){
+        DB::table('tblorder_shipping_fee')
+           ->insert([
+              'order_no' => $order_no,
+              'shipping_fee' => $shipping_fee,
+           ]);
       }
 
       public function storeDiscount($user_id, $order_no, $discount){

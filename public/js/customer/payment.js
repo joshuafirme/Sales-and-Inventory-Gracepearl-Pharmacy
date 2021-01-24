@@ -66,12 +66,10 @@ $(document).ready(function(){
      
     }
   
-
-    $(window).on('load', function() {
       setTimeout(function(){
         forgetOrder();
       },3500)
-     });
+   
     
     function forgetOrder(){
       $.ajax({

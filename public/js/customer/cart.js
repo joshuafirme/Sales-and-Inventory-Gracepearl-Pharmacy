@@ -6,9 +6,6 @@ $(document).ready(function(){
         }
       });
 
-     // forgetPayment();
-
-
       countCart();
 
       function countCart(){
@@ -144,6 +141,7 @@ $(document).ready(function(){
         removeFromCart(product_code);
         countCart();
         getSubtotal();
+        getTotalDueWithDiscount();
         removeProceedToCheckout();//if cart is equal to 0
     });
 
@@ -247,9 +245,10 @@ $(document).ready(function(){
        });
     }
 
-    function forgetPayment() {
+
+    function forgetDiscount() {
       $.ajax({
-        url:"/payment/afterpayment/forget",
+        url:"/checkout/forget",
         type:"GET",
         
         success:function(){

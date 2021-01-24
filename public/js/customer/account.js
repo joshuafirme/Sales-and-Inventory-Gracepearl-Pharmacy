@@ -141,8 +141,10 @@ $(document).ready(function(){
         var phone_no = $('#phone_no').val();
         var flr_bldg_blk = $('#flr-bldg-blk').val();
         var municipality = $('#municipality').val();
-        var brgy = $('#brgy').val();
+        var brgy = $('#barangay').val();
         var notes = $('#notes').val();
+
+        console.log(brgy);
 
         var is_valid = validateInputs(
           fullname,

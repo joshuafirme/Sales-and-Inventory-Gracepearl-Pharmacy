@@ -18,7 +18,7 @@
             <div class="row">
               {{ csrf_field() }}
 
-            <div class="col-md-6 mb-3">
+            <div class="col-md-12 mb-3">
                 <label class="col-form-label">Municipality</label>
                 <select class="form-control" name="municipality" id="municipality">
                 
@@ -30,14 +30,14 @@
                 </select>
               </div>
     
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <label class="col-form-label">Barangay</label>
                 <select class="form-control" name="brgy" id="brgy">
 
                 </select>
               </div>
     
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <label class="col-form-label">Shipping Fee</label>
                 <input type="number" step="1" min="0" class="form-control" value="0" name="shipping-fee" id="shipping-fee" required>
               </div>

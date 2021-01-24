@@ -90,12 +90,11 @@ class CustomerAccountCtr extends Controller
 
     public function updateShippingAddress($flr_bldg_blk, $municipality, $brgy, $notes){
 
-        $user_id = $this->getUserID();
+    //    $user_id = $this->getUserID();
         $user_id_prefix = $this->getUserIDWithPrefix();
 
-        $shipping_add =  DB::table($this->tbl_ship_add)
-        ->where('user_id', $user_id_prefix)->get();
-        
+        $shipping_add =  DB::table($this->tbl_ship_add)->where('user_id', $user_id_prefix)->get();
+
         if($shipping_add->count() > 0){
             DB::table($this->tbl_ship_add)
             ->where('user_id', $user_id_prefix)

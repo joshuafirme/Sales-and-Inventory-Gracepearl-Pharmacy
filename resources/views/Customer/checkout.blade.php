@@ -133,11 +133,14 @@
                   <span class="text-success"><a href="{{ url('/account') }}" class="text-primary">Edit</a></span>
                 </div>
 
-                <Label class="label-small">Subd/Blk/Bldg</Label>
-                <input type="text" class="form-control mb-3" placeholder="flr/blk/bldg" id="flr-bldg-blk" readonly>
+                <Label class="label-small">Municipality</Label>
+                <input type="text" class="form-control mb-3" id="municipality" readonly>
 
                 <Label class="label-small">Barangay</Label>
                 <input type="text" class="form-control mb-3" id="brgy" readonly>
+
+                <Label class="label-small">Subd/Blk/Bldg</Label>
+                <input type="text" class="form-control mb-3" placeholder="flr/blk/bldg" id="flr-bldg-blk" readonly>
 
                 <Label class="label-small">Note</Label>
                 <textarea class="form-control mb-3" id="note" readonly></textarea>
@@ -149,10 +152,16 @@
                 <input type="text" class="form-control" id="email" readonly><br>
 
           
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-0">
+                Subtotal
+                <span class="text-success" id="txt-subtotal"></span>
+              </li>
+
               <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                 Shipping Fee
-                <span class="text-success">Free</span>
+                <span class="text-success txt-shipping-fee"></span>
               </li>
+
               <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                 <div>
                   <strong>The total amount of</strong>
@@ -160,7 +169,7 @@
                     <p class="mb-0">(VAT Included)</p>
                   </strong>
                 </div>
-                <span><strong id="cart-totalcsc">₱{{  number_format(session()->get('checkout-total'),2,".",",") }}</strong></span>
+                <span><strong id="txt-total-due"></strong></span>
               </li>
             </ul>
   

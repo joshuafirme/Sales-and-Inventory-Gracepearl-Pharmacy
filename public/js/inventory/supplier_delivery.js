@@ -136,14 +136,12 @@ $(document).on('click', '#btn-add', function(){
     var qty_delivered = $('#del_qty_delivered').val();
     var exp_date = $('#del_exp_date').val();
     var date_recieved = $('#del_date_recieved').val();
-    var remarks =  $('select[name=del_remarks] option').filter(':selected').text();
   
     console.log(po_num);
     console.log(product_code);
     console.log(qty_delivered);
     console.log(exp_date);
     console.log(date_recieved);
-    console.log(remarks);
     $.ajax({
       url:"/inventory/delivery/recordDelivery",
       type:"POST",
@@ -152,8 +150,7 @@ $(document).on('click', '#btn-add', function(){
           product_code:product_code,
           qty_delivered:qty_delivered,
           exp_date:exp_date,
-          date_recieved:date_recieved,
-          remarks:remarks
+          date_recieved:date_recieved
         },
         beforeSend:function(){
             $('#btn-add').text('Adding...');

@@ -66,8 +66,8 @@ class SupplierDeliveryCtr extends Controller
                     $button = '<span class="badge badge-success">Completed</span>';     
                     return $button;
                 }
-                else if($del->remarks == 'Partial'){
-                    $button = '<span class="badge badge-warning">Partial</span>';     
+                else if($del->remarks == 'Partially Completed'){
+                    $button = '<span class="badge badge-warning">Partially Completed</span>';     
                     return $button;
                 }
                 else if($del->remarks == 'Pending'){
@@ -106,19 +106,27 @@ class SupplierDeliveryCtr extends Controller
         $sd->qty_delivered = Input::input('qty_delivered');
         $sd->exp_date = Input::input('exp_date');
         $sd->date_recieved = Input::input('date_recieved');
-
-        $checked_result = $this->checkDeliveredQty($sd->product_code, $sd->qty_delivered );
+       
+        $checked_result = $this->checkDeliveredQty($sd->product_code, $sd->qty_delivered);
+      
         $sd->remarks = $checked_result;
+
         $sd->save();
 
         $this->updatePurchaseOrder($sd->po_num, $sd->product_code, $checked_result);
-        $this->updateInventory($sd->product_code, $sd->qty_delivered);        
+        $this->updateInventory($sd->product_code, $sd->qty_delivered, $sd->exp_date); 
+       
     }
 
     public function updatePurchaseOrder($po_num, $product_code, $remarks){
-        DB::table($this->table_po)
-            ->where('product_code', $product_code)
-            ->update(['status' => $remarks]);
+        DB::table($this->table_po.' as PO')
+            ->where([        
+                ['PO.product_code', '=', $product_code],
+                [DB::raw('CONCAT(PO._prefix, PO.po_num)'), '=', $po_num],
+            ])
+            ->update(
+                ['PO.status' => $remarks]
+            );
     }
 
     public function checkDeliveredQty($product_code, $qty_delivered){
@@ -127,7 +135,7 @@ class SupplierDeliveryCtr extends Controller
             ->value('qty_order');
 
             if($qty_order > $qty_delivered){
-                $p = 'Partial';
+                $p = 'Partially Completed';
             }
             else if($qty_order == $qty_delivered){
                 $p = 'Completed';
@@ -136,11 +144,40 @@ class SupplierDeliveryCtr extends Controller
             return $p;
     }
 
-    public function updateInventory($product_code, $qty_delivered){
-        DB::table($this->table_prod)
-        ->where(DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), $product_code)
-        ->update(array(
-            'qty' => DB::raw('qty + '. $qty_delivered .'')));
+    public function updateInventory($product_code, $qty_delivered, $exp_date)
+    {
+        if($this->checkIfSameExpDate($product_code, $exp_date) == true)
+        {
+            DB::table($this->table_prod.' as P')
+            ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
+            ->update(array('qty' => DB::raw('qty + '. $qty_delivered .''))); 
+        }
+        else{
+            DB::table('tblexpiration')->insert(
+                [
+                    'product_code' => $product_code,
+                    'qty' => $qty_delivered,
+                    'exp_date' => $exp_date
+                ]
+            );
+        }
+    }
+
+    public function checkIfSameExpDate($product_code, $exp_date)
+    {
+        $res = DB::table($this->table_prod.' as P')
+            ->where([
+                [DB::raw('CONCAT(P._prefix, P.id)'), $product_code],
+                ['exp_date', $exp_date],
+            ])
+            ->get();
+        if($res->count() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    
     }
 
 
@@ -205,7 +242,7 @@ class SupplierDeliveryCtr extends Controller
 
 
     public function getDeliveryNumPrefix(){
-        return 'D' . $this->getMonth() . $this->getDay();
+        return 'D' . date('m') . date('d');
     }
 
     

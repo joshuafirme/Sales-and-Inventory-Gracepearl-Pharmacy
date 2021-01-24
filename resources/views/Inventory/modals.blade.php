@@ -55,8 +55,13 @@
         </div>
 
         <div class="col-md-4">
-          <label class="col-form-label">Remarks</label>
-          <input type="text" class="form-control" name="remarks" id="remarks">
+          <label class="col-form-label">Reason</label>
+          <select class="form-control" name="remarks" id="remarks">
+            <option value="Expired">Expired</option>
+            <option value="Damaged">Damaged</option>
+            <option value="Owner used">Owner used</option>
+            <option value="Physical count descrepancy">Physical count descrepancy</option>
+          </select>
         </div>
 
         <div class="col-md-4 mt-4">
@@ -345,14 +350,6 @@
             <input type="date" class="form-control" id="del_date_recieved" value="{{ $getCurrentDate }}">
             </div>
        
-            <div class="col-md-4">
-              <label class="col-form-label">Remarks</label>
-              <select class="form-control" name="del_remarks" id="del_remarks">
-              <option>Completed</option>
-              <option>Partial</option>
-
-              </select>
-            </div>
             
         </div>  
 

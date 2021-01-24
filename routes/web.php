@@ -75,6 +75,8 @@ Route::get('/cart/total_due_discount', 'Customer\CartCtr@getTotalDueWithDiscount
 Route::get('/checkout', 'Customer\CheckoutCtr@index');
 Route::get('/checkout/getsubtotal', 'Customer\CheckoutCtr@getSubtotalAmount');
 Route::post('/checkout/placeorder', 'Customer\CheckoutCtr@placeOrder');
+Route::get('/checkout/shipping_fee', 'Customer\CheckoutCtr@getShippingFee');
+Route::get('/checkout/forget', 'Customer\CheckoutCtr@forgetDiscount');
 //Payment
 Route::get('/payment', 'Customer\PaymentCtr@index');
 Route::post('/payment/cod', 'Customer\PaymentCtr@cashOnDelivery');   //COD

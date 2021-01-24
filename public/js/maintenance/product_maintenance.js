@@ -135,7 +135,7 @@ $(document).ready(function(){
       $('#category_name').change(function(){
         category =  $('select[name=category_name] option').filter(':selected').text();
 
-        if(category == 'Branded' || category == 'Generic'){
+        if(category == 'Branded' || category == 'Generic' || category == 'Vitamins'){
           $('.with-prescription').css('display', 'block');
         }
         else{

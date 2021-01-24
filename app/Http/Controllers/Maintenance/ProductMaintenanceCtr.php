@@ -120,7 +120,7 @@ class ProductMaintenanceCtr extends Controller
                 'image' => 'file|image|max:5000',
             ]);
         }
-        $this->storeImage($product);
+        $this->storeImage($product->id);
 
         return redirect('/maintenance/product')->with('success', 'Data Saved');
     }

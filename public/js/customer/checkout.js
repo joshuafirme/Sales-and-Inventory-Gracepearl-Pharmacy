@@ -14,7 +14,7 @@ $(document).ready(function(){
             type:"GET",
             success:function(response){
                 console.log('cart total');
-                $('#cart-total').text('₱'+convertToMoneyFormat(response));
+                $('#cart-total').text('₱'+moneyFormat(response));
             }         
            });
       }
@@ -31,14 +31,18 @@ $(document).ready(function(){
             console.log(data);
            if(data){
       
-            $('#flr-bldg-blk').val(data[0].flr_bldg_blk);
+            $('#municipality').val(data[0].municipality);
             $('#brgy').val(data[0].brgy);
+            $('#flr-bldg-blk').val(data[0].flr_bldg_blk);
             $('#note').val(data[0].note);
             $('#contact-no').val(data[0].phone_no);
+
+            getShippingFee();
            }
           }
            
          });
+          
       }
 
       function fetchAccountInfo(){
@@ -54,13 +58,34 @@ $(document).ready(function(){
       }
 
 
-$('#contact-no').keyup(function(e)
-{
+    $('#contact-no').keyup(function(e){
     //retricts value of letter
     if (/\D/g.test(this.value)){
         this.value = this.value.replace(/\D/g, '');
     }
     }); 
+
+    
+    function getShippingFee(){
+      var municipality = $('#municipality').val(); 
+      var brgy = $('#brgy').val(); 
+      console.log(municipality+ 'mun');
+      console.log(brgy);
+      $.ajax({
+        url:"/checkout/shipping_fee",
+        type:"GET",
+        data:{
+          municipality:municipality,
+          brgy:brgy
+        },
+        success:function(shipping_fee){
+            $('.txt-shipping-fee').text('₱'+shipping_fee); 
+            getTotal(shipping_fee);
+        }
+         
+       });
+    
+    }
 
     getSubtotal();
 
@@ -69,23 +94,42 @@ $('#contact-no').keyup(function(e)
           url:"/checkout/getsubtotal",
           type:"GET",
           success:function(response){
-              $('#checkout-subtotal').text('₱'+convertToMoneyFormat(response));
+              $('#txt-subtotal').text('₱'+moneyFormat(response));
           }         
          });
     }
 
-    function convertToMoneyFormat(total)
-    {
-    var round_off = Math.round((parseInt(total) + Number.EPSILON) * 100) / 100;
-    return money_format = round_off.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+    function getTotal(shipping_fee){
+      $.ajax({
+          url:"/checkout/getsubtotal",
+          type:"GET",
+          success:function(subtotal){
+            var total = parseFloat(subtotal) + parseFloat(shipping_fee);
+              $('#txt-total-due').text('₱'+moneyFormat(total));
+          }         
+         });
     }
 
+    function moneyFormat(total)
+      {
+        var decimal = (Math.round(total * 100) / 100).toFixed(2);
+       // var round_off = Math.round((parseInt(parseFloat(decimal)) + Number.EPSILON) * 100) / 100;
+        return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+    
+
     $('#btn-place-order').click(function(){
-       
+
+      var shipping_fee = $('.txt-shipping-fee').text().slice(1);; 
+      
         if(checkFields() == true){
             $.ajax({
                 url:"/checkout/placeorder",
                 type:"POST",
+                data:{
+                  shipping_fee:shipping_fee
+                },
                 beforeSend:function(){
                     $('#loading-modal').modal('toggle');
                 },
@@ -111,7 +155,6 @@ $('#contact-no').keyup(function(e)
        }
     }
 
-  
 
 });
   

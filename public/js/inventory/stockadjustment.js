@@ -37,7 +37,6 @@ $(document).on('click', '#btn-stockad', function(){
   var productCode = $(this).attr('product-code');
   $('#qty_to_adjust').val('');
   $('#qty_to_adjust').focus();
-  $('#remarks').val('');
   console.log(productCode);
 
   $.ajax({

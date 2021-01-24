@@ -282,11 +282,11 @@ $(document).ready(function(){
             success:function(data){
               
               var discount = data;
-              var total = getTotalDue();  
+              var total = getGenericTotal();  
               
               var result = discount * total;
               var nya = total - result;
-              $('#less-discount').text(result);
+              $('#less-discount').text(moneyFormat(result));
               $('#total-amount-due').val(nya);
               computeChange();
             }
@@ -299,7 +299,7 @@ $(document).ready(function(){
             success:function(data){
                 
               var discount = data;
-              var total = getTotalDue();
+              var total = getGenericTotal();
 
               var result = discount * total;
               var nya = total - result;
@@ -311,12 +311,18 @@ $(document).ready(function(){
         }
       }
 
-      function getTotalDue(){
-        var total_hidden = $('#total_hidden').val();
-        console.log(total_hidden);
-        $('#total-amount-due').val(total_hidden);
-        return total_hidden;  
+      function getGenericTotal(){
+        var total = $('#total_amount_generic').val();
+        return total;  
     }
+
+    function moneyFormat(total)
+    {
+      var decimal = (Math.round(total * 100) / 100).toFixed(2);
+     // var round_off = Math.round((parseInt(parseFloat(decimal)) + Number.EPSILON) * 100) / 100;
+      return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
         
         //proccess items
         $('#btn-process').click(function(){
@@ -331,6 +337,7 @@ $(document).ready(function(){
        $('#btn-confirm-inv').click(function(){
    
         var senior_chk = $('#senior-chk').val();
+        var less_discount = $('#less-discount').text();
         var sales_inv_no= $('#sales-invoice-no').val();
     //    var senior_name = $('#senior-name').val();
 
@@ -363,7 +370,7 @@ $(document).ready(function(){
                     type:"GET",
                     data:{
                       sales_inv_no:sales_inv_no,
-                   //   senior_name:senior_name,
+                      less_discount:less_discount,
                       senior_chk:senior_chk
                     },
                     beforeSend:function(){

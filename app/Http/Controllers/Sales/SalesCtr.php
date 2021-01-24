@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Input;
 use App\Sales;
+use App\OrderDiscount;
 use Illuminate\Http\Request;
 use App\Classes\UserAccessRights;
 use App\Classes\CashieringInvoice;
@@ -69,7 +70,6 @@ class SalesCtr extends Controller
         if($search_key){
             $product = DB::table($this->table_prod)
             ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) as productCode'))
-            ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
             ->where(DB::raw('CONCAT(tblproduct._prefix, tblproduct.id)'), 'LIKE', '%'.$search_key.'%') // CONCAT 
             ->orWhere('description', 'LIKE', '%'.$search_key.'%')
@@ -96,6 +96,7 @@ class SalesCtr extends Controller
                     $product_code => [             
                             "description" => $p->description,
                             "qty" => $qty_order,
+                            "category" => $p->category_name,  
                             "unit" => $p->unit,  
                             "unit_price" => $p->selling_price,  
                             "amount" => $total,
@@ -231,7 +232,12 @@ class SalesCtr extends Controller
     public function process(){
 
         $sales_inv_no = Input::input('sales_inv_no'); 
+        $discount = Input::input('less_discount'); 
         $this->updateSales($sales_inv_no);
+
+        if($discount){
+            $this->storeDiscount($discount);
+        }
  
         return redirect()->back();
     }
@@ -268,6 +274,12 @@ class SalesCtr extends Controller
             echo "No data found";
         }
     }
+
+    public function storeDiscount($discount){
+        $od = new OrderDiscount;
+        $od->discount_amount = $discount;
+        $od->save();
+      }
 
     public function updateInventory($product_code, $qty){
         

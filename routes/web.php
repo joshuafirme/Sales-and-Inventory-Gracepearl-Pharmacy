@@ -254,7 +254,7 @@ Route::get('/reports/reorder', 'Reports\ReOrderReportCtr@index');
 
 Route::get('/reports/expired', 'Reports\ExpiredProductReportCtr@index');
 
-Route::get('/reports/fastAndSlowMoving', 'Reports\FastAndSlowMovingReOrderReportCtr@index');
+Route::get('/reports/fastAndSlowMoving', 'Reports\FastAndSlowMovingReportCtr@index');
 
 Route::get('/reports/audittrail', 'Reports\AuditTrailCtr@index');
 

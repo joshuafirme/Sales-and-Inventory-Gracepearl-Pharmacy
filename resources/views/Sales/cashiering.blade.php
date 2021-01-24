@@ -160,7 +160,10 @@
                 
                   <div class="card-body">
             <div class="box-body cashiering-table">
-              <?php $total = 0; ?> 
+              <?php 
+                $total = 0;
+                $total_amount_generic = 0;
+              ?> 
               <table class="table table-hover" id="cashiering-table" width="100%">
              
                   <thead>
@@ -187,6 +190,10 @@
                         <?php 
                         $sub_total = $details['qty'] * $details['unit_price'];
                         $total += $sub_total;
+
+                        if($details['category'] == 'Generic'){
+                          $total_amount_generic += $sub_total;
+                        }
                          ?> 
                         <td>₱ {{ number_format($sub_total, 2, '.', '') }}</td>
                         <td><a href="" style="cursor: pointer; color:#24568D;" id="show-void-modal" product-code="{{ $product_code }}"
@@ -197,6 +204,7 @@
                       @endforeach
                       <td>
                         <input type="hidden" id="total_hidden" value={{ $total }}>
+                        <input type="hidden" id="total_amount_generic" value={{ $total_amount_generic }}>
                       </td>
                       <td></td>    <td></td>    <td></td>    <td></td>  <td></td>
                       @endif                 

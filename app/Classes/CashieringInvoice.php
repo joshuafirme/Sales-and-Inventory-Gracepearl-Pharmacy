@@ -103,8 +103,8 @@ class CashieringInvoice {
                 <td>'. $data['qty'] .'</td>  
                 <td>'. $data['unit'] .'</td>  
                 <td>'. $data['description'] .'</td>
-                <td>'. number_format($data['unit_price'],2,',','.') .'</td>   
-                <td>'. number_format($data['amount'],2,',','.') .'</td>              
+                <td>'. number_format($data['unit_price'],2,'.',',') .'</td>   
+                <td>'. number_format($data['amount'],2,'.',',') .'</td>              
             </tr>
 
           
@@ -121,7 +121,7 @@ class CashieringInvoice {
      $output .='
         <tr>
             <td style="text-align:right;" colspan="4">Total Sales (VAT Inclusive) </td>
-            <td class="align-text">'. number_format($total_amount,2,',','.') .'</td>
+            <td class="align-text">'. number_format($total_amount,2,'.',',') .'</td>
         </tr>
 
         <tr>
@@ -159,7 +159,7 @@ class CashieringInvoice {
 
         <tr>
             <td style="text-align:right;" colspan="4">Total Amount Due </td>
-            <td class="align-text">'. number_format($total_amount) .'</td>
+            <td class="align-text">'. number_format($total_amount,'.',',') .'</td>
         </tr>
 
         </tbody>

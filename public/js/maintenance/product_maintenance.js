@@ -79,6 +79,7 @@ $(document).ready(function(){
       console.log(product_id);
       product_name =  $(this).closest("tr").find('td:eq(1)').text();
       $('#proconfirmModal').modal('show');
+      $('.delete-success').hide();
       $('.delete-message').html('Are you sure do you want to delete <b>'+ product_name +'</b>?');
     }); 
     
@@ -97,19 +98,18 @@ $(document).ready(function(){
                 $('#product_ok_button').text('Deleting...');
                 $('.loader').css('display', 'inline');
             },
-            success:function(data){
+            
+            success:function(){
                 setTimeout(function(){
-                    $('#product_ok_button').remove();
-                    $('.delete-message').remove();
                     $('.delete-success').show();
-                    $('.cancel-delete').text('Ok');
                     $('.loader').css('display', 'none');
-                   // $('#proconfirmModal').modal('hide');
+                    $('#product_ok_button').text('Delete');
                     row.fadeOut(500, function () {
-                      table.row(row).remove().draw()
-                      
+                      table.row(row).remove().draw() 
                       });
-                   
+                      setTimeout(function(){
+                        $('#proconfirmModal').modal('hide');
+                    }, 1000);
                 }, 1000);
             }
         });

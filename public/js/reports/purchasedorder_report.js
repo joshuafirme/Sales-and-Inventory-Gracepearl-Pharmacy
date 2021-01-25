@@ -27,7 +27,6 @@ $(document).ready(function(){
       
         ajax:{
          url: "/reports/purchasedorder",
-         type:"GET",
          data:{
            date_from:date_from,
            date_to:date_to,
@@ -92,6 +91,17 @@ $(document).ready(function(){
      ],
         
        });
+
+       function getDate() {
+        var d = new Date();
+    
+        var month = d.getMonth()+1;
+        var day = d.getDate();
+        
+        return date = d.getFullYear() + '/' +
+            (month<10 ? '0' : '') + month + '/' +
+            (day<10 ? '0' : '') + day;
+      }
  
   //end of fetch_sales
     }
@@ -126,16 +136,7 @@ $(document).ready(function(){
       fetchPO(date_from, date_to, supplier);
    });
  
-   function getDate() {
-     var d = new Date();
- 
-     var month = d.getMonth()+1;
-     var day = d.getDate();
-     
-     return date = d.getFullYear() + '/' +
-         (month<10 ? '0' : '') + month + '/' +
-         (day<10 ? '0' : '') + day;
-   }
+
     
  
    });

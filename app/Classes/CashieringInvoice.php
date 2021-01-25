@@ -159,7 +159,7 @@ class CashieringInvoice {
 
         <tr>
             <td style="text-align:right;" colspan="4">Total Amount Due </td>
-            <td class="align-text">'. number_format($total_amount,'.',',') .'</td>
+            <td class="align-text">'. number_format($total_amount,2,'.',',') .'</td>
         </tr>
 
         </tbody>

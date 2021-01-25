@@ -23,14 +23,26 @@ class FastAndSlowMovingReportCtr extends Controller
             $rights->notAuthMessage();
         }
 
-        $inv = $this->getInventory();
 
         if(request()->ajax())
         {
-            return datatables()->of($inv)
-            ->make(true);  
         }
         
-        return view('reports/inventoryreport');
+        return view('reports/fast_and_slow_moving');
     }
+
+
+    public function getFastAndSlowMoving($date_from, $date_to){
+        $p = DB::table($this->table_prod.' AS P')
+        ->select("P.*", 
+        DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
+        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereBetween('P.date', [$date_from, $date_to])
+        ->get();
+
+        return $p;
+    }
+
 }

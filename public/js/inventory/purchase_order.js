@@ -122,6 +122,8 @@ $(document).ready(function(){
     
     });
 
+ 
+
     //add to order
     $(document).on('click', '#btn-add-to-order', function(){
 
@@ -134,41 +136,61 @@ $(document).ready(function(){
       var qty_order = $('#po_qty_order').val();
       var price = $('#po_price').val();
       var amount = $('#po_amount').text();
-    
-        $.ajax({
-          url:"/inventory/purchaseorder/addToOrder",
-          type:"POST",
-          data:{
-            product_code:product_code,
-            description:description,
-            category:category,
-            unit:unit,
-            qty_order:qty_order,
-            price:price,
-            supplier:supplier,
-            amount:amount
-          },
-          beforeSend:function(){
-            $('#btn-add-to-order').text('Adding...');
-            $('.loader').css('display', 'inline');
-          },
-              success:function(response){
-               
-                  setTimeout(function(){
-                    $('.update-success-validation').css('display', 'inline');
-                    $('#btn-add-to-order').text('Add to Order');
-                    $('.loader').css('display', 'none');
-                    setTimeout(function(){
-                      $('.update-success-validation').fadeOut('slow');
-       
-                    },2000);
-                  
-                  },1000);
-                }          
-         });    
-    });
-    
 
+      isDifferentSupplier(product_code, description, category, unit, supplier, qty_order, price, amount);
+            
+    });
+
+    function isDifferentSupplier(product_code, description, category, unit, supplier, qty_order, price, amount) {
+      $.ajax({
+        url:"/inventory/po/get_po_supplier",
+        type:"GET",
+  
+            success:function(response){
+              console.log(response)
+              if(response == supplier || response == ''){ 
+                  addToOrder(product_code, description, category, unit, supplier, qty_order, price, amount);
+              }
+              else{
+                alert('You already have a pending order from another supplier that is waiting to be sent.\nSend the order first before ordering from another supplier..');
+              }
+            }
+       });
+    }
+
+    function addToOrder(product_code, description, category, unit, supplier, qty_order, price, amount) {
+      $.ajax({
+        url:"/inventory/purchaseorder/addToOrder",
+        type:"POST",
+        data:{
+          product_code:product_code,
+          description:description,
+          category:category,
+          unit:unit,
+          qty_order:qty_order,
+          price:price,
+          supplier:supplier,
+          amount:amount
+        },
+        beforeSend:function(){
+          $('#btn-add-to-order').text('Adding...');
+          $('.loader').css('display', 'inline');
+        },
+            success:function(response){
+             
+                setTimeout(function(){
+                  $('.update-success-validation').css('display', 'inline');
+                  $('#btn-add-to-order').text('Add to Order');
+                  $('.loader').css('display', 'none');
+                  setTimeout(function(){
+                    $('.update-success-validation').fadeOut('slow');
+     
+                  },2000);
+                
+                },1000);
+              }          
+       });
+    }
 
     //show orders           
     $('#btn-show-orders').click(function(){

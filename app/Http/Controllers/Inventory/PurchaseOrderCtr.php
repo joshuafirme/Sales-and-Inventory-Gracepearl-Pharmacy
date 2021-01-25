@@ -25,7 +25,8 @@ class PurchaseOrderCtr extends Controller
 
     public function index(Request $request)
     {
-
+       // session()->forget('purchase-orders');
+       // session()->forget('po-supplier');
         $rights = new UserAccessRights;
 
         if(!($rights->isUserAuthorize($this->module)))
@@ -84,15 +85,7 @@ class PurchaseOrderCtr extends Controller
         {       
             return datatables()->of($get_all_orders)
             ->addColumn('status', function($orders){
-                if($orders->status == 'Completed'){
-                    $button = '<span class="badge badge-success">Completed</span>';     
-                    return $button;
-                }
-                else if($orders->status == 'Partial'){
-                    $button = '<span style="color:#fff;" class="badge badge-warning">Partial</span>';     
-                    return $button;
-                }
-                else if($orders->status == 'Pending'){
+                if($orders->status == 'Pending'){
                     $button = '<span class="badge" style="background-color:#337AB7; color:#fff;">Pending</span>';     
                     return $button;
                 }
@@ -150,10 +143,11 @@ class PurchaseOrderCtr extends Controller
     public function getAllOrders(){
         $product = DB::table($this->table_po.' AS PO')
         ->select("PO.*", DB::raw('CONCAT(PO._prefix, PO.po_num) AS po_num, DATE_FORMAT(date,"%d-%m-%Y") as date, description, unit, supplierName, category_name'))
-        ->leftJoin($this->table_prod.' AS P',  DB::raw('CONCAT(P._prefix, P.id)'), '=', 'PO.product_code')
+        ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'PO.product_code')
         ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
         ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
         ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->where('PO.status', 'Pending')
         ->orderBy('date', 'desc')
         ->get();
 
@@ -193,7 +187,9 @@ class PurchaseOrderCtr extends Controller
         $price = Input::input('price');
         $amount = Input::input('amount');
 
+        session()->put('po-supplier', $supplier);
         $orders = session()->get('purchase-orders');
+
         if(!$orders) {
             $orders = [
                 $product_code => [
@@ -297,13 +293,18 @@ public function downloadOrderPDF(){
     return $pdf->download();
 }
 
-public function convertProductDataToHTML(){
+public function getPOSupplier(){
+    return session()->get('po-supplier');
+}
 
+public function convertProductDataToHTML(){
+    $po = $this->getPOSupplier();
+    $po_supllier = session()->get('po-supplier');
     $output = '
     <div style="width:100%">
     <p style="text-align:right;">Date: '. $this->getDate() .'</p>
-    
-    <h2 style="text-align:center;">Purchase Order</h2>
+    <h1 style="text-align:center;">'. $po_supllier .'</h1>
+    <h3 style="text-align:center;">Purchase Order</h3>
 
     <table width="100%" style="border-collapse:collapse; border: 1px solid;">
                   
@@ -321,8 +322,8 @@ public function convertProductDataToHTML(){
     ';
     $total_amount = 0;
     $sub_total = 0;
-    if(session()->get('purchase-orders')){
-        foreach (session()->get('purchase-orders') as $product_code => $data) {
+    if($po){
+        foreach ($po as $product_code => $data) {
         
             $sub_total = $data['qty_order'] * $data['price'];
             $total_amount += $sub_total;
@@ -333,9 +334,9 @@ public function convertProductDataToHTML(){
             <td style="border: 1px solid; padding:10px;">'. $data['description'] .'</td>
             <td style="border: 1px solid; padding:10px;">'. $data['category'] .'</td> 
             <td style="border: 1px solid; padding:10px;">'. $data['unit'] .'</td>  
-            <td style="border: 1px solid; padding:10px;">'. number_format($data['price']) .'</td>  
+            <td style="border: 1px solid; padding:10px;">'. number_format($data['price'],2,'.',',') .'</td>  
             <td style="border: 1px solid; padding:10px;">'. $data['qty_order'] .'</td>  
-            <td style="border: 1px solid; padding:10px;">'. number_format($sub_total) .' PhP</td>              
+            <td style="border: 1px solid; padding:10px;">'. number_format($sub_total,2,'.',',') .' PhP</td>              
           </tr>
           ';
         
@@ -349,7 +350,7 @@ public function convertProductDataToHTML(){
  $output .='
    </tbody>
   </table>
-  <p style="text-align:right;">Total: '. number_format($total_amount) .' PhP</p>
+  <p style="text-align:right;">Total: <b>'. number_format($total_amount,2,'.',',') .' PhP</b></p>
   </div>';
 
     return $output;

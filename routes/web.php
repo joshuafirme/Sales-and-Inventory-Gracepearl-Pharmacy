@@ -212,6 +212,7 @@ Route::post('/filterSupplier/{supplier_id}', 'Inventory\PurchaseOrderCtr@filterS
 Route::post('/inventory/addRecord', 'Inventory\PurchaseOrderCtr@recordOrder');
 Route::get('/inventory/displayReorders', 'Inventory\PurchaseOrderCtr@displayReorders');
 Route::get('/inventory/displayOrders', 'Inventory\PurchaseOrderCtr@displayOrders');
+Route::get('/inventory/po/get_po_supplier', 'Inventory\PurchaseOrderCtr@getPOSupplier');
 
 //Supplier Delivery
 Route::get('/inventory/delivery', 'Inventory\SupplierDeliveryCtr@index');

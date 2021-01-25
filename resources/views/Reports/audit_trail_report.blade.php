@@ -41,22 +41,16 @@
                        Date
                       </div>              
                     
-                    <div class="col-sm-2 mb-3">
-                      <input data-column="9" type="date" class="form-control" name="sales_date_from" id="sales_date_from" value="">
-                      </div>
-
-                      <div class="mt-2">
-                        -
-                        </div>
-          
                       <div class="col-sm-2 mb-3">
-                        <input data-column="9" type="date" class="form-control" name="sales_date_to" id="sales_date_to" value="">
+                        <input data-column="9" type="date" class="form-control" id="date_from" value="{{ $currentDate }}">
                         </div>
-
-
-                        <div class="col-sm-4 mt-1">
-                          <button class="btn btn-primary btn-sm btn-load-records"><span class='fas fa-sync-alt'></span> Load Records</button>   
-                            
+      
+                        <div class="mt-2">
+                          -
+                          </div>
+            
+                        <div class="col-sm-2 mb-3">
+                          <input data-column="9" type="date" class="form-control" id="date_to" value="{{ $currentDate }}">
                           </div>
                  
 

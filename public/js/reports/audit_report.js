@@ -4,11 +4,12 @@ $(document).ready(function(){
     load_data();
  
     function load_data()  {
- 
-       fetchAuditTrail();
+        var date_from = $('#date_from').val()
+        var date_to = $('#date_to').val();
+        fetchAuditTrail(date_from, date_to);
     }  
  
-    function fetchAuditTrail(){
+    function fetchAuditTrail(date_from, date_to){
  
      $('#audit-report-table').DataTable({
      
@@ -25,7 +26,10 @@ $(document).ready(function(){
         ajax:{
          url: "/reports/audittrail",
          type:"GET",
-    
+         data:{
+            date_from:date_from,
+            date_to:date_to
+         }
         }, 
         
         columns:[       
@@ -81,21 +85,40 @@ $(document).ready(function(){
      ],
         
        });
+
+       function getDate() {
+        var date_from = $('#date_from').val()
+        var date_to = $('#date_to').val();
+      
+        return 'As of ' + date_from +' to '+ date_to;
+       }
  
   //end of fetch_sales
+  
     }
  
-   function getDate() {
-     var d = new Date();
- 
-     var month = d.getMonth()+1;
-     var day = d.getDate();
-     
-     return date = d.getFullYear() + '/' +
-         (month<10 ? '0' : '') + month + '/' +
-         (day<10 ? '0' : '') + day;
-   }
+
+
+
+   $('#date_from').change(function()
+   {
+       var date_from = $('#date_from').val()
+       var date_to = $('#date_to').val();
+
+       $('#audit-report-table').DataTable().destroy();
+       fetchAuditTrail(date_from, date_to);
+   });
+
+  $('#date_to').change(function()
+  {
+     var date_from = $('#date_from').val()
+     var date_to = $('#date_to').val();
+
+     $('#audit-report-table').DataTable().destroy();
+     fetchAuditTrail(date_from, date_to);
+  });
     
  
    });
    
+

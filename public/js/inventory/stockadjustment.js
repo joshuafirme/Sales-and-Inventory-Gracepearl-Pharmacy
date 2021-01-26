@@ -16,7 +16,7 @@ $(document).ready(function(){
       
        
       columns:[       
-       {data: 'productCode', name: 'productCode'},
+       {data: 'product_code', name: 'product_code'},
        {data: 'description', name: 'description'},
        {data: 'unit', name: 'unit'},
        {data: 'category_name', name: 'category_name'},
@@ -35,9 +35,9 @@ $(document).ready(function(){
   //show
 $(document).on('click', '#btn-stockad', function(){
   var productCode = $(this).attr('product-code');
+  console.log(productCode);
   $('#qty_to_adjust').val('');
   $('#qty_to_adjust').focus();
-  console.log(productCode);
 
   $.ajax({
     url:"/inventory/stockadjustment/show/"+productCode,
@@ -46,8 +46,8 @@ $(document).on('click', '#btn-stockad', function(){
     success:function(response){
      
       console.log(response);
-      $('#product_code_hidden').val(response[0].id);
-      $('#product_code').text(response[0].productCode);
+      $('#product_code_hidden').val(response[0].id_exp);
+      $('#product_code').text(response[0].product_code);
       $('#description').text(response[0].description);
       $('#unit').text(response[0].unit);
       $('#category').text(response[0].category_name);
@@ -60,6 +60,7 @@ $(document).on('click', '#btn-stockad', function(){
 
   //adjust
   $(document).on('click', '#btn-adjust', function(){
+    var product_code_hidden = $('#product_code_hidden').val();
     var product_code = $('#product_code').text();
     var qty_to_adjust = $('#qty_to_adjust').val();
     var remarks = $('#remarks').val();
@@ -69,6 +70,7 @@ $(document).on('click', '#btn-stockad', function(){
       url:"/inventory/stockadjustment/adjust",
       type:"POST",
       data:{
+            product_code_hidden:product_code_hidden,
             product_code:product_code,
             qty_to_adjust:qty_to_adjust,
             remarks:remarks,

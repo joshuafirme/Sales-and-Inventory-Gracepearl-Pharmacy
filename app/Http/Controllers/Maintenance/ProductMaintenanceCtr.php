@@ -236,7 +236,7 @@ class ProductMaintenanceCtr extends Controller
         $audit->recordAction($this->module, 'Delete product');
   
         $product_code = Input::input('product_code');
-        $product = DB::table($this->table_prod)->where('id', $id)->delete();
+        $product = DB::table($this->table_exp)->where('id', $id)->delete();
         return $product;
     }
 

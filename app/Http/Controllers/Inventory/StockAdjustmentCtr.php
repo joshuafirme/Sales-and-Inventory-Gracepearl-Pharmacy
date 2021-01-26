@@ -13,6 +13,7 @@ use App\Classes\UserAccessRights;
 class StockAdjustmentCtr extends Controller
 {
     private $table_prod = "tblproduct";
+    private $table_exp = "tblexpiration";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
@@ -50,8 +51,18 @@ class StockAdjustmentCtr extends Controller
     }
 
     public function getAllProduct(){
-        $product = DB::table($this->table_prod.' AS P')
-            ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, supplierName, category_name, unit'))
+        $product = DB::table($this->table_exp.' AS E')
+        ->select("E.*", 'E.product_code',
+                 'P.description',
+                 'P.re_order', 
+                 'P.orig_price', 
+                 'P.selling_price', 
+                 'E.qty', 
+                 'unit', 
+                 'supplierName', 
+                 'category_name', 
+                 DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+            ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
             ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
             ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
             ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
@@ -61,7 +72,10 @@ class StockAdjustmentCtr extends Controller
     }
 
     public function adjust(){
+
        $action = Input::get('rdo_addless');
+       $id_hidden = Input::input('product_code_hidden');
+
         if($action == 'add'){
 
             $stockad = new StockAdjustment;
@@ -72,7 +86,7 @@ class StockAdjustmentCtr extends Controller
             $stockad->action = 'add';
             $stockad->remarks = Input::input('remarks');
             $stockad->save();
-            $this->updateStock($action, $stockad->product_code, $stockad->qtyToAdjust);
+            $this->updateStock($action, $id_hidden, $stockad->qtyToAdjust);
         }
         else if($action == 'less'){
             $stockad = new StockAdjustment;
@@ -83,20 +97,20 @@ class StockAdjustmentCtr extends Controller
             $stockad->action = 'less';
             $stockad->remarks = Input::input('remarks');
             $stockad->save();
-            $this->updateStock($action, $stockad->product_code, $stockad->qtyToAdjust);
+            $this->updateStock($action, $id_hidden, $stockad->qtyToAdjust);
         }
     }
 
-    public function updateStock($action, $product_code, $qtyAdjusted){
+    public function updateStock($action, $id_hidden, $qtyAdjusted){
         if($action == 'add'){ 
-            DB::table($this->table_prod.' AS P')
-            ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
+            DB::table($this->table_exp.' AS E')
+            ->where('E.id', $id_hidden)
             ->update(array(
                 'qty' => DB::raw('qty + '. $qtyAdjusted .'')));
         }
         else if($action == 'less'){
-            DB::table($this->table_prod.' AS P')
-            ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
+            DB::table($this->table_prod.' AS E')
+            ->where('E.id', $id_hidden)
             ->update(array(
                 'qty' => DB::raw('qty - '. $qtyAdjusted .'')));
         }
@@ -104,12 +118,19 @@ class StockAdjustmentCtr extends Controller
 
     public function show($productCode)
     {
-        $product = DB::table($this->table_prod.' AS P')
-            ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, supplierName, category_name, unit'))
+        $product = DB::table($this->table_exp.' AS E')
+        ->select("P.*", 'E.product_code', 'E.id as id_exp',
+                 'unit', 
+                 'supplierName', 
+                 'category_name', 
+                 'image', 
+                 'E.qty', 
+                 'E.exp_date')
+            ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
             ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
             ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
             ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-            ->where('P.id', $productCode)
+            ->where('E.id', $productCode)
             ->get();
 
             return $product;

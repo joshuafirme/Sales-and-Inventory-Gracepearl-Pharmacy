@@ -42,7 +42,7 @@ class StockAdjustmentReportCtr extends Controller
         ->leftJoin($this->tbl_suplr.' AS S', 'S.id', '=', 'P.supplierID')
         ->leftJoin($this->tbl_cat.' AS C', 'C.id', '=', 'P.categoryID')
         ->leftJoin($this->tbl_unit.' AS U', 'U.id', '=', 'P.unitID')
-        ->whereBetween('SA.created_at', [$date_from, $date_to])
+        ->whereBetween('SA.created_at', [$date_from, date('Y-m-d', strtotime($date_to. ' + 1 days'))])
         ->get();
 
         return $product;     

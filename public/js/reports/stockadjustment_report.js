@@ -106,7 +106,7 @@ $(document).ready(function(){
    {
       var date_from = $('#date_from').val()
       var date_to = $('#date_to').val();
-
+      console.log(date_to);
       $('#stockadjustment-report-table').DataTable().destroy();
       fetchStockAdjustment(date_from, date_to);
    });

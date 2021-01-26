@@ -14,6 +14,7 @@
           <div class="row">
         {{ csrf_field() }}
 
+        <input type="hidden" id="id_hidden" required>
         <input type="hidden" id="product_code_hidden" required>
 
         <div class="col-md-4 mb-2">

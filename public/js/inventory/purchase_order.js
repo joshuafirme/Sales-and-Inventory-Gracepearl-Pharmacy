@@ -27,7 +27,7 @@ $(document).ready(function(){
         }, 
    
         columns:[       
-         {data: 'productCode', name: 'productCode'},
+         {data: 'product_code', name: 'product_code'},
          {data: 'description', name: 'description'},
          {data: 'unit', name: 'unit'},   
          {data: 'category_name', name: 'category_name'},    
@@ -99,7 +99,7 @@ $(document).ready(function(){
     
               success:function(response){
                console.log(response);
-               $('#po_product_code').val(response[0].productCode);
+               $('#po_product_code').val(response[0].product_code);
                $('#po_description').val(response[0].description);
                $('#po_category').val(response[0].category_name);
                $('#po_unit').val(response[0].unit);

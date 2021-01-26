@@ -20,7 +20,7 @@ $(document).ready(function(){
         
          
         columns:[       
-         {data: 'productCode', name: 'productCode'},
+         {data: 'product_code', name: 'product_code'},
          {data: 'description', name: 'description'},
          {data: 'category_name', name: 'ategory_name'},
          {data: 'unit', name: 'unit'},

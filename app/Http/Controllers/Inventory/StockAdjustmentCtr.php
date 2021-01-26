@@ -109,7 +109,7 @@ class StockAdjustmentCtr extends Controller
                 'qty' => DB::raw('qty + '. $qtyAdjusted .'')));
         }
         else if($action == 'less'){
-            DB::table($this->table_prod.' AS E')
+            DB::table($this->table_exp.' AS E')
             ->where('E.id', $id_hidden)
             ->update(array(
                 'qty' => DB::raw('qty - '. $qtyAdjusted .'')));

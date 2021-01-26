@@ -28,7 +28,7 @@ class SupplierDeliveryCtr extends Controller
         {
             $rights->notAuthMessage();
         }
-        return view('inventory/supplier_delivery',['getCurrentDate' => date('yy-m-d')]);
+        return view('inventory/supplier_delivery',['getCurrentDate' => date('Y-m-d')]);
     }
 
     public function displayPurchaseOrder(){

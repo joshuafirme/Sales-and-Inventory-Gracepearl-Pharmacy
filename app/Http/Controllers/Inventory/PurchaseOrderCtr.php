@@ -17,6 +17,7 @@ use App\Classes\Date;
 class PurchaseOrderCtr extends Controller
 {
     private $table_prod = "tblproduct";
+    private $table_exp = "tblexpiration";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
@@ -26,7 +27,7 @@ class PurchaseOrderCtr extends Controller
     public function index(Request $request)
     {
        // session()->forget('purchase-orders');
-       // session()->forget('po-supplier');
+      //  session()->forget('po-supplier');
         $rights = new UserAccessRights;
 
         if(!($rights->isUserAuthorize($this->module)))
@@ -100,11 +101,11 @@ class PurchaseOrderCtr extends Controller
     public function sendMail(){
         $data = $this->convertProductDataToHTML();
 
+        $this->recordOrder();
         $email = Input::input('supplier_email');
         Mail::to($email)
         ->send(new MyMail($data));
         // after email sent, it will automatically save orders to database
-        $this->recordOrder();
     }
 
     public function getSupplierEmail($supplier){
@@ -116,24 +117,44 @@ class PurchaseOrderCtr extends Controller
     }
 
     public function getAllReorder(){
-        $product = DB::table($this->table_prod.' AS P')
-        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name'))
-        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-        ->whereColumn('P.re_order','>=', 'P.qty')
+        $product = DB::table($this->table_exp.' AS E')
+        ->select("E.*", 'E.product_code',
+                 'P.description',
+                 'P.re_order', 
+                 'P.orig_price', 
+                 'P.selling_price', 
+                 'E.qty', 
+                 'unit', 
+                 'supplierName', 
+                 'category_name', 
+                 DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+            ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+            ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+            ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+            ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereColumn('P.re_order','>=', 'E.qty')
         ->get();
 
         return $product;
     }
 
     public function getReorderBySupplier($supplier){
-        $product = DB::table($this->table_prod.' AS P')
-        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name'))
-        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-        ->whereColumn('P.re_order','>=', 'P.qty')
+        $product = DB::table($this->table_exp.' AS E')
+        ->select("E.*", 'E.product_code',
+                 'P.description',
+                 'P.re_order', 
+                 'P.orig_price', 
+                 'P.selling_price', 
+                 'E.qty', 
+                 'unit', 
+                 'supplierName', 
+                 'category_name', 
+                 DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+            ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+            ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+            ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+            ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->whereColumn('P.re_order','>=', 'E.qty')
         ->where('P.supplierID', $supplier)
         ->get();
 
@@ -155,12 +176,22 @@ class PurchaseOrderCtr extends Controller
     }
 
     public function show($product_code){
-        $product = DB::table($this->table_prod.' AS P')
-        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS productCode, unit, supplierName, category_name'))
-        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-        ->where('P.id', $product_code)
+        $product = DB::table($this->table_exp.' AS E')
+        ->select("E.*", 'E.product_code',
+                 'P.description',
+                 'P.re_order', 
+                 'P.orig_price', 
+                 'P.selling_price', 
+                 'E.qty', 
+                 'unit', 
+                 'supplierName', 
+                 'category_name', 
+                 DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+            ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+            ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+            ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+            ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->where('E.id', $product_code)
         ->get();
  
 
@@ -239,6 +270,7 @@ public function recordOrder(){
     $sub_total = 0;
     $total_amount = 0;
     $po_num = $this->getPONum();
+
     if(session()->get('purchase-orders')){
         foreach (session()->get('purchase-orders') as $product_code => $data) {
 
@@ -258,6 +290,7 @@ public function recordOrder(){
     }
     // remove request orders after save to PO database
     session()->forget('purchase-orders');
+    session()->forget('po-supplier');
 }
 
 public function getPONum(){
@@ -268,7 +301,7 @@ public function getPONum(){
 }
 
 public function getPrefix(){
-    return $date = $this->getMonth() . $this->getDay();
+    return $date = date('Y') . date('m');
  }
 
 public function pdf(){
@@ -298,12 +331,12 @@ public function getPOSupplier(){
 }
 
 public function convertProductDataToHTML(){
-    $po = $this->getPOSupplier();
-    $po_supllier = session()->get('po-supplier');
+    $po = session()->get('purchase-orders');
+    $po_supplier = session()->get('po-supplier');
     $output = '
     <div style="width:100%">
     <p style="text-align:right;">Date: '. $this->getDate() .'</p>
-    <h1 style="text-align:center;">'. $po_supllier .'</h1>
+    <h1 style="text-align:center;">'. $po_supplier .'</h1>
     <h3 style="text-align:center;">Purchase Order</h3>
 
     <table width="100%" style="border-collapse:collapse; border: 1px solid;">

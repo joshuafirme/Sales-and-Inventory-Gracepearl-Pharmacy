@@ -75,7 +75,7 @@
                                           <tbody>
                                               <tr>    
                                                 @foreach ($nearExpiryProduct as $data)                        
-                                                <td>{{ $data->productCode }}</td>
+                                                <td>{{ $data->product_code }}</td>
                                                 <td>{{ $data->description }}</td>
                                                 <td>{{ $data->unit }}</td>
                                                 <td>{{ $data->category_name }}</td>
@@ -111,7 +111,7 @@
                                           <tbody>
                                               <tr>    
                                                 @foreach ($expiredProduct as $data)                        
-                                                <td>{{ $data->productCode }}</td>
+                                                <td>{{ $data->product_code }}</td>
                                                 <td>{{ $data->description }}</td>
                                                 <td>{{ $data->unit }}</td>
                                                 <td>{{ $data->category_name }}</td>
@@ -149,7 +149,7 @@
                                           <tbody>
                                               <tr>    
                                                 @foreach ($reorderProduct as $data)                        
-                                                <td>{{ $data->productCode }}</td>
+                                                <td>{{ $data->product_code }}</td>
                                                 <td>{{ $data->description }}</td>
                                                 <td>{{ $data->supplierName }}</td>
                                                 <td>{{ $data->category_name }}</td>

@@ -22,7 +22,7 @@ $(document).ready(function(){
       data: {category:category}, 
           
       columns:[       
-       {data: 'productCode', name: 'productCode'},
+       {data: 'product_code', name: 'product_code'},
        {data: 'description', name: 'description'},
        {data: 'category_name', name: 'category_name'},
        {data: 'unit', name: 'unit'},
@@ -77,6 +77,7 @@ $(document).ready(function(){
       row = $(this).closest("tr")
       product_id = $(this).attr('delete-id');
       console.log(product_id);
+      product_code =  $(this).closest("tr").find('td:eq(0)').text();
       product_name =  $(this).closest("tr").find('td:eq(1)').text();
       $('#proconfirmModal').modal('show');
       $('.delete-success').hide();
@@ -93,6 +94,9 @@ $(document).ready(function(){
         $.ajax({
             url: '/maintenance/product/delete/'+ product_id,
             type: 'DELETE',
+            data:{
+              product_code:product_code
+            },
           
             beforeSend:function(){
                 $('#product_ok_button').text('Deleting...');
@@ -135,16 +139,26 @@ $(document).ready(function(){
       $('#category_name').change(function(){
         category =  $('select[name=category_name] option').filter(':selected').text();
 
+        showWithPrescriptionRadio(category);  
+      });
+
+      $('select[name=edit_category_name]').change(function(){
+        category =  $('select[name=edit_category_name] option').filter(':selected').text();
+
+        showWithPrescriptionRadio(category);  
+      });
+
+      function showWithPrescriptionRadio(category) {
         if(category == 'Branded' || category == 'Generic' || category == 'Vitamins'){
           $('.with-prescription').css('display', 'block');
         }
         else{
+          $('input[name ="edit_with_prescription"]').val('no');
           $('input[name ="with_prescription"]').val('no');
           $('.with-prescription').css('display', 'none');
-        }
-       
-    
-        });
+        } 
+        
+      }
 
       function getCompanyID(supplierID){
         $.ajax({
@@ -180,7 +194,7 @@ $(document).ready(function(){
         var percentage = $('#discount_hidden').val();
         var diff = orig_price * percentage;
         var markup =  parseFloat(orig_price) + diff;
-        return markup;
+        return moneyFormat(markup);
       }
 
       function editComputeMarkup(){
@@ -188,7 +202,7 @@ $(document).ready(function(){
         var percentage = $('#edit_discount_hidden').val();
         var prod = orig_price * percentage;
         var markup =  parseFloat(orig_price) + prod;
-        return markup;
+        return moneyFormat(markup);
       }
 
       $('#supplier_name').change(function(){
@@ -220,6 +234,11 @@ $(document).ready(function(){
         $('#edit_selling_price').val(markup);
       });
 
+      function moneyFormat(total)
+      {
+        return (Math.round(total * 100) / 100).toFixed(2);
+       // var round_off = Math.round((parseInt(parseFloat(decimal)) + Number.EPSILON) * 100) / 100;
+      }
       
 //edit show
 $(document).on('click', '#btn-edit-product-maintenance', function(){
@@ -238,7 +257,7 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
      
       console.log(response);
       $('#product_code_hidden').val(response[0].id);
-      $('#product_code').val(response[0].productCode);
+      $('#product_code').val(response[0].product_code);
       $('#edit_description').val(response[0].description);
       $('#edit_unit').text(response[0].unit);
       $('#edit_category_name').text(response[0].category_name);
@@ -257,6 +276,8 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
       $('#edit_selling_price').val(response[0].selling_price);
       $('#edit_exp_date').val(response[0].exp_date);
       edit_highlights.setData(response[0].highlights);
+      
+      showWithPrescriptionRadio(response[0].category_name); 
 
       if(response[0].image !== null){
         var img_source = '../../storage/'+response[0].image;
@@ -274,7 +295,7 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
     //update 
 $('#update-product-maintenance').click(function(){
   var id = $('#product_code_hidden').val(); 
-  console.log(product_code);
+
   var description = $('#edit_description').val(); 
   var unit = $('select[name=edit_unit] option').filter(':selected').val();
   var category_name = $('select[name=edit_category_name] option').filter(':selected').val();

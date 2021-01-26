@@ -64,12 +64,12 @@
   
             <div class="col-md-4  mb-2">
               <label class="col-form-label">Original Price</label>
-              <input type="number" min="1"  class="form-control" name="orig_price" id="orig_price" required>
+              <input type="number" step=".01" min="0" max="9999999"  class="form-control" name="orig_price" id="orig_price" required>
             </div>
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
-              <input  class="form-control orig_price" name="selling_price" id="selling_price" required>
+              <input  type="number" step=".01" min="0" max="9999999" class="form-control orig_price" name="selling_price" id="selling_price" required>
             </div>
 
             <div class="col-md-4">
@@ -219,7 +219,7 @@
   
             <div class="col-md-4  mb-2">
               <label class="col-form-label">Original Price</label>
-              <input type="number" class="form-control" name="edit_orig_price" id="edit_orig_price" required>
+              <input type="number" step=".01" min="0" max="9999999" class="form-control" name="edit_orig_price" id="edit_orig_price" required>
             </div>
 
      
@@ -240,14 +240,15 @@
               <input  type="file" name="image">
             <div>{{ $errors->first('image') }}</div>
             </div> 
-            <div class="col-md-4 mt-3 with-prescription" style="display: none">
+
+            <div class="col-md-12 mt-3 with-prescription"  style="display: none">
               <label for="">With Presciption?</label>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="with_prescription" value="yes">
+                <input class="form-check-input" type="radio" name="edit_with_prescription" id="edit_with_prescription" value="yes">
                 <label class="form-check-label" for="add">
                   Yes
                 </label>
-                <input class="form-check-input ml-2" type="radio" name="with_prescription"  value="no" checked>
+                <input class="form-check-input ml-2" type="radio" name="edit_with_prescription" id="edit_no_prescription" value="no" checked>
                 <label class="form-check-label ml-4" for="less">
                   No
                 </label>
@@ -256,7 +257,7 @@
 
             <div class="col-md-4 mt-2">
 
-              <img alt="no available image" style="width: 200px;"  name="img_view" id="img_view">
+              <img alt="no available image" style="width: 235px; max-heigth:300px;"  name="img_view" id="img_view">
             <div>{{ $errors->first('image') }}</div>
             </div> 
 

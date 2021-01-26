@@ -15,6 +15,7 @@ use App\Model\Maintenance\Product;
 class ProductMaintenanceCtr extends Controller
 {
     private $table_prod = "tblproduct";
+    private $table_exp = "tblexpiration";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_unit = "tblunit";
@@ -108,7 +109,7 @@ class ProductMaintenanceCtr extends Controller
         $product->qty = $request->input('qty');
         $product->re_order = $request->input('re_order');
         $product->orig_price = $request->input('orig_price');
-        $product->selling_price = $request->get('selling_price');
+        $product->selling_price = floor($request->get('selling_price')*100)/100;
         $product->exp_date = $request->input('exp_date');
         $product->with_prescription = $request->input('with_prescription');
         $product->highlights = $request->input('highlights');
@@ -192,7 +193,12 @@ class ProductMaintenanceCtr extends Controller
                     'image' => 'file|image|max:5000',
                 ]);
             }
-            $this->storeImage($product->id);
+            
+            DB::table($this->table_exp)
+            ->where('id', $product->id)
+            ->update(['exp_date' => $product->exp_date]);
+ 
+            $this->storeImage($product->id_exp);
 
         return redirect('/maintenance/product')->with('success', 'Product was successfully updated');
      //   Storage::disk('local')->put($image, 'Contents');
@@ -228,6 +234,8 @@ class ProductMaintenanceCtr extends Controller
     {
         $audit = new AuditTrailHelper;
         $audit->recordAction($this->module, 'Delete product');
+  
+        $product_code = Input::input('product_code');
         $product = DB::table($this->table_prod)->where('id', $id)->delete();
         return $product;
     }

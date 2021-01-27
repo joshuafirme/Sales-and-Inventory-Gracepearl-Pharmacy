@@ -16,6 +16,7 @@ class SalesCtr extends Controller
 {
     private $table_sales = "tblsales";
     private $table_prod = "tblproduct";
+    private $table_exp = "tblexpiration";
     private $table_cat = "tblcategory";
     private $table_suplr = "tblsupplier";
     private $table_emp = "tblemployee";
@@ -68,12 +69,21 @@ class SalesCtr extends Controller
     public function search($search_key)
     {
         if($search_key){
-            $product = DB::table($this->table_prod)
-            ->select("tblproduct.*", DB::raw('CONCAT(tblproduct._prefix, tblproduct.id) as productCode'))
-            ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-            ->where(DB::raw('CONCAT(tblproduct._prefix, tblproduct.id)'), 'LIKE', '%'.$search_key.'%') // CONCAT 
-            ->orWhere('description', 'LIKE', '%'.$search_key.'%')
-            ->where('qty', '>=', 0)
+            $product = DB::table($this->table_exp.' AS E')
+            ->select("E.*",
+                     'P.description',
+                     'P.re_order', 
+                     'P.orig_price', 
+                     'P.selling_price', 
+                     'E.qty', 
+                     'category_name', 
+                     DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+                ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+                ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+            ->where('E.product_code', 'LIKE', '%'.$search_key.'%') // CONCAT 
+            ->orWhere('P.description', 'LIKE', '%'.$search_key.'%')
+            ->where('E.qty', '>', 0)
+            ->orderBy('E.exp_date') // First expiry first out
             ->get();
 
             return $product;

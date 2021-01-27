@@ -146,6 +146,7 @@ $(document).ready(function(){
       var sales_inv_no = $('#rc_sales_inv_no').val();
       var product_code = $('select[name=rc_product_code] option').filter(':selected').val();
       var qty_return = $('#rc_qty_return').val();
+      var exp_date = $('#rc_exp_date').val();
       var reason = $('select[name=rc_reason] option').filter(':selected').val();
       var date = $('#rc_date').val();
 
@@ -158,6 +159,7 @@ $(document).ready(function(){
           data:{
              sales_inv_no:sales_inv_no,
              product_code:product_code,
+             exp_date:exp_date,
              qty_return:qty_return,
              reason:reason,
              date:date

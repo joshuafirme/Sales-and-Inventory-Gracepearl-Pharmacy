@@ -155,10 +155,24 @@ $(document).ready(function(){
         data:{
           id_type:id_type
         },
+        beforeSend:function(){
+          $('#btn-approve').text('Please wait...');
+          $('.loader').css('display', 'inline');
+        },
+        success:function(){
+          $('#verified-table').DataTable().ajax.reload();
+          $('#for-validation-table').DataTable().ajax.reload();
+          setTimeout(function(){
+            $('.update-success-validation').css('display', 'inline');
+            $('#btn-approve').text('Approve');
+            $('.loader').css('display', 'none');
+            setTimeout(function(){
+              $('.update-success-validation').fadeOut('slow');
+              $('#verifyCustomerModal').modal('toggle');
 
-        success:function(data){
-          alert('success');
-          $('#verify-customer-table').DataTable().ajax.reload();
+            },2000);
+          
+          },1000);
         }
          
        });

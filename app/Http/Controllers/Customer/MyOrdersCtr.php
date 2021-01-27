@@ -26,6 +26,7 @@ class MyOrdersCtr extends Controller
             'order_no' => $this->orderNo()
         ]);
     }
+    
 
     public function getMyOrders(){
 
@@ -39,11 +40,24 @@ class MyOrdersCtr extends Controller
         return $orders;
       }
 
+    public function cancelOrder($order_no){
+
+      $remarks = Input::input('remarks');
+        DB::table($this->tbl_ol_order)
+        ->where([
+            ['order_no', $order_no],
+        ])->update([
+          'status' => 'Cancelled',
+          'remarks' => $remarks
+        ]);
+    }
+
     public function orderNo(){
       $user_id = $this->getUserIDWithPrefix();
         $order_no = DB::table($this->tbl_ol_order)
         ->select(DB::raw('CONCAT('.$this->tbl_ol_order.'._prefix, '.$this->tbl_ol_order.'.order_no) AS pr_order_no'), 'order_no')
         ->where('email', $user_id)
+        ->whereNotIn('status', ['Cancelled'])
         ->distinct('order_no')
         ->orderBy('order_no', 'desc')
         ->get();

@@ -14,6 +14,7 @@ use App\Classes\UserAccessRights;
 class ReturnCtr extends Controller
 {
     private $tbl_prod = "tblproduct";
+    private $tbl_exp = "tblexpiration";
     private $tbl_cat = "tblcategory";
     private $tbl_suplr = "tblsupplier";
     private $tbl_unit = "tblunit";
@@ -30,7 +31,7 @@ class ReturnCtr extends Controller
             $rights->notAuthMessage();
         }
 
-        return  view('/inventory/return', ['getCurrentDate' => date('yy-m-d')]);
+        return  view('/inventory/return', ['getCurrentDate' => date('Y-m-d')]);
     }
 
     public function searchSalesInvoice()
@@ -100,16 +101,19 @@ class ReturnCtr extends Controller
     {
         $sales_inv_no = Input::input('sales_inv_no');
         $product_code = Input::input('product_code');
+        $exp_date = Input::input('exp_date');
         $qty_return = Input::input('qty_return');
         $reason = Input::input('reason');
         $date = Input::input('date');
 
         if($reason == 'Damaged' || $reason == 'Expired'){
             $this->recordReturn($sales_inv_no, $product_code, $qty_return, $reason, $date);
+            $this->updateSales($sales_inv_no, $product_code);
         }
         else if($reason == 'Wrong Item'){
             $this->recordReturn($sales_inv_no, $product_code, $qty_return, $reason, $date);
-            $this->updateInventory($product_code, $qty_return);
+            $this->updateInventory($product_code, $qty_return, $exp_date);
+            $this->updateSales($sales_inv_no, $product_code);
         }        
 
     }
@@ -124,17 +128,19 @@ class ReturnCtr extends Controller
         $rc->save();     
     }
 
-    public function updateInventory($product_code, $qty_return){
-            DB::table($this->tbl_prod)
-            ->where(DB::raw('CONCAT('.$this->tbl_prod.'._prefix, '.$this->tbl_prod.'.id)'), $product_code)
+    public function updateInventory($product_code, $qty_return, $exp_date){
+            DB::table($this->tbl_exp.' as E')
+            ->where([
+                ['product_code', $product_code],
+                ['exp_date', $exp_date]
+            ])
             ->update(array(
                 'qty' => DB::raw('qty + '. $qty_return .'')));
     }
 
     public function updateSales($sales_inv_no, $product_code){
-        DB::table($this->tbl_prod)
-        ->where(DB::raw('CONCAT('.$this->tbl_prod.'._prefix, '.$this->tbl_prod.'.id)'), $product_code)
-        ->update(array(
-            'qty' => DB::raw('qty + '. $qty_return .'')));
+        DB::table($this->tbl_sales.' as S')
+        ->where('S.sales_inv_no', $sales_inv_no)
+        ->delete();
 }
 }

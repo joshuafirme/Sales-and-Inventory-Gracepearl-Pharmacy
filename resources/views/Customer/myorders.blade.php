@@ -11,14 +11,23 @@
     <div class="row mt-2">
   
     <div class="col-lg-8 m-auto"><h4>My Orders</h4></div>
+
+    <div class="col-lg-8 m-auto"> 
+        <div class="alert alert-success" style="display: none;" role="alert" id="success-message">
+        Your order has been cancelled successfully.
+       </div>
+     </div>
       <!--Grid column-->
       <div class="col-lg-8 m-auto">
-
+        
+       
+        
         <!-- Card -->
         @if(count($order_no) > 0)
         @foreach($order_no as $o)
         <div class="card wish-list mb-3 mt-1">
-          <div class="card-body card-cart">
+          <div class="card-body card-cart"  id="my-order-contr">
+
             <?php
             
             $orders = DB::table('tblonline_order')
@@ -41,11 +50,13 @@
                     ->orderBy('order_no', 'desc')
                     ->first();
                  ?>
+                 
+              
                 @if($order_status == 'Payment pending')
-                <button class="btn btn-sm btn-success ml-auto mr-3 btn-pay-now" order-no={{ $o->order_no }}>Pay now ></button> 
+                  <button class="btn btn-sm btn-success ml-auto mr-3 btn-pay-now" order-no={{ $o->order_no }}>Pay now ></button>            
+                  <button class="btn btn-sm text-danger ml-auto mr-3 btn-cancel-order" order-no={{ $o->order_no }}>Cancel</button>  
                 @else
-                
-                <p class="ml-auto mr-3 label-small" style="color: #2A2F6E;">Payment Method: {{ $p->payment_method }}</p>         
+                  <p class="ml-auto mr-3 label-small" style="color: #2A2F6E;">Payment Method: {{ $p->payment_method }}</p>               
                 @endif
 
                 <p class="col-12 mt-0 label-small">Placed on {{ $p->created_at }}<span></span></p>
@@ -132,7 +143,7 @@
 </div>
 
 
-      @extends('customer.layouts.loading_modal')
-      @section('modals')
+      @extends('customer.layouts.modal_cancel')
+      @section('cancelModal')
       @endsection
 @endsection

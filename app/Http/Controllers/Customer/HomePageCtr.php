@@ -70,7 +70,7 @@ class HomePageCtr extends Controller
           $cat_imp = 'Milk", "Branded", "Generic", "Vitamins", "Galenical", "Cosmetic';
         }
 
-        if($search_key){
+        if($search_key !== ''){
           $product = DB::table($this->table_prod.' AS P')
           ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
           ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')

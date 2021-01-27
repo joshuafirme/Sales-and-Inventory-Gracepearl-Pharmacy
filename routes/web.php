@@ -90,6 +90,7 @@ Route::post('stripe', 'Customer\StripePaymentCtr@stripePost')->name('stripe.post
 Route::get('stripe/success_payment', 'Customer\StripePaymentCtr@stripeSuccess');
 //my order
 Route::get('myorders', 'Customer\MyOrdersCtr@index');
+Route::get('myorder/cancel/{order_no}', 'Customer\MyOrdersCtr@cancelOrder');
 
 
 

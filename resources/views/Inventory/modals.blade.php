@@ -52,7 +52,7 @@
 
         <div class="col-md-4">
           <label class="col-form-label">Qty to adjust</label>
-          <input type="number" class="form-control" name="qty_to_adjust" id="qty_to_adjust" autofocus>
+          <input type="number" min="0" class="form-control" name="qty_to_adjust" id="qty_to_adjust" autofocus>
         </div>
 
         <div class="col-md-4">
@@ -427,6 +427,11 @@
             </div>
 
             <div class="col-md-12 mt-2 mb-2"><hr></div>
+
+            <div class="col-md-4 mb-2">
+              <label class="col-form-label">Expiration Date</label><br>
+            <input type="date" class="form-control" id="rc_exp_date">
+            </div>
 
             <div class="col-md-4 mb-2">
               <label class="col-form-label">Qty to Return</label><br>

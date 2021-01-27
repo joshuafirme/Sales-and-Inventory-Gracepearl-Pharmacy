@@ -35,7 +35,7 @@ $(document).ready(function(){
                 $('#total').val('');
               }
               console.log(response);
-              var product_code = response[0].productCode;
+              var product_code = response[0].product_code;
 
               $('#product_code_hidden').val(response[0].id);
               $('#product_code').val(product_code);

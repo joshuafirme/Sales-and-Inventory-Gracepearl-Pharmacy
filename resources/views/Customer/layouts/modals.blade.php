@@ -197,3 +197,26 @@
     </div>
   </div>
 </div>
+
+@yield('cancelModal')
+<!--Confirm Cancel Modal-->
+<div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cancel Order</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="confirmation-message"></p>
+      </div>
+      <div class="modal-footer">
+        <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
+        <button class="btn btn-sm btn-outline-dark" type="button" id="btn-cancel-order">Yes</button>
+        <button class="btn btn-sm btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

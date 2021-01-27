@@ -39,7 +39,11 @@
     
   
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer"> 
+        <div class="update-success-validation mr-auto ml-3" style="display: none">
+         <label class="label text-success">Customer is successfully verified</label>    
+        </div> 
+      <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
         <button id="btn-decline" class="btn btn-sm btn-danger">Decline</button>
         <button id="btn-approve" class="btn btn-sm btn-success">Approve</button>
       </div>

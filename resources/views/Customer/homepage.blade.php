@@ -114,9 +114,9 @@
                 
                 <label class="text-muted">Price Range</label>
                 <div class="d-flex align-items-center mt-0 pb-1"> 
-                    <input type="number" class="form-control mb-0" placeholder="min" id="input-minprice" value={{ $minPrice }}>          
+                    <input type="number" class="form-control mb-0" placeholder="min" id="input-minprice" value={{ $minPrice }} style="font-size: 13px;">          
                     <p class="px-2 mb-0 text-muted"> - </p>
-                    <input type="number" class="form-control mb-0" placeholder="max" id="input-maxprice" value={{ $maxPrice }}> 
+                    <input type="number" class="form-control mb-0" placeholder="max" id="input-maxprice" value={{ $maxPrice }} style="font-size: 13px;"> 
                 </div>
 
              </div>

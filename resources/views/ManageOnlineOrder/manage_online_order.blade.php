@@ -55,12 +55,12 @@
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" id="completed-tab" data-toggle="tab" href="#completed_tab" role="tab" aria-controls="contact" aria-selected="true">Completed
+                  <a class="nav-link" id="delivered-tab" data-toggle="tab" href="#delivered_tab" role="tab" aria-controls="contact" aria-selected="true">Delivered
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="nav-link" id="cancelled-order-tab" data-toggle="tab" href="#cancelled_order_tab" role="tab" aria-controls="contact" aria-selected="true">Cancelled order
+                  <a class="nav-link" id="cancelled-tab" data-toggle="tab" href="#cancelled_tab" role="tab" aria-controls="contact" aria-selected="true">Cancelled order
                   </a>
                 </li>
  
@@ -114,6 +114,7 @@
                       <thead>
                         <tr>
 
+                          <th><input type="checkbox" name="select_all" value="1" id="select-all"></th>
                           <th>Order #</th>
                           <th>Customer Name</th>                                                           
                           <th>Phone No</th>        
@@ -122,6 +123,97 @@
                           <th>Date placed</th>
                           <th>Status</th>
                           <th>Action</th>
+                        
+                        </tr>
+                      </thead>
+                    </table>
+
+                    <img class="ml-2" src="{{asset('assets/arrow_ltr.png')}}" alt="">
+
+                    <button class="btn btn-sm btn-success mt-2" id="btn-bulk-dispatch">Dispatch</button>
+
+                  </div>
+
+                  <div class="tab-pane fade" id="dispatch_tab" role="tabpanel" aria-labelledby="dispatch-tab">
+
+                    <table class="table responsive table-hover" id="dispatch-table" width="100%">                               
+                      <thead>
+                        <tr>
+
+                          <th><input type="checkbox" name="select_all" value="1" id="select-all"></th>
+                          <th>Order #</th>
+                          <th>Customer Name</th>                                                           
+                          <th>Phone No</th>        
+                          <th>Email</th>
+                          <th>Payment method</th>
+                          <th>Date placed</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        
+                        </tr>
+                      </thead>
+                    </table>
+
+                    <img class="ml-2" src="{{asset('assets/arrow_ltr.png')}}" alt="">
+                    <button class="btn btn-sm btn-success mt-2" id="btn-bulk-delivered">Delivered</button>
+                    <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
+
+                  </div>
+
+                  <div class="tab-pane fade" id="delivered_tab" role="tabpanel" aria-labelledby="delivered-tab">
+
+                    <div class="row">
+
+                      <div class="mt-2 ml-3">
+                         Date Delivered
+                        </div>              
+                      
+                      <div class="col-sm-2 mb-3">
+                        <input data-column="9" type="date" class="form-control" name="date_from" id="date_from" value="{{ $currentDate }}">
+                        </div>
+      
+                        <div class="mt-2">
+                          -
+                          </div>
+            
+                        <div class="col-sm-2 mb-3">
+                          <input data-column="9" type="date" class="form-control" name="date_to" id="date_to" value="{{ $currentDate }}">
+                          </div>                 
+
+                     </div>
+
+                    <table class="table responsive table-hover" id="delivered-table" width="100%">                               
+                      <thead>
+                        <tr>
+
+                          <th>Order #</th>
+                          <th>Customer Name</th>                                                           
+                          <th>Phone No</th>        
+                          <th>Email</th>
+                          <th>Payment method</th>
+                          <th>Date placed</th>
+                          <th>Date delivered</th>
+                          <th>Status</th>
+                        
+                        </tr>
+                      </thead>
+                    </table>
+
+                  </div>
+
+                  <div class="tab-pane fade" id="cancelled_tab" role="tabpanel" aria-labelledby="cancelled-tab">
+
+                    <table class="table responsive table-hover" id="cancelled-table" width="100%">                               
+                      <thead>
+                        <tr>
+
+                          <th>Order #</th>
+                          <th>Customer Name</th>                                                           
+                          <th>Phone No</th>        
+                          <th>Email</th>
+                          <th>Payment method</th>
+                          <th>Date placed</th>
+                          <th>Status</th>
                         
                         </tr>
                       </thead>

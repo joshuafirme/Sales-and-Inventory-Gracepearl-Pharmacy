@@ -1,6 +1,8 @@
 
 $(document).ready(function(){
 
+// Pending------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     fetchPendingOrders();
 
     function fetchPendingOrders(){
@@ -25,6 +27,8 @@ $(document).ready(function(){
         
        });
     }
+
+// Processing------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     fetchProcessingOrders();
 
@@ -52,10 +56,12 @@ $(document).ready(function(){
        });
     }
 
+// Packed------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
     fetchPackedOrders();
 
     function  fetchPackedOrders(){
-      $('#packed-table').DataTable({
+      var tbl_packed = $('#packed-table').DataTable({
      
         processing: true,
         serverSide: true,
@@ -64,7 +70,20 @@ $(document).ready(function(){
          url: "/manageorder/packed",
         }, 
 
+        columnDefs: [{
+          targets: 0,
+          searchable: false,
+          orderable: false,
+          changeLength: false,
+          className: 'dt-body-center',
+          render: function (data, type, full, meta){
+              return '<input type="checkbox" name="checkbox[]" value="' + $('<div/>').text(data).html() + '">';
+          }
+       }],
+       order: [[1, 'asc']],
+
         columns:[       
+         {data: 'order_num', name: 'order_num'},
          {data: 'order_num', name: 'order_num'},
          {data: 'fullname', name: 'fullname'},
          {data: 'phone_no', name: 'phone_no'},
@@ -76,7 +95,131 @@ $(document).ready(function(){
         ]
         
        });
+
+       $('#select-all').on('click', function(){
+        var rows = tbl_packed.rows({ 'search': 'applied' }).nodes();
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        });
+    
+        $('#packed-table tbody').on('change', 'input[type="checkbox"]', function(){
+          if(!this.checked){
+             var el = $('#select-all').get(0);
+             if(el && el.checked && ('indeterminate' in el)){
+                el.indeterminate = true;
+             }
+          }
+       });
     }
+
+// Dispatch------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    fetchDispatchOrders();
+
+    function  fetchDispatchOrders(){
+      var tbl_dispatch = $('#dispatch-table').DataTable({
+     
+        processing: true,
+        serverSide: true,
+
+        ajax:{
+         url: "/manageorder/dispatch",
+        }, 
+
+        columnDefs: [{
+          targets: 0,
+          searchable: false,
+          orderable: false,
+          changeLength: false,
+          className: 'dt-body-center',
+          render: function (data, type, full, meta){
+              return '<input type="checkbox" name="checkbox[]" value="' + $('<div/>').text(data).html() + '">';
+          }
+       }],
+       order: [[1, 'asc']],
+
+        columns:[       
+         {data: 'order_num', name: 'order_num'},
+         {data: 'order_num', name: 'order_num'},
+         {data: 'fullname', name: 'fullname'},
+         {data: 'phone_no', name: 'phone_no'},
+         {data: 'email', name: 'email'},   
+         {data: 'payment_method', name: 'payment_method'},   
+         {data: 'created_at', name: 'created_at'},
+         {data: 'status', name: 'status',orderable: false},
+         {data: 'action', name: 'action',orderable: false},
+        ]
+        
+       });
+
+       $('#select-all').on('click', function(){
+        var rows = tbl_dispatch.rows({ 'search': 'applied' }).nodes();
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        });
+    
+        $('#dispatch-table tbody').on('change', 'input[type="checkbox"]', function(){
+          if(!this.checked){
+             var el = $('#select-all').get(0);
+             if(el && el.checked && ('indeterminate' in el)){
+                el.indeterminate = true;
+             }
+          }
+       });
+    }
+
+// Delivered------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    var date_from = $('#date_from').val()
+    var date_to = $('#date_to').val();
+
+    fetchDelivered(date_from, date_to);
+
+    function fetchDelivered(date_from, date_to){
+      $('#delivered-table').DataTable({
+     
+        processing: true,
+        serverSide: true,
+
+        ajax:{
+         url: "/manageorder/delivered",
+         data:{
+          date_from:date_from,
+          date_to:date_to
+         },
+        }, 
+
+        columns:[       
+          {data: 'order_num', name: 'order_num'},
+          {data: 'fullname', name: 'fullname'},
+          {data: 'phone_no', name: 'phone_no'},
+          {data: 'email', name: 'email'},   
+          {data: 'payment_method', name: 'payment_method'},   
+          {data: 'created_at', name: 'created_at'},
+          {data: 'updated_at', name: 'updated_at'},
+          {data: 'status', name: 'status',orderable: false},
+        ]
+        
+       });
+    }
+
+    $('#date_from').change(function()
+    {
+        var date_from = $('#date_from').val()
+        var date_to = $('#date_to').val();
+
+        $('#delivered-table').DataTable().destroy();
+        fetchDelivered(date_from, date_to);
+    });
+
+   $('#date_to').change(function()
+   {
+      var date_from = $('#date_from').val()
+      var date_to = $('#date_to').val();
+
+      $('#delivered-table').DataTable().destroy();
+      fetchDelivered(date_from, date_to);
+   });
+
+// end------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
     $(document).on('click', '#btn-show-items', function(){
     
@@ -198,6 +341,93 @@ $(document).ready(function(){
       }
     });
   });
+
+
+
+  $('#btn-bulk-dispatch').click(function(){
+
+    var order_no = [];
+
+    $(':checkbox:checked').each(function(i){
+      order_no[i] = $(this).val();
+    });
+
+    if(order_no.length > 0){
+      
+        if($('#select-all').is(":checked")){
+          //used slice method to start index at 1, so the value of sellect_all checkbox is not included in array
+          order_no = order_no.slice(1).join(", ");
+          console.log(order_no);
+        }
+        else{
+          order_no = order_no.join(", ");
+          console.log(order_no);
+        }
+    
+        $.ajax({
+          url:"/manageorder/bulk_dispatch/"+order_no,
+          type:"POST",
+          beforeSend:function(){
+            $('.loader').css('display', 'inline');
+          },
+          success:function(){
+    
+            setTimeout(function(){
+              $('#packed-table').DataTable().ajax.reload();
+              $('#dispatch-table').DataTable().ajax.reload();
+              $('.loader').css('display', 'none');
+              },1000);
+          
+          }
+        });
+    }
+    else{
+        alert('Please select a customer!')       
+    }
+});
+
+
+$('#btn-bulk-delivered').click(function(){
+
+  var order_no = [];
+
+  $(':checkbox:checked').each(function(i){
+    order_no[i] = $(this).val();
+  });
+
+  if(order_no.length > 0){
+    
+      if($('#select-all').is(":checked")){
+        //used slice method to start index at 1, so the value of sellect_all checkbox is not included in array
+        order_no = order_no.slice(1).join(", ");
+        console.log(order_no);
+      }
+      else{
+        order_no = order_no.join(", ");
+        console.log(order_no);
+      }
+  
+      $.ajax({
+        url:"/manageorder/bulk_delivered/"+order_no,
+        type:"POST",
+        beforeSend:function(){
+          $('.loader').css('display', 'inline');
+        },
+        success:function(){
+  
+          setTimeout(function(){
+            $('#dispatch-table').DataTable().ajax.reload();
+            $('#delivered-table').DataTable().ajax.reload();
+            $('.loader').css('display', 'none');
+            },1000);
+        
+        }
+      });
+  }
+  else{
+      alert('Please select a customer!')       
+  }
+});
  
 
 });

@@ -177,12 +177,16 @@ Route::get('/manageorder', 'ManageOnlineOrderCtr@index');
 Route::get('/manageorder/pending', 'ManageOnlineOrderCtr@displayPendingOrder');
 Route::get('/manageorder/processing', 'ManageOnlineOrderCtr@displayProcessingOrder');
 Route::get('/manageorder/packed', 'ManageOnlineOrderCtr@displayPackedOrder');
+Route::get('/manageorder/dispatch', 'ManageOnlineOrderCtr@displayDispatchOrder');
+Route::get('/manageorder/delivered', 'ManageOnlineOrderCtr@displayDeliveredOrder');
 Route::post('/manageorder/pack_items/{order_no}', 'ManageOnlineOrderCtr@packItems');
 Route::get('/manageorder/showitems/{order_no}', 'ManageOnlineOrderCtr@showOrderItems');
 Route::get('/manageorder/customerinfo/{user_id}', 'ManageOnlineOrderCtr@getCustomerInfo');
 Route::get('/manageorder/shippinginfo/{user_id}', 'ManageOnlineOrderCtr@getShippingInfo');
 Route::get('/manageorder/salesinvoice', 'ManageOnlineOrderCtr@generateSalesInvoice');
 Route::get('/manageorder/verification_info/{user_id}', 'ManageOnlineOrderCtr@verificationInfo');
+Route::post('/manageorder/bulk_dispatch/{order_no}', 'ManageOnlineOrderCtr@bulkDispatch');
+Route::post('/manageorder/bulk_delivered/{order_no}', 'ManageOnlineOrderCtr@bulkDelivered');
 
 //VERIFY CUSTOMER---------------------------------------------------------------------------------------------------------
 Route::get('/verifycustomer', 'VerifyCustomerCtr@index');

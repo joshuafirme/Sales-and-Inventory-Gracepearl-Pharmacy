@@ -28,7 +28,7 @@ class ManageOnlineOrderCtr extends Controller
         {
             $rights->notAuthMessage();
         }
-        return view('/manageonlineorder/manage_online_order');
+        return view('/manageonlineorder/manage_online_order',['currentDate' => date('Y-m-d')]);
     }
 
     public function displayPendingOrder(){
@@ -75,15 +75,40 @@ class ManageOnlineOrderCtr extends Controller
         {
             return datatables()->of($packed_order)
             ->addColumn('action', function($packed_order){
-                $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $packed_order->order_num .' user-id='.$packed_order->user_id.'
-                 title="View order"><i class="fas fa-eye"></i></a>';
-
-                $button .= '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $packed_order->order_num .' 
+                $button = '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $packed_order->order_num .' 
                 title="Generate sales invoice"><i class="fas fa-print"></i></a>';
 
                 return $button;
             })
             ->rawColumns(['action'])
+            ->make(true);                         
+        }
+    }
+    
+    public function displayDispatchOrder(){
+        $d = $this->getDispatchOrder();
+        
+        if(request()->ajax())
+        {
+            return datatables()->of($d)
+            ->addColumn('action', function($d){
+                $button = '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $d->order_num .' 
+                title="Generate sales invoice"><i class="fas fa-print"></i></a>';
+
+                return $button;
+            })
+            ->rawColumns(['action'])
+            ->make(true);                         
+        }
+    }
+
+    public function displayDeliveredOrder(Request $request){
+
+        $d = $this->getDeliveredOrder($request->date_from, $request->date_to);
+        
+        if(request()->ajax())
+        {
+            return datatables()->of($d)
             ->make(true);                         
         }
     }
@@ -125,6 +150,33 @@ class ManageOnlineOrderCtr extends Controller
         ->get();   
 
         return $orders->unique('order_no');    
+    }
+
+    public function getDispatchOrder(){
+
+        $orders = DB::table($this->tbl_ol_order.' as O')
+        ->orderBy('created_at', 'asc')
+        ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, CA.email, O.email as user_id'))
+        ->leftJoin($this->tbl_cust_acc.' AS CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'O.email')
+        ->where('status', 'Dispatch')
+        ->orderBy('O.id', 'desc')
+        ->get();   
+
+        return $orders->unique('order_no');    
+    }
+
+    public function getDeliveredOrder($date_from, $date_to){
+
+        $o = DB::table($this->tbl_ol_order.' as O')
+        ->orderBy('created_at', 'asc')
+        ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, CA.email, O.email as user_id'))
+        ->leftJoin($this->tbl_cust_acc.' AS CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'O.email')
+        ->where('status', 'Delivered')
+        ->whereBetween('O.updated_at', [$date_from, date('Y-m-d', strtotime($date_to. ' + 1 days'))])
+        ->orderBy('O.id', 'desc')
+        ->get();   
+
+        return $o->unique('order_no');    
     }
 
     public function showOrderItems($order_no){
@@ -256,8 +308,35 @@ class ManageOnlineOrderCtr extends Controller
    
     }
 
+    public function bulkDispatch($order_no){
+
+        $order_no_arr = explode(", ", $order_no);
+        for($i = 0; $i < count($order_no_arr); $i++) {
+
+            DB::table($this->tbl_ol_order.' as O')
+            ->where(DB::raw('CONCAT(O._prefix, O.order_no)'), $order_no_arr[$i])
+            ->update([
+                'status' => 'Dispatch'
+                ]);
+        }
+    }
+
+    public function bulkDelivered($order_no){
+
+        $order_no_arr = explode(", ", $order_no);
+        for($i = 0; $i < count($order_no_arr); $i++) {
+
+            DB::table($this->tbl_ol_order.' as O')
+            ->where(DB::raw('CONCAT(O._prefix, O.order_no)'), $order_no_arr[$i])
+            ->update([
+                'status' => 'Delivered',
+                'updated_at' => date("Y-m-d h:m:s")
+                ]);    
+        }
+    }
+
     public function getDate(){
-        $date = date('yy-m-d');
+        $date = date('Y-m-d');
         return $date;
     }
 

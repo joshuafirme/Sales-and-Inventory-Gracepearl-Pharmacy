@@ -100,6 +100,8 @@ Route::get('myorder/cancel/{order_no}', 'Customer\MyOrdersCtr@cancelOrder');
 Route::get('/sales/cashiering', 'Sales\SalesCtr@index');
 Route::post('/sales/cashiering/{search_key}', 'Sales\SalesCtr@search');
 Route::get('/sales/cashiering/addToCart', 'Sales\SalesCtr@addToCart');
+Route::get('/cashiering/total_amount', 'Sales\SalesCtr@getTotalAmount');
+Route::get('/cashiering/generic_total_amount', 'Sales\SalesCtr@getGenericTotalAmount');
 Route::get('/sales/cashiering/process', 'Sales\SalesCtr@process');
 Route::get('/sales/cashiering/getTransNo', 'Sales\SalesCtr@getCurrentTransacNo');
 Route::get('/sales/cashiering/getSalesInvNo', 'Sales\SalesCtr@getSalesInvNo');

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\Sales;
 use App\OrderDiscount;
+use App\Cashiering;
 use Illuminate\Http\Request;
 use App\Classes\UserAccessRights;
 use App\Classes\CashieringInvoice;
@@ -35,7 +36,11 @@ class SalesCtr extends Controller
         }
 
         $getCurrenTransNo = $this->getCurrentTransacNo();
-        return view('/sales/cashiering', ['getTransNo' => $getCurrenTransNo]);
+        return view('/sales/cashiering', [
+            'getTransNo' => $getCurrenTransNo,
+            'getProduct' => $this->getCashieringProduct(),
+            'getTotalAmount' => $this->getTotalAmount()
+            ]);
    
     }
 
@@ -91,75 +96,95 @@ class SalesCtr extends Controller
     
        
     }
-    // add product to cart
-    public function addToCart(){
-            $product_code = Input::input('product_code');
-            $qty_order = Input::input('qty_order');
-            $total = Input::input('total');
-            $date = $this->getDate();
-            
-            $p = $this->getProductInfo($product_code);
-          
-            $cart = session()->get('cart');
-            if(!$cart) {
-                $cart = [
-                    $product_code => [             
-                            "description" => $p->description,
-                            "qty" => $qty_order,
-                            "category" => $p->category_name,  
-                            "unit" => $p->unit,  
-                            "unit_price" => $p->selling_price,  
-                            "amount" => $total,
-                            "date" => $date
-                        ]
-                ];
-                
-                session()->put('cart', $cart);
-                return redirect()->back();
-            }
  
-            if(isset($cart[$product_code])) {
-                $cart[$product_code]['qty'] += $qty_order;
-                session()->put('cart', $cart);
-                return redirect()->back();
+    
+    public function addToCart(){
+  
+            $product_code = Input::input('product_code');
+            $qty = Input::input('qty_order');
+            $total = Input::input('total');
+           
+            if($this->isProductExists($product_code)){
+                DB::table('tblcashiering')
+                ->where('product_code', $product_code)
+                ->update(array(
+                    'amount' => DB::raw('amount + '. $total),
+                    'qty' => DB::raw('qty + '. $qty)));
             }
-            
-            $cart[$product_code] = [
-                "description" => $p->description,
-                "qty" => $qty_order,
-                "category" => $p->category_name,  
-                "unit" => $p->unit,  
-                "unit_price" => $p->selling_price,  
-                "amount" => $total,
-                "date" => $date             
-            ];
-        
-            session()->put('cart', $cart);
-            return redirect()->back();
+            else{
+                $c = new Cashiering;
+                $c->product_code = $product_code;
+                $c->qty = $qty;
+                $c->amount = $total;
+                $c->save();
+            }
     }
 
-    public function getProductInfo($product_code){
-
-        $product = DB::table($this->table_prod)
-        ->select("tblproduct.*", 'category_name', 'supplierName', 'unit')
-        ->leftJoin($this->table_suplr, $this->table_suplr . '.id', '=', $this->table_prod . '.supplierID')
-        ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
-        ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
-        ->where(DB::raw('CONCAT(tblproduct._prefix, tblproduct.id)'), $product_code)
-        ->first();
-
-        return $product;
+    public function isProductExists($product_code){
+        $p = DB::table('tblcashiering')->where('product_code', $product_code);
+        if($p->count() > 0){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
+    
+    public function getTotalAmount(){
+        return DB::table('tblcashiering')->sum('amount');
+    }
+
+    public function getGenericTotalAmount(){
+        return DB::table('tblcashiering as CS')
+                ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'CS.product_code')
+                ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+                ->where('C.category_name', 'Generic')
+                ->sum('amount');
+    }
+
 
     public function void()
     {
         $product_code = Input::input('product_code');
-        $cart = session()->get('cart');
-        if(isset($cart[$product_code])){
-            unset($cart[$product_code]);  
+        DB::table('tblcashiering')->where('product_code', $product_code)->delete();
+    }
+
+    public function process(){
+
+        $sales_inv_no = Input::input('sales_inv_no'); 
+        $discount = Input::input('less_discount'); 
+
+        if($discount){
+            $this->storeDiscount($discount);
         }
-        session()->put('cart', $cart);
-        return redirect()->back();
+
+        foreach($this->getCashieringProduct() as $data){
+            $sales = new Sales;
+            $sales->_prefix = $this->getPrefix();
+            $sales->sales_inv_no = $sales_inv_no;
+            $sales->product_code = $data->product_code;
+            $sales->qty = $data->qty;
+            $sales->amount = $data->amount;       
+            $sales->date = date('Y-m-d');     
+            $sales->employeeID = 20001;   
+            $sales->order_from = "Walk-in";   
+            $sales->save(); 
+            
+            $this->updateInventory($sales->product_code, $sales->qty);
+        }
+ 
+    }
+
+    public function getCashieringProduct(){
+
+        $product = DB::table('tblcashiering as CS')
+        ->select("CS.*", 'description', 'selling_price', 'category_name', 'unit')
+        ->leftJoin($this->table_prod.' as P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'CS.product_code')
+        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->get();
+
+        return $product;
     }
 
     public function credentialBeforeVoid(){
@@ -239,7 +264,7 @@ class SalesCtr extends Controller
         return $s;
     }
 
-    public function process(){
+ /*   public function process(){
 
         $sales_inv_no = Input::input('sales_inv_no'); 
         $discount = Input::input('less_discount'); 
@@ -254,7 +279,7 @@ class SalesCtr extends Controller
 
     public function forgetCart(){
         session()->forget('cart');
-    }
+    }*/
 
     public function updateSales($sales_inv_no){
 
@@ -293,8 +318,8 @@ class SalesCtr extends Controller
 
     public function updateInventory($product_code, $qty){
         
-        DB::table($this->table_prod.' as P')
-        ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
+        DB::table($this->table_exp)
+        ->where('product_code', $product_code)
         ->update(array(
             'qty' => DB::raw('qty - '. $qty .'')));
     }
@@ -327,9 +352,8 @@ class SalesCtr extends Controller
     }
 
     public function salesInvoice(){
-
        $c = new CashieringInvoice;
-       return $c->getSalesInvoice();
+       return $c->getSalesInvoice($this->getCashieringProduct());
     }
 
 

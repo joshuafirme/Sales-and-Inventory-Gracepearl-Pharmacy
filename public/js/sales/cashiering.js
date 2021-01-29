@@ -86,7 +86,7 @@ $(document).ready(function(){
       var qty_order  = $('#qty_order').val();
       var price  = $('#price').val();
       var total  = $('#total').val();                         
-
+      console.log(product_code);
         $.ajax({
           url:"/sales/cashiering/addToCart",
           type:"GET",
@@ -98,41 +98,43 @@ $(document).ready(function(){
             },
 
           success:function(){
-    
-          clear();
-
             $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
-
-            computeTotalAmountDue();
-            getCurrentTransNo();  
+            getTotalAmount(); 
+            getGenericTotalAmount();
           }
         });     
-        setTimeout(function(){
-          $('#total-amount-due').val();
-        },2000);
     }
 
 
-        computeTotalAmountDue();
-
-        function computeTotalAmountDue(){
-          setTimeout(function () {
-            var total_hidden = $('#total_hidden').val();
-            console.log(total_hidden);
-            $('#total-amount-due').val(total_hidden);
-            return total_hidden;
-          },500);
-           
-         
+     function getTotalAmount() {
+      $.ajax({
+        url:"/cashiering/total_amount",
+        type:"GET",
+        success:function(data){
+          $('#total-amount-due').val(data); 
         }
+      });
+     }
 
-     
+     getGenericTotalAmount();
 
+     function getGenericTotalAmount() {
+
+        $.ajax({
+          url:"/cashiering/generic_total_amount",
+          type:"GET",
+          success:function(data){
+            console.log(data);
+            $('#generic_total_hidden').val(data);
+          }
+        });
+     }
        
        
         //compute change
         function computeChange(){
           var tendered  =  $('#tendered').val();
+         if(tendered){
           var total_amount_due  = $('#total-amount-due').val();                         
           var change = parseFloat(tendered) - parseFloat(total_amount_due);
           if(change == 0 || change == undefined){
@@ -140,6 +142,7 @@ $(document).ready(function(){
             console.log('change');
           }
           $('#change').val(change.toFixed(2));
+         }
         }
 
           $('#tendered').keyup(function(){
@@ -163,7 +166,7 @@ $(document).ready(function(){
       */
 
 
-     $('#show-void-modal').click(function()
+     $(document).on('click', '.show-void-modal', function()
      {   
       $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
 
@@ -200,9 +203,9 @@ $(document).ready(function(){
               $('.loader').css('display', 'none');
               $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
 
-              
-              computeTotalAmountDue();
+              getTotalAmount();
               computeChange();
+              getGenericTotalAmount();
             },500);
           }
         });
@@ -254,67 +257,73 @@ $(document).ready(function(){
           if($('#discount-chk').prop('checked') == true){
             $('.discount-option').css('display', 'block');
              
-            getDiscount();
+            getSeniorDiscount();
+            getPWDDiscount();
           }
           else{
             $('.discount-option').css('display', 'none');
-            computeTotalAmountDue();
-            setTimeout(function(){
-              computeChange();
-            },500);
-     
+            getTotalAmount();
+            computeChange();
           }
         });
 
         $('#radio-sc').click(function () {
-            getDiscount();
+            getSeniorDiscount();
         });
 
         $('#radio-pwd').click(function () {
-            getDiscount();
+            getPWDDiscount();
         });
 
-      function getDiscount() {
+      function getSeniorDiscount() {
         if($('#radio-sc').is(':checked')){
           $.ajax({
             url:"/maintenance/discount/sc_discount",
             type:"POST",
-            success:function(data){
-              
-              var discount = data;
-              var total = getGenericTotal();  
-              
-              var result = discount * total;
-              var nya = total - result;
-              $('#less-discount').text(moneyFormat(result));
-              $('#total-amount-due').val(nya);
+            success:function(percentage){          
+              computeDiscount(percentage);
               computeChange();
             }
           });
         }
+        else{
+          computeChange();
+        }
+       
+      }
+
+      function getPWDDiscount() {
         if($('#radio-pwd').is(':checked')){
           $.ajax({
             url:"/maintenance/discount/pwd_discount",
             type:"POST",
-            success:function(data){
-                
-              var discount = data;
-              var total = getGenericTotal();
-
-              var result = discount * total;
-              var nya = total - result;
-              $('#less-discount').text(result);
-              $('#total-amount-due').val(nya);
+            success:function(percentage){
+              computeDiscount(percentage);
               computeChange();
             }
           });
         }
+        else{
+          computeChange();
+        }
       }
 
-      function getGenericTotal(){
-        var total = $('#total_amount_generic').val();
-        return total;  
-    }
+      function computeDiscount(percentage){
+        getTotalAmount();
+        setTimeout(function(){
+          var total = $('#total-amount-due').val();  
+        var total_generic = $('#generic_total_hidden').val();  
+        var discount = percentage * total_generic;
+        var total_due = total - discount;
+
+        $('#less-discount').text(moneyFormat(discount));
+        $('#total-amount-due').val(moneyFormat(total_due));
+
+        computeChange();
+        },500);          
+      }
+
+
 
     function moneyFormat(total)
     {

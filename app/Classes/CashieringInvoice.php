@@ -1,10 +1,11 @@
 <?php 
 
 namespace App\Classes;
+use Illuminate\Support\Facades\DB;
 
 class CashieringInvoice {
 
-    public function getSalesInvoice(){
+    public function getSalesInvoice($product){
 
         $output = '
         <style>
@@ -92,19 +93,19 @@ class CashieringInvoice {
         ';
         $total_amount = 0;
         $sub_total = 0;
-        if(session()->get('cart')){
-            foreach (session()->get('cart') as $product_code => $data) {
+        if($product){
+            foreach ($product as $data) {
             
-                $sub_total = $data['qty'] * $data['unit_price'];
+                $sub_total = $data->qty * $data->selling_price;
                 $total_amount += $sub_total;
             
                 $output .='
             <tr class="align-text">                             
-                <td>'. $data['qty'] .'</td>  
-                <td>'. $data['unit'] .'</td>  
-                <td>'. $data['description'] .'</td>
-                <td>'. number_format($data['unit_price'],2,'.',',') .'</td>   
-                <td>'. number_format($data['amount'],2,'.',',') .'</td>              
+                <td>'. $data->qty .'</td>  
+                <td>'. $data->unit .'</td>  
+                <td>'. $data->description .'</td>
+                <td>'. number_format($data->selling_price,2,'.',',') .'</td>   
+                <td>'. number_format($data->amount,2,'.',',') .'</td>    
             </tr>
 
           
@@ -170,7 +171,7 @@ class CashieringInvoice {
         <p class="ar b-label">Cashier/Authorized Representative</p>
     </div>
 </div>';
-    
+        DB::table('tblcashiering')->delete();
         return $output;
     }
 

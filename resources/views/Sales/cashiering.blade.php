@@ -111,7 +111,7 @@
                         <div class="row amount-due">
                        
                             <label>Total Amout Due</label>
-                              <input type="text" class="form-control" id="total-amount-due" value="₱0" readonly>
+                              <input type="text" class="form-control" id="total-amount-due" value="{{ $getTotalAmount }}" readonly>
                   
                               <label>Tentered</label>
                               <input type="text" class="form-control" id="tendered">
@@ -181,30 +181,21 @@
 
                       <tr>
                            
-                        @if(session('cart'))
-                        @foreach(session('cart') as $product_code => $details)
-                        <td>{{ $product_code }}</td>
-                        <td>{{ $details['description'] }}</td>
-                        <td>₱ {{ number_format($details['unit_price'], 2, '.', '') }}</td>
-                        <td>{{ $details['qty'] }}</td>
-                        <?php 
-                        $sub_total = $details['qty'] * $details['unit_price'];
-                        $total += $sub_total;
-
-                        if($details['category'] == 'Generic'){
-                          $total_amount_generic += $sub_total;
-                        }
-                         ?> 
-                        <td>₱ {{ number_format($sub_total, 2, '.', '') }}</td>
-                        <td><a href="" style="cursor: pointer; color:#24568D;" id="show-void-modal" product-code="{{ $product_code }}"
+                        @if($getProduct)
+                        @foreach($getProduct as $data)
+                        <td>{{ $data->product_code }}</td>
+                        <td>{{ $data->description }}</td>
+                        <td>₱{{ number_format($data->selling_price, 2, '.', '') }}</td>
+                        <td>{{ $data->qty }}</td>    
+                        <td>₱ {{ number_format($data->amount, 2, '.', '') }}</td>
+                        <td><a href="" style="cursor: pointer; color:#24568D;" class="show-void-modal" product-code="{{ $data->product_code }}"
                            data-toggle="modal" data-target="#voidModal">Void</a>
                         </td>
                       </tr>  
                                  
                       @endforeach
+                      <input type="hidden" id="generic_total_hidden">
                       <td>
-                        <input type="hidden" id="total_hidden" value={{ $total }}>
-                        <input type="hidden" id="total_amount_generic" value={{ $total_amount_generic }}>
                       </td>
                       <td></td>    <td></td>    <td></td>    <td></td>  <td></td>
                       @endif                 

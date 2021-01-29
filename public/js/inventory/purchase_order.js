@@ -99,7 +99,7 @@ $(document).ready(function(){
     
               success:function(response){
                console.log(response);
-               $('#po_product_code').val(response[0].product_code);
+               $('#po_product_code').val(response[0].productCode);
                $('#po_description').val(response[0].description);
                $('#po_category').val(response[0].category_name);
                $('#po_unit').val(response[0].unit);

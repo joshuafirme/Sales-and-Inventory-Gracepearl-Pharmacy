@@ -151,6 +151,15 @@
                             <a href="{{ url('/maintenance/shippingadd') }}" ><i class="fas fa-location-arrow"></i> Shipping Address</a>
                         </li>
                     </ul>
+                </li>  
+                
+                <li>
+                    <a href="#backup-and-restore" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-cog"></i> Utilities</a>
+                    <ul class="collapse list-unstyled" id="backup-and-restore">
+                        <li>
+                            <a href="{{ url('utilities/backup_restore') }}"><i class="fas fa-database"></i> Backup and Restore</a>
+                        </li>
+                    </ul>
                 </li>   
                 
                 <li>

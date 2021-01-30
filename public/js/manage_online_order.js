@@ -224,18 +224,51 @@ $(document).ready(function(){
     $(document).on('click', '#btn-show-items', function(){
     
       var order_no = $(this).attr('order-no');
+      var order_id = $(this).attr('order-id');
       var user_id = $(this).attr('user-id');
 
       $('#order-no').val(order_no);
       $('#user-id').val(user_id);
 
       $('#showItemsModal').modal('toggle');
-      console.log(user_id+' userID');
-      getOrderItems(order_no);
+      console.log(order_id);
+      getOrderItems(order_no, order_id);
       fetchAccountInfo(user_id);
       fetchShippingInfo(user_id);
 
     });
+
+
+    function getShippingFee(order_id){
+      $.ajax({
+        url:"/manageorder/shippingfee/"+order_id,
+        type:"GET",
+        success:function(data){ 
+          console.log(data); 
+          if(data){
+            $('#txt_shipping_fee').text(data);
+          }
+         
+        }
+         
+       });
+    }
+    
+    
+    function getTotalAmount(order_id){
+      $.ajax({
+        url:"/manageorder/total_amount/"+order_id,
+        type:"GET",
+        success:function(data){  
+          console.log(data); 
+          if(data){
+            $('#txt_total_amount').text(data);
+          }
+         
+        }
+         
+       });
+    }
 
     function fetchAccountInfo(user_id){
       $.ajax({
@@ -287,7 +320,7 @@ $(document).ready(function(){
 
     });
 
-  function getOrderItems(order_no) {
+  function getOrderItems(order_no, order_id) {
     $.ajax({
       url:"/manageorder/showitems/" + order_no,
       type:"GET",
@@ -296,7 +329,8 @@ $(document).ready(function(){
         $('#title-order-no').text('Order #'+order_no);
         $( "#cust-order-table" ).load( "manageorder #cust-order-table" );
 
-      
+        getShippingFee(order_id);
+        getTotalAmount(order_id);
       }
     });
   }

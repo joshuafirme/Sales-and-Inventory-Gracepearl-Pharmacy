@@ -44,12 +44,22 @@ class DrugDisposalCtr extends Controller
     
     public function getExpiredProduct()
     {
-        $product = DB::table($this->tbl_prod.' AS P')
-        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName, DATE_FORMAT(exp_date,"%d-%m-%Y") as exp_date'))
+        $product = DB::table('tblexpiration AS E')
+        ->select("E.*", 'E.product_code',
+                 'P.description',
+                 'P.re_order', 
+                 'P.orig_price', 
+                 'P.selling_price', 
+                 'E.qty', 
+                 'unit', 
+                 'supplierName', 
+                 'category_name', 
+                 DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+        ->leftJoin($this->tbl_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
         ->leftJoin($this->tbl_suplr.' AS S', 'S.id', '=', 'P.supplierID')
         ->leftJoin($this->tbl_cat.' AS C', 'C.id', '=', 'P.categoryID')
         ->leftJoin($this->tbl_unit.' AS U', 'U.id', '=', 'P.unitID')
-        ->whereRaw('P.exp_date <= CURDATE()')
+        ->whereRaw('E.exp_date <= CURDATE()')
         ->get();
 
         return $product;
@@ -57,7 +67,7 @@ class DrugDisposalCtr extends Controller
 
     public function dispose($id)
     {
-        $product = DB::table($this->tbl_prod)->where('id', $id)->delete();
+        $product = DB::table('tblexpiration')->where('id', $id)->delete();
         return $product;
     }
 }

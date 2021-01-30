@@ -160,6 +160,7 @@
             {{ csrf_field() }}
             <input type="hidden" id="edit_discount_hidden">
             <input type="hidden" name="product_code_hidden" id="product_code_hidden">
+            <input type="hidden" name="id_exp" id="id_exp">
 
             <div class="col-md-4 mb-2">
               <label class="col-form-label">Product Code</label>

@@ -256,6 +256,7 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
     success:function(response){
      
       console.log(response);
+      $('#id_exp').val(productCode);
       $('#product_code_hidden').val(response[0].id);
       $('#product_code').val(response[0].product_code);
       $('#edit_description').val(response[0].description);

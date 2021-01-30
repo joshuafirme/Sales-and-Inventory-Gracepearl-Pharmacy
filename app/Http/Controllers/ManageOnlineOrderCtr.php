@@ -55,10 +55,10 @@ class ManageOnlineOrderCtr extends Controller
         {
             return datatables()->of($ol_order)
             ->addColumn('action', function($ol_order){
-                $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $ol_order->order_num .' user-id='.$ol_order->user_id.'
+                $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $ol_order->order_num .' user-id='.$ol_order->user_id.'  order-id='. $ol_order->order_no .'
                  title="View order"><i class="fas fa-eye"></i></a>';
 
-                $button .= '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $ol_order->order_num .' 
+                $button .= '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $ol_order->order_num .'
                 title="Generate sales invoice"><i class="fas fa-print"></i></a>';
 
                 return $button;
@@ -117,7 +117,7 @@ class ManageOnlineOrderCtr extends Controller
 
         $orders = DB::table($this->tbl_ol_order.' AS O')
         ->orderBy('created_at', 'asc')
-        ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, CA.email'))
+        ->select('O.*', DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, CA.email'))
         ->leftJoin($this->tbl_cust_acc.' AS CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'O.email')
         ->where('status', 'Payment pending')
         ->orderBy('O.order_no', 'desc')
@@ -244,6 +244,25 @@ class ManageOnlineOrderCtr extends Controller
     public function salesInvoiceHTML(){
         $s = new OrderInvoice;
         return $s->getSalesInvoiceHtml();
+    }
+
+
+    
+    public function getShippingFee($order_id){
+
+        return DB::table('tblorder_shipping_fee')
+                    ->where('order_no', $order_id)
+                    ->pluck('shipping_fee'); 
+    }
+
+    public function getOrderTotalAmount($order_id){
+        
+        $fee = $this->getShippingFee($order_id);
+        $subtotal = DB::table('tblonline_order')
+                    ->where('order_no', $order_id)
+                    ->sum('amount'); 
+
+        return $subtotal + $fee[0];
     }
 
 

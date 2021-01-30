@@ -159,6 +159,7 @@ class ProductMaintenanceCtr extends Controller
         $audit = new AuditTrailHelper;
         $audit->recordAction($this->module, 'Update product');
         $product = new ProductMaintenance;
+        $id_exp = $request->input('id_exp');
         $product->id = $request->input('product_code_hidden');
         $product->description = $request->input('edit_description');
         $product->unitID = $request->input('edit_unit');
@@ -195,7 +196,7 @@ class ProductMaintenanceCtr extends Controller
             }
             
             DB::table($this->table_exp)
-            ->where('id', $product->id)
+            ->where('id', $id_exp)
             ->update(['exp_date' => $product->exp_date]);
  
             $this->storeImage($product->id_exp);

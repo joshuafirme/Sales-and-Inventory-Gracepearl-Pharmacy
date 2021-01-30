@@ -54,11 +54,33 @@
                                       <td></td>
                                       <td></td>
                                       <td></td>
-                                      <td>Total:</td>
+                                      <td>Subtotal:</td>
                                       <td>
-                                        <b>₱ {{ number_format(session('order-total-amount'), 2, '.', ',') }}</b>
+                                        ₱ {{ number_format(session('order-total-amount'), 2, '.', ',') }}
                                       </td>   
                                    </tr> 
+                                   <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>Shipping Fee:</td>
+                                    <td>
+                                      ₱ <span id="txt_shipping_fee"></span>
+                                    </td>   
+                                 </tr> 
+                                 <tr>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td></td>
+                                  <td>Total Amount:</td>
+                                  <td>
+                                    <b>₱ <span id="txt_total_amount"></span></b>
+                                  </td>   
+                               </tr> 
                                   @endif
                               </tbody>
                               

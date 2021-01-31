@@ -109,6 +109,7 @@ class ProductMaintenanceCtr extends Controller
         $product->qty = $request->input('qty');
         $product->re_order = $request->input('re_order');
         $product->orig_price = $request->input('orig_price');
+        $product->markup = $request->input('markup');
         $product->selling_price = floor($request->get('selling_price')*100)/100;
         $product->exp_date = $request->input('exp_date');
         $product->with_prescription = $request->input('with_prescription');
@@ -169,6 +170,7 @@ class ProductMaintenanceCtr extends Controller
         $product->re_order = $request->input('edit_re_order');
         $product->orig_price = $request->input('edit_orig_price');
         $product->selling_price = $request->input('edit_selling_price');
+        $product->markup = $request->input('edit_markup');
         $product->exp_date = $request->input('edit_exp_date');
         $product->with_prescription = $request->input('edit_with_prescription');
         $product->highlights = $request->input('edit_highlights');
@@ -183,6 +185,7 @@ class ProductMaintenanceCtr extends Controller
               'qty' => $product->qty,
               're_order' => $product->re_order,
               'orig_price' => $product->orig_price,
+              'markup' => $product->markup,
               'selling_price' => $product->selling_price,
               'exp_date' => $product->exp_date,
               'with_prescription' => $product->with_prescription,

@@ -20,6 +20,7 @@ class ProductMaintenance extends Model
                             'exp_date' ,
                             'with_prescription',
                             'image',
-                            'highlights'
+                            'highlights',
+                            'markup'
                             ];
 }

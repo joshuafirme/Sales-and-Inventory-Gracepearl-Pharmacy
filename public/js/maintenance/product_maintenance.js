@@ -191,44 +191,54 @@ $(document).ready(function(){
 
       function computeMarkup(){
         var orig_price = $('#orig_price').val();
-        var percentage = $('#discount_hidden').val();
+        var percentage = $('#markup').val();
         var diff = orig_price * percentage;
         var markup =  parseFloat(orig_price) + diff;
+        $('#selling_price').val(markup);
         return moneyFormat(markup);
       }
 
       function editComputeMarkup(){
         var orig_price = $('#edit_orig_price').val();
-        var percentage = $('#edit_discount_hidden').val();
-        var prod = orig_price * percentage;
-        var markup =  parseFloat(orig_price) + prod;
+        var percentage = $('#edit_markup').val();
+        var diff = orig_price * percentage;
+        var markup =  parseFloat(orig_price) + diff;
+        $('#edit_selling_price').val(markup);
         return moneyFormat(markup);
       }
-
-      $('#supplier_name').change(function(){
-        var supplierID = $(this).val();
-        getCompanyID(supplierID);
-     
+      
+      $('#markup').keyup(function(){
+          computeMarkup();
       });
 
-      $('#edit_supplier_name').change(function(){
-        var supplierID = $(this).val();
-        getCompanyID(supplierID);
-     
+      $('#edit_markup').keyup(function(){
+        editComputeMarkup();
       });
+
+   //   $('#supplier_name').change(function(){
+  //      var supplierID = $(this).val();
+//        getCompanyID(supplierID);
+     
+ //     });
+
+ //     $('#edit_supplier_name').change(function(){
+  //      var supplierID = $(this).val();
+ //       getCompanyID(supplierID);
+     
+ //     });
 
 
       $('#orig_price').keyup(function(){
-        var supplierID = $('#supplier_name').val();
-        getCompanyID(supplierID);
+  //     var supplierID = $('#supplier_name').val();
+  //      getCompanyID(supplierID);
 
         var markup = computeMarkup();
         $('#selling_price').val(markup);
       });
 
       $('#edit_orig_price').keyup(function(){
-        var supplierID = $('#edit_supplier_name').val();
-        getCompanyID(supplierID);
+ //       var supplierID = $('#edit_supplier_name').val();
+  //      getCompanyID(supplierID);
 
         var markup = editComputeMarkup();
         $('#edit_selling_price').val(markup);
@@ -274,6 +284,7 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
       $('#edit_qty').val(response[0].qty);
       $('#edit_re_order').val(response[0].re_order);
       $('#edit_orig_price').val(response[0].orig_price);
+      $('#edit_markup').val(response[0].markup);
       $('#edit_selling_price').val(response[0].selling_price);
       $('#edit_exp_date').val(response[0].exp_date);
       edit_highlights.setData(response[0].highlights);

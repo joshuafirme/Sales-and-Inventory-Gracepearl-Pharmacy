@@ -95,15 +95,38 @@
 
                   <div class="tab-pane fade" id="orderstab" role="tabpanel" aria-labelledby="orders-tab">
 
-                    <div class="form-group row">
-                
-                        <label class="m-2 ml-3">Supplier</label>
-                        <select data-column="5" class=" form-control col-sm-2 ml-2" name="ord_supplier" id="ord_supplier">
-                          @foreach($suplr as $data)
-                        <option value={{ $data->supplierName }}>{{ $data->supplierName }}</option>
-                          @endforeach
-                        </select>
-                      </div>
+
+                      <div class="row">
+
+                        <div class="mt-2">
+                          Supplier
+                         </div>  
+                        
+                        <div class="col-sm-2 mb-3">
+                          <select data-column="5" class=" form-control col-sm-12 ml-2" name="ord_supplier" id="ord_supplier">
+                            @foreach($suplr as $data)
+                          <option value={{ $data->supplierName }}>{{ $data->supplierName }}</option>
+                            @endforeach
+                          </select>
+                          </div> 
+
+                        <div class="mt-2 ml-3">
+                           Date
+                          </div>              
+                        
+                        <div class="col-sm-2 mb-3">
+                          <input data-column="9" type="date" class="form-control" name="date_from" id="date_from" value="{{ $currentDate }}">
+                          </div>
+        
+                          <div class="mt-2">
+                            -
+                            </div>
+              
+                          <div class="col-sm-2 mb-3">
+                            <input data-column="9" type="date" class="form-control" name="date_to" id="date_to" value="{{ $currentDate }}">
+                            </div>  
+
+                       </div>
 
                       @if(count($getAllOrders) > 0) 
                         <table class="table responsive  table-hover" id="ord-table" width="100%">       

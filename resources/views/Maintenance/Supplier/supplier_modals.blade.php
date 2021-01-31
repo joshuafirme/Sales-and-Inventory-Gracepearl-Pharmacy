@@ -49,17 +49,6 @@
                               <input type="text" class="form-control" name="contact" id="contact" required>
                             </div>
                           </div>
-    
-                            <div class="col-md-4 mb-2">    
-                              <label class="col-form-label">Company</label>
-                              <select class="form-control company" name="company" id="company">
-                
-                                @foreach($company as $data)
-                              <option value={{ $data->id }}>{{ $data->company_name }}</option>
-                                @endforeach
-                
-                              </select>
-                            </div>
                             
                       </div>         
                       
@@ -127,17 +116,6 @@
                               <label class="col-form-label">Contact</label>
                               <input type="text" class="form-control" name="contact" id="edit_contact" required>
                             </div>
-                          </div>
-                          
-                          <div class="col-md-4 mb-2">    
-                            <label class="col-form-label">Company</label>
-                            <select class="form-control edit_company" name="edit_company">
-                              <option  id="edit_company" selected></option>
-                              @foreach($company as $data)
-                            <option value={{ $data->id }}>{{ $data->company_name }}</option>
-                              @endforeach
-              
-                            </select>
                           </div>
                           
 

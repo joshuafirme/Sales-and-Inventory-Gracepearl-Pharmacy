@@ -57,19 +57,24 @@
               <input type="number" min="1" class="form-control" name="qty" id="qty" required>
             </div>
   
-            <div class="col-md-4">
-              <label class="col-form-label">Reorder Point</label>
-              <input type="number" class="form-control" name="re_order" id="re_order" required>
-            </div>
-  
             <div class="col-md-4  mb-2">
               <label class="col-form-label">Original Price</label>
               <input type="number" step=".01" min="0" max="9999999"  class="form-control" name="orig_price" id="orig_price" required>
             </div>
             
+            <div class="col-md-4  mb-2">
+              <label class="col-form-label">Markup</label>
+              <input type="number" step=".01" min="0" max="9999999" class="form-control" name="markup" id="markup" required>
+            </div>
+            
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
               <input  type="number" step=".01" min="0" max="9999999" class="form-control orig_price" name="selling_price" id="selling_price" required>
+            </div>
+            
+            <div class="col-md-4">
+              <label class="col-form-label">Reorder Point</label>
+              <input type="number" class="form-control" name="re_order" id="re_order" required>
             </div>
 
             <div class="col-md-4">
@@ -213,21 +218,25 @@
               <input type="number" class="form-control" name="edit_qty" id="edit_qty" readonly>
             </div>
   
-            <div class="col-md-4">
-              <label class="col-form-label">Reorder Point</label>
-              <input type="number" class="form-control" name="edit_re_order" id="edit_re_order" required>
-            </div>
-  
             <div class="col-md-4  mb-2">
               <label class="col-form-label">Original Price</label>
               <input type="number" step=".01" min="0" max="9999999" class="form-control" name="edit_orig_price" id="edit_orig_price" required>
             </div>
 
-     
+            <div class="col-md-4  mb-2">
+              <label class="col-form-label">Markup</label>
+              <input type="number" step=".01" min="0" max="9999999" class="form-control" name="edit_markup" id="edit_markup" required>
+            </div>
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
               <input type="number" class="form-control orig_price" name="edit_selling_price" id="edit_selling_price" readonly>
+            </div>
+            
+  
+            <div class="col-md-4">
+              <label class="col-form-label">Reorder Point</label>
+              <input type="number" class="form-control" name="edit_re_order" id="edit_re_order" required>
             </div>
 
             <div class="col-md-4">

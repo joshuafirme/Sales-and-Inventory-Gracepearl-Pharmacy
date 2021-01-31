@@ -55,7 +55,7 @@ class PurchaseOrderCtr extends Controller
             'suplr' => $suplr,
             'reorderCount' => $reorder_count,
             'getAllOrders' => $get_all_orders,
-            'getCurrentDate' => date('yy-m-d'),
+            'currentDate' => date('Y-m-d'),
             'PORequest' => $this->getPORequest()
             ]);
     }
@@ -281,7 +281,7 @@ public function recordOrder(){
     $total_amount = 0;
     $po_num = $this->getPONum();
     $po_request = $this->getPORequest();
-    
+
     if($po_request){
         foreach ($po_request as $data) {
            
@@ -341,7 +341,7 @@ public function getPOSupplier(){
 }
 
 public function convertProductDataToHTML(){
-    $po = session()->get('purchase-orders');
+    $po = $this->getPORequest();
     $po_supplier = session()->get('po-supplier');
     $output = '
     <div style="width:100%">
@@ -351,50 +351,47 @@ public function convertProductDataToHTML(){
 
     <table width="100%" style="border-collapse:collapse; border: 1px solid;">
                   
-    <thead>
-      <tr>
-          <th style="border: 1px solid;">Product Code</th>
-          <th style="border: 1px solid;">Description</th>     
-          <th style="border: 1px solid;">Category</th>
-          <th style="border: 1px solid;">Unit</th>
-          <th style="border: 1px solid;">Unit Price</th>   
-          <th style="border: 1px solid;">Qty Order</th>   
-          <th style="border: 1px solid;">Amount</th>   
-  </thead>
-  <tbody>
-    ';
-    $total_amount = 0;
-    $sub_total = 0;
-    if($po){
-        foreach ($po as $product_code => $data) {
-        
-            $sub_total = $data['qty_order'] * $data['price'];
-            $total_amount += $sub_total;
-        
-            $output .='
-            <tr>                             
-            <td style="border: 1px solid; padding:10px;">'. $product_code .'</td>
-            <td style="border: 1px solid; padding:10px;">'. $data['description'] .'</td>
-            <td style="border: 1px solid; padding:10px;">'. $data['category'] .'</td> 
-            <td style="border: 1px solid; padding:10px;">'. $data['unit'] .'</td>  
-            <td style="border: 1px solid; padding:10px;">'. number_format($data['price'],2,'.',',') .'</td>  
-            <td style="border: 1px solid; padding:10px;">'. $data['qty_order'] .'</td>  
-            <td style="border: 1px solid; padding:10px;">'. number_format($sub_total,2,'.',',') .' PhP</td>              
-          </tr>
-          ';
-        
-        } 
-    }
-    else{
-        echo "No data found";
-    }
+        <thead>
+            <tr>
+                <th style="border: 1px solid;">Product Code</th>
+                <th style="border: 1px solid;">Description</th>     
+                <th style="border: 1px solid;">Category</th>
+                <th style="border: 1px solid;">Unit</th>
+                <th style="border: 1px solid;">Unit Price</th>   
+                <th style="border: 1px solid;">Qty Order</th>   
+                <th style="border: 1px solid;">Amount</th>   
+        </thead>
+        <tbody>
+            ';
+
+        if($po){
+            foreach ($po as $product_code => $data) {
+            
+                $output .='
+                <tr>                             
+                <td style="border: 1px solid; padding:10px;">'. $data->product_code .'</td>
+                <td style="border: 1px solid; padding:10px;">'. $data->description .'</td>
+                <td style="border: 1px solid; padding:10px;">'. $data->category_name .'</td> 
+                <td style="border: 1px solid; padding:10px;">'. $data->unit .'</td>  
+                <td style="border: 1px solid; padding:10px;">'. number_format($data->selling_price,2,'.',',') .'</td>  
+                <td style="border: 1px solid; padding:10px;">'. $data->qty .'</td>  
+                <td style="border: 1px solid; padding:10px;">'. number_format($data->amount,2,'.',',') .' PhP</td>              
+            </tr>
+            ';
+            
+            } 
+        }
+        else{
+            echo "No data found";
+        }
     
       
- $output .='
-   </tbody>
-  </table>
-  <p style="text-align:right;">Total: <b>'. number_format($total_amount,2,'.',',') .' PhP</b></p>
-  </div>';
+        $output .='
+        </tbody>
+    </table>
+
+        <p style="text-align:right;">Total: <b>'. number_format($this->getTotalAmount(),2,'.',',') .' PhP</b></p>
+        </div>';
 
     return $output;
 }

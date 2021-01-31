@@ -26,13 +26,11 @@ class SupplierMaintenanceCtr extends Controller
             $rights->notAuthMessage();
         }
 
-        $company = DB::table($this->table_company)->get();
         $suplr = DB::table($this->table_name)
-        ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID, company_name'))
-        ->leftJoin($this->table_company, $this->table_company . '.id', '=', $this->table_name . '.companyID')
+        ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID'))
         ->paginate(10);
 
-        return view('maintenance/supplier/supplier', ['suplr' => $suplr, 'company' => $company]);
+        return view('maintenance/supplier/supplier', ['suplr' => $suplr]);
     }
 
     public function isUserAuthorize(){
@@ -64,7 +62,6 @@ class SupplierMaintenanceCtr extends Controller
         $suplr->email = Input::input('email');
         $suplr->person = Input::input('person');
         $suplr->contact = Input::input('contact');
-        $suplr->companyID = Input::input('company');
         $suplr->save();
 
     }
@@ -87,8 +84,7 @@ class SupplierMaintenanceCtr extends Controller
     public function edit($id)
     {
         $suplr = DB::table($this->table_name)
-        ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID, company_name'))
-        ->leftJoin($this->table_company, $this->table_company . '.id', '=', $this->table_name . '.companyID')
+        ->select("tblsupplier.*", DB::raw('CONCAT(tblsupplier._prefix, tblsupplier.id) AS supplierID'))
         ->where('tblsupplier.id', $id)
         ->get();
         return $suplr;
@@ -110,16 +106,14 @@ class SupplierMaintenanceCtr extends Controller
         $suplr->email = Input::get('email');
         $suplr->person = Input::get('person');
         $suplr->contact = Input::get('contact');
-        $suplr->companyID = Input::get('company');
 
         DB::update('UPDATE '. $this->table_name .' SET supplierName = ?,
                                                         address = ?,
                                                         email= ?,
                                                         person = ?,
                                                         contact = ?,
-                                                        companyID = ?
                                                         WHERE id = ?',
-        [$suplr->supplierName, $suplr->address, $suplr->email, $suplr->person, $suplr->contact, $suplr->companyID, $suplr->id]);
+        [$suplr->supplierName, $suplr->address, $suplr->email, $suplr->person, $suplr->contact, $suplr->id]);
 
     
     }

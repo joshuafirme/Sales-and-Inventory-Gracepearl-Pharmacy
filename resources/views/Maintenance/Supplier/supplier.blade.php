@@ -42,16 +42,6 @@
            <div class="card">
             <div class="card-body">
 
-              <div class="row">
-              <div class="input-group col-sm-4 col-md-3 mt-4 ml-auto mb-3">
-                <input class="form-control" type="search" id="example-search-input" placeholder="search">
-                <span class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button">
-                      <i class="fa fa-search"></i>
-                  </button>
-                </span>
-             </div>
-            </div>
 
                     <table class="table table-hover" id="supplier-table" width="100%">
                       @if(count($suplr) > 0)
@@ -63,7 +53,6 @@
                                 <th>Email</th>
                                 <th>Person</th>
                                 <th>Contact</th>
-                                <th>Company</th>
                                 <th style="width: 12%;">Action</th>
                             </tr>
                         </thead>
@@ -77,7 +66,6 @@
                               <td>{{ $data->email }}</td>
                               <td>{{ $data->person }}</td>
                               <td>{{ $data->contact }}</td>  
-                              <td>{{ $data->company_name }}</td>  
                               <td>
                                <a class="btn btn-sm" id="btn-edit-supplier" supplier-id="{{ $data->id }}" data-toggle="modal" data-target="#editSupplierModal"><i class="fa fa-edit"></i></a>
                           

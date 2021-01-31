@@ -14,7 +14,7 @@ class BackupAndRestoreCtr extends Controller
     public function backup(){
         $filename = "backup-" . date('Y-m-d') . ".sql";
 
-        $command = "".env('DUMP_PATH')." --user=" . env('DB_USERNAME') . " --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  > " . storage_path() . "/app/backup/" . $filename;
+        $command = "".storage_path() . "/app/mysqldump.exe"." --user=" . env('DB_USERNAME') . " --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  > " . storage_path() . "/app/backup/" . $filename;
 
         $returnVar = NULL;
         $output = NULL;
@@ -27,7 +27,7 @@ class BackupAndRestoreCtr extends Controller
     public function restore(){
         $filename = "backup-" . date('Y-m-d') . ".sql";
 
-        $command = "".env('IMP_PATH')." --user=" . env('DB_USERNAME') . " --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  < " . storage_path() . "/app/backup/" . $filename;
+        $command = "".storage_path() . "/app/mysql.exe"." --user=" . env('DB_USERNAME') . " --password=" . env('DB_PASSWORD') . " --host=" . env('DB_HOST') . " " . env('DB_DATABASE') . "  < " . storage_path() . "/app/backup/" . $filename;
 
         $returnVar = NULL;
         $output = NULL;

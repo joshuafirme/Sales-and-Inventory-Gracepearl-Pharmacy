@@ -84,7 +84,7 @@
                                 </tr> 
                                 <tr>
                                     <th scope="row">Stock</th>
-                                    <td>{{ $data->qty }}</td>
+                                    <td>{{ $qty }}</td>
                                 </tr>           
                                 </tbody>
                             </table>

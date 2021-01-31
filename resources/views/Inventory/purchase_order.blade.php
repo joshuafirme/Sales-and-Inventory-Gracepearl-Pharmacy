@@ -147,7 +147,7 @@
     </section>
     <!-- /.content -->
 
-    @extends('inventory.modals')
+    @extends('inventory.po_modal')
     @section('modals')
     @endsection
 

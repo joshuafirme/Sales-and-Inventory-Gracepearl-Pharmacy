@@ -126,9 +126,7 @@
                 <li>
                     <a href="#tools-menu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-tools"></i> Maintenance</a>
                     <ul class="collapse list-unstyled" id="tools-menu">
-                        <li>
-                            <a href="{{ url('maintenance/user') }}"><i class="fas fa-user"></i> User</a>
-                        </li>
+                       
                         <li>
                             <a href="{{ url('maintenance/company') }}" ><i class="fas fa-chart-line"></i> Company</a>
                         </li>
@@ -157,7 +155,13 @@
                     <a href="#backup-and-restore" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle no-caret-down"><i class="fas fa-cog"></i> Utilities</a>
                     <ul class="collapse list-unstyled" id="backup-and-restore">
                         <li>
+                            <a href="{{ url('maintenance/user') }}"><i class="fas fa-user"></i> User</a>
+                        </li>
+                        <li>
                             <a href="{{ url('utilities/backup_restore') }}"><i class="fas fa-database"></i> Backup and Restore</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('utilities/archive') }}"><i class="fas fa-archive"></i> Archive</a>
                         </li>
                     </ul>
                 </li>   

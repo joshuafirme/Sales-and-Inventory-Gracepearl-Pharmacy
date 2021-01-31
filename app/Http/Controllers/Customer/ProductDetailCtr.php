@@ -12,19 +12,30 @@ class ProductDetailCtr extends Controller
   private $table_prod = "tblproduct";
   private $table_cat = "tblcategory";
   private $table_unit = "tblunit";
+  private $table_exp = "tblexpiration";
 
     public function getProductDetails($product_code){
 
 
         $details = DB::table($this->table_prod.' AS P')
-        ->select("P.*",'unit', 'category_name', 'description', DB::raw('CONCAT(P._prefix, P.id) AS product_code'))
-        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-        ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
-        ->get();
+          ->select("P.*",'unit', 'category_name', 'description', DB::raw('CONCAT(P._prefix, P.id) AS product_code'))
+          ->leftJoin($this->table_exp.' AS E', 'E.product_code', '=', DB::raw('CONCAT(P._prefix, P.id)'))
+          ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+          ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+          ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
+          ->get();
+
+         
         
-        return view('customer/product_detail',['product' => $details]);      
+        return view('customer/product_detail',['product' => $details->unique('id'), 'qty' =>  $this->getQty($product_code)]);      
       } 
+
+      public function getQty($product_code){
+        return DB::table($this->table_prod.' AS P')
+          ->leftJoin($this->table_exp.' AS E', 'E.product_code', '=', DB::raw('CONCAT(P._prefix, P.id)'))
+          ->where('E.product_code', $product_code)
+          ->sum('E.qty');
+      }
 
       public function buyNow()
       {

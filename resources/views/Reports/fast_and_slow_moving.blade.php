@@ -33,17 +33,35 @@
   
           <div class="card">
             <div class="card-body">
-                <table class="table responsive table-hover" id="inventory-report-table" width="100%">                               
+
+              <div class="row">
+
+                <div class="mt-2 ml-3">
+                   Date
+                  </div>              
+                
+                <div class="col-sm-2 mb-3">
+                  <input data-column="9" type="date" class="form-control" name="date_from" id="date_from" value="{{ $currentDate }}">
+                  </div>
+
+                  <div class="mt-2">
+                    -
+                    </div>
+      
+                  <div class="col-sm-2 mb-3">
+                    <input data-column="9" type="date" class="form-control" name="date_to" id="date_to" value="{{ $currentDate }}">
+                    </div>                 
+
+               </div>
+
+                <table class="table responsive table-hover" id="fast-and-slow-report-table" width="100%">                               
                     <thead>
                       <tr>
 
                         <th>Product Code</th>
                         <th>Description</th>   
                         <th>Category</th>        
-                        <th>Unit</th>   
-                        <th>Supplier</th>             
-                        <th>Quantity</th>
-                        <th>Expiration</th>
+                        <th>Frequency</th>  
                       
                       </tr>
                     </thead>

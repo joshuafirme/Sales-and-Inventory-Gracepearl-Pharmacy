@@ -149,7 +149,7 @@ $(document).ready(function(){
       });
 
       function showWithPrescriptionRadio(category) {
-        if(category == 'Branded' || category == 'Generic' || category == 'Vitamins'){
+        if(category == 'Branded' || category == 'Generic'){
           $('.with-prescription').css('display', 'block');
         }
         else{
@@ -288,6 +288,13 @@ $(document).on('click', '#btn-edit-product-maintenance', function(){
       }
     
       $('#img_view').attr('src', img_source);
+
+      if(response[0].with_prescription == 'yes'){
+        $("#rdo_prescription_yes").prop("checked", true);
+      }
+      else{
+        $("#rdo_prescription_no").prop("checked", true);
+      }
     }
    });
 });  

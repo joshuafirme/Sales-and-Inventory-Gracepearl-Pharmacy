@@ -214,6 +214,8 @@ Route::resource('/inventory/purchaseorder', 'Inventory\PurchaseOrderCtr');
 Route::post('/inventory/purchaseorder/show/{product_code}', 'Inventory\PurchaseOrderCtr@show');
 Route::post('/inventory/purchaseorder/addToOrder', 'Inventory\PurchaseOrderCtr@addToOrder');
 Route::get('/inventory/order/print', 'Inventory\PurchaseOrderCtr@pdf');
+Route::get('/inventory/order/totalamount', 'Inventory\PurchaseOrderCtr@getTotalAmount');
+Route::post('/inventory/order/remove/{product_code}', 'Inventory\PurchaseOrderCtr@removeProduct');
 Route::get('/inventory/order/downloadOrderPDF', 'Inventory\PurchaseOrderCtr@downloadOrderPDF');
 Route::get('/sendorder', 'Inventory\PurchaseOrderCtr@sendMail');
 Route::post('/getSupplierEmail/{supplier_id}', 'Inventory\PurchaseOrderCtr@getSupplierEmail');

@@ -245,11 +245,11 @@
             <div class="col-md-12 mt-3 with-prescription"  style="display: none">
               <label for="">With Presciption?</label>
               <div class="form-check">
-                <input class="form-check-input" type="radio" name="edit_with_prescription" id="edit_with_prescription" value="yes">
+                <input class="form-check-input" type="radio" name="edit_with_prescription" id="rdo_prescription_yes" value="yes">
                 <label class="form-check-label" for="add">
                   Yes
                 </label>
-                <input class="form-check-input ml-2" type="radio" name="edit_with_prescription" id="edit_no_prescription" value="no" checked>
+                <input class="form-check-input ml-2" type="radio" name="edit_with_prescription" id="rdo_prescription_no" value="no" checked>
                 <label class="form-check-label ml-4" for="less">
                   No
                 </label>

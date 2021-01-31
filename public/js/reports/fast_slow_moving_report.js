@@ -1,7 +1,7 @@
 
 $(document).ready(function(){
    
-  //  load_data();
+    load_data();
  
     function load_data()  {
        var date_from = $('#date_from').val()
@@ -12,7 +12,7 @@ $(document).ready(function(){
  
     function fetchFastAndSlowMoving(date_from, date_to){
  
-     $('#xx-report-table').DataTable({
+     $('#fast-and-slow-report-table').DataTable({
      
         processing: true,
         serverSide: true,
@@ -25,12 +25,11 @@ $(document).ready(function(){
         },
       
         ajax:{
-         url: "/reports/purchasedorder",
+         url: "/reports/fastAndSlowMoving",
          type:"GET",
          data:{
            date_from:date_from,
            date_to:date_to,
-           supplier:supplier
          },
         }, 
         
@@ -38,9 +37,7 @@ $(document).ready(function(){
             {data: 'product_code', name: 'product_code'},
             {data: 'description', name: 'description'},
             {data: 'category_name', name: 'category_name'},         
-            {data: 'unit', name: 'unit'},     
-            {data: 'supplierName', name: 'supplierName'},    
-           // {data: 'frequency', name: 'frequency'},
+            {data: 'frequency', name: 'frequency'},  
         ],
  
         //buttons
@@ -55,17 +52,17 @@ $(document).ready(function(){
           
              extend: 'excel', 
              text:'nya',       
-             title: 'Purchased Order Report',
+             title: 'Fast and Slow Moving Report',
              messageTop: getDate()
          },
          {
              extend: 'pdf',
-             title: 'Purchased Order Report',
+             title: 'Fast and Slow Moving Report',
              messageTop: getDate()
          },
          {
              extend: 'csv',
-             title: 'Purchased Order Report',
+             title: 'Fast and Slow Moving Report',
              messageTop: getDate()
          },
          {
@@ -76,7 +73,7 @@ $(document).ready(function(){
                  altkey: true
              },
              
-             title: 'Purchased Order Report',
+             title: 'Fast and Slow Moving Report',
              messageTop: getDate(),                
              customize: function (win){
                $(win.document.body).find('h1').css('text-align', 'center');
@@ -91,16 +88,29 @@ $(document).ready(function(){
   //end of fetch_sales
     }
 
+    $('#date_from').change(function()
+    {
+       var date_from = $('#date_from').val()
+       var date_to = $('#date_to').val();
+ 
+       $('#fast-and-slow-report-table').DataTable().destroy();
+       fetchFastAndSlowMoving(date_from, date_to);
+    });
+ 
+    $('#date_to').change(function()
+    {
+       var date_from = $('#date_from').val()
+       var date_to = $('#date_to').val();
+       console.log(date_to);
+       $('#fast-and-slow-report-table').DataTable().destroy();
+       fetchFastAndSlowMoving(date_from, date_to);
+    });
  
    function getDate() {
-     var d = new Date();
- 
-     var month = d.getMonth()+1;
-     var day = d.getDate();
-     
-     return date = d.getFullYear() + '/' +
-         (month<10 ? '0' : '') + month + '/' +
-         (day<10 ? '0' : '') + day;
+    var date_from = $('#date_from').val()
+    var date_to = $('#date_to').val();
+      
+    return 'From ' + date_from +' to '+ date_to;
    }
     
  

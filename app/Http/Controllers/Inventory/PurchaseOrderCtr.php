@@ -55,7 +55,8 @@ class PurchaseOrderCtr extends Controller
             'suplr' => $suplr,
             'reorderCount' => $reorder_count,
             'getAllOrders' => $get_all_orders,
-            'getCurrentDate' => date('yy-m-d')
+            'getCurrentDate' => date('yy-m-d'),
+            'PORequest' => $this->getPORequest()
             ]);
     }
 
@@ -207,58 +208,67 @@ class PurchaseOrderCtr extends Controller
         return $arr;
     }
 
-    public function addToOrder(){
 
-        $product_code = Input::input('product_code');
-        $description = Input::input('description');
-        $category = Input::input('category');
-        $unit = Input::input('unit');
-        $supplier = Input::input('supplier');
-        $qty_order = Input::input('qty_order');
-        $price = Input::input('price');
-        $amount = Input::input('amount');
-
-        session()->put('po-supplier', $supplier);
-        $orders = session()->get('purchase-orders');
-
-        if(!$orders) {
-            $orders = [
-                $product_code => [
-                        "description" => $description,
-                        "category" => $category,
-                        "unit" => $unit,
-                        "supplier" => $supplier,
-                        "qty_order" => $qty_order,
-                        "price" => $price,   
-                        "amount" => $amount
-                    ]
-            ];
-            
-            session()->put('purchase-orders', $orders);
-            return redirect()->back()->with('success', 'Product added to order successfully!');
-        }
-
-        if(isset($orders[$product_code])) {
-            $orders[$product_code]['qty_order'] += $qty_order;
-            session()->put('purchase-orders', $orders);
-            return redirect()->back()->with('success', 'Product added to orders successfully!');
-        }
         
-        $orders[$product_code] = [
-    
-            "description" => $description,
-            "category" => $category,
-            "unit" => $unit,
-            "supplier" => $supplier,
-            "qty_order" => $qty_order,
-            "price" => $price,   
-            "amount" => $amount
-        ];
-    
-        session()->put('purchase-orders', $orders);
 
 
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+public function addToOrder(){
+
+    $product_code = Input::input('product_code');
+    $qty_order = Input::input('qty_order');
+    $amount = Input::input('amount');
+    $supplier = Input::input('supplier');
+
+    session()->put('po-supplier', $supplier);
+
+    if($this->isProductExists($product_code)){
+        DB::table('tblpo_request')
+        ->where('product_code', $product_code)
+        ->update(array(
+            'amount' => DB::raw('amount + '. $amount),
+            'qty' => DB::raw('qty + '. $qty_order)));
+    }
+    else{
+        DB::table('tblpo_request')
+            ->insert([
+                'product_code' => $product_code,
+                'qty' => $qty_order,
+                'amount' => $amount
+            ]);
+    }      
+}
+
+public function isProductExists($product_code){
+    $p = DB::table('tblpo_request')->where('product_code', $product_code);
+    if($p->count() > 0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+public function getTotalAmount(){
+    return DB::table('tblpo_request')->sum('amount');
+}
+
+
+public function removeProduct($product_code)
+{
+    DB::table('tblpo_request')->where('product_code', $product_code)->delete();
+}
+
+public function getPORequest(){
+
+    $product = DB::table('tblpo_request as PR')
+    ->select("PR.*", 'description', 'selling_price', 'category_name', 'unit', 'supplierName')
+    ->leftJoin($this->table_prod.' as P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'PR.product_code')
+    ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+    ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+    ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+    ->get();
+
+    return $product;
 }
 
 public function getDate(){   
@@ -270,24 +280,24 @@ public function recordOrder(){
     $sub_total = 0;
     $total_amount = 0;
     $po_num = $this->getPONum();
-
-    if(session()->get('purchase-orders')){
-        foreach (session()->get('purchase-orders') as $product_code => $data) {
-
-            $sub_total = $data['qty_order'] * $data['price'];
-            $total_amount += $sub_total;
+    $po_request = $this->getPORequest();
+    
+    if($po_request){
+        foreach ($po_request as $data) {
            
             $po = new PurchaseOrder;
             $po->_prefix = 'PO' . $this->getPrefix();
             $po->po_num = $po_num;
-            $po->product_code = $product_code;
-            $po->qty_order = $data['qty_order'];
-            $po->amount = $sub_total;       
+            $po->product_code = $data->product_code;
+            $po->qty_order = $data->qty;
+            $po->amount = $data->amount;       
             $po->date = $this->getDate();  
             $po->status = 'Pending';    
             $po->save();     
         } 
     }
+    DB::table('tblpo_request')->delete();
+
     // remove request orders after save to PO database
     session()->forget('purchase-orders');
     session()->forget('po-supplier');

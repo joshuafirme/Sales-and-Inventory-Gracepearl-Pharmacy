@@ -99,7 +99,7 @@ $(document).ready(function(){
     
               success:function(response){
                console.log(response);
-               $('#po_product_code').val(response[0].productCode);
+               $('#po_product_code').val(response[0].product_code);
                $('#po_description').val(response[0].description);
                $('#po_category').val(response[0].category_name);
                $('#po_unit').val(response[0].unit);
@@ -122,7 +122,19 @@ $(document).ready(function(){
     
     });
 
- 
+
+    function getTotalPOAmount(){
+      
+      $.ajax({
+        url:"/inventory/order/totalamount",
+        type:"GET",
+  
+            success:function(response){
+              console.log(response)
+              $('#txt_po_total').text(response);
+            }
+       });
+    }
 
     //add to order
     $(document).on('click', '#btn-add-to-order', function(){
@@ -135,7 +147,7 @@ $(document).ready(function(){
       var supplier = $('#po_supplier').val();
       var qty_order = $('#po_qty_order').val();
       var price = $('#po_price').val();
-      var amount = $('#po_amount').text();
+      var amount = $('#po_amount').text().slice(1);
 
       isDifferentSupplier(product_code, description, category, unit, supplier, qty_order, price, amount);
             
@@ -192,13 +204,29 @@ $(document).ready(function(){
        });
     }
 
+
+    $(document).on('click','#btn-remove-order',function(){
+      var product_code = $(this).attr('delete-id');
+      console.log('remove');
+      $.ajax({
+        url:"/inventory/order/remove/"+product_code,
+        type:"POST",
+
+        success:function(){
+          $("#order-table").load( "purchaseorder #order-table" );
+          getTotalPOAmount();
+          }   
+
+       });
+    });
+
     //show orders           
     $('#btn-show-orders').click(function(){
       $('.text-danger').css('display', 'none');
-      setTimeout(function(){
         $("#order-table").load( "purchaseorder #order-table" );
+        
+    getTotalPOAmount();
   
-    },1000);
    /*  $.ajax({
           url:"/filterSupplier/" + supplier_id,
           type:"POST",

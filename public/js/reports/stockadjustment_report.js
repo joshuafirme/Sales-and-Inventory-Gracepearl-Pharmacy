@@ -111,16 +111,12 @@ $(document).ready(function(){
       fetchStockAdjustment(date_from, date_to);
    });
 
-  function getDate() {
-    var d = new Date();
-
-    var month = d.getMonth()+1;
-    var day = d.getDate();
-    
-    return date = d.getFullYear() + '/' +
-        (month<10 ? '0' : '') + month + '/' +
-        (day<10 ? '0' : '') + day;
-  }
+   function getDate() {
+    var date_from = $('#date_from').val()
+    var date_to = $('#date_to').val();
+      
+    return 'From ' + date_from +' to '+ date_to;
+   }
    
 
   });

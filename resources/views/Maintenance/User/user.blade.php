@@ -43,7 +43,7 @@
                             <tr>
                                 <th>Employee ID</th>
                                 <th>Name</th>
-                                <th>Position</th>
+                                <th>Role</th>
                                 <th>Username</th>
                                 <th>Authorized Modules</th>
                                 <th>Action</th>

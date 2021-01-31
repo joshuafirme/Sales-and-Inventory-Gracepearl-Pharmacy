@@ -36,11 +36,21 @@ class ReOrderReportCtr extends Controller
 
     public function getAllReOrder()
     {
-        $product = DB::table($this->tbl_prod.' AS P')
-        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
-        ->leftJoin($this->tbl_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-        ->leftJoin($this->tbl_cat.' AS C', 'C.id', '=', 'P.categoryID')
-        ->leftJoin($this->tbl_unit.' AS U', 'U.id', '=', 'P.unitID')
+        $product = DB::table('tblexpiration AS E')
+        ->select("E.*", 'E.product_code',
+                 'P.description',
+                 'P.re_order', 
+                 'P.orig_price', 
+                 'P.selling_price', 
+                 'E.qty', 
+                 'unit', 
+                 'supplierName', 
+                 'category_name', 
+                 DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+            ->leftJoin($this->tbl_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+            ->leftJoin($this->tbl_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+            ->leftJoin($this->tbl_cat.' AS C', 'C.id', '=', 'P.categoryID')
+            ->leftJoin($this->tbl_unit.' AS U', 'U.id', '=', 'P.unitID')
         ->whereRaw('P.qty <= P.re_order')
         ->get();
 

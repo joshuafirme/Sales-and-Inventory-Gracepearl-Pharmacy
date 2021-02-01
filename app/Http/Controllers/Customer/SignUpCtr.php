@@ -51,5 +51,18 @@ class SignUpCtr extends Controller
             return '1';
         }
     }
+
+
+    public function sendOTP(){
+        $phone_no = Input::input('phone_no');
+        $basic  = new \Nexmo\Client\Credentials\Basic('a08cdaef', '9cXwHtJotgmRww3t');
+        $client = new \Nexmo\Client($basic);
+
+        $message = $client->message()->send([
+            'to' => '63'.$phone_no,
+            'from' => 'Gracepearl Pharmacy',
+            'text' => rand(1000,9999).' is your OTP from Gracepearl Pharmacy'
+        ]);
+    }
  
 }

@@ -36,7 +36,14 @@
             
                         <div class="col-md-6">
                             <label class="label-small">Phone Number</label>
-                            <input type="text" class="form-control" id="phone_no">
+                            <input type="text" maxlength="11" class="form-control" id="phone_no">
+                            <a id="send-OTP" style="cursor: pointer; color:#32638D;" class="label-small"><u>Send OTP</u></a>
+                            <span><div class="countdown label-small"></div></span>
+                        </div> 
+
+                        <div class="col-md-6">
+                            <label class="label-small">Enter your OTP</label>
+                            <input type="text" class="form-control" id="otp">
                         </div> 
     
                         <div class="col-md-6 mb-3">

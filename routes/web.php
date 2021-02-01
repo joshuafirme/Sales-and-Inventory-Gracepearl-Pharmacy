@@ -39,6 +39,7 @@ Route::get('/customer/islogged', 'Customer\GoogleLoginCtr@isLoggedIn');
 Route::get('/signup', 'Customer\SignUpCtr@index');
 Route::post('/signup/signup', 'Customer\SignUpCtr@signUp');
 Route::get('/signup/isexists', 'Customer\SignUpCtr@isPhoneNoExists');
+Route::get('/signup/send-OTP', 'Customer\SignUpCtr@sendOTP');
 
 //customer account
 Route::get('/account', 'Customer\CustomerAccountCtr@index');

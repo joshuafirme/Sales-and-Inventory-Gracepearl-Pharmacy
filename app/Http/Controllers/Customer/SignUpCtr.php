@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\CustomerAccount;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class SignUpCtr extends Controller
 {
@@ -58,11 +59,24 @@ class SignUpCtr extends Controller
         $basic  = new \Nexmo\Client\Credentials\Basic('a08cdaef', '9cXwHtJotgmRww3t');
         $client = new \Nexmo\Client($basic);
 
+        $otp = rand(1000,9999);
+
+        Session::put('otp', $otp);
+
         $message = $client->message()->send([
             'to' => '63'.$phone_no,
             'from' => 'Gracepearl Pharmacy',
-            'text' => rand(1000,9999).' is your OTP from Gracepearl Pharmacy'
+            'text' => $otp.' is your OTP from Gracepearl Pharmacy'
         ]);
+    }
+
+    public function validateOTP($otp){
+        if(Session::get('otp') == $otp){
+            return '1';
+        }
+        else{
+            return '0';
+        }
     }
  
 }

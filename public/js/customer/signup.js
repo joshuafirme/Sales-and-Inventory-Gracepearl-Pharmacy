@@ -49,29 +49,7 @@ $(document).ready(function(){
         }
     }
 
-    function signUp(fullname, phone_no, password) {
-
-        $.ajax({
-            url:"/signup/signup",
-            type:"POST",
-            data:{
-                fullname:fullname,
-                phone_no:phone_no,
-                password:password
-            },
-            beforeSend:function(){
-                $('#loading-modal').modal('toggle');
-            },
-            success:function(){
-                $('#alert-acc-success').css('display', 'block');
-                $('#alert-acc-success').addClass('alert-success');
-                $('#alert-acc-success')
-                .html('You have successfully created your account! <a href="/customer-login">Login</a> here');
-                $('#loading-modal').modal('toggle');
-            }         
-           });      
-       
-    }
+   
 
     $('#phone_no').blur(function() {
         var phone_no = $('#phone_no').val();
@@ -85,9 +63,6 @@ $(document).ready(function(){
             data:{
                 phone_no:phone_no
             },
-            beforeSend:function(){
-              $('#loading-modal').modal('toggle');
-            },
             success:function(response){
              
              setTimeout(function() {
@@ -95,14 +70,12 @@ $(document).ready(function(){
                 {
                     if(response == '1')
                     {
-                        $('#loading-modal').modal('toggle');
                         $("#pn-validation").remove();
                         $('#phone_no')
                         .after('<span class="label-small text-danger" id="pn-validation">Phone number is already exists.</div>');
                         $('#phone_no').val('');
                     }
                     else{
-                        $('#loading-modal').modal('toggle');
                         $("#pn-validation").remove();
                     }
                   }
@@ -113,43 +86,53 @@ $(document).ready(function(){
     }
 
     function isPhoneNoValid(phone_no) {
-        if(phone_no.replace(/ /g,'').length > 11 || phone_no.replace(/ /g,'').length < 11){
-            $('#loading-modal').modal('toggle');
-            $("#pn-validation").remove();
-            $('#phone_no')
-            .after('<span class="label-small text-danger" id="pn-validation">Please enter a valid phone number!</div>');
+        if(phone_no){
+            if(phone_no.replace(/ /g,'').length > 11 || phone_no.replace(/ /g,'').length < 10){
+                $("#pn-validation").remove();
+                $('#phone_no')
+                .after('<span class="label-small text-danger" id="pn-validation">Please enter a valid phone number.</div>');
+                return false
+            }
+            else{
+                $("#pn-validation").remove();
+                return true;
+            }
         }
         else{
-            $('#loading-modal').modal('toggle');
             $("#pn-validation").remove();
-            return true;
+            $('#phone_no')
+            .after('<span class="label-small text-danger" id="pn-validation">Please enter your phone number.</div>');
         }
     }
 
     $('#send-OTP').click(function() {
         var phone_no = $('#phone_no').val().replace(/^0+/, ''); //remove leading zeros
         console.log(phone_no);
-   //     $('#timer').css('dislay', 'inline');
-        setTimer();
-    //    sendOTP(phone_no);
+        sendOTP(phone_no);
+      // setTimer();
     });
 
-    function sendOTP(phone){
-        $.ajax({
-            url:"/signup/send-OTP",
-            type:"GET",
-            data:{
-               phone_no:phone_no
-            },
-            success:function(){
-                $('#timer').css('dislay', 'inline');
-                setTimer();
-            }         
-           });
+    function sendOTP(phone_no){
+       if(isPhoneNoValid(phone_no)){
+        if(phone_no){
+            $.ajax({
+                url:"/signup/send-OTP",
+                type:"GET",
+                data:{
+                   phone_no:phone_no
+                },
+                success:function(){
+                    setTimer();
+                }         
+               });
+        }
+       }
+
     }
 
     function setTimer(){
-        var timer2 = "0:2";
+        $('#send-OTP').css('display', 'none');
+        var timer2 = "0:30";
         var interval = setInterval(function() {
         
           var timer = timer2.split(':');
@@ -162,20 +145,88 @@ $(document).ready(function(){
           seconds = (seconds < 0) ? 59 : seconds;
           seconds = (seconds < 10) ? '0' + seconds : seconds;
           //minutes = (minutes < 10) ?  minutes : minutes;
-          $('.countdown').text(minutes + ':' + seconds);
+          $('.countdown').text('Resend OTP in ' + minutes + ':' + seconds);
           timer2 = minutes + ':' + seconds;
+
+          if(seconds == 0){
+              minutes = 0;
+              seconds = 0;
+            $('.countdown').css('display', 'none');
+            $('#send-OTP').css('display', 'inline');
+            $('#send-OTP').text('Resend OTP');
+          }
         }, 1000);
     }
 
 
     $('#otp').blur(function() {
-         
+         var otp = $(this).val();
+         validateOTP(otp);
     });
 
-
-    function validateOTP(){
-
+    function validateOTP(otp){
+        if(otp){
+            $.ajax({
+                url:"/signup/validate-otp/"+otp,
+                type:"GET",
+                success:function(response){
+                    if(response == '1'){
+                        $("#pn-validation").remove();
+                        $('#otp')
+                        .after('<span class="label-small text-success" id="pn-validation">OTP is valid.</div>');
+                    }
+                    else{
+                        $("#pn-validation").remove();
+                        $('#otp')
+                        .after('<span class="label-small text-danger" id="pn-validation">OTP is invalid.</div>');
+                    }
+                }         
+               });
+        }
     }
+
+    function signUp(fullname, phone_no, password) {
+        var otp = $('#otp').val();
+        if(otp){
+            $.ajax({
+                url:"/signup/validate-otp/"+otp,
+                type:"GET",
+                success:function(response){
+                    if(response == '1'){
+                        $.ajax({
+                            url:"/signup/signup",
+                            type:"POST",
+                            data:{
+                                fullname:fullname,
+                                phone_no:phone_no,
+                                password:password
+                            },
+                            beforeSend:function(){
+                                $('#loading-modal').modal('toggle');
+                            },
+                            success:function(){
+                                $('#alert-acc-success').css('display', 'block');
+                                $('#alert-acc-success').addClass('alert-success');
+                                $('#alert-acc-success')
+                                .html('You have successfully created your account!');
+                                window.location.href = "/customer-login";
+                            }         
+                           });   
+                    }
+                    else{
+                        $("#pn-validation").remove();
+                        $('#otp')
+                        .after('<span class="label-small text-danger" id="pn-validation">OTP is invalid.</div>');
+                    }
+                }         
+               });
+        }
+           
+       
+    }
+
+
+
 });
   
   

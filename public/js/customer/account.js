@@ -16,7 +16,7 @@ $(document).ready(function(){
       $.ajax({
         url:"/account/getaccountinfo",
         type:"GET",
-        success:function(data){  console.log(data);
+        success:function(data){
           $('#fullname').val(data[0].fullname);
           $('#email').val(data[0].email);
           $('#phone_no').val(data[0].phone_no);
@@ -31,20 +31,16 @@ $(document).ready(function(){
         type:"GET",
         success:function(data){
          if(data){
-          console.log(data);
+         
+          $('#municipality').append('<option selected value="' + data[0].municipality + '">' + data[0].municipality + '</option>');
+
+          $('#brgy').append('<option selected value="' + data[0].brgy + '">' + data[0].brgy + '</option>');
+
+       //   $("#municipality option[value="+data[0].municipality+"]").remove();
+
           $('#flr-bldg-blk').val(data[0].flr_bldg_blk);
-
-          $('#municipality-sel').text(data[0].municipality);
-
-          $("#municipality option[value="+data[0].municipality+"]").remove();
-
-          $('#municipality-sel').val(data[0].municipality);
              
           getBrgy(data[0].municipality, data[0].brgy);
-         
-          $("#brgy-selected").text(data[0].brgy);
-          $("#brgy-selected").val(data[0].brgy);
-          
 
           $('#notes').val(data[0].note);
          }
@@ -52,7 +48,19 @@ $(document).ready(function(){
          
        });
     }
- 
+
+
+  initMunicipality();
+
+  function initMunicipality()
+  {
+      var municipality = $('#municipality').val();
+
+      if(municipality){       
+          getBrgy(municipality, '');
+      }
+  }
+     
 
  $('#municipality').change(function () {
     var municipality = $(this).val();
@@ -63,7 +71,6 @@ $(document).ready(function(){
  function getBrgy(municipality, brgy) {
 
   $('#barangay').empty(); 
-  $('#barangay').append('<option value="' + brgy + '">' + brgy  + '</option>');
     $.ajax({
         url: '/account/getBrgyList/'+municipality,
         tpye: 'GET',

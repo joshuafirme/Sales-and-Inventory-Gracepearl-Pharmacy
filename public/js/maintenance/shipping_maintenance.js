@@ -5,13 +5,42 @@ $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
-});  
+}); 
 
-if(municipality){       
-    getBrgy(municipality);
+fetchData();
+
+
+function fetchData(){
+    $('#shipping-table').DataTable({
+    
+       processing: true,
+       serverSide: true,
+      
+       ajax:"/maintenance/shippingadd",
+           
+       columns:[       
+        {data: 'municipality', name: 'municipality'},
+        {data: 'brgy', name: 'brgy'},
+        {data: 'shipping_fee', name: 'shipping_fee'},
+        {data: 'action', name: 'action',orderable: false},
+       ]
+      });
+
+   }
+
+
+initMunicipality();
+
+function initMunicipality()
+{
+    var municipality =$('select[name=municipality]').val();
+
+    if(municipality){       
+        getBrgy(municipality);
     }
+}
 
- $('#municipality').change(function () {
+ $('select[name=municipality]').change(function () {
     var municipality = $(this).val();
        
     getBrgy(municipality);
@@ -24,10 +53,10 @@ if(municipality){
         url: '/maintenance/shippingadd/brgylist/'+municipality_name,
         tpye: 'GET',
         success:function(data){
-            $('#brgy').empty();
+            $('select[name=brgy]').empty();
             for (var i = 0; i < data['barangay_list'].length; i++) 
             {
-                $('#brgy').append('<option value="' + data['barangay_list'][i] + '">' + data['barangay_list'][i] + '</option>');
+                $('select[name=brgy]').append('<option value="' + data['barangay_list'][i] + '">' + data['barangay_list'][i] + '</option>');
             }
            
     
@@ -35,5 +64,59 @@ if(municipality){
       });
 }
 
+//edit show
+$(document).on('click', '#btn-edit-shipping', function(){
+    var id = $(this).attr('edit-id');
+    
+    console.log(id);
+  
+    $.ajax({
+      url:"/maintenance/shippingadd/show/"+id,
+      type:"GET",
+
+      success:function(data){
+        $('#id_hidden').val(id);
+        $('#edit_municipality').val(data[0].municipality);
+        $('#edit_brgy').append('<option selected value="' + data[0].brgy + '">' + data[0].brgy + '</option>');
+        $('#edit_fee').val(data[0].shipping_fee);
+      }
+     });
+  });       
+
 
 });
+
+
+var id;
+$(document).on('click', '#btn-delete-shipping', function(){
+    id = $(this).attr('delete-id');
+    $('#confirmModal').modal('show');
+    $('.delete-success').hide();
+    $('.delete-message').html('Are you sure do you want to delete this address?');
+  }); 
+  
+  
+  $('#confirm-del-ship').click(function(){
+      $.ajax({
+          url: '/maintenance/shippingadd/delete/'+ id,
+          type: 'GET',
+        
+          beforeSend:function(){
+              $('#confirm-del-ship').text('Deleting...');
+              $('.loader').css('display', 'inline');
+          },
+          
+          success:function(){
+              setTimeout(function(){
+                  $('.delete-success').show();
+                  $('.loader').css('display', 'none');
+                  $('#confirm-del-ship').text('Delete');
+                  $( "#shipping-table" ).load( "shippingadd #shipping-table" );
+                    setTimeout(function(){
+                      $('#confirmModal').modal('hide');
+                  }, 1000);
+              }, 1000);
+          }
+      });
+    
+  });

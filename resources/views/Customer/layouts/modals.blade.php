@@ -50,7 +50,6 @@
                 <div class="col-md-6">
                     <label class="label-small">Municipality</label>
                     <select class="form-control" name="municipality" id="municipality">
-                      <option id="municipality-sel" selected></option>
                       @foreach($municipality as $data)
                        <option value="{{ $data->municipality }}">{{ $data->municipality }}</option>
                       @endforeach
@@ -61,7 +60,7 @@
                 <div class="col-md-6">
                   <label class="label-small">Barangay</label>
                   <select class="form-control" name="barangay" id="barangay">
-                    <option id="brgy-selected" selected></option>
+                    
                   </select>
               </div> 
     

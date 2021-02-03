@@ -166,6 +166,9 @@ Route::delete('/maintenance/category/{id}', 'Maintenance\CategoryMaintenanceCtr@
 Route::get('/maintenance/shippingadd', 'Maintenance\ShippingAddressCtr@index');
 Route::get('/maintenance/shippingadd/brgylist/{municipality_name}', 'Maintenance\ShippingAddressCtr@getBrgyList');
 Route::post('/maintenance/shippingadd/store', 'Maintenance\ShippingAddressCtr@store');
+Route::get('/maintenance/shippingadd/show/{id}', 'Maintenance\ShippingAddressCtr@show');
+Route::post('/maintenance/shippingadd/update', 'Maintenance\ShippingAddressCtr@update');
+Route::get('/maintenance/shippingadd/delete/{id}', 'Maintenance\ShippingAddressCtr@destroy');
 
 //User
 Route::get('/maintenance/user', 'Maintenance\UserMaintenanceCtr@index');

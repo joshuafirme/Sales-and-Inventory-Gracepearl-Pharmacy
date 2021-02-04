@@ -1,7 +1,6 @@
 
 $(document).ready(function(){
 
-    fetch_orders();
     initLoadData();
 
     function initLoadData(){
@@ -49,26 +48,36 @@ $(document).ready(function(){
     }
 
 
-    
-    function fetch_orders(){
-      var order_tbl = $('#ord-table').DataTable({
+    var date_from = $('#date_from').val()
+    var date_to = $('#date_to').val();
+    var supplier = $('#ord_supplier option').filter(':selected').text();
+    console.log(date_from, date_to, supplier);
+    fetch_orders(date_from, date_to, supplier);
+
+    function fetch_orders(date_from, date_to, supplier){
+      console.log(date_from, date_to, supplier);
+      $('#ord-table').DataTable({
+        
      
         processing: true,
         serverSide: true,
-        
-       
+            
         ajax:{
          url: "/inventory/displayOrders",
-      
+         data:{
+           date_from:date_from,
+           date_to:date_to,
+           supplier:supplier
+         } 
         }, 
         
         columns:[       
          {data: 'po_num', name: 'po_num'},
          {data: 'product_code', name: 'product_code'},
-         {data: 'description', name: 'description'},
-         {data: 'unit', name: 'unit'},   
-         {data: 'category_name', name: 'category_name'},    
-         {data: 'supplierName', name: 'supplierName'},    
+         {data: 'description', name: 'description'},   
+         {data: 'supplierName', name: 'supplierName'},     
+         {data: 'category_name', name: 'category_name'}, 
+         {data: 'unit', name: 'unit'},  
          {data: 'qty_order', name: 'qty_order'},
          {data: 'amount', name: 'amount'},
          {data: 'date', name: 'date'},
@@ -76,17 +85,42 @@ $(document).ready(function(){
         ]
         
        });
-       $('#ord_supplier').change(function(){
-        
-        order_tbl.column( $(this).data('column') )
-        .search( $(this).val() )
-        .draw();
-    
-        });
-
-        
+      
     }
 
+
+    $('#ord_supplier').change(function(){
+        
+      var date_from = $('#date_from').val()
+      var date_to = $('#date_to').val();
+      var supplier = $('#ord_supplier option').filter(':selected').text();
+      console.log(date_from, date_to, supplier);
+      $('#ord-table').DataTable().destroy();
+      fetch_orders(date_from, date_to, supplier);
+
+    });
+
+    $('#date_from').change(function(){
+
+      var date_from = $('#date_from').val()
+      var date_to = $('#date_to').val();
+      var supplier = $('#ord_supplier option').filter(':selected').text();
+      console.log(date_from);
+      $('#ord-table').DataTable().destroy();
+      fetch_orders(date_from, date_to, supplier);
+    });
+
+    $('#date_to').change(function(){
+
+      var date_from = $('#date_from').val()
+      var date_to = $('#date_to').val();
+      var supplier = $('#ord_supplier option').filter(':selected').text();
+      console.log(date_to);
+      $('#ord-table').DataTable().destroy();
+      fetch_orders(date_from, date_to, supplier);
+    });
+
+    
     //show product details
     $(document).on('click', '#btn-add-order', function(){
       var product_code = $(this).attr('product-code');
@@ -334,6 +368,9 @@ $(document).ready(function(){
                   },2000);
                 
                 },1000);
+
+                $("#order-table").load( "purchaseorder #order-table" );
+                getTotalPOAmount();
   
                 }          
          });

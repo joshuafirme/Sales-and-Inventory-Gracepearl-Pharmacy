@@ -139,13 +139,8 @@
 
               <div class="col-md-4 mb-2">    
                 <label class="col-form-label">Position</label>
-                <select class="form-control edit_position" name="edit_position">
-                  <option id="edit_position" selected></option>
-                  <option value="Cashier">Cashier</option>
-                  <option value="Purchaser">Purchaser</option>
-                  <option value="Certified Pharmacy Assistant">Certified Pharmacy Assistant</option>
-                  <option value="Pharmacy Assistant">Pharmacy Assistant</option>
-                  
+                <select class="form-control edit_position" name="edit_position" id="edit_position">
+                             
                 </select>
               </div>
 

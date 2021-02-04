@@ -186,6 +186,7 @@ Route::get('/manageorder/processing', 'ManageOnlineOrderCtr@displayProcessingOrd
 Route::get('/manageorder/packed', 'ManageOnlineOrderCtr@displayPackedOrder');
 Route::get('/manageorder/dispatch', 'ManageOnlineOrderCtr@displayDispatchOrder');
 Route::get('/manageorder/delivered', 'ManageOnlineOrderCtr@displayDeliveredOrder');
+Route::get('/manageorder/cancelled', 'ManageOnlineOrderCtr@displayCancelledOrder');
 Route::post('/manageorder/pack_items/{order_no}', 'ManageOnlineOrderCtr@packItems');
 Route::get('/manageorder/shippingfee/{order_id}', 'ManageOnlineOrderCtr@getShippingFee');
 Route::get('/manageorder/total_amount/{order_id}', 'ManageOnlineOrderCtr@getOrderTotalAmount');

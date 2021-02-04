@@ -44,7 +44,7 @@ class PurchaseOrderCtr extends Controller
         $suplr = DB::table($this->table_suplr)->get();
         
         //
-        $get_all_orders = $this->getAllOrders();
+      //  $get_all_orders = $this->getAllOrders();
         $reorder_count = $get_all_reorder->count(); 
        
         return view('/inventory/purchase_order', 
@@ -54,7 +54,6 @@ class PurchaseOrderCtr extends Controller
             'category' => $category,
             'suplr' => $suplr,
             'reorderCount' => $reorder_count,
-            'getAllOrders' => $get_all_orders,
             'currentDate' => date('Y-m-d'),
             'PORequest' => $this->getPORequest()
             ]);
@@ -79,9 +78,9 @@ class PurchaseOrderCtr extends Controller
         }
     }
 
-    public function displayOrders(){
+    public function displayOrders(Request $request){
 
-        $get_all_orders = $this->getAllOrders();
+        $get_all_orders = $this->getAllOrders($request->date_from, $request->date_to, $request->supplier);
 
         if(request()->ajax())
         {       
@@ -97,25 +96,6 @@ class PurchaseOrderCtr extends Controller
         }
     }
 
-
-
-    public function sendMail(){
-        $data = $this->convertProductDataToHTML();
-
-        $this->recordOrder();
-        $email = Input::input('supplier_email');
-        Mail::to($email)
-        ->send(new MyMail($data));
-        // after email sent, it will automatically save orders to database
-    }
-
-    public function getSupplierEmail($supplier){
-        $supplier = DB::table($this->table_suplr)
-        ->where('supplierName', $supplier)
-        ->value('email');
-
-        return $supplier;
-    }
 
     public function getAllReorder(){
         $product = DB::table($this->table_exp.' AS E')
@@ -162,18 +142,18 @@ class PurchaseOrderCtr extends Controller
         return $product;
     }
     
-    public function getAllOrders(){
-        $product = DB::table($this->table_po.' AS PO')
+    public function getAllOrders($date_from, $date_to, $supplier){
+        return DB::table($this->table_po.' AS PO')
         ->select("PO.*", DB::raw('CONCAT(PO._prefix, PO.po_num) AS po_num, DATE_FORMAT(date,"%d-%m-%Y") as date, description, unit, supplierName, category_name'))
         ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'PO.product_code')
         ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
         ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
         ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+      //  ->whereBetween('PO.date', [$date_from, date('Y-m-d', strtotime($date_to. ' + 1 days'))])
+        ->whereBetween('PO.date', [$date_from, $date_to])
+        ->where('S.supplierName', $supplier)
         ->where('PO.status', 'Pending')
-        ->orderBy('date', 'desc')
         ->get();
-
-        return $product;
     }
 
     public function show($product_code){
@@ -209,7 +189,23 @@ class PurchaseOrderCtr extends Controller
     }
 
 
-        
+    public function sendMail(){
+        $data = $this->convertProductDataToHTML();
+
+        $this->recordOrder();
+        $email = Input::input('supplier_email');
+        Mail::to($email)
+        ->send(new MyMail($data));
+        // after email sent, it will automatically save orders to database
+    }
+
+    public function getSupplierEmail($supplier){
+        $supplier = DB::table($this->table_suplr)
+        ->where('supplierName', $supplier)
+        ->value('email');
+
+        return $supplier;
+    }       
 
 
 public function addToOrder(){
@@ -256,6 +252,10 @@ public function getTotalAmount(){
 public function removeProduct($product_code)
 {
     DB::table('tblpo_request')->where('product_code', $product_code)->delete();
+    $po_req = DB::table('tblpo_request');
+    if($po_req->count() == 0){
+        session()->forget('po-supplier');
+    }
 }
 
 public function getPORequest(){

@@ -103,7 +103,7 @@
                          </div>  
                         
                         <div class="col-sm-2 mb-3">
-                          <select data-column="5" class=" form-control col-sm-12 ml-2" name="ord_supplier" id="ord_supplier">
+                          <select class=" form-control col-sm-12 ml-2" name="ord_supplier" id="ord_supplier">
                             @foreach($suplr as $data)
                           <option value={{ $data->supplierName }}>{{ $data->supplierName }}</option>
                             @endforeach
@@ -128,7 +128,6 @@
 
                        </div>
 
-                      @if(count($getAllOrders) > 0) 
                         <table class="table responsive  table-hover" id="ord-table" width="100%">       
                           <thead>
                             <tr>
@@ -144,13 +143,7 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
-                          @else
-                          <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h5><i class="icon fas fa-exclamation-triangle"></i> </h5>No orders found
-                          </div>  
-                           @endif                     
+                        <tbody>                    
                       </tbody>
                         
                         </table> 

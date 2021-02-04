@@ -52,16 +52,63 @@ $(document).ready(function(){
       alert('Password do not match!')
     }
    });
+   
 
-   function populateCheckbox(){
-    var result = [
+  //edit show
+  $(document).on('click', '#btn-edit-user', function(){
+    var empID = $(this).attr('emp-id');
+
+    $("#edit_position").val('');
+    $("#edit_position").text('');
+      
+    uncheckCheckboxModules(); 
+    
+    $.ajax({
+      url:"/maintenance/user/show/"+ empID,
+      type:"POST",
+
+      success:function(response){
+        console.log(response);
+        $('#edit_empID_hidden').val(response[0].id);
+        $('#edit_empID').val(response[0].empID);
+        $('#edit_employee_name').val(response[0].name);
+
+        $('#edit_position').append('<option selected value="' + response[0].position + '">' + response[0].position + '</option>');
+        populateCheckbox();
+
+    //    $("#edit_position option[value="+response[0].position+"]").remove();  
+        $('#edit_username').val(response[0].username);
+        $('#edit_password').val(response[0].password);
+
+        var modules_arr = response[0].auth_modules.split(', ');
+        console.log(modules_arr);
+
+
+        for(var i = 0; i < modules_arr.length; i++)
+        {
+          $('#edit_chk-'+modules_arr[i].replace(/\s/g, '')).prop('checked', true);  
+        }
+
+        $('#edit_chk-User').attr("disabled", false);
+        if(response[0].position == 'Administrator') // disabled user checkbox if edit admin modal is show
+        {
+          $('#edit_chk-User').attr("disabled", true);
+        }    
+      }
+    });
+  }); 
+
+  
+  function populateCheckbox(){
+    var data =  [
       'Cashier', 'Purchaser', 'Pharmacy Assistant', 'Certified Pharmacy Assistant', 'Administrator'
     ];
 
-    var $dropdown = $("select[name='edit_position']");
-    $.each(result, function() {
-        $dropdown.append($("<option />").val(this).text(this));
-    });
+      for (var i = 0; i < data.length; i++) 
+      {
+          $('#edit_position').append('<option value="' + data[i] + '">' + data[i] + '</option>');
+      } 
+         
    }
 
    function uncheckCheckboxModules(){
@@ -74,46 +121,6 @@ $(document).ready(function(){
     $('#edit_chk-manageorder').prop('checked', false);
     $('#edit_chk-verifycustomer').prop('checked', false);
    }
-
-  //edit show
-  $(document).on('click', '#btn-edit-user', function(){
-    var empID = $(this).attr('emp-id');
-
-    $("#edit_position").val('');
-    $("#edit_position").text('');
-       
- 
-   // populateCheckbox();
-    uncheckCheckboxModules(); 
-    
-    $.ajax({
-      url:"/maintenance/user/show/"+ empID,
-      type:"POST",
-
-      success:function(response){
-        console.log(response);
-        $('#edit_empID_hidden').val(response[0].id);
-        $('#edit_empID').val(response[0].empID);
-        $('#edit_employee_name').val(response[0].name);
-       
-      //  $('#edit_position').text(response[0].position);
-     //  $("select[name='edit_position'] option:selected").text(response[0].position);
-     //   $("select[name='edit_position'] option[value="+response[0].position+"]").remove();
-        $("select[name='edit_position'] option:selected").text(response[0].position);
-
-        $('#edit_username').val(response[0].username);
-        $('#edit_password').val(response[0].password);
-
-        var modules_arr = response[0].auth_modules.split(', ');
-        console.log(modules_arr);
-
-        for(var i = 0; i < modules_arr.length; i++)
-        {
-          $('#edit_chk-'+modules_arr[i].replace(/\s/g, '')).prop('checked', true);  
-        }    
-      }
-    });
-  }); 
    
   //update
   $(document).on('click', '#btn-update-user', function(){

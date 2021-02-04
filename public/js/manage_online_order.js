@@ -167,10 +167,10 @@ $(document).ready(function(){
     }
 
 // Delivered------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    var date_from = $('#date_from').val()
-    var date_to = $('#date_to').val();
+    var del_date_from = $('#del_date_from').val()
+    var del_date_to = $('#del_date_to').val();
 
-    fetchDelivered(date_from, date_to);
+    fetchDelivered(del_date_from, del_date_to);
 
     function fetchDelivered(date_from, date_to){
       $('#delivered-table').DataTable({
@@ -200,26 +200,77 @@ $(document).ready(function(){
        });
     }
 
-    $('#date_from').change(function()
+    $('#del_date_from').change(function()
     {
-        var date_from = $('#date_from').val()
-        var date_to = $('#date_to').val();
+        var date_from = $('#del_date_from').val()
+        var date_to = $('#del_date_to').val();
 
         $('#delivered-table').DataTable().destroy();
         fetchDelivered(date_from, date_to);
     });
 
-   $('#date_to').change(function()
+   $('#del_date_to').change(function()
    {
-      var date_from = $('#date_from').val()
-      var date_to = $('#date_to').val();
+      var date_from = $('#del_date_from').val()
+      var date_to = $('#del_date_to').val();
 
       $('#delivered-table').DataTable().destroy();
       fetchDelivered(date_from, date_to);
    });
 
-// end------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+// Cancelled------------------------------------------------------------------------------------------------------------------------------------------------------------------
+var cancelled_date_from = $('#cancelled_date_from').val()
+var cancelled_date_to = $('#cancelled_date_to').val();
+
+fetchCancelled(cancelled_date_from, cancelled_date_to);
+
+function fetchCancelled(date_from, date_to){
+  $('#cancelled-table').DataTable({
+ 
+    processing: true,
+    serverSide: true,
+
+    ajax:{
+     url: "/manageorder/cancelled",
+     data:{
+      date_from:date_from,
+      date_to:date_to
+     },
+    }, 
+
+    columns:[       
+      {data: 'order_num', name: 'order_num'},
+      {data: 'fullname', name: 'fullname'},
+      {data: 'phone_no', name: 'phone_no'},
+      {data: 'email', name: 'email'},   
+      {data: 'status', name: 'status',orderable: false},
+      {data: 'remarks', name: 'remarks',orderable: false},   
+      {data: 'created_at', name: 'created_at'},
+    ]
+    
+   });
+}
+
+$('#cancelled_date_from').change(function()
+{
+    var date_from = $('#cancelled_date_from').val()
+    var date_to = $('#cancelled_date_to').val();
+
+    $('#cancelled-table').DataTable().destroy();
+    fetchCancelled(date_from, date_to);
+});
+
+$('#cancelled_date_to').change(function()
+{
+  var date_from = $('#cancelled_date_from').val()
+  var date_to = $('#cancelled_date_to').val();
+
+  $('#cancelled-table').DataTable().destroy();
+  fetchCancelled(date_from, date_to);
+});
+
+// end------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     $(document).on('click', '#btn-show-items', function(){
     

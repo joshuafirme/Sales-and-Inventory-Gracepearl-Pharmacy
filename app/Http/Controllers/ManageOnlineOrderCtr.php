@@ -112,6 +112,17 @@ class ManageOnlineOrderCtr extends Controller
             ->make(true);                         
         }
     }
+    
+    public function displayCancelledOrder(Request $request){
+
+        $c = $this->getCancelledOrder($request->date_from, $request->date_to);
+        
+        if(request()->ajax())
+        {
+            return datatables()->of($c)
+            ->make(true);                         
+        }
+    }
 
     public function getPendingOrder(){
 
@@ -178,6 +189,21 @@ class ManageOnlineOrderCtr extends Controller
 
         return $o->unique('order_no');    
     }
+
+    public function getCancelledOrder($date_from, $date_to){
+
+        $o = DB::table($this->tbl_ol_order.' as O')
+        ->orderBy('created_at', 'asc')
+        ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, CA.email, O.email as user_id'))
+        ->leftJoin($this->tbl_cust_acc.' AS CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'O.email')
+        ->where('status', 'Cancelled')
+        ->whereBetween('O.updated_at', [$date_from, date('Y-m-d', strtotime($date_to. ' + 1 days'))])
+        ->orderBy('O.id', 'desc')
+        ->get();   
+
+        return $o->unique('order_no');    
+    }
+
 
     public function showOrderItems($order_no){
     

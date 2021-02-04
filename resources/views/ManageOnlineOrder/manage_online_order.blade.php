@@ -169,7 +169,7 @@
                         </div>              
                       
                       <div class="col-sm-2 mb-3">
-                        <input data-column="9" type="date" class="form-control" name="date_from" id="date_from" value="{{ $currentDate }}">
+                        <input data-column="9" type="date" class="form-control" name="date_from" id="del_date_from" value="{{ $currentDate }}">
                         </div>
       
                         <div class="mt-2">
@@ -177,7 +177,7 @@
                           </div>
             
                         <div class="col-sm-2 mb-3">
-                          <input data-column="9" type="date" class="form-control" name="date_to" id="date_to" value="{{ $currentDate }}">
+                          <input data-column="9" type="date" class="form-control" name="date_to" id="del_date_to" value="{{ $currentDate }}">
                           </div>                 
 
                      </div>
@@ -203,6 +203,26 @@
 
                   <div class="tab-pane fade" id="cancelled_tab" role="tabpanel" aria-labelledby="cancelled-tab">
 
+                    <div class="row">
+
+                      <div class="mt-2 ml-3">
+                         Date Cancelled
+                        </div>              
+                      
+                      <div class="col-sm-2 mb-3">
+                        <input data-column="9" type="date" class="form-control" name="date_from" id="cancelled_date_from" value="{{ $currentDate }}">
+                        </div>
+      
+                        <div class="mt-2">
+                          -
+                          </div>
+            
+                        <div class="col-sm-2 mb-3">
+                          <input data-column="9" type="date" class="form-control" name="date_to" id="cancelled_date_to" value="{{ $currentDate }}">
+                          </div>                 
+
+                     </div>
+                     
                     <table class="table responsive table-hover" id="cancelled-table" width="100%">                               
                       <thead>
                         <tr>
@@ -211,9 +231,9 @@
                           <th>Customer Name</th>                                                           
                           <th>Phone No</th>        
                           <th>Email</th>
-                          <th>Payment method</th>
-                          <th>Date placed</th>
                           <th>Status</th>
+                          <th>Reason</th>
+                          <th>Date placed</th>
                         
                         </tr>
                       </thead>

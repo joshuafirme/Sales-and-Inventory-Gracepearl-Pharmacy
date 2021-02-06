@@ -27,8 +27,8 @@
 
       </div>
       <div class="modal-footer">
-          <div class="update-success-validation mr-auto ml-3" style="display: none">
-            <label class="label text-success">Product is successfully voided</label>    
+          <div class="mr-auto ml-3" id="void-success" style="display: none">
+            <span class="label text-success">Product is successfully voided</span>    
           </div> 
           <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
 
@@ -57,7 +57,6 @@
             {{ csrf_field() }}
 
               <label class="col-form-label">Sales Invoice #</label>
-              <input type="number" class="form-control" name="sales-invoice" id="sales-invoice-no" required>
 
               <small style="display: none" class="form-text text-danger">Please fillup this field to continue</small>
         
@@ -74,7 +73,6 @@
           <label class="label text-success">Proccess completed</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
-          <button type="submit" class="btn btn-sm btn-success" id="btn-confirm-inv">Generate Reciept</button>
 
       </div>
     </form>

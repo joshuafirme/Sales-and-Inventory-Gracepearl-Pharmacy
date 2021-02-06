@@ -276,7 +276,7 @@ Route::get('/reports/fastAndSlowMoving', 'Reports\FastAndSlowMovingReportCtr@ind
 
 Route::get('/reports/audittrail', 'Reports\AuditTrailCtr@index');
 
-//REPORTS---------------------------------------------------------------------------------------------------------------
+//UTILITIES---------------------------------------------------------------------------------------------------------------
 Route::get('/utilities/backup_restore', 'Utilities\BackupAndRestoreCtr@index');
 Route::post('/utilities/backup_restore/backup', 'Utilities\BackupAndRestoreCtr@backup');
 Route::post('/utilities/backup_restore/restore', 'Utilities\BackupAndRestoreCtr@restore');

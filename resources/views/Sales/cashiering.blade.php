@@ -28,143 +28,43 @@
 
         <div class="row">
          
-            <div class="card ml-3 mt-3" style="width: 900px">
+            <div class="card ml-3 mt-3">
                 
                 <div class="card-body">
+                  <table id="" class="table responsive table-bordered table-hover" style=" margin-bottom:20px;">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Search<input type="search" class="form-control" id="cashiering_search" placeholder="Search product code or description..."></th>
+                            <th colspan="4"><button class="btn btn-sm btn-primary" id="btn-addToCart"><i class="fa fa-plus"></i> Add</button></th>
+                        </tr>
+                        <tr>
+                            <th>Qty</th>
+                            <th>Product Code</th>
+                            <th>Description</th>
+                            <th>Stock</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <input type="hidden" id="id">
+                            <th><input type="number" min="1" class="form-control" id="qty_order" ></th>
+                            <th><input type="text" class="form-control" readonly id="product_code"></th>
+                            <th><input type="text" class="form-control" readonly id="description"></th>
+                            <th><input type="number" class="form-control" readonly id="qty"></th>
+                            <th><input type="number" class="form-control" readonly id="price"></th>
+                            <th><input type="number" class="form-control" readonly id="total"></th>
+                        </tr>
+                    </tbody>    
+                </table>
 
-                      <div class="row mt-5 ml-5">
-
-                        <div class="col-lg-6">
-
-                        
-                          
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-3 col-form-label">Search</label>
-                            <div class="col-sm-8">
-                              <input type="search" class="form-control" id="cashiering_search">
-                            </div>
-                          </div>
-
-                        <div class="form-group row">
-                          <label for="inputEmail3" class="col-sm-3 col-form-label">Qty</label>
-                          <div class="col-sm-8">
-                            <input type="number" min="1" class="form-control" id="qty_order" >
-                          </div>
-                        </div> 
-
-                          <input type="hidden" id="product_code_hidden">
-
-                        <div class="form-group row">
-                          <label for="inputEmail3" class="col-sm-4 col-form-label">Product Code</label>
-                          <div class="col-sm-7">
-                            <input type="text" class="form-control" id="product_code" readonly>
-                          </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-4 col-form-label">Description</label>
-                            <div class="col-sm-7">
-                              <input type="text" class="form-control" id="description" readonly>
-                            </div>
-                          </div>  
-
-                          <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-4 col-form-label">Stock On Hand</label>
-                            <div class="col-sm-7">
-                              <input type="number" class="form-control" id="qty" readonly>
-                            </div>
-                          </div> 
-
-                        </div> 
-                 
-
-                          <div class="col-lg-6">
-
-                          <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Price</label>
-                            <div class="col-sm-7">
-                              <input type="number" class="form-control" id="price" readonly>
-                            </div>
-                          </div> 
-
-                          <div class="form-group row">
-                            <label for="inputEmail3" class="col-sm-2 col-form-label">Total</label>
-                            <div class="col-sm-7">
-                              <input type="number" class="form-control" id="total" readonly>
-                            </div>
-                          </div> 
-
-                          <button style="font-size: 12px;" class="btn btn-primary btn-sm btn-addToCart" id="btn-addToCart"> ADD [F9]</button> 
-
-                        </div>
-             
-                      </div>
-                 
-                      </div>
-                    
-                </div>
-
-                <div class="card ml-3 mt-3" style="width: 350px">
-                
-                  <div class="card-body">
-  
-                        <div class="row amount-due">
-                       
-                            <label>Total Amout Due</label>
-                              <input type="text" class="form-control" id="total-amount-due" value="{{ $getTotalAmount }}" readonly>
-                  
-                              <label>Tentered</label>
-                              <input type="text" class="form-control" id="tendered">
-
-                              <label>Change</label>
-                              <input type="text" class="form-control" id="change" value="₱0" readonly>
-
-                              <div class="form-check mt-1 mr-4  mb-2">
-                                <input type="checkbox" class="form-check-input chk-discount" id="discount-chk">
-                                <label class="form-check-label" for="exampleCheck1">Discount</label>
-                              </div>
-
-                              <div class="form-group ml-auto">
-                                <button class="btn btn-success btn-sm btn-processs" style="font-size: 14px; width: 100px;" 
-                                data-toggle="modal" data-target="#processModal" id="btn-process"><u>P</u>AY</button> 
-                              </div>
-
-                              <div class="discount-option" style="display: none;">
-                                <div class="form-check ml-2 mr-2 mt-1">
-                                  <input class="form-check-input" type="radio" name="radio-discount" id="radio-sc" value="sc" checked required>
-                                  <label class="form-check-label" for="add">
-                                    SC
-                                  </label>
-                                </div>
-                                <div class="form-check mt-1 ml-2">
-                                  <input class="form-check-input" type="radio" name="radio-discount" id="radio-pwd" value="pwd" required>
-                                  <label class="form-check-label" for="less">
-                                    PWD
-                                  </label>
-                                </div>
-
-                              <p class="mt-1 ml-2">Less: ₱<span id="less-discount"></span></p>
-                              </div>
-
-                          </div> 
-                    
-                        </div>
-                         
-                        
-                         
-                        </div>
-                      
-                  </div>
-
-                <div class="card  mt-1" style="width: 1267px">
-                
-                  <div class="card-body">
-            <div class="box-body cashiering-table">
-              <?php 
+                <?php 
                 $total = 0;
                 $total_amount_generic = 0;
               ?> 
-              <table class="table table-hover" id="cashiering-table" width="100%">
+              <div class="cashiering-table">
+                <table class="table table-hover" id="cashiering-table" width="100%">
              
                   <thead>
                       <tr>
@@ -188,8 +88,8 @@
                         <td>₱{{ number_format($data->selling_price, 2, '.', '') }}</td>
                         <td>{{ $data->qty }}</td>    
                         <td>₱ {{ number_format($data->amount, 2, '.', '') }}</td>
-                        <td><a href="" style="cursor: pointer; color:#24568D;" class="show-void-modal" product-code="{{ $data->product_code }}"
-                           data-toggle="modal" data-target="#voidModal">Void</a>
+                        <td>
+                          <a href="" style="cursor: pointer; color:#AA0000;" class="show-void-modal" product-code="{{ $data->product_code }}" data-toggle="modal" data-target="#voidModal">&times;</a>
                         </td>
                       </tr>  
                                  
@@ -202,13 +102,84 @@
                   </tbody>
              
               </table>
-            
-          </div>
-                  </div>
-               
-     </div>
+              </div>
 
-            </div>
+              <hr>
+
+              <div class="row mt-2">
+
+                <div class="col-lg-4">
+                        <table class="table table-bordered table-hover">
+                          <thead>
+                              <tr>
+                                  <th>Total Amount Due</th>
+                                  <th><input type="text" class="form-control peso-sign" id="total-amount-due" value="{{ $getTotalAmount }}" readonly></th>
+                              </tr>
+                              <tr>
+                                  <th>Tendered</th>
+                                  <th><input type="text" class="form-control peso-sign" id="tendered"></th>
+                              </tr>
+                              <tr>
+                                  <th>Change</th>
+                                  <th><input type="text" class="form-control peso-sign" id="change" readonly></th>
+                              </tr>
+                          </thead>
+                      </table>
+                </div>
+
+              <div class="col-lg-6">
+                        <div class="form-check mt-1 mr-4  mb-2">
+                          <input type="checkbox" class="form-check-input chk-discount" id="discount-chk">
+                          <label class="form-check-label" for="exampleCheck1">Discount</label>
+                        </div>
+                        <div class="discount-option" style="display: none;">
+                          <div class="form-check ml-2 mr-2 mt-1">
+                            <input class="form-check-input" type="radio" name="radio-discount" id="radio-sc" value="sc" checked required>
+                            <label class="form-check-label">
+                              SC
+                            </label>
+                          </div>
+                          <div class="form-check mt-1 ml-2">
+                            <input class="form-check-input" type="radio" name="radio-discount" id="radio-pwd" value="pwd" required>
+                            <label class="form-check-label">
+                              PWD
+                            </label>
+                          </div>
+            
+                        <p class="mt-1 ml-2">Less: ₱<span id="less-discount"></span></p>
+                        </div>
+
+                        <div class="payment-option">
+                          <div class="form-check ml-2 mr-2 mt-1">
+                            <input class="form-check-input" type="radio" name="radio-payment-option" id="radio-cash" value="cash" checked required>
+                            <label class="form-check-label">
+                              Cash
+                            </label>
+                          </div>
+                          <div class="form-check mt-1 ml-2">
+                            <input class="form-check-input" type="radio" name="radio-payment-option" id="radio-gcash" value="gcash" required>
+                            <label class="form-check-label">
+                              Gcash
+                            </label>
+                          </div>
+                        </div>
+
+                        <input type="hidden" class="form-control" name="sales-invoice" id="sales-invoice-no">
+
+                        <div class="form-group ml-auto">
+                          <button class="btn btn-success btn-sm btn-processs mt-2" style="font-size: 14px; width: 100px;"  id="btn-confirm-inv">Pay</button> 
+                        </div>
+              </div>
+             
+              </div>
+
+            
+            
+                 
+                      </div>
+                    
+                </div>
+
         <!-- /.row (main row) -->
       </div>
       <!-- /.container-fluid -->

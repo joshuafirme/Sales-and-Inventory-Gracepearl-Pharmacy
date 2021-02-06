@@ -153,6 +153,7 @@ class SalesCtr extends Controller
 
         $sales_inv_no = Input::input('sales_inv_no'); 
         $discount = Input::input('less_discount'); 
+        $payment_method = Input::input('payment_method'); 
 
         if($discount){
             $this->storeDiscount($discount);
@@ -165,7 +166,8 @@ class SalesCtr extends Controller
             $sales->product_code = $data->product_code;
             $sales->qty = $data->qty;
             $sales->amount = $data->amount;       
-            $sales->date = date('Y-m-d');     
+            $sales->date = date('Y-m-d'); 
+            $sales->payment_method = $payment_method;    
             $sales->employeeID = 20001;   
             $sales->order_from = "Walk-in";   
             $sales->save(); 
@@ -308,6 +310,8 @@ class SalesCtr extends Controller
         else{
             echo "No data found";
         }
+
+        DB::table('tblcashiering')->delete();
     }
 
     public function storeDiscount($discount){

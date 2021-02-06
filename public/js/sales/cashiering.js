@@ -99,6 +99,7 @@ $(document).ready(function(){
 
           success:function(){
             $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+            $('#cashiering_search').val('');
             getTotalAmount(); 
             getGenericTotalAmount();
           }
@@ -198,15 +199,22 @@ $(document).ready(function(){
           },
           success:function(){
             setTimeout(function () {
-              $('.update-success-validation').css('display', 'inline');
+              $('#void-success').css('display', 'inline');
               $('#btn-void').text('Void');
               $('.loader').css('display', 'none');
               $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+              setTimeout(function(){
+                $('#void-success').fadeOut('slow');
+                $('#admin-username').val('');
+                $('#admin-password').val('');
+                $('#voidModal').modal('hide');
+              },2000);
+            },1000);
 
-              getTotalAmount();
-              computeChange();
-              getGenericTotalAmount();
-            },500);
+            
+            getTotalAmount();
+            computeChange();
+            getGenericTotalAmount();
           }
         });
       }
@@ -238,7 +246,7 @@ $(document).ready(function(){
         }
         
       }
-              
+      getSalesInvoice();
         //get sales inv and pass to input
         function getSalesInvoice(){
           $.ajax({
@@ -309,18 +317,18 @@ $(document).ready(function(){
       }
 
       function computeDiscount(percentage){
-        getTotalAmount();
-        setTimeout(function(){
-          var total = $('#total-amount-due').val();  
-        var total_generic = $('#generic_total_hidden').val();  
-        var discount = percentage * total_generic;
-        var total_due = total - discount;
+          getTotalAmount();
+          setTimeout(function(){
+            var total = $('#total-amount-due').val();  
+          var total_generic = $('#generic_total_hidden').val();  
+          var discount = percentage * total_generic;
+          var total_due = total - discount;
 
-        $('#less-discount').text(moneyFormat(discount));
-        $('#total-amount-due').val(moneyFormat(total_due));
+          $('#less-discount').text(moneyFormat(discount));
+          $('#total-amount-due').val(moneyFormat(total_due));
 
-        computeChange();
-        },500);          
+          computeChange();
+          },500);          
       }
 
 
@@ -342,27 +350,24 @@ $(document).ready(function(){
       
         });
 
-       //enter sales invoice # and check if senior citizen
+      
+
        $('#btn-confirm-inv').click(function(){
    
-        var senior_chk = $('#senior-chk').val();
         var less_discount = $('#less-discount').text();
         var sales_inv_no= $('#sales-invoice-no').val();
-    //    var senior_name = $('#senior-name').val();
+        var payment_method;
 
-        console.log(senior_chk);
-        console.log(sales_inv_no);
-     //   console.log(senior_name);
-
-        if($('#senior-chk').prop('checked') == true){
-          senior_chk = 'yes';
+        if($('#radio-cash').is(':checked')){
+          payment_method = 'Cash';
         }
-        else{
-          senior_chk = 'no';
+        else if($('#radio-gcash').is(':checked')){
+          payment_method = 'GCash';
         }
 
-          if($('#sales-invoice').val() == ''){
-            $('.text-danger').css('display','inline');
+
+          if($('#tendered').val() == ''){
+            alert('Please enter the amount tendered.')
           }
           else{
             $.ajax({
@@ -380,17 +385,16 @@ $(document).ready(function(){
                     data:{
                       sales_inv_no:sales_inv_no,
                       less_discount:less_discount,
-                      senior_chk:senior_chk
+                      payment_method:payment_method
                     },
                     beforeSend:function(){
                       $('#btn-confirm-inv').text('Processing...');
-                      $('.loader').css('display', 'inline');
                     },
                     success:function(){
-      
-                      initComponents();
+                      $( ".cashiering-table" ).load( "cashiering .cashiering-table" );
                       clear();
-                     
+                      getSalesInvoice();
+                      initComponents();
                     }
                   });   
                 }
@@ -400,46 +404,27 @@ $(document).ready(function(){
     });
 
     function initComponents(){
-      setTimeout(function(){
       
-        $('.loader').css('display', 'none');
-        $('.update-success-validation').css('display', 'inline');
-        $('#btn-confirm-inv').text('Print Reciept');
+     //   $('.loader').css('display', 'none');
+      //  $('.update-success-validation').css('display', 'inline');
+        $('#btn-confirm-inv').text('Pay');
 
-        
-        $('#senior-chk').prop('checked', false);
-        $('#senior-name').css('display', 'none');
-       
+        $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
+  
        setTimeout(function(){
           $('.update-success-validation').fadeOut('slow')
 
           setTimeout(function(){
-            $('#processModal').modal('hide');
 
             //generate sales invoice in new tab 
             window.open('/cashiering/reciept/print', '_blank'); 
-            //then forget cart session
-            setTimeout(function() {
-              forgetCart();
-               $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
 
-            },3000);
 
           },1000);
 
         },500);
-
-      },500);
     }
 
-    function forgetCart() {
-      $.ajax({
-        url:"/cashiering/forgetcart",
-        type:"GET",
-        success:function(){
-        }
-      }); 
-    }
 
     function clear(){
       $('#cashiering_search').val('');
@@ -454,18 +439,5 @@ $(document).ready(function(){
       $('#change').val('');
       $('#tendered').val('');
     }
-
-      
-      function getCurrentTransNo(){
-        $.ajax({
-          url:"/sales/cashiering/getTransNo",
-          type:"GET",
-          success:function(response){
-            console.log(response);
-              $('#transno').val(response);
-           
-          }
-        }); 
-      }
 
 });

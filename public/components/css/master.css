@@ -485,7 +485,7 @@ flex-direction: row;
     .cashiering-table{
         overflow-x:auto; 
         overflow-y:auto; 
-        height: 290px;
+        height: 240px;
     }
     
     
@@ -572,4 +572,13 @@ flex-direction: row;
 	min-width: 300px;
 	max-height: 600px;
 
+  }
+
+
+  .peso-sign{
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="30"><text x="5" y="23" style="font: 16px Lato;">₱</text></svg>') no-repeat;
+    padding-left: 20px;
+    font-family: "Lato", "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    color: #444;
   }

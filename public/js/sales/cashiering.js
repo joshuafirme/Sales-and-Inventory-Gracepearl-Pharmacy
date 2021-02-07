@@ -407,7 +407,7 @@ $(document).ready(function(){
      //   $('.loader').css('display', 'none');
       //  $('.update-success-validation').css('display', 'inline');
         $('#btn-confirm-inv').text('Pay');
-
+        $('#less-discount').text('');
         $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
   
        setTimeout(function(){

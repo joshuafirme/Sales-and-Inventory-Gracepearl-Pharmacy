@@ -4,6 +4,19 @@ namespace App\Classes;
 use Illuminate\Support\Facades\DB;
 
 class CashieringInvoice {
+    
+    public function getVAT($total_due){
+        return $total_due * 0.12;
+    }
+
+    public function getNetOfVAT($total_due){
+        return $total_due - ($total_due * 0.12);
+    }
+
+    public function getAmountDue($total_due){
+        return $total_due - $this->getVAT($total_due);
+    }
+
 
     public function getSalesInvoice($product, $discount){
 
@@ -68,6 +81,10 @@ class CashieringInvoice {
             font-style:italic;
         }
 
+        .peso-sign {
+            content: "\20B1";
+          }
+
 
          </style>
         <div style="width:100%">
@@ -122,45 +139,45 @@ class CashieringInvoice {
      $output .='
         <tr>
             <td style="text-align:right;" colspan="4">Total Sales (VAT Inclusive) </td>
-            <td class="align-text">'. number_format($total_amount,2,'.',',') .'</td>
+            <td class="align-text">'. number_format($total_amount,2,'.',',') .' PhP</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="4">Less: VAT </td>
-            <td ></td>
+            <td class="align-text">'. number_format($this->getVAT($total_amount),2,'.',',') .'</td>
         </tr>
 
         <tr >
             <td class="ar" colspan="2">VATable Sales </td>
             <td ></td>
             <td class="ar">Amount: Net of VAT</td>
-            <td ></td>
+            <td class="align-text">'. number_format($this->getNetOfVAT($total_amount),2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="2">VAT-Exempt Sales</td>
             <td ></td>
             <td class="ar">Less:SC/PWD Discount</td>
-            <td ></td>
+            <td class="align-text">'. $discount .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="2">Zero Rated Sales</td>
             <td ></td>
             <td class="ar">Amount Due</td>
-            <td ></td>
+            <td class="align-text">'. number_format($this->getAmountDue($total_amount),2,'.',',') .' PhP</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="2">VAT Amount</td>
             <td ></td>
             <td class="ar">Add: VAT</td>
-            <td ></td>
+            <td class="align-text">'. number_format($this->getVAT($total_amount),2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td style="text-align:right;" colspan="4">Total Amount Due </td>
-            <td class="align-text">'. number_format(($total_amount - $discount),2,'.',',')  .'</td>
+            <td class="align-text">'. number_format(($total_amount - $discount),2,'.',',')  .' PhP</td>
         </tr>
 
         </tbody>

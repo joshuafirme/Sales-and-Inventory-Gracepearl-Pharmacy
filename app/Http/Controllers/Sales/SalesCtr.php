@@ -149,13 +149,13 @@ class SalesCtr extends Controller
     }
 
     public function process(){
-
+        session()->forget('walkin-discount');
         $sales_inv_no = Input::input('sales_inv_no'); 
         $discount = Input::input('less_discount'); 
         $payment_method = Input::input('payment_method'); 
 
         if($discount){
-            $this->storeDiscount($discount);
+            $this->storeDiscount($discount, $sales_inv_no);
         }
 
         foreach($this->getCashieringProduct() as $data){
@@ -175,6 +175,15 @@ class SalesCtr extends Controller
         }
  
     }
+
+    public function storeDiscount($discount, $sales_inv_no){
+        session()->put('walkin-discount', $discount);
+        DB::table('tblorder_discount')
+            ->insert([
+                'discount_amount' => $discount,
+                'sales_inv_no' => $sales_inv_no
+            ]);
+      }
 
     public function getCashieringProduct(){
 
@@ -311,12 +320,6 @@ class SalesCtr extends Controller
         }
     }
 
-    public function storeDiscount($discount){
-        $od = new OrderDiscount;
-        $od->discount_amount = $discount;
-        $od->save();
-      }
-
     public function updateInventory($product_code, $qty){
         
         DB::table($this->table_exp)
@@ -354,12 +357,9 @@ class SalesCtr extends Controller
 
     public function salesInvoice(){
        $c = new CashieringInvoice;
-       return $c->getSalesInvoice($this->getCashieringProduct(), $this->getDiscount());
+       return $c->getSalesInvoice($this->getCashieringProduct(), session()->get('walkin-discount'));
     }
 
-    public function getDiscount(){
-        session()->put('discount', Input::input('less_discount'));
-     }
 
 
 }

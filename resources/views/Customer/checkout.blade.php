@@ -112,6 +112,34 @@
           </div>
         </div>
         <!-- Card -->
+
+        <!-- Card -->
+        <div class="card mb-3">
+          <div class="card-body">
+
+          <h5 class="mb-4">Secure payment services by</h5>
+          <img class="mr-2" width="32px"
+              src="{{asset('assets/gcash-logo.png')}}"
+              alt="Gcash" style="border-radius: 3px;">
+          <img class="mr-2" width="45px"
+              src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+              alt="Visa">
+          <img class="mr-2" width="45px"
+              src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+              alt="American Express">
+          <img class="mr-2" width="45px"
+              src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+              alt="Mastercard">
+          <img class="mr-2" width="45px"
+              src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/discover.svg"
+              alt="Mastercard">
+          <img class="mr-2" width="45px"
+              src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/jcb.svg"
+              alt="Mastercard">
+      
+          </div>
+      </div>
+      <!-- Card -->
   
 
       </div>
@@ -179,33 +207,7 @@
         </div>
         <!-- Card -->
         
-        <!-- Card -->
-        <div class="card mb-3">
-            <div class="card-body">
-
-            <h5 class="mb-4">Secure payment services by</h5>
-            <img class="mr-2" width="32px"
-                src="{{asset('assets/gcash-logo.png')}}"
-                alt="Gcash" style="border-radius: 3px;">
-            <img class="mr-2" width="45px"
-                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                alt="Visa">
-            <img class="mr-2" width="45px"
-                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                alt="American Express">
-            <img class="mr-2" width="45px"
-                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                alt="Mastercard">
-            <img class="mr-2" width="45px"
-                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/discover.svg"
-                alt="Mastercard">
-            <img class="mr-2" width="45px"
-                src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/jcb.svg"
-                alt="Mastercard">
         
-            </div>
-        </div>
-        <!-- Card -->
     
   
       </div>

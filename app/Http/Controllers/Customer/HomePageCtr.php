@@ -71,25 +71,27 @@ class HomePageCtr extends Controller
         }
 
         if($search_key !== ''){
-          $product = DB::table($this->table_prod.' AS P')
-          ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
-          ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-          ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-          ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-          ->whereRaw('exp_date >= CURDATE()')
-          ->where('description', 'LIKE', '%'.$search_key.'%')
-          ->whereRaw('C.category_name IN ("'.$cat_imp.'")')
-          ->whereBetween('selling_price', [$min_price, $max_price])
-          ->limit($limit)
-          ->get();
+          $product = DB::table($this->table_exp.' AS E')
+          ->select("E.*", 'E.product_code', 'P.description', 'P.re_order', 'P.orig_price', 'P.selling_price', 'E.qty', 'unit', 'category_name', 
+              DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+              ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+              ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
+              ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+              ->whereRaw('E.exp_date >= CURDATE()')
+              ->where('description', 'LIKE', '%'.$search_key.'%')
+              ->whereRaw('C.category_name IN ("'.$cat_imp.'")')
+              ->whereBetween('selling_price', [$min_price, $max_price])
+              ->limit($limit)
+              ->get();
         }
         else{
-          $product = DB::table($this->table_prod.' AS P')
-          ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) AS product_code, unit, category_name, supplierName'))
-          ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
+          $product = DB::table($this->table_exp.' AS E')
+          ->select("E.*", 'E.product_code', 'P.description', 'P.re_order', 'P.orig_price', 'P.selling_price', 'E.qty', 'unit', 'category_name', 
+          DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+          ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
           ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
           ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-          ->whereRaw('exp_date >= CURDATE()')
+          ->whereRaw('E.exp_date >= CURDATE()')
           ->whereRaw('C.category_name IN ("'.$cat_imp.'")')
           ->limit($limit)
           ->get();

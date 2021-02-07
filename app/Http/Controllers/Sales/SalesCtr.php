@@ -142,7 +142,6 @@ class SalesCtr extends Controller
                 ->sum('amount');
     }
 
-
     public function void()
     {
         $product_code = Input::input('product_code');
@@ -310,8 +309,6 @@ class SalesCtr extends Controller
         else{
             echo "No data found";
         }
-
-        DB::table('tblcashiering')->delete();
     }
 
     public function storeDiscount($discount){
@@ -357,8 +354,12 @@ class SalesCtr extends Controller
 
     public function salesInvoice(){
        $c = new CashieringInvoice;
-       return $c->getSalesInvoice($this->getCashieringProduct());
+       return $c->getSalesInvoice($this->getCashieringProduct(), $this->getDiscount());
     }
+
+    public function getDiscount(){
+        session()->put('discount', Input::input('less_discount'));
+     }
 
 
 }

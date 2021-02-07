@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 class CashieringInvoice {
 
-    public function getSalesInvoice($product){
+    public function getSalesInvoice($product, $discount){
 
         $output = '
         <style>
@@ -160,7 +160,7 @@ class CashieringInvoice {
 
         <tr>
             <td style="text-align:right;" colspan="4">Total Amount Due </td>
-            <td class="align-text">'. number_format($total_amount,2,'.',',') .'</td>
+            <td class="align-text">'. number_format(($total_amount - $discount),2,'.',',')  .'</td>
         </tr>
 
         </tbody>

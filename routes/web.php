@@ -134,7 +134,7 @@ Route::resource('/maintenance/product', 'Maintenance\ProductMaintenanceCtr');
 Route::post('/maintenance/product/store', 'Maintenance\ProductMaintenanceCtr@store');
 Route::post('/maintenance/updateproduct', 'Maintenance\ProductMaintenanceCtr@updateProduct');
 Route::post('/maintenance/product/show/{productCode}', 'Maintenance\ProductMaintenanceCtr@show');
-Route::delete('/maintenance/product/delete/{productCode}', 'Maintenance\ProductMaintenanceCtr@destroy');
+Route::delete('/maintenance/product/delete', 'Maintenance\ProductMaintenanceCtr@destroy');
 
 //Unit 
 Route::resource('/maintenance/unit', 'Maintenance\UnitMaintenanceCtr');

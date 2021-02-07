@@ -75,10 +75,10 @@
                             <th>Product Code</th>
                             <th>Description</th> 
                             <th>Category</th>   
-                            <th>Unit</th>    
-                            <th>Supplier</th>        
+                            <th>Unit</th>         
                             <th>Quantity</th>
                             <th>Amount</th>
+                            <th>Payment Method</th>   
                             <th>Date</th>
                             <th>From</th>
                         </tr>

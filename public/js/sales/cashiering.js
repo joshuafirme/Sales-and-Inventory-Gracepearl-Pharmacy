@@ -390,8 +390,7 @@ $(document).ready(function(){
                     beforeSend:function(){
                       $('#btn-confirm-inv').text('Processing...');
                     },
-                    success:function(){
-                      $( ".cashiering-table" ).load( "cashiering .cashiering-table" );
+                    success:function(){      
                       clear();
                       getSalesInvoice();
                       initComponents();
@@ -418,7 +417,9 @@ $(document).ready(function(){
 
             //generate sales invoice in new tab 
             window.open('/cashiering/reciept/print', '_blank'); 
-
+            setTimeout(function(){
+              $( ".cashiering-table" ).load( "cashiering .cashiering-table" );
+            },3000)
 
           },1000);
 

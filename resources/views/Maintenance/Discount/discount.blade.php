@@ -37,13 +37,13 @@
                     {{ csrf_field() }}
                         <div class="form-group">
                           <label for="discount">Senior Citizen</label>
-                          <input type="number" step="0.01" min="0.01" max="1.0" class="form-control" name="sc-discount" id="sc-discount" value={{ $sc_discount }}>
+                          <input type="number" step="0.01" min="0.01" max="1.0" class="form-control" name="sc-discount" id="sc-discount" value={{ number_format($sc_discount, 2,'.',',') }}>
                           <small class="form-text text-muted">0.01 is equal to 1% discount.</small>
                         </div> 
                         
                         <div class="form-group">
                           <label for="discount">PWD</label>
-                          <input type="number" step="0.01" min="0.01" max="1.0" class="form-control" name="pwd-discount" id="pwd-discount" value={{ $pwd_discount }}>
+                          <input type="number" step="0.01" min="0.01" max="1.0" class="form-control" name="pwd-discount" id="pwd-discount" value={{ number_format($pwd_discount, 2,'.',',') }}>
                         </div>  
                         <button type="submit" class="btn btn-sm btn-success" id="btn-activate">Activate</button>
                       </form>

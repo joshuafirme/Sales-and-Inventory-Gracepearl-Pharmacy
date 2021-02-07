@@ -46,7 +46,7 @@ class ProductMaintenanceCtr extends Controller
                     $button = ' <a class="btn btn-sm btn-primary" id="btn-edit-product-maintenance" product-code="'. $product->id .'" 
                     data-toggle="modal" data-target="#editProductModal"><i class="fa fa-edit"></i></a>';
                     $button .= '&nbsp;&nbsp;';
-                    $button .= '<a class="btn btn-sm" id="delete-product" delete-id="'. $product->id .'"><i style="color:#DC3545;" class="fas fa-archive"></i></a>';
+                    $button .= '<a class="btn btn-sm" id="delete-product" product-id="'. $product->id_exp .'" delete-id="'. $product->product_id .'"><i style="color:#DC3545;" class="fas fa-archive"></i></a>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -59,7 +59,7 @@ class ProductMaintenanceCtr extends Controller
                     $button = ' <a class="btn btn-sm" id="btn-edit-product-maintenance" product-code="'. $product->id .'"
                     data-toggle="modal" data-target="#editProductModal" ><i class="fa fa-edit"></i></a>';
                    $button .= '&nbsp;&nbsp;';
-                   $button .= '<a class="btn btn-sm" id="delete-product" delete-id="'. $product->id .'"><i  style="color:#DC3545;" class="fa fa-archive"></i></a>';
+                   $button .= '<a class="btn btn-sm" id="delete-product" product-id="'. $product->id_exp .'" delete-id="'. $product->product_id .'"><i  style="color:#DC3545;" class="fa fa-archive"></i></a>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -202,7 +202,7 @@ class ProductMaintenanceCtr extends Controller
             ->where('id', $id_exp)
             ->update(['exp_date' => $product->exp_date]);
  
-            $this->storeImage($product->id_exp);
+            $this->storeImage($product->id);
 
         return redirect('/maintenance/product')->with('success', 'Product was successfully updated');
      //   Storage::disk('local')->put($image, 'Contents');
@@ -234,14 +234,18 @@ class ProductMaintenanceCtr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        $audit = new AuditTrailHelper;
-        $audit->recordAction($this->module, 'Delete product');
-  
-        $product_code = Input::input('product_code');
-        $product = DB::table($this->table_exp)->where('id', $id)->delete();
-        return $product;
+    //    $audit = new AuditTrailHelper;
+    //    $audit->recordAction($this->module, 'Delete product');
+
+        $id_exp = Input::input('id_exp');
+        $product_id = Input::input('product_id');
+        
+        DB::table($this->table_exp)->where('id', $product_id)->delete();
+        DB::table($this->table_prod)->where('id',$id_exp)->delete();
+
+        return $product_id.' - '. $id_exp;
     }
 
     public function pdf($filter_category){

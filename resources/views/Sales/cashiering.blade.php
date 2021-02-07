@@ -34,7 +34,7 @@
                   <table id="" class="table responsive table-bordered table-hover" style=" margin-bottom:20px;">
                     <thead>
                         <tr>
-                            <th colspan="2">Search<input type="search" class="form-control" id="cashiering_search" placeholder="Search product code or description..."></th>
+                            <th colspan="2">Search<input type="search" class="form-control" id="cashiering_search" placeholder="Search product code or description"></th>
                             <th colspan="4"><button class="btn btn-sm btn-primary" id="btn-addToCart"><i class="fa fa-plus"></i> Add</button></th>
                         </tr>
                         <tr>
@@ -136,7 +136,7 @@
                           <div class="form-check ml-2 mr-2 mt-1">
                             <input class="form-check-input" type="radio" name="radio-discount" id="radio-sc" value="sc" checked required>
                             <label class="form-check-label">
-                              SC
+                              Senior Citizen
                             </label>
                           </div>
                           <div class="form-check mt-1 ml-2">

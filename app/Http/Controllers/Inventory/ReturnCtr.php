@@ -130,17 +130,16 @@ class ReturnCtr extends Controller
 
     public function updateInventory($product_code, $qty_return, $exp_date){
             DB::table($this->tbl_exp.' as E')
-            ->where([
-                ['product_code', $product_code],
-                ['exp_date', $exp_date]
-            ])
+            ->where('product_code', $product_code)
+            ->where('exp_date', $exp_date)
             ->update(array(
                 'qty' => DB::raw('qty + '. $qty_return .'')));
     }
 
     public function updateSales($sales_inv_no, $product_code){
-        DB::table($this->tbl_sales.' as S')
-        ->where('S.sales_inv_no', $sales_inv_no)
+        DB::table($this->tbl_sales)
+        ->where('sales_inv_no', $sales_inv_no)
+        ->where('product_code', $product_code)
         ->delete();
 }
 }

@@ -60,14 +60,14 @@ class SignUpCtr extends Controller
         $client = new \Nexmo\Client($basic);
 
         $otp = rand(1000,9999);
-
-        Session::put('otp', $otp);
-
+      
         $message = $client->message()->send([
             'to' => '63'.$phone_no,
             'from' => 'Gracepearl Pharmacy',
             'text' => $otp.' is your OTP from Gracepearl Pharmacy'
         ]);
+        Session::put('otp', $otp);
+
     }
 
     public function validateOTP($otp){

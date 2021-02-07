@@ -72,12 +72,12 @@ $(document).ready(function(){
 
 
   // delete product alert
-  var product_id, product_name;
+  var id_exp, product_id, product_name;
   $(document).on('click', '#delete-product', function(){
       row = $(this).closest("tr")
-      product_id = $(this).attr('delete-id');
-      console.log(product_id);
-      product_code =  $(this).closest("tr").find('td:eq(0)').text();
+      id_exp = $(this).attr('delete-id');
+      product_id = $(this).attr('product-id');
+      console.log(id_exp+' '+product_id);
       product_name =  $(this).closest("tr").find('td:eq(1)').text();
       $('#proconfirmModal').modal('show');
       $('.delete-success').hide();
@@ -92,10 +92,11 @@ $(document).ready(function(){
     
     $('#product_ok_button').click(function(){
         $.ajax({
-            url: '/maintenance/product/delete/'+ product_id,
+            url: '/maintenance/product/delete',
             type: 'DELETE',
             data:{
-              product_code:product_code
+              id_exp:id_exp,
+              product_id:product_id
             },
           
             beforeSend:function(){
@@ -103,7 +104,9 @@ $(document).ready(function(){
                 $('.loader').css('display', 'inline');
             },
             
-            success:function(){
+            success:function(response){
+              console.log(response);
+              console.log(id_exp+' '+product_id);
                 setTimeout(function(){
                     $('.delete-success').show();
                     $('.loader').css('display', 'none');

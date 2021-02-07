@@ -69,7 +69,7 @@
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
-              <input  type="number" step=".01" min="0" max="9999999" class="form-control orig_price" name="selling_price" id="selling_price" required>
+              <input  type="text" step=".01" min="0" class="form-control orig_price" name="selling_price" id="selling_price" required>
             </div>
             
             <div class="col-md-4">

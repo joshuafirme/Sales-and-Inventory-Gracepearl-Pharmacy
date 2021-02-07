@@ -243,7 +243,7 @@ class ProductMaintenanceCtr extends Controller
         $product_id = Input::input('product_id');
         
         DB::table($this->table_exp)->where('id', $product_id)->delete();
-        DB::table($this->table_prod)->where('id',$id_exp)->delete();
+    //    DB::table($this->table_prod)->where('id',$id_exp)->delete();
 
         return $product_id.' - '. $id_exp;
     }

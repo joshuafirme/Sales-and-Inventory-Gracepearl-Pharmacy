@@ -120,10 +120,8 @@ class SupplierDeliveryCtr extends Controller
 
     public function updatePurchaseOrder($po_num, $product_code, $remarks){
         DB::table($this->table_po.' as PO')
-            ->where([        
-                ['PO.product_code', '=', $product_code],
-                [DB::raw('CONCAT(PO._prefix, PO.po_num)'), '=', $po_num],
-            ])
+            ->where('PO.product_code', '=', $product_code)
+            ->where(DB::raw('CONCAT(PO._prefix, PO.po_num)'), '=', $po_num)
             ->update(
                 ['PO.status' => $remarks]
             );
@@ -132,24 +130,25 @@ class SupplierDeliveryCtr extends Controller
     public function checkDeliveredQty($product_code, $qty_delivered){
         $qty_order = DB::table($this->table_po)
             ->where('product_code', $product_code)
-            ->value('qty_order');
+            ->pluck('qty_order');
 
             if($qty_order > $qty_delivered){
-                $p = 'Partially Completed';
+                return 'Partially Completed';
             }
-            else if($qty_order == $qty_delivered){
-                $p = 'Completed';
+            if($qty_order == $qty_delivered){
+                return 'Completed';
             }
             
-            return $p;
+          //  return $p;
     }
 
     public function updateInventory($product_code, $qty_delivered, $exp_date)
     {
         if($this->checkIfSameExpDate($product_code, $exp_date) == true)
         {
-            DB::table($this->table_prod.' as P')
-            ->where(DB::raw('CONCAT(P._prefix, P.id)'), $product_code)
+            DB::table('tblexpiration')
+            ->where('product_code', $product_code)
+            ->where('exp_date', $exp_date)
             ->update(array('qty' => DB::raw('qty + '. $qty_delivered .''))); 
         }
         else{
@@ -165,11 +164,9 @@ class SupplierDeliveryCtr extends Controller
 
     public function checkIfSameExpDate($product_code, $exp_date)
     {
-        $res = DB::table($this->table_prod.' as P')
-            ->where([
-                [DB::raw('CONCAT(P._prefix, P.id)'), $product_code],
-                ['exp_date', $exp_date],
-            ])
+        $res = DB::table('tblexpiration')
+            ->where('product_code', $product_code)
+            ->where('exp_date', $exp_date)
             ->get();
         if($res->count() > 0){
             return true;

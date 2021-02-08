@@ -281,6 +281,8 @@ Route::get('/utilities/backup_restore', 'Utilities\BackupAndRestoreCtr@index');
 Route::post('/utilities/backup_restore/backup', 'Utilities\BackupAndRestoreCtr@backup');
 Route::post('/utilities/backup_restore/restore', 'Utilities\BackupAndRestoreCtr@restore');
 
+Route::get('/utilities/archive', 'Utilities\ArchiveCtr@index');
+
 
 
 

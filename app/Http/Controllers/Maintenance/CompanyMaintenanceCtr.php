@@ -22,7 +22,7 @@ class CompanyMaintenanceCtr extends Controller
 
         if(!($rights->isUserAuthorize($this->module)))
         {
-            $rights->notAuthMessage();
+            return view('/layouts.not_auth');
         }
 
         $company = DB::table($this->table_name)

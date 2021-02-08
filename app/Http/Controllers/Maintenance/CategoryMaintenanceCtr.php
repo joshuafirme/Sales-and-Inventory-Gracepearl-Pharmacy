@@ -21,7 +21,7 @@ class CategoryMaintenanceCtr extends Controller
 
         if(!($rights->isUserAuthorize($this->module)))
         {
-            $rights->notAuthMessage();
+            return view('/layouts.not_auth');
         }
     
         $category = DB::table($this->table_name)

@@ -15,13 +15,13 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="icon-big text-center">
-                                    <i class="teal fas fa-shopping-cart"></i>
+                                    <i class="olive fas fa-shopping-cart"></i>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail text-center">
                                     <p>New Orders</p>
-                                    <span class="number">6,267</span>
+                                    <span class="number">{{ $newOrders}}</span>
                                 </div>
                             </div>
                         </div>
@@ -45,8 +45,8 @@
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail text-center">
-                                    <p>Revenue</p>
-                                    <span class="number">$180,900.00</span>
+                                    <p>Walk-in Sales</p>
+                                  <span class="number">₱{{ number_format($currentMonthSales, 2, '.',',')  }}</span>
                                 </div>
                             </div>
                         </div>
@@ -65,20 +65,20 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="icon-big text-center">
-                                    <i class="violet fas fa-eye"></i>
+                                    <i class="olive fas fa-dollar-sign"></i>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail text-center">
-                                    <p>Page views</p>
-                                    <span class="number">28,210</span>
+                                    <p>Online Sales</p>
+                                    <span class="number">₱{{ number_format($currentMonthSales, 2, '.',',')  }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                <i class="fas fa-stopwatch"></i> In the last 24 Hour
+                                <i class="fas fa-calendar"></i> In this current Month
                             </div>
                         </div>
                     </div>
@@ -90,13 +90,13 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="icon-big text-center">
-                                    <i class="orange fas fa-envelope"></i>
+                                    <i class="olive fas fa-users"></i>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail text-center">
-                                    <p>Support Request</p>
-                                    <span class="number">75</span>
+                                    <p>Registered Customer</p>
+                                    <span class="number">{{ $registeredCustomer }}</span>
                                 </div>
                             </div>
                         </div>

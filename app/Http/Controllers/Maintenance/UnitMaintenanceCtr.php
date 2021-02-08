@@ -21,7 +21,7 @@ class UnitMaintenanceCtr extends Controller
 
         if(!($rights->isUserAuthorize($this->module)))
         {
-            $rights->notAuthMessage();
+            return view('/layouts.not_auth');
         }
 
         $unit = DB::table($this->table_name)->get();

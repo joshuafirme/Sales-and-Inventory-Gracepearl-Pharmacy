@@ -80,6 +80,10 @@
             </div>
         </div>
 
+        <footer class="page-copyright ml-auto">
+          <p>© 2021. All Rights Reserved.</p>
+      </footer>
+
         <!-- /.row (main row) -->
         
       </div><!-- /.container-fluid -->

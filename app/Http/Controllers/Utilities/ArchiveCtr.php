@@ -7,5 +7,7 @@ use App\Http\Controllers\Controller;
 
 class ArchiveCtr extends Controller
 {
-    //
+    public function index(){
+        return view('utilities.archive');
+    }
 }

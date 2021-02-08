@@ -28,7 +28,7 @@ class ProductMaintenanceCtr extends Controller
 
         if(!($rights->isUserAuthorize($this->module)))
         {
-            $rights->notAuthMessage();
+            return view('/layouts.not_auth');
         }
 
         $category_param = $request->category;

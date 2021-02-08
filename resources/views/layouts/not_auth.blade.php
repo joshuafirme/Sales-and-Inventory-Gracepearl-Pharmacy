@@ -210,7 +210,19 @@
             </nav>
             <section class="content">
                 <div class="container-fluid">               
-                    @yield('content')
+                    
+                    <div class="wrapper">
+                        <div class="page vertical-align text-center">
+                            <div class="page-content vertical-align-middle">
+                            <header>
+                                <p>You are not authorized to access this module!</p>
+                            </header>
+                            <p class="error-advise">Please see your administrator.</p>
+                            <a class="btn btn-primary btn-round mb-5" href="/dashboard">GO TO HOME PAGE</a>
+                            
+                            </div>
+                        </div>
+                    </div>
                 
           </div>
           <script>
@@ -231,66 +243,6 @@
           <script src="{{asset('components/vendor/bootstrap4/js/bootstrap.bundle.min.js')}}"></script>
           <script src="{{asset('components/vendor/fontawesome5/js/solid.min.js')}}"></script>
           <script src="{{asset('components/vendor/fontawesome5/js/fontawesome.min.js')}}"></script>
-          <script src="{{asset('components/vendor/chartsjs/Chart.min.js')}}"></script>
-          <script src="{{asset('components/js/dashboard-charts.js')}}"></script>
-          <script src="{{asset('components/js/script.js')}}"></script>
-          <script src="{{asset('components/js/alert-auto-close.js')}}"></script>
-          <script src="{{asset('components/jquery-tabledit-master/jquery.tabledit.min.js')}}"></script>
-          <script src="{{asset('components/vendor/summernote/summernote-bs4.min.js')}}"></script>
-          <script src="{{asset('components/js/initiate-summernote.js')}}"></script>
-          <script src="https://cdn.ckeditor.com/4.15.1/standard/ckeditor.js"></script>
-    
-          <!-- maintenance -->
-          <script src="{{asset('js/maintenance/product_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/category_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/supplier_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/unit_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/company_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/user_maintenance.js')}}"></script>
-          <script src="{{asset('js/maintenance/shipping_maintenance.js')}}"></script>
-
-          <!-- sales -->
-          <script src="{{asset('js/sales/cashiering.js')}}"></script>
-          <script src="{{asset('js/sales/sales_report.js')}}"></script>
-
-           <!-- verify cutomer -->
-           <script src="{{asset('js/verify_customer.js')}}"></script>
-           
-           <!-- manage order -->
-           <script src="{{asset('js/manage_online_order.js')}}"></script>
-
-          <!-- inventory -->
-          <script src="{{asset('js/inventory/stockadjustment.js')}}"></script>
-          <script src="{{asset('js/inventory/purchase_order.js')}}"></script>
-          <script src="{{asset('js/inventory/notification.js')}}"></script>
-          <script src="{{asset('js/inventory/supplier_delivery.js')}}"></script>
-          <script src="{{asset('js/inventory/return.js')}}"></script>
-          <script src="{{asset('js/inventory/drug_disposal.js')}}"></script>
-
-           <!-- reports -->
-           <script src="{{asset('js/reports/inventory_report.js')}}"></script>
-           <script src="{{asset('js/reports/stockadjustment_report.js')}}"></script>
-           <script src="{{asset('js/reports/purchasedorder_report.js')}}"></script>
-           <script src="{{asset('js/reports/supplierdelivery_report.js')}}"></script>
-           <script src="{{asset('js/reports/returns_report.js')}}"></script>
-           <script src="{{asset('js/reports/reorder_report.js')}}"></script>
-           <script src="{{asset('js/reports/fast_slow_moving_report.js')}}"></script>
-           <script src="{{asset('js/reports/expired_report.js')}}"></script>
-           <script src="{{asset('js/reports/audit_report.js')}}"></script>
-
-          <!-- main - count all notifs and get user's name--> 
-          <script src="{{asset('js/main.js')}}"></script>
-
-          <script src="{{asset('js/products.js')}}"></script>
-
-          <script src="{{asset('components/vendor/DataTables/datatables.min.js')}}"></script>
-          <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/dataTables.buttons.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.flash.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
-          <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.html5.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://nightly.datatables.net/buttons/js/buttons.print.min.js"></script>
-          <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.22/api/sum().js"></script>
  
       </body>
 

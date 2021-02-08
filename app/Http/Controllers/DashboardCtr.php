@@ -16,31 +16,33 @@ class DashboardCtr extends Controller
     private $module = "Maintenance";
 
     public function index(){
-        $rights = new UserAccessRights;
+        if(session()->get('is-login') !== 'yes'){
+   
+            return redirect()->to('/admin-login')->send();
+         }
 
-        if(!($rights->isUserAuthorize($this->module)))
-        {
-            $rights->notAuthMessage();
-        }
-
-        $this->getSales();
-        return view('/dashboard');
+        return view('/dashboard',[
+            'newOrders' => $this->getOrders(),
+            'currentMonthSales' => $this->getCurrentMonthSales(),
+            'registeredCustomer' => $this->getRegisteredCustomer()
+        ]);
     }
 
-    public function getSales(){
+    public function getOrders(){
+        return DB::table('tblonline_order')
+                ->whereDate('created_at', date('Y-m-d'))
+                ->sum('amount');
+    }
 
-        $product = DB::table($this->table_sales)
-        ->select('date','amount')
-        ->whereBetween('date', ['2020-11-30', '2020-12-30'])
-        ->groupBy('date','amount')
-        ->get();
-      
-  
-        return ;
-      
-            
-      //   ->whereBetween('date', [$date_from, $date_to])
-      //   ->where('category_name', $category)
-      
-     }
+    public function getCurrentMonthSales(){
+        return DB::table('tblsales')
+                ->whereBetween('date', [date('Y-m-d', strtotime("-3 months")), date('Y-m-d')])
+                ->sum('amount');
+    }
+
+    public function getRegisteredCustomer(){
+        return DB::table('tblcustomer_account')->count();
+    }
+
+
 }

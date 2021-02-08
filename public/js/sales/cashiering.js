@@ -102,6 +102,7 @@ $(document).ready(function(){
             $('#cashiering_search').val('');
             getTotalAmount(); 
             getGenericTotalAmount();
+            clear();
           }
         });     
     }
@@ -407,7 +408,9 @@ $(document).ready(function(){
      //   $('.loader').css('display', 'none');
       //  $('.update-success-validation').css('display', 'inline');
         $('#btn-confirm-inv').text('Pay');
-        $('#less-discount').text('');
+        $('#less-discount').text('');     
+        $('.discount-option').css('display', 'none');
+        $('#discount-chk').prop('checked', false);
         $( "#cashiering-table" ).load( "cashiering #cashiering-table" );
   
        setTimeout(function(){

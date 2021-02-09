@@ -228,106 +228,36 @@ class ProductMaintenanceCtr extends Controller
         return $prefix;
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy()
     {
-    //    $audit = new AuditTrailHelper;
-    //    $audit->recordAction($this->module, 'Delete product');
+        $audit = new AuditTrailHelper;
+        $audit->recordAction($this->module, 'Delete product');
 
         $id_exp = Input::input('id_exp');
         $product_id = Input::input('product_id');
         
-        DB::table($this->table_exp)->where('id', $product_id)->delete();
-    //    DB::table($this->table_prod)->where('id',$id_exp)->delete();
+        DB::table($this->table_exp)
+            ->where('id', $product_id)
+            ->update([
+                'archive_status' => 1,
+                'updated_at' => date('Y-m-d h:m:s')
+            ]);
 
         return $product_id.' - '. $id_exp;
     }
 
-    public function pdf($filter_category){
+    public function bulkArchive($id){
 
-        $product_data = $this->getAllProductData($filter_category);
-        $output = $this->convertProductDataToHTML($product_data);
+        $id_arr = explode(", ", $id);
+        for($i = 0; $i < count($id_arr); $i++) {
 
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($output);
-        $pdf->setPaper('A4', 'landscape');
-
-        return $pdf->stream($product_data[0]->created_at);
-    }
-
-
-    public function getAllProductData($category_param)
-    {
-        $product = DB::table($this->table_prod.' AS P')
-        ->select("*", DB::raw('CONCAT(P._prefix, P.id) AS productCode'))
-        ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
-        ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-        ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
-        ->where('category_name',  $category_param)
-        ->get();
-
-        return $product;
-    }
-
-    public function convertProductDataToHTML($product_data){
-        $output = '
-        <div style="width:100%">
-        <p style="text-align:right;">Date: '. $this->getDate() .'</p>
-        <h2 style="text-align:center;">Product List</h2>
-        <table width="100%" style="border-collapse:collapse; border: 1px solid;">
-                      
-        <thead>
-          <tr>
-              <th style="border: 1px solid;">Product Code</th>
-              <th style="border: 1px solid;">Description</th>
-              <th style="border: 1px solid;">Quantity</th>
-              <th style="border: 1px solid;">Re-Order Point</th>
-              <th style="border: 1px solid;">Supplier</th>
-              <th style="border: 1px solid;">Category</th>
-              <th style="border: 1px solid;">Original Price</th>
-              <th style="border: 1px solid;">Selling Price</th>
-          </tr>
-      </thead>
-      <tbody>
-        ';
-        
-        foreach ($product_data as $data) {
-        $output .='
-        <tr>    
-                               
-        <td style="border: 1px solid; padding:10px;">'. $data->productCode .'</td>
-        <td style="border: 1px solid; padding:10px;">'. $data->description .'</td>
-        <td style="border: 1px solid; padding:10px;">'. $data->qty .'</td>
-        <td style="border: 1px solid; padding:10px;">'. $data->re_order .'</td>      
-        <td style="border: 1px solid; padding:10px;">'. $data->supplierName .'</td>   
-        <td style="border: 1px solid; padding:10px;">'. $data->category_name .'</td>      
-        <td style="border: 1px solid; padding:10px;">'. $data->orig_price .'</td>      
-        <td style="border: 1px solid; padding:10px;">'. $data->selling_price .'</td>           
-      </tr>';
-    }
-          
-     $output .='
-       </tbody>
-      </table>
-      </div>';
-
-        return $output;
-    }
-
-    public function getCategoryParam()
-    {
-        $filter_category = Input::input('filter_category');
-        
-        return $filter_category;
-    }
-
-    public function getDate(){
-        $date = date('m-d-yy');
-        return $date;
+            DB::table('tblexpiration')
+            ->where('id', $id_arr[$i])
+            ->update([
+                'archive_status' => 1,
+                'updated_at' => date('Y-m-d h:m:s')
+            ]);
+                
+        }
     }
 }

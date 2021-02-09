@@ -278,6 +278,9 @@
            <script src="{{asset('js/reports/expired_report.js')}}"></script>
            <script src="{{asset('js/reports/audit_report.js')}}"></script>
 
+            <!-- utilities -->
+            <script src="{{asset('js/utilities/archive.js')}}"></script>
+
           <!-- main - count all notifs and get user's name--> 
           <script src="{{asset('js/main.js')}}"></script>
 

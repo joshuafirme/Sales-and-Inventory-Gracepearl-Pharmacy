@@ -34,6 +34,7 @@ class Product extends Model
         ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
         ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
         ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->where('E.archive_status', 0)
         ->get();
 
         return $product;
@@ -55,6 +56,7 @@ class Product extends Model
         ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
         ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
         ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
+        ->where('E.archive_status', 0)
         ->get();
 
         return $product;

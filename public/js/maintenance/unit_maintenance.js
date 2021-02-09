@@ -20,7 +20,7 @@ $(document).ready(function(){
     $('#ok_button').click(function(){
         $.ajax({
             url: '/maintenance/unit/'+ id,
-            type: 'DELETE',
+            type: 'POST',
           
             beforeSend:function(){
                 $('#ok_button').text('Deleting...');

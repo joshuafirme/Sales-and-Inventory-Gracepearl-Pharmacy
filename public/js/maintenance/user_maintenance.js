@@ -187,13 +187,13 @@ $(document).ready(function(){
           empID = $(this).attr('delete-id');
           name =  $(this).closest("tr").find('td:eq(1)').text();
           $('#confirmModal').modal('show');
-          $('.delete-user-message').html('Are you sure do you want to remove <b>'+ name +'</b>?');
+          $('.delete-user-message').html('Are you sure do you want to delete <b>'+ name +'</b>?');
         }); 
         
         $('#btn-delete-user').click(function(){
             $.ajax({
                 url: '/maintenance/user/delete/'+ empID,
-                type: 'DELETE',
+                type: 'POST',
               
                 beforeSend:function(){
                     $('#btn-delete-user').text('Deleting...');

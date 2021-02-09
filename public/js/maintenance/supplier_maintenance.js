@@ -19,7 +19,7 @@ $(document).ready(function(){
       $('#btn-delete-suplr').click(function(){
           $.ajax({
               url: '/maintenance/supplier/'+ supplier_id,
-              type: 'DELETE',
+              type: 'POST',
             
               beforeSend:function(){
                   $('#btn-delete-suplr').text('Deleting...');

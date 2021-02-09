@@ -125,7 +125,7 @@ Route::get('maintenance/supplier/', 'Maintenance\SupplierMaintenanceCtr@index');
 Route::post('/maintenance/supplier/store', 'Maintenance\SupplierMaintenanceCtr@store');
 Route::post('/maintenance/supplier/update', 'Maintenance\SupplierMaintenanceCtr@update');
 Route::post('/maintenance/supplier/edit/{id}', 'Maintenance\SupplierMaintenanceCtr@edit');
-Route::delete('/maintenance/supplier/{supplierID}', 'Maintenance\SupplierMaintenanceCtr@destroy');
+Route::post('/maintenance/supplier/{supplierID}', 'Maintenance\SupplierMaintenanceCtr@destroy');
 Route::post('/maintenance/supplier/action', 'Maintenance\SupplierMaintenanceCtr@action');
 Route::post('/getCompanyID/{supplierID}', 'Maintenance\SupplierMaintenanceCtr@getCompanyID');
 
@@ -134,13 +134,14 @@ Route::resource('/maintenance/product', 'Maintenance\ProductMaintenanceCtr');
 Route::post('/maintenance/product/store', 'Maintenance\ProductMaintenanceCtr@store');
 Route::post('/maintenance/updateproduct', 'Maintenance\ProductMaintenanceCtr@updateProduct');
 Route::post('/maintenance/product/show/{productCode}', 'Maintenance\ProductMaintenanceCtr@show');
-Route::delete('/maintenance/product/delete', 'Maintenance\ProductMaintenanceCtr@destroy');
+Route::post('/maintenance/product/delete', 'Maintenance\ProductMaintenanceCtr@destroy');
+Route::post('/maintenance/product/bulk-archive/{id}', 'Maintenance\ProductMaintenanceCtr@bulkArchive');
 
 //Unit 
 Route::resource('/maintenance/unit', 'Maintenance\UnitMaintenanceCtr');
 Route::post('/maintenance/unit/edit/{id}', 'Maintenance\UnitMaintenanceCtr@edit');
 Route::post('/maintenance/unit/update/{id}', 'Maintenance\UnitMaintenanceCtr@update');
-Route::delete('/maintenance/unit/{id}', 'Maintenance\UnitMaintenanceCtr@destroy');
+Route::post('/maintenance/unit/{id}', 'Maintenance\UnitMaintenanceCtr@destroy');
 
 //Company
 Route::resource('/maintenance/company', 'Maintenance\CompanyMaintenanceCtr');
@@ -160,7 +161,7 @@ Route::get('/maintenance/category', 'Maintenance\CategoryMaintenanceCtr@index');
 Route::post('/maintenance/category', 'Maintenance\CategoryMaintenanceCtr@store');
 Route::post('/maintenance/category/edit/{id}', 'Maintenance\CategoryMaintenanceCtr@edit');
 Route::post('/maintenance/category/update/{category_id}', 'Maintenance\CategoryMaintenanceCtr@updateCategory');
-Route::delete('/maintenance/category/{id}', 'Maintenance\CategoryMaintenanceCtr@destroy');
+Route::post('/maintenance/category/{id}', 'Maintenance\CategoryMaintenanceCtr@destroy');
 
 //shipping address
 Route::get('/maintenance/shippingadd', 'Maintenance\ShippingAddressCtr@index');
@@ -168,7 +169,7 @@ Route::get('/maintenance/shippingadd/brgylist/{municipality_name}', 'Maintenance
 Route::post('/maintenance/shippingadd/store', 'Maintenance\ShippingAddressCtr@store');
 Route::get('/maintenance/shippingadd/show/{id}', 'Maintenance\ShippingAddressCtr@show');
 Route::post('/maintenance/shippingadd/update', 'Maintenance\ShippingAddressCtr@update');
-Route::get('/maintenance/shippingadd/delete/{id}', 'Maintenance\ShippingAddressCtr@destroy');
+Route::post('/maintenance/shippingadd/delete/{id}', 'Maintenance\ShippingAddressCtr@destroy');
 
 //User
 Route::get('/maintenance/user', 'Maintenance\UserMaintenanceCtr@index');
@@ -177,7 +178,7 @@ Route::get('/maintenance/user/getname', 'Maintenance\UserMaintenanceCtr@getName'
 Route::post('/maintenance/user/store', 'Maintenance\UserMaintenanceCtr@store');
 Route::post('/maintenance/user/show/{empID}', 'Maintenance\UserMaintenanceCtr@show');
 Route::post('/maintenance/user/update', 'Maintenance\UserMaintenanceCtr@update');
-Route::delete('/maintenance/user/delete/{empID}', 'Maintenance\UserMaintenanceCtr@destroy');
+Route::post('/maintenance/user/delete/{empID}', 'Maintenance\UserMaintenanceCtr@destroy');
 
 //MANAGE ONLINE ORDER-----------------------------------------------------------------------------------------------------
 Route::get('/manageorder', 'ManageOnlineOrderCtr@index');
@@ -282,6 +283,12 @@ Route::post('/utilities/backup_restore/backup', 'Utilities\BackupAndRestoreCtr@b
 Route::post('/utilities/backup_restore/restore', 'Utilities\BackupAndRestoreCtr@restore');
 
 Route::get('/utilities/archive', 'Utilities\ArchiveCtr@index');
+Route::get('/utilities/archive/product', 'Utilities\ArchiveCtr@displayArchivedProduct');
+Route::post('/utilities/archive/retrieve-product/{id}', 'Utilities\ArchiveCtr@retrieveProduct');
+Route::post('/utilities/archive/bulk-retrieve-product/{id}', 'Utilities\ArchiveCtr@bulkRetrieveProduct');
+
+Route::get('/utilities/archive/sales', 'Utilities\ArchiveCtr@displayArchivedSales');
+Route::post('/utilities/archive/retrieve-sales/{id}', 'Utilities\ArchiveCtr@retrieveSales');
 
 
 

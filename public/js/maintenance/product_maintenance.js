@@ -20,8 +20,21 @@ $(document).ready(function(){
       ajax:"/maintenance/product",
  
       data: {category:category}, 
+
+      columnDefs: [{
+        targets: 0,
+        searchable: false,
+        orderable: false,
+        changeLength: false,
+        className: 'dt-body-center',
+        render: function (data, type, full, meta){
+            return '<input type="checkbox" name="checkbox[]" value="' + $('<div/>').text(data).html() + '">';
+        }
+     }],
+     order: [[1, 'asc']],
           
       columns:[       
+       {data: 'id_exp', name: 'id_exp'},
        {data: 'product_code', name: 'product_code'},
        {data: 'description', name: 'description'},
        {data: 'category_name', name: 'category_name'},
@@ -49,7 +62,64 @@ $(document).ready(function(){
       .draw();
   
       });
+
+      $('#select-all-product').on('click', function(){
+        var rows = product_table.rows({ 'search': 'applied' }).nodes();
+        $('input[type="checkbox"]', rows).prop('checked', this.checked);
+        });
+    
+        $('#product-table tbody').on('change', 'input[type="checkbox"]', function(){
+          if(!this.checked){
+             var el = $('#select-all-product').get(0);
+             if(el && el.checked && ('indeterminate' in el)){
+                el.indeterminate = true;
+             }
+          }
+       });
   }
+
+  $('#btn-bulk-archive').click(function(){
+
+    var id = [];
+
+    $(':checkbox:checked').each(function(i){
+      id[i] = $(this).val();
+    });
+
+    if(id.length > 0){
+      
+        if($('#select-all-product').is(":checked")){
+          //used slice method to start index at 1, so the value of sellect_all checkbox is not included in array
+          id = id.slice(1).join(", ");
+          console.log(id);
+        }
+        else{
+          id = id.join(", ");
+          console.log(id);
+        }
+    
+        $.ajax({
+          url:"/maintenance/product/bulk-archive/"+id,
+          type:"POST",
+          beforeSend:function(){
+            $('.loader').css('display', 'inline');
+            $('#btn-bulk-archive').text('Please wait...');
+          },
+          success:function(){
+    
+            setTimeout(function(){
+              $('#product-table').DataTable().ajax.reload();
+              $('.loader').css('display', 'none');
+              $('#btn-bulk-archive').text('Archive');
+              },1000);
+          
+          }
+        });
+    }
+    else{
+        alert('No data selected!')       
+    }
+});
 
   //add product
   $('#btn-add-product').click(function(){
@@ -81,7 +151,7 @@ $(document).ready(function(){
       product_name =  $(this).closest("tr").find('td:eq(1)').text();
       $('#proconfirmModal').modal('show');
       $('.delete-success').hide();
-      $('.delete-message').html('Are you sure do you want to delete <b>'+ product_name +'</b>?');
+      $('.delete-message').html('Are you sure do you want to archive <b>'+ product_name +'</b>?');
     }); 
     
     $.ajaxSetup({
@@ -93,7 +163,7 @@ $(document).ready(function(){
     $('#product_ok_button').click(function(){
         $.ajax({
             url: '/maintenance/product/delete',
-            type: 'DELETE',
+            type: 'POST',
             data:{
               id_exp:id_exp,
               product_id:product_id

@@ -467,7 +467,7 @@ $('#cancelled_date_to').change(function()
         });
     }
     else{
-        alert('Please select a customer!')       
+        alert('No data selected!')       
     }
 });
 
@@ -510,7 +510,7 @@ $('#btn-bulk-delivered').click(function(){
       });
   }
   else{
-      alert('Please select a customer!')       
+      alert('No data selected!')       
   }
 });
  

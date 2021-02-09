@@ -99,7 +99,7 @@ $(document).on('click', '#btn-delete-shipping', function(){
   $('#confirm-del-ship').click(function(){
       $.ajax({
           url: '/maintenance/shippingadd/delete/'+ id,
-          type: 'GET',
+          type: 'POST',
         
           beforeSend:function(){
               $('#confirm-del-ship').text('Deleting...');

@@ -58,6 +58,7 @@
                     <table class="table table-data responsive  table-hover" id="product-table" width="100%">                               
                       <thead>
                         <tr>
+                            <th><input type="checkbox" name="select_all" value="1" id="select-all-product"></th>
                             <th>Product Code</th>
                             <th>Description</th> 
                             <th>Category</th>   
@@ -73,6 +74,11 @@
                     </thead>
                     
                     </table>
+
+                    <img class="ml-2" src="{{asset('assets/arrow_ltr.png')}}" alt="">
+
+                    <button class="btn btn-sm btn-danger mt-2" id="btn-bulk-archive">Archive</button>
+
                   </div>
                 </div>
                 
@@ -82,7 +88,7 @@
 
         <footer class="page-copyright ml-auto">
           <p>© 2021. All Rights Reserved.</p>
-      </footer>
+        </footer>
 
         <!-- /.row (main row) -->
         

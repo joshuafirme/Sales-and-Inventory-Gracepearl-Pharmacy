@@ -1,12 +1,42 @@
 <?php 
 
 namespace App\Classes;
+use Session;
 
 class OrderInvoice {
 
-    public function getSalesInvoiceHtml()
+    public function getTotalDue()
     {
+        $sub_total = Session::get('order-total-amount');
+        $shipping_fee = Session::get('order-shipping-fee');
+        $discount = Session::get('order-discount');
+
+        return ($sub_total + $shipping_fee) - $discount;
+    }
+    
+    public function getVAT(){
+        return $this->getTotalDue() * 0.12;
+    }
+
+    public function getNetOfVAT(){
+        return $this->getTotalDue() - ($this->getTotalDue() * 0.12);
+    }
+
+    public function getAmountDue(){
+        return $this->getTotalDue() - $this->getVAT($this->getTotalDue());
+    }
+
+    public function getSalesInvoiceHtml($shipping_info)
+    { 
         $output = '
+        <!DOCTYPE html>
+        <html>
+        
+        <head>
+            <meta charset="UTF-8">
+        </head>
+
+        <body>
         <style>
         @page { margin: 10px; }
         body{ font-family: sans-serif; }
@@ -43,7 +73,7 @@ class OrderInvoice {
         }
 
         .align-text{
-            text-align:center;
+            padding-left: 10px;
         }
 
         .align-text td{
@@ -67,8 +97,14 @@ class OrderInvoice {
             font-style:italic;
         }
 
+        .f-courier{
+            font-family: monospace, sans-serif;
+        }
+
 
          </style>
+
+
         <div style="width:100%">
         
         <h1 class="p-name">GRACE PEARL PHARMACY</h1>
@@ -118,45 +154,52 @@ class OrderInvoice {
      $output .='
         <tr>
             <td style="text-align:right;" colspan="4">Total Sales (VAT Inclusive) </td>
-            <td class="align-text">'. number_format(session()->get('order-total-amount'),2,'.',',') .'</td>
+            <td class="align-text">P '. number_format($this->getTotalDue(),2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="4">Less: VAT </td>
-            <td ></td>
+            <td class="align-text">P '. number_format($this->getVAT(),2,'.',',') .'</td>
         </tr>
 
         <tr >
             <td class="ar" colspan="2">VATable Sales </td>
             <td ></td>
             <td class="ar">Amount: Net of VAT</td>
-            <td ></td>
+            <td class="align-text">P '. number_format($this->getNetOfVAT(),2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="2">VAT-Exempt Sales</td>
             <td ></td>
             <td class="ar">Less:SC/PWD Discount</td>
-            <td ></td>
+            <td class="align-text">P '. Session::get('order-discount') .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="2">Zero Rated Sales</td>
             <td ></td>
             <td class="ar">Amount Due</td>
-            <td ></td>
+            <td class="align-text">P '. number_format($this->getAmountDue(),2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="2">VAT Amount</td>
             <td ></td>
             <td class="ar">Add: VAT</td>
+            <td class="align-text">P '. number_format($this->getVAT(),2,'.',',') .'</td>
+        </tr>
+
+        <tr>
+            <td class="ar" colspan="2"></td>
             <td ></td>
+            <td class="ar">Shipping fee</td>
+            <td class="align-text">P '. Session::get('order-shipping-fee') .'</td>
         </tr>
 
         <tr>
             <td style="text-align:right;" colspan="4">Total Amount Due </td>
-            <td class="align-text">'. number_format(session()->get('order-total-amount'),2,'.',',') .'</td>
+            <td class="align-text">P '. number_format($this->getTotalDue(),2,'.',',') .'</td>
         </tr>
 
         </tbody>
@@ -166,8 +209,27 @@ class OrderInvoice {
         <p class="ar line">----------------------------------------</p>
         <p class="ar b-label">Cashier/Authorized Representative</p>
     </div>
-</div>';
-    
+
+    <table cellspacing="0" cellpadding="0" style="border-collapse: collapse; border: 0px solid none;">
+        <tr class="f-courier">
+            <td>'.$shipping_info->municipality.'</td>
+            </tr>
+            <tr class="f-courier">
+            <td>'.$shipping_info->brgy.'</td>
+            </tr>
+            <tr class="f-courier">
+            <td>'.$shipping_info->flr_bldg_blk.'</td>
+            </tr>
+            <tr class="f-courier">
+            <td>'.$shipping_info->note.'</td>
+            </tr>
+    </table>
+
+</div>
+
+</body>
+
+</html>';
 return $output;
 }
 

@@ -17,6 +17,8 @@
                 <p class="confirmation-message"></p>
             </div> 
 
+            <input type="hidden" id="order-no-hidden">
+
             <div class="col-md-12 mb-2">
                 <label class="label-small">Select a reason</label>
                 <select class="form-control" id="remarks">

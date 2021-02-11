@@ -16,56 +16,55 @@ $(document).ready(function () {
     
     $('.btn-cancel-order').click(function(){
       var order_no = $(this).attr('order-no');
-      
+      $('#order-no-hidden').val(order_no);
       $('#cancelOrderModal').modal('toggle'); 
-      cancelOrder(order_no);
+
+      $('.confirmation-message').html('Are you sure do you want to cancel your order?</b>');
+  });
+
+        
+  $('#btn-confirm-cancel').click(function(){
+    var order_no = $('#order-no-hidden').val();
+    var remarks = $('#remarks').find(':selected').text();
+
+    cancelOrder(order_no, remarks);
 
   });
 
-    function payNow(order_no, amount) {
+
+  function cancelOrder(order_no, remarks) {  
       $.ajax({
-        url:"/payment/paynow/"+order_no,
+        url:"/myorder/cancel/"+order_no,
         type:"GET",
         data:{
-          amount:amount
+          remarks:remarks
         },
-        success:function(){ 
-          window.location.href = "/payment";
-        }         
-       });
-    }
-
-
-    function cancelOrder(order_no) {
-      var remarks = $('#remarks').find(':selected').text();
-        
-      $('.confirmation-message').html('Are you sure do you want to cancel your order?</b>');
- 
-        
-        $('#btn-confirm-cancel').click(function(){
-          $.ajax({
-            url:"/myorder/cancel/"+order_no,
-            type:"GET",
-            data:{
-              remarks:remarks
-            },
-            beforeSend:function(){
-              $('#btn-confirm-cancel').text('Please wait...');
-            },
-            success:function(){
-                setTimeout(function(){
-                  $('#btn-confirm-cancel').text('Confirm');
-                  $( "#my-order-contr" ).load( "myorders #my-order-contr" );
-                  $('#success-message').css('display', 'inline');
-                }, 1000);
-              }     
-            });
-          
+        beforeSend:function(){
+          $('#btn-confirm-cancel').text('Please wait...');
+        },
+        success:function(){
+            setTimeout(function(){
+              $('#btn-confirm-cancel').text('Confirm');
+              $( "#my-order-contr" ).load( "myorders #my-order-contr" );
+              $('#success-message').css('display', 'inline');
+            }, 1000);
+          }     
         });
-     
-    }
+      
+}      
 
 
-
-
+      function payNow(order_no, amount) {
+        $.ajax({
+          url:"/payment/paynow/"+order_no,
+          type:"GET",
+          data:{
+            amount:amount
+          },
+          success:function(){ 
+            window.location.href = "/payment";
+          }         
+         });
+      }
+  
 });

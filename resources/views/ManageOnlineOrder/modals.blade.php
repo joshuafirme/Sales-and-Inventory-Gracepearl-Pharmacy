@@ -67,7 +67,7 @@
                                     <td></td>
                                     <td>SC/PWD Discount:</td>
                                     <td>
-                                      ₱ <span id="txt_sc_pwd_discount">-</span>
+                                     <span id="txt_sc_pwd_discount"></span>
                                     </td>   
                                  </tr> 
                                    <tr>

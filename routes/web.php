@@ -188,11 +188,12 @@ Route::get('/manageorder/delivered', 'ManageOnlineOrderCtr@displayDeliveredOrder
 Route::get('/manageorder/cancelled', 'ManageOnlineOrderCtr@displayCancelledOrder');
 Route::post('/manageorder/pack_items/{order_no}', 'ManageOnlineOrderCtr@packItems');
 Route::get('/manageorder/shippingfee/{order_id}', 'ManageOnlineOrderCtr@getShippingFee');
+Route::get('/manageorder/discount/{order_id}', 'ManageOnlineOrderCtr@getDiscount');
 Route::get('/manageorder/total_amount/{order_id}', 'ManageOnlineOrderCtr@getOrderTotalAmount');
 Route::get('/manageorder/showitems/{order_no}', 'ManageOnlineOrderCtr@showOrderItems');
 Route::get('/manageorder/customerinfo/{user_id}', 'ManageOnlineOrderCtr@getCustomerInfo');
 Route::get('/manageorder/shippinginfo/{user_id}', 'ManageOnlineOrderCtr@getShippingInfo');
-Route::get('/manageorder/salesinvoice', 'ManageOnlineOrderCtr@generateSalesInvoice');
+Route::get('/manageorder/salesinvoice/{user_id}/{discount}/{shipping_fee}', 'ManageOnlineOrderCtr@generateSalesInvoice');
 Route::get('/manageorder/verification_info/{user_id}', 'ManageOnlineOrderCtr@verificationInfo');
 Route::post('/manageorder/bulk_dispatch/{order_no}', 'ManageOnlineOrderCtr@bulkDispatch');
 Route::post('/manageorder/bulk_delivered/{order_no}', 'ManageOnlineOrderCtr@bulkDelivered');

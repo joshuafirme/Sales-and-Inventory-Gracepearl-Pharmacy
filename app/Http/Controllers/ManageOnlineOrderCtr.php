@@ -8,6 +8,7 @@ use Input;
 use App\OnlineOrder;
 use App\Classes\UserAccessRights;
 use App\Classes\OrderInvoice;
+use Session;
 
 class ManageOnlineOrderCtr extends Controller
 {
@@ -193,12 +194,11 @@ class ManageOnlineOrderCtr extends Controller
     public function getCancelledOrder($date_from, $date_to){
 
         $o = DB::table($this->tbl_ol_order.' as O')
-        ->orderBy('created_at', 'asc')
         ->select('O.*',DB::raw('CONCAT(O._prefix, O.order_no) AS order_num, fullname, phone_no, CA.email, O.email as user_id'))
         ->leftJoin($this->tbl_cust_acc.' AS CA', DB::raw('CONCAT(CA._prefix, CA.id)'), '=', 'O.email')
         ->where('status', 'Cancelled')
         ->whereBetween('O.updated_at', [$date_from, date('Y-m-d', strtotime($date_to. ' + 1 days'))])
-        ->orderBy('O.id', 'desc')
+        ->orderBy('O.updated_at', 'desc')
         ->get();   
 
         return $o->unique('order_no');    
@@ -256,9 +256,15 @@ class ManageOnlineOrderCtr extends Controller
 
    
 
-    public function generateSalesInvoice(){
+    public function generateSalesInvoice($user_id, $discount, $shipping_fee){
 
-        $output = $this->salesInvoiceHTML();
+        Session::put('order-discount', $discount);
+        Session::put('order-shipping-fee', $shipping_fee);
+        Session::put('order-user-id', $user_id);
+
+        $shipping_address = $this->getShippingInfo($user_id);
+
+        $output = $this->salesInvoiceHTML($shipping_address);
     
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($output);
@@ -267,12 +273,17 @@ class ManageOnlineOrderCtr extends Controller
         return $pdf->stream();
     }
 
-    public function salesInvoiceHTML(){
+    public function salesInvoiceHTML($shipping_address){
         $s = new OrderInvoice;
-        return $s->getSalesInvoiceHtml();
+        return $s->getSalesInvoiceHtml($shipping_address);
     }
 
+    public function getDiscount($order_id){
 
+        return DB::table('tblorder_discount')
+                    ->where('order_no', $order_id)
+                    ->value('discount_amount'); 
+    }
     
     public function getShippingFee($order_id){
 
@@ -284,21 +295,27 @@ class ManageOnlineOrderCtr extends Controller
     public function getOrderTotalAmount($order_id){
         
         $fee = $this->getShippingFee($order_id);
+        $discount = $this->getDiscount($order_id);
+
         $subtotal = DB::table('tblonline_order')
                     ->where('order_no', $order_id)
                     ->sum('amount'); 
 
-        return $subtotal + $fee[0];
+        return ($subtotal + $fee[0]) - $discount;
     }
 
 
     public function getCustomerInfo($user_id){
 
-        $acc_info = DB::table($this->tbl_cust_acc.' as C')
+        return DB::table($this->tbl_cust_acc.' as C')
                     ->where(DB::raw('CONCAT(C._prefix, C.id)'), $user_id)
                     ->get(); 
-
-        return $acc_info;
+    }
+    
+    public function getShippingInfo($user_id){      
+        return DB::table($this->tbl_ship_add)
+            ->where('user_id', $user_id)
+            ->first();           
     }
 
     public function verificationInfo($user_id){
@@ -328,15 +345,6 @@ class ManageOnlineOrderCtr extends Controller
                 return null;
             } 
         }      
-    }
-
-    public function getShippingInfo($user_id){
-        
-        $ship_info = DB::table($this->tbl_ship_add)
-                    ->where('user_id', $user_id)
-                    ->get(); 
-
-        return $ship_info;
     }
 
 

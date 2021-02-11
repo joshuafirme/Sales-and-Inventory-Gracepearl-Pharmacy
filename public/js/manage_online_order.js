@@ -290,21 +290,7 @@ $('#cancelled_date_to').change(function()
 
     });
 
-
-    function getShippingFee(order_id){
-      $.ajax({
-        url:"/manageorder/shippingfee/"+order_id,
-        type:"GET",
-        success:function(data){ 
-          console.log(data); 
-          if(data){
-            $('#txt_shipping_fee').text(data);
-          }
-         
-        }
-         
-       });
-    }
+    
     
     
     function getTotalAmount(order_id){
@@ -362,13 +348,28 @@ $('#cancelled_date_to').change(function()
     }
 
     $(document).on('click', '#btn-gen-sales-inv', function(){
-      window.open('/manageorder/salesinvoice', '_blank'); 
+
+        var user_id, discount, shipping_fee;
+        user_id = $('#user-id').val();
+        discount = $('#txt_sc_pwd_discount').text().toString().slice(3);
+        shipping_fee = $('#txt_shipping_fee').text();
+        
+        if(!discount){
+          discount = 0.00;
+        }
+        if(!shipping_fee){
+          shipping_fee = 0.00;
+        }
+
+      window.open('/manageorder/salesinvoice/'+user_id+'/'+discount.toFixed(2)+'/'+shipping_fee, '_blank'); 
     });
 
+
     $(document).on('click', '#fa-gen-sales-inv', function(){
-      var order_no = $(this).attr('order-no');
-      getOrderItems(order_no);
-      window.open('/manageorder/salesinvoice', '_blank'); 
+
+        var order_no = $(this).attr('order-no');
+        getOrderItems(order_no);
+        window.open('/manageorder/salesinvoice', '_blank'); 
 
     });
 
@@ -381,10 +382,46 @@ $('#cancelled_date_to').change(function()
         $('#title-order-no').text('Order #'+order_no);
         $( "#cust-order-table" ).load( "manageorder #cust-order-table" );
 
+        getDiscount(order_id);
         getShippingFee(order_id);
         getTotalAmount(order_id);
       }
     });
+  }
+
+
+  function getDiscount(order_id){
+    $.ajax({
+      url:"/manageorder/discount/"+order_id,
+      type:"GET",
+      success:function(data){ 
+        console.log(data+' discount'); 
+        if(data){
+          $('#txt_sc_pwd_discount').text('- ₱'+data);
+        }
+        else{
+          $('#txt_sc_pwd_discount').text('-');
+        }
+       
+      }
+       
+     });
+  }
+
+
+  function getShippingFee(order_id){
+    $.ajax({
+      url:"/manageorder/shippingfee/"+order_id,
+      type:"GET",
+      success:function(data){ 
+        console.log(data); 
+        if(data){
+          $('#txt_shipping_fee').text(data);
+        }
+       
+      }
+       
+     });
   }
 
   function getVerificationInfo(user_id) {

@@ -42,7 +42,7 @@ class Product extends Model
 
     public function filterByCategory($category_param){
         $product = DB::table($this->table_exp.' AS E')
-        ->select("E.*", 'E.product_code', 'E.id as id_exp', 'P.id as product_id',
+        ->select("E.*", 'E.product_code', 'E.id as id_exp', 'P.id as product_id', 
                  'P.description',
                  'P.re_order', 
                  'P.orig_price', 

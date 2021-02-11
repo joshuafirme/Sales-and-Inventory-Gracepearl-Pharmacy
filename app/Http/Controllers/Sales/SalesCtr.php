@@ -85,11 +85,12 @@ class SalesCtr extends Controller
                      DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
                 ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
                 ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
-            ->where('E.product_code', 'LIKE', '%'.$search_key.'%') // CONCAT 
-            ->orWhere('P.description', 'LIKE', '%'.$search_key.'%')
-            ->where('E.qty', '>', 0)
-            ->orderBy('E.exp_date') // First expiry first out
-            ->get();
+                ->where('E.archive_status', 0)               
+                ->where('E.qty', '>', 0)
+               // ->where('E.product_code', 'LIKE', '%'.$search_key.'%') // CONCAT 
+                ->where('P.description', 'LIKE', '%'.$search_key.'%')
+                ->orderBy('E.exp_date') // First expiry first out
+                ->get();
 
             return $product;
         }
@@ -167,7 +168,7 @@ class SalesCtr extends Controller
             $sales->amount = $data->amount;       
             $sales->date = date('Y-m-d'); 
             $sales->payment_method = $payment_method;    
-            $sales->employeeID = 20001;   
+          //  $sales->employeeID = 20001;   
             $sales->order_from = "Walk-in";   
             $sales->save(); 
             

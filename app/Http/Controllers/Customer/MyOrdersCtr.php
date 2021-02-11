@@ -48,7 +48,8 @@ class MyOrdersCtr extends Controller
             ['order_no', $order_no],
         ])->update([
           'status' => 'Cancelled',
-          'remarks' => $remarks
+          'remarks' => $remarks,
+          'updated_at' => date('Y-m-d h:m:s')
         ]);
     }
 

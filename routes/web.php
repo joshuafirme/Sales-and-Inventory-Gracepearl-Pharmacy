@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'Customer\LoginCtr@index');
 
 //Admin
 Route::get('/admin-login', 'AdminLoginCtr@index');
@@ -28,7 +27,6 @@ Route::resource('/products', 'ProductSearch');
 
 //CUSTOMER---------------------------------------------------------------------------------------------------------------
 //login
-Route::get('/customer-login', 'Customer\LoginCtr@index');
 Route::post('customer-login/login', 'Customer\LoginCtr@login');
 Route::get('/customer/logout', 'Customer\LoginCtr@logout');
 //google login

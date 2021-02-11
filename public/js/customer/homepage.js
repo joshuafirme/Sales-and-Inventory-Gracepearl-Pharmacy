@@ -36,7 +36,7 @@ $(document).ready(function(){
               $('#login-url').removeAttr('data-toggle');
               $('#lblCartCount').css('display', 'none');
               $('.fa-shopping-cart').css('display', 'none');
-              $('#login-url').attr("href", "http://127.0.0.1:8000/customer-login");
+              $('#login-url').attr("href", "/");
           }
      
         }
@@ -248,7 +248,7 @@ $(document).ready(function(){
           success:function(response){
               
             if(response !== 'yes'){
-              window.location.href = "/customer-login";
+              window.location.href = "/";
             }
             else{
               $.ajax({

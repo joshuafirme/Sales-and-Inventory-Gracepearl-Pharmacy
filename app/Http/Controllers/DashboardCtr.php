@@ -31,7 +31,7 @@ class DashboardCtr extends Controller
     public function getOrders(){
         return DB::table('tblonline_order')
                 ->whereDate('created_at', date('Y-m-d'))
-                ->sum('amount');
+                ->count();
     }
 
     public function getCurrentMonthSales(){

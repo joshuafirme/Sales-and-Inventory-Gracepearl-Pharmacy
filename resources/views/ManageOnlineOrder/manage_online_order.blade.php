@@ -234,6 +234,7 @@
                           <th>Status</th>
                           <th>Reason</th>
                           <th>Date placed</th>
+                          <th>Date cancelled</th>
                         
                         </tr>
                       </thead>

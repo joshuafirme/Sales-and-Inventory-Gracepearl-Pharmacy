@@ -16,10 +16,9 @@ $(document).ready(function () {
     
     $('.btn-cancel-order').click(function(){
       var order_no = $(this).attr('order-no');
-      var remarks = $('#remarks').val();
+      
       $('#cancelOrderModal').modal('toggle'); 
-
-      cancelOrder(order_no, remarks);
+      cancelOrder(order_no);
 
   });
 
@@ -37,7 +36,8 @@ $(document).ready(function () {
     }
 
 
-    function cancelOrder(order_no, remarks) {
+    function cancelOrder(order_no) {
+      var remarks = $('#remarks').find(':selected').text();
         
       $('.confirmation-message').html('Are you sure do you want to cancel your order?</b>');
  

@@ -19,6 +19,7 @@ class PaymentCtr extends Controller
 
     public function index()
     {
+       // dd($this->getOrderDetails('00001'));
       //  dd(session()->get('order-no'));
         $this->isLoggedIn();
         return view('customer/payment');
@@ -57,6 +58,17 @@ class PaymentCtr extends Controller
             'payment_method' => 'COD',
             'status' => 'Processing'
         ]); 
+
+        $order = $this->getOrderDetails($order_no);
+
+        for($i = 0; $i < $order->count(); $i++){
+            $this->recordSales(
+                $order[$i]->product_code,
+                $order[$i]->qty,
+                $order[$i]->amount,
+                'COD'
+            );    
+        }
         $this->forgetOrder();  
     }
 
@@ -68,7 +80,7 @@ class PaymentCtr extends Controller
         if(!$source_ss) {
         $source = Paymongo::source()->create([
             'type' => 'gcash',
-            'amount' => $amount,
+            'amount' => number_format((int)$amount,2,'.',','),
             'currency' => 'PHP',
             'redirect' => [
                 'success' => route('gcashpayment'),
@@ -110,6 +122,7 @@ class PaymentCtr extends Controller
     public function updatePaymentToGcash(){
 
         $order_no = session()->get('order-no'); 
+        $payment_method = 'GCash';
 
         //kapag walang laman ang session
         if(!$order_no){
@@ -122,10 +135,58 @@ class PaymentCtr extends Controller
             ['order_no', $order_no]
         ])
         ->update([
-        'payment_method' => 'GCash',
-        'status' => 'Processing'
-        
-        ]); 
+            'payment_method' => $payment_method,
+            'status' => 'Processing'
+        ]);
+
+        $order = $this->getOrderDetails($order_no);
+
+        for($i = 0; $i < $order->count(); $i++){
+            $this->recordSales(
+                $order[$i]->product_code,
+                $order[$i]->qty,
+                $order[$i]->amount,
+                $payment_method
+            );    
+        }
+        $this->updateInventory($order[0]->product_code, $order[0]->qty);
+    }
+
+    
+    public function recordSales($product_code, $qty, $amount, $payment_method){
+        DB::table('tblsales')
+            ->insert([
+                '_prefix' => date('Ymd'),
+                'sales_inv_no' => $this->getSalesInvNo(),
+                'product_code' => $product_code,
+                'qty' => $qty,
+                'amount' => $amount,
+                'payment_method' => $payment_method,
+                'date' => date('Y-m-d'),
+                'order_from' => 'Online',
+                'created_at' => date('Y-m-d h:m:s'),
+                'updated_at' => date('Y-m-d h:m:s')
+            ]);
+    }
+
+    public function updateInventory($product_code, $qty){   
+        DB::table('tblexpiration')
+        ->where('product_code', $product_code)
+        ->update(array(
+            'qty' => DB::raw('qty - '. $qty .'')));
+    }
+
+    public function getSalesInvNo(){
+        $sales_inv_no = DB::table('tblsales')
+        ->max('sales_inv_no');
+        $inc = ++ $sales_inv_no;
+        return str_pad($inc, 5, '0', STR_PAD_LEFT);
+    }
+
+    public function getOrderDetails($order_no){
+        return DB::table($this->tbl_ol_order)
+        ->where('order_no', $order_no)
+        ->get();
     }
 
     public function payNow($order_no){

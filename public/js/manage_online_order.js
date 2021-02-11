@@ -247,6 +247,7 @@ function fetchCancelled(date_from, date_to){
       {data: 'status', name: 'status',orderable: false},
       {data: 'remarks', name: 'remarks',orderable: false},   
       {data: 'created_at', name: 'created_at'},
+      {data: 'updated_at', name: 'updated_at'},
     ]
     
    });
@@ -454,6 +455,7 @@ $('#cancelled_date_to').change(function()
           type:"POST",
           beforeSend:function(){
             $('.loader').css('display', 'inline');
+            $('#btn-bulk-dispatch').text('Please wait...')
           },
           success:function(){
     
@@ -461,6 +463,7 @@ $('#cancelled_date_to').change(function()
               $('#packed-table').DataTable().ajax.reload();
               $('#dispatch-table').DataTable().ajax.reload();
               $('.loader').css('display', 'none');
+              $('#btn-bulk-dispatch').text('Dispatch')
               },1000);
           
           }
@@ -497,6 +500,7 @@ $('#btn-bulk-delivered').click(function(){
         type:"POST",
         beforeSend:function(){
           $('.loader').css('display', 'inline');
+          $('#btn-bulk-delivered').text('Please wait...')
         },
         success:function(){
   
@@ -504,6 +508,7 @@ $('#btn-bulk-delivered').click(function(){
             $('#dispatch-table').DataTable().ajax.reload();
             $('#delivered-table').DataTable().ajax.reload();
             $('.loader').css('display', 'none');
+            $('#btn-bulk-delivered').text('Delivered')
             },1000);
         
         }

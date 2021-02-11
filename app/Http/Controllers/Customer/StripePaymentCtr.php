@@ -62,6 +62,17 @@ class StripePaymentCtr extends Controller
             'payment_method' => $card_type,
             'status' => 'Processing'
         ]); 
+        $order = $this->getOrderDetails($this->getOrderNo() -1);
+
+        for($i = 0; $i < $order->count(); $i++){
+            $this->recordSales(
+                $order[$i]->product_code,
+                $order[$i]->qty,
+                $order[$i]->amount,
+                $card_type
+            );    
+        }
+        $this->updateInventory($order[0]->product_code, $order[0]->qty);
     }
 
     public function cardType($card_number)
@@ -85,6 +96,42 @@ class StripePaymentCtr extends Controller
              default:
               return "N/A";
           }
+    }
+
+    public function recordSales($product_code, $qty, $amount, $payment_method){
+        DB::table('tblsales')
+            ->insert([
+                '_prefix' => date('Ymd'),
+                'sales_inv_no' => $this->getSalesInvNo(),
+                'product_code' => $product_code,
+                'qty' => $qty,
+                'amount' => $amount,
+                'payment_method' => $payment_method,
+                'date' => date('Y-m-d'),
+                'order_from' => 'Online',
+                'created_at' => date('Y-m-d h:m:s'),
+                'updated_at' => date('Y-m-d h:m:s')
+            ]);
+    }
+
+    public function updateInventory($product_code, $qty){   
+        DB::table('tblexpiration')
+        ->where('product_code', $product_code)
+        ->update(array(
+            'qty' => DB::raw('qty - '. $qty .'')));
+    }
+
+    public function getSalesInvNo(){
+        $sales_inv_no = DB::table('tblsales')
+        ->max('sales_inv_no');
+        $inc = ++ $sales_inv_no;
+        return str_pad($inc, 5, '0', STR_PAD_LEFT);
+    }
+
+    public function getOrderDetails($order_no){
+        return DB::table($this->tbl_ol_order)
+        ->where('order_no', $order_no)
+        ->get();
     }
 
     public function getOrderNo(){

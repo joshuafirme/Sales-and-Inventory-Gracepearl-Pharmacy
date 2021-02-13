@@ -59,8 +59,8 @@ class ManageOnlineOrderCtr extends Controller
                 $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $ol_order->order_num .' user-id='.$ol_order->user_id.'  order-id='. $ol_order->order_no .'
                  title="View order"><i class="fas fa-eye"></i></a>';
 
-                $button .= '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $ol_order->order_num .'
-                title="Generate sales invoice"><i class="fas fa-print"></i></a>';
+             //   $button .= '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $ol_order->order_num .'
+             //   title="Generate sales invoice"><i class="fas fa-print"></i></a>';
 
                 return $button;
             })
@@ -76,8 +76,10 @@ class ManageOnlineOrderCtr extends Controller
         {
             return datatables()->of($packed_order)
             ->addColumn('action', function($packed_order){
-                $button = '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $packed_order->order_num .' 
-                title="Generate sales invoice"><i class="fas fa-print"></i></a>';
+             //   $button = '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $packed_order->order_num .' 
+            //    title="Generate sales invoice"><i class="fas fa-print"></i></a>';
+            $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $packed_order->order_num .' user-id='.$packed_order->user_id.'  order-id='. $packed_order->order_no .'
+            title="View order"><i class="fas fa-eye"></i></a>';
 
                 return $button;
             })
@@ -93,8 +95,10 @@ class ManageOnlineOrderCtr extends Controller
         {
             return datatables()->of($d)
             ->addColumn('action', function($d){
-                $button = '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $d->order_num .' 
-                title="Generate sales invoice"><i class="fas fa-print"></i></a>';
+             //   $button = '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $d->order_num .' 
+            //    title="Generate sales invoice"><i class="fas fa-print"></i></a>';
+            $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $ol_order->order_num .' user-id='.$ol_order->user_id.'  order-id='. $ol_order->order_no .'
+            title="View order"><i class="fas fa-eye"></i></a>';
 
                 return $button;
             })
@@ -315,7 +319,7 @@ class ManageOnlineOrderCtr extends Controller
     public function getShippingInfo($user_id){      
         return DB::table($this->tbl_ship_add)
             ->where('user_id', $user_id)
-            ->first();           
+            ->get();           
     }
 
     public function verificationInfo($user_id){

@@ -333,6 +333,7 @@ $('#cancelled_date_to').change(function()
         type:"GET",
         success:function(data){
          if(data){
+          $('#municipality').text(data[0].municipality);
           $('#flr-bldg-blk').text(data[0].flr_bldg_blk);
           $('#brgy').text(data[0].brgy);
           $('#note').text(data[0].note);
@@ -361,15 +362,26 @@ $('#cancelled_date_to').change(function()
           shipping_fee = 0.00;
         }
 
-      window.open('/manageorder/salesinvoice/'+user_id+'/'+discount.toFixed(2)+'/'+shipping_fee, '_blank'); 
+      window.open('/manageorder/salesinvoice/'+user_id+'/'+discount+'/'+shipping_fee, '_blank'); 
     });
 
 
     $(document).on('click', '#fa-gen-sales-inv', function(){
 
-        var order_no = $(this).attr('order-no');
-        getOrderItems(order_no);
-        window.open('/manageorder/salesinvoice', '_blank'); 
+        var user_id, discount, shipping_fee;
+        user_id = $('#user-id').val();
+        discount = $('#txt_sc_pwd_discount').text().toString().slice(3);
+        console.log(discount+' discount');
+        shipping_fee = $('#txt_shipping_fee').text();
+        
+        if(discount == ''){
+          discount = 0.00;
+        }
+        if(shipping_fee == ''){
+          shipping_fee = 0.00;
+        }
+
+      window.open('/manageorder/salesinvoice/'+user_id+'/'+discount+'/'+shipping_fee, '_blank'); 
 
     });
 
@@ -555,6 +567,14 @@ $('#btn-bulk-delivered').click(function(){
       alert('No data selected!')       
   }
 });
+
+function moneyFormat(param)
+      {
+        var decimal = (Math.round(param * 100) / 100).toFixed(2);
+       // var round_off = Math.round((parseInt(parseFloat(decimal)) + Number.EPSILON) * 100) / 100;
+        return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+
  
 
 });

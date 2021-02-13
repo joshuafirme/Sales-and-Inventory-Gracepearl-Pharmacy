@@ -117,7 +117,7 @@
         <div class="card mb-3">
           <div class="card-body">
 
-          <h5 class="mb-4">Secure payment services by</h5>
+          <h5 class="mb-4">SSL SECURE PAYMENT</h5>
           <img class="mr-2" width="32px"
               src="{{asset('assets/gcash-logo.png')}}"
               alt="Gcash" style="border-radius: 3px;">
@@ -158,7 +158,7 @@
 
                 <div class="d-flex justify-content-between align-items-center px-0">
                   <h5>Shipping Address</h5>
-                  <span class="text-success"><a href="{{ url('/account') }}" class="text-primary">Edit</a></span>
+                  <a id="btn-edit-shipping-info" style="cursor: pointer;" class="text-primary">Edit</a>
                 </div>
 
                 <Label class="label-small">Municipality</Label>
@@ -220,6 +220,7 @@
   <!--Section: Block Content-->
 
 </div>
+
 
 
       @extends('customer.layouts.loading_modal')

@@ -127,7 +127,7 @@
                       </table>
                 </div>
 
-              <div class="col-lg-6">
+              <div class="col-lg-1 mr-3">
                         <div class="form-check mt-1 mr-4  mb-2">
                           <input type="checkbox" class="form-check-input chk-discount" id="discount-chk">
                           <label class="form-check-label" for="exampleCheck1">Discount</label>
@@ -170,6 +170,11 @@
                           <button class="btn btn-success btn-sm btn-processs mt-2" style="font-size: 14px; width: 100px;"  id="btn-confirm-inv">Pay</button> 
                         </div>
               </div>
+
+              <div class="col-lg-3" style="display: none;" id="img-gcash-qrcode">
+                  <img src="{{ asset('assets/QR-code-gcash.png') }}" alt="" width="300px">
+              </div>
+
              
               </div>
 

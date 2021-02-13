@@ -321,14 +321,14 @@ $(document).ready(function(){
           getTotalAmount();
           setTimeout(function(){
             var total = $('#total-amount-due').val();  
-          var total_generic = $('#generic_total_hidden').val();  
-          var discount = percentage * total_generic;
-          var total_due = total - discount;
+            var total_generic = $('#generic_total_hidden').val();  
+            var discount = percentage * total_generic;
+            var total_due = total - discount;
 
-          $('#less-discount').text(moneyFormat(discount));
-          $('#total-amount-due').val(moneyFormat(total_due));
+            $('#less-discount').text(moneyFormat(discount));
+            $('#total-amount-due').val(moneyFormat(total_due));
 
-          computeChange();
+            computeChange();
           },500);          
       }
 
@@ -351,6 +351,14 @@ $(document).ready(function(){
       
         });
 
+        // gcash click
+        $('#radio-gcash').click(function(){
+          $('#img-gcash-qrcode').css('display', 'inline');
+        });
+
+        $('#radio-cash').click(function(){
+          $('#img-gcash-qrcode').css('display', 'none');
+        });
       
 
        $('#btn-confirm-inv').click(function(){

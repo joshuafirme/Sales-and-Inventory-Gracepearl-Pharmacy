@@ -81,9 +81,10 @@ class CashieringInvoice {
             font-style:italic;
         }
 
-        .peso-sign {
-            content: "\20B1";
-          }
+        .f-courier{
+            font-family: monospace, sans-serif;
+            font-size:14px;
+        }
 
 
          </style>
@@ -118,11 +119,11 @@ class CashieringInvoice {
             
                 $output .='
             <tr class="align-text">                             
-                <td>'. $data->qty .'</td>  
-                <td>'. $data->unit .'</td>  
-                <td>'. $data->description .'</td>
-                <td>'. number_format($data->selling_price,2,'.',',') .'</td>   
-                <td>'. number_format($data->amount,2,'.',',') .'</td>    
+                <td class="f-courier">'. $data->qty .'</td>  
+                <td class="f-courier">'. $data->unit .'</td>  
+                <td class="f-courier">'. $data->description .'</td>
+                <td class="f-courier">'. number_format($data->selling_price,2,'.',',') .'</td>   
+                <td class="f-courier" style="width:110px;">'. number_format($data->amount,2,'.',',') .'</td>    
             </tr>
 
           
@@ -139,45 +140,45 @@ class CashieringInvoice {
      $output .='
         <tr>
             <td style="text-align:right;" colspan="4">Total Sales (VAT Inclusive) </td>
-            <td class="align-text">'. number_format($total_amount,2,'.',',') .' PhP</td>
+            <td class="align-text f-courier">PhP '. number_format($total_amount,2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="4">Less: VAT </td>
-            <td class="align-text">'. number_format($this->getVAT($total_amount),2,'.',',') .'</td>
+            <td class="align-text f-courier">PhP '. number_format($this->getVAT($total_amount),2,'.',',') .'</td>
         </tr>
 
         <tr >
             <td class="ar" colspan="2">VATable Sales </td>
             <td ></td>
             <td class="ar">Amount: Net of VAT</td>
-            <td class="align-text">'. number_format($this->getNetOfVAT($total_amount),2,'.',',') .'</td>
+            <td class="align-text f-courier">PhP '. number_format($this->getNetOfVAT($total_amount),2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="2">VAT-Exempt Sales</td>
             <td ></td>
             <td class="ar">Less:SC/PWD Discount</td>
-            <td class="align-text">'. $discount .'</td>
+            <td class="align-text f-courier">PhP '. number_format($this->getNetOfVAT($discount),2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="2">Zero Rated Sales</td>
             <td ></td>
             <td class="ar">Amount Due</td>
-            <td class="align-text">'. number_format($this->getAmountDue($total_amount),2,'.',',') .' PhP</td>
+            <td class="align-text f-courier">PhP '. number_format($this->getAmountDue($total_amount),2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td class="ar" colspan="2">VAT Amount</td>
             <td ></td>
             <td class="ar">Add: VAT</td>
-            <td class="align-text">'. number_format($this->getVAT($total_amount),2,'.',',') .'</td>
+            <td class="align-text f-courier">PhP '. number_format($this->getVAT($total_amount),2,'.',',') .'</td>
         </tr>
 
         <tr>
             <td style="text-align:right;" colspan="4">Total Amount Due </td>
-            <td class="align-text">'. number_format(($total_amount - $discount),2,'.',',')  .' PhP</td>
+            <td class="align-text f-courier">PhP '. number_format(($total_amount - $discount),2,'.',',')  .'</td>
         </tr>
 
         </tbody>

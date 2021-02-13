@@ -134,6 +134,16 @@
                     <div class="col-md-12 mb-2">
                         <h5>Shipping Address</h5>
                     </div>
+
+                    <div class="col-md-4">
+                      <label class="label-small">Municipality</label>
+                      <p id="municipality"></p>
+                    </div> 
+        
+                    <div class="col-md-4">
+                      <label class="label-small">Barangay</label>
+                      <p id="brgy"></p>
+                    </div> 
     
                     <div class="col-md-4 mb-3">
                         <label class="label-small">House/Unit/Flr #, Bldg Name, Blk or Lot #</label>
@@ -141,12 +151,7 @@
                     </div> 
         
                     <div class="col-md-4">
-                        <label class="label-small">Barangay</label>
-                        <p id="brgy"></p>
-                    </div> 
-        
-                    <div class="col-md-4">
-                        <label class="label-small">Notes</label>
+                        <label class="label-small">Nearest landmark</label>
                         <p id="note"></p>
                     </div> 
           

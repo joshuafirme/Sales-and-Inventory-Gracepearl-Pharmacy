@@ -141,6 +141,13 @@ $(document).ready(function(){
        
 });
 
+$(document).on('click', '#btn-edit-shipping-info', function(){
+
+    window.location.href = "/account";
+    $('#editAccountModal').modal('toggle');
+  
+});
+
 
     function checkFields() {
        var brgy = $('#brgy').val();
@@ -154,6 +161,8 @@ $(document).ready(function(){
            return true;
        }
     }
+
+    
 
 
 });

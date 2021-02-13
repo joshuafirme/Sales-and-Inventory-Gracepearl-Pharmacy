@@ -70,11 +70,6 @@
             @foreach($shipping as $data)
 
             <div class="col-md-6">
-                <label class="label-small text-muted">House/Unit/Flr #, Bldg Name, Blk or Lot #</label>
-                <p>{{ $data->flr_bldg_blk }}</p>
-            </div> 
-
-            <div class="col-md-6">
                 <label class="label-small text-muted">Municipality</label>
                 <p>{{ $data->municipality }}</p>
             </div> 
@@ -85,7 +80,12 @@
             </div> 
 
             <div class="col-md-6">
-                <label class="label-small text-muted">Notes</label>
+                <label class="label-small text-muted">House/Unit/Flr #, Bldg Name, Blk or Lot #</label>
+                <p>{{ $data->flr_bldg_blk }}</p>
+            </div> 
+
+            <div class="col-md-6">
+                <label class="label-small text-muted">Nearest landmark</label>
                 <p>{{ $data->note }}</p>
             </div> 
 

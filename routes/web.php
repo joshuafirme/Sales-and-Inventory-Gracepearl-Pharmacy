@@ -56,10 +56,13 @@ Route::get('/account/change-password', 'Customer\CustomerAccountCtr@change_passw
 Route::get('/account/get-user-email', 'Customer\CustomerAccountCtr@getUserEmail');
 Route::get('/account/get-user-phone', 'Customer\CustomerAccountCtr@getUserPhoneNo');
 Route::post('/account/update-password/{password}', 'Customer\CustomerAccountCtr@updatePassword');
-//verification
+//change password
 Route::get('/account/send-email-code/{email}', 'Customer\CustomerAccountCtr@sendEmailVerificationCode');
 Route::get('/account/send-sms-code/{phone_no}', 'Customer\CustomerAccountCtr@sendSMSVerificationCode');
 Route::get('/account/validate-otp/{vcode}', 'Customer\CustomerAccountCtr@validateOTP');
+//contact us
+Route::get('/contact-us', 'Customer\ContactUsCtr@index');
+Route::get('/contact-us/send', 'Customer\ContactUsCtr@sendMessage');
 
 //homepage
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');

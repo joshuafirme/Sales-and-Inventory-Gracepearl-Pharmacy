@@ -24,14 +24,16 @@ class SignUpCtr extends Controller
         $phone_no = Input::input('phone_no');
         $password = Input::input('password');
         
-            $cust_acc = new CustomerAccount;
-            $cust_acc->_prefix = 'CUST-'. date('yy').'-';
-            $cust_acc->fullname = $fullname;
-            $cust_acc->phone_no = $phone_no;
-            $cust_acc->password = $this->hashPassword($password);
-            $cust_acc->save();
-            
-            return redirect('/customer-login')->send();
+        $cust_acc = new CustomerAccount;
+        $cust_acc->_prefix = 'CUST-'. date('yy').'-';
+        $cust_acc->fullname = $fullname;
+        $cust_acc->phone_no = $phone_no;
+        $cust_acc->password = $this->hashPassword($password);
+        $cust_acc->save();
+
+        Session::forget('otp');
+        
+        return redirect('/customer-login')->send();         
       
     }
 

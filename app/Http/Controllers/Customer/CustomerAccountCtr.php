@@ -185,7 +185,9 @@ class CustomerAccountCtr extends Controller
             ->update([
                 'password' => $hashed
             ]);
-        return Redirect::to('/account/change-password')->with('success', 'Your password is updated successfully');
+
+        Session::forget('vcode');
+      //  return Redirect::to('/account/change-password')->with('success', 'Your password is updated successfully');
     }
 
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

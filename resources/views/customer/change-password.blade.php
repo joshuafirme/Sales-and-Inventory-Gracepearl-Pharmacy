@@ -27,14 +27,6 @@
         <div class="card wish-list mb-3">
           <div class="card-body card-cart">
 
-            @if(\Session::has('success'))
-            <div class="alert alert-success alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-              <h5><i class="icon fas fa-check"></i> </h5>
-              {{ \Session::get('success') }}
-            </div>
-            @endif
-
                 <div class="row">
                     
                         <div class="col-md-12 mb-4">
@@ -68,6 +60,12 @@
                         </div>
 
                 </div>
+
+            <div class="alert alert-success alert-dismissible mt-3" style="display: none;" id="change-pass-success">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <h5><i class="icon fas fa-check"></i> </h5>
+              <p>Your password is updated successfully</p>
+            </div>
 
             </div>      
           </div>

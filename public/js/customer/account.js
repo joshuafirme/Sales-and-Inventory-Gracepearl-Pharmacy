@@ -442,6 +442,9 @@ $(document).on('click', '#btn-update-password', function(){
     $.ajax({
       url:"/account/validate-otp/"+otp,
       type:"GET",
+      beforeSend:function(){
+        $('#btn-update-password').text('Updating...');
+      },
       success:function(response){
           $("#pn-validation").remove();
           if(response == '1')
@@ -450,6 +453,8 @@ $(document).on('click', '#btn-update-password', function(){
               url:"/account/update-password/"+password,
               type:"POST",
               success:function(){
+                $('#change-pass-success').css('display', 'block');
+                $('#btn-update-password').text('Update Password');
               }         
             });
           }

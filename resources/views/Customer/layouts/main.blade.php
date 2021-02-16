@@ -43,7 +43,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
-                                <a href="" class="nav-item nav-link dropdown-toggle text-secondary">Contact us</a>
+                                <a href="{{ url('/contact-us') }}" class="nav-item nav-link dropdown-toggle text-secondary">Contact us</a>
                             </div>
                         </li>
           
@@ -119,6 +119,7 @@
           <script src="{{asset('js/customer/payment.js')}}"></script>
           <script src="{{asset('js/customer/account.js')}}"></script>
           <script src="{{asset('js/customer/myorder.js')}}"></script>
+          <script src="{{asset('js/customer/contact-us.js')}}"></script>
           
           <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 

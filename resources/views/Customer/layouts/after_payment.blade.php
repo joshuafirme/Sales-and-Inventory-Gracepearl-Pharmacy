@@ -24,7 +24,7 @@
                             <div class="col-12 mb-3">
                                 <p class="text-center m-0">Order Recieved</p>
                                 <p class="text-center m-0">Please have this amount ready on delivery</p>
-                                <h4 class="text-success text-center">₱{{ session()->get('checkout-total') }}</h4>
+                                <h4 class="text-success text-center">₱{{ session()->get('checkout-total') + session()->get('after-payment-shipping-fee') }}</h4>
                             </div>
                      
                                 <a class="m-auto btn btn-sm btn-blue-primary" style="text-align: center" href="{{ url('/homepage') }}">Continue Shopping</a>

@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Input;
+use Mail;
+use Session;
+use App\Mail\EmailVerification;
 use App\CustomerAccount;
 use App\CustomerVerification;
 use App\Classes\BrgyAPI;
+use Redirect;
 
 class CustomerAccountCtr extends Controller
 {
@@ -18,6 +23,7 @@ class CustomerAccountCtr extends Controller
     private $tbl_ship_add_maintenance = "tblship_add_maintenance";
 
     public function index(){
+        $this->isLoggedIn();
         $acc_info = $this->getAccountInfo();
         $verification_info = $this->getVerificationInfo();
         $ship_info = $this->getShippingInfo();
@@ -30,6 +36,13 @@ class CustomerAccountCtr extends Controller
             'shipping' => $ship_info,
             'municipality' => $municipality
         ]);
+    }
+
+    public function isLoggedIn(){
+        if(session()->get('is-customer-logged') !== 'yes'){
+   
+           return redirect()->to('/customer-login')->send();
+        }
     }
 
     public function getAccountInfo()
@@ -117,6 +130,67 @@ class CustomerAccountCtr extends Controller
         }
     }
 
+// Change Password-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    public function change_password_view(){
+        $this->isLoggedIn();
+        return view('customer.change-password',[
+            'email' => $this->getUserEmail()
+        ]);
+    }
+
+
+    public function sendEmailVerificationCode($email)
+    {
+        $vcode = rand(1000,9999);
+        $message = "Your verification code is ". $vcode ." from Gracepearl Pharmacy";
+
+        Mail::to($email)->send(new EmailVerification($message));
+        Session::put('vcode', $vcode);
+    }
+
+    public function sendSMSVerificationCode($phone_no)
+    {
+        $basic  = new \Nexmo\Client\Credentials\Basic('a08cdaef', '9cXwHtJotgmRww3t');
+        $client = new \Nexmo\Client($basic);
+
+        $vcode = rand(1000,9999);
+      
+        $message = $client->message()->send([
+            'to' => '63'.$phone_no,
+            'from' => 'Gracepearl Pharmacy',
+            'text' => "Your verification code is ". $vcode ." from Gracepearl Pharmacy"
+        ]);
+
+        Session::put('vcode', $vcode);
+    }
+
+    public function validateOTP($vcode)
+    {
+        if(Session::get('vcode') == $vcode){
+            return '1';
+        }
+        else{
+            return '0';
+        }
+    }
+
+    public function updatePassword($password)
+    {         
+        $user_id = $this->getUserID();  
+        $hashed = Hash::make($password);
+
+        DB::table('tblcustomer_account')
+            ->where('id', $user_id)
+            ->update([
+                'password' => $hashed
+            ]);
+        return Redirect::to('/account/change-password')->with('success', 'Your password is updated successfully');
+    }
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
     public function uploadID(Request $request){
         $user_id = $this->getUserIDWithPrefix();
         $cust_verif = new CustomerVerification;
@@ -192,6 +266,20 @@ class CustomerAccountCtr extends Controller
                 ->where('municipality', $municipality)
                 ->get(); 
         return $brgy;
+    }
+
+    public function getUserEmail()
+    {
+        return DB::table('tblcustomer_account')
+                ->where('id', $this->getUserID())
+                ->value('email'); 
+    }
+
+    public function getUserPhoneNo()
+    {
+        return DB::table('tblcustomer_account')
+                ->where('id', $this->getUserID())
+                ->value('phone_no'); 
     }
 
     public function getUserID(){

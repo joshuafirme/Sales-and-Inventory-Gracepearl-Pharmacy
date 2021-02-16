@@ -9,6 +9,7 @@ use Input;
 use Luigel\Paymongo\Facades\Paymongo;
 use Illuminate\Support\Str;
 use App\OnlineOrder;
+use Session;
 
 class PaymentCtr extends Controller
 {
@@ -40,10 +41,11 @@ class PaymentCtr extends Controller
         session()->forget('order-no');
     }
 
+// COD---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public function cashOnDelivery(){
 
         $order_no = session()->get('order-no');
-        //kung walang laman ang session
+
         if(!$order_no){
            $order_no = $this->getOrderNo() -1;
         }
@@ -72,15 +74,34 @@ class PaymentCtr extends Controller
         $this->forgetOrder();  
     }
 
+    
+    public function getShippingFee(){
+
+        $user_id = $this->getUserIDWithPrefix();
+        $data = DB::table('tblshipping_add')
+                            ->where('user_id', $user_id)
+                            ->first();
+
+        $fee = DB::table('tblship_add_maintenance')
+                  ->where([
+                      ['municipality', $data->municipality],
+                      ['brgy', $data->brgy]
+                  ])
+                  ->value('shipping_fee');
+        return $fee;
+     }
+
+// GCash Payment---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     public function gcashPayment()
     {     
         $source_ss = session()->get('source');
-        $amount = session()->get('checkout-total');    
+        $shipping_fee = $this->getShippingFee();
+        $amount = Session::get('checkout-total') + $shipping_fee;    
         
         if(!$source_ss) {
         $source = Paymongo::source()->create([
             'type' => 'gcash',
-            'amount' => number_format((int)$amount,2,'.',','),
+            'amount' => number_format($amount,2,'.',','),
             'currency' => 'PHP',
             'redirect' => [
                 'success' => route('gcashpayment'),

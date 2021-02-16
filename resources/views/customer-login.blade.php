@@ -25,7 +25,7 @@
 						<i class="fas fa-user"></i>
 					</div>
 					<div>
-						<h5>Phone number or email</h5>
+						<h5>Phone number</h5>
 						<input class="input" type="text" id="phone_email">
 					</div>
 				</div>

@@ -19,17 +19,19 @@
 
                 <div class="col-md-4">
                     <label class="label-small" >Full Name</label>
-                    <input type="text" class="form-control" id="fullname">
+                    <input type="text" class="form-control" id="fullname" readonly>
                 </div>
     
                 <div class="col-md-4">
                     <label class="label-small">Email Address</label>
-                    <input type="email" class="form-control" id="email">
+                    <input type="email" class="form-control" id="email" readonly>
+                    <a href="" class="label-small" style="color: #1F6EA6;">Change</a>
                 </div>
     
                 <div class="col-md-4">
                     <label class="label-small">Phone Number</label>
-                    <input type="number" class="form-control" id="phone_no">
+                    <input type="number" class="form-control" id="phone_no" readonly>
+                    <a href="" class="label-small" style="color: #1F6EA6;">Change</a>
                 </div> 
     
                 <div class="col-md-12 mb-1 mt-2">
@@ -41,13 +43,8 @@
                 <div class="col-md-12 mb-2">
                     <h5>Shipping Address</h5>
                 </div>
-
-                <div class="col-md-6 mb-3">
-                    <label class="label-small">House/Unit/Flr #, Bldg Name, Blk or Lot #</label>
-                    <input type="text" class="form-control" id="flr-bldg-blk">
-                </div> 
     
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
                     <label class="label-small">Municipality</label>
                     <select class="form-control" name="municipality" id="municipality">
                       @foreach($municipality as $data)
@@ -63,9 +60,14 @@
                     
                   </select>
               </div> 
+
+              <div class="col-md-6">
+                  <label class="label-small">House/Unit/Flr #, Bldg Name, Blk or Lot #</label>
+                  <input type="text" class="form-control" id="flr-bldg-blk">
+              </div> 
     
                 <div class="col-md-6">
-                    <label class="label-small">Notes</label>
+                    <label class="label-small">Nearest Landmark</label>
                     <input type="text" class="form-control" id="notes">
                 </div> 
                 

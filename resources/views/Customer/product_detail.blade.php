@@ -51,8 +51,8 @@
                     <h5 class="mt-3" id="details-description">{{ $data->description }}</h5>
                
                     <p><h4 class="mr-1 text-success">₱<span id="price-buynow">{{ number_format($data->selling_price) }}</span></h4></p>
-                    <button type="button" class="btn btn-sm card__btn-buy mr-1 mb-2" id="btn-buynow" product-code={{ $data->product_code }}>Buy now</button>
-                    <button type="button" class="btn btn-sm card__btn-buy-now mr-1 mb-2" id="btn-add-to-cart" product-code={{ $data->product_code }}>
+                  <!--  <button type="button" class="btn btn-sm card__btn-buy mr-1 mb-2" id="btn-buynow" product-code=// $data->product_code }}>Buy now</button> -->
+                    <button type="button" class="btn btn-sm btn-success mr-1 mb-2" style="border-radius: 50px;" id="btn-add-to-cart" product-code={{ $data->product_code }}>
                         <i class="fas fa-cart-plus"></i> Add to cart</button>
                     
                         <!-- QTY -->

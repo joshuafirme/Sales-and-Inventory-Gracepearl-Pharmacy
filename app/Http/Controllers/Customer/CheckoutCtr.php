@@ -23,6 +23,7 @@ class CheckoutCtr extends Controller
     public function index(){
      // session()->forget('buynow-item');
      //   dd(session()->get('buynow-item'));
+     
         session()->forget('source');
     
         $this->isLoggedIn();
@@ -71,16 +72,23 @@ class CheckoutCtr extends Controller
       }
 
       public function getShippingFee(){
-        $municipality = Input::input('municipality');
-        $brgy = Input::input('brgy');
+
+        $user_id = $this->getUserIDWithPrefix();
+        $data = DB::table('tblshipping_add')
+                            ->where('user_id', $user_id)
+                            ->first();
+
         $fee = DB::table($this->tbl_ship_add_maintenance)
                   ->where([
-                      ['municipality', $municipality],
-                      ['brgy', $brgy]
+                      ['municipality', $data->municipality],
+                      ['brgy', $data->brgy]
                   ])
                   ->value('shipping_fee');
+
+        session()->put('after-payment-shipping-fee', $fee);
+
         return $fee;
-    }
+     }
 
       public function getSubtotalAmount()
       {

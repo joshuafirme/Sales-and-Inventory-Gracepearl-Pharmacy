@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Input;
 use App\ProductMaintenance;
+use Session;
 
 class CartCtr extends Controller
 {
@@ -30,7 +31,7 @@ class CartCtr extends Controller
       }
 
       public function isLoggedIn(){
-        if(session()->get('is-customer-logged') !== 'yes'){
+        if(Session::get('is-customer-logged') !== 'yes'){
    
            return redirect()->to('/customer-login')->send();
         }
@@ -62,7 +63,8 @@ class CartCtr extends Controller
       {
         $user_id_prefix = $this->getUserIDWithPrefix();
         $product_code = Input::input('product_code');
-        $price = $this->getPrice($product_code);
+        $qty = Input::input('qty');
+        $price = $this->getPrice($product_code) * $qty;
   
         if($this->isProductExists($product_code) == true)
         {
@@ -74,7 +76,7 @@ class CartCtr extends Controller
           ])
             ->update(array(
               'amount' => DB::raw('amount + '. $price .''),
-              'qty' => DB::raw('qty + '. 1)));
+              'qty' => DB::raw('qty + '. $qty)));
           
          
         }
@@ -84,7 +86,7 @@ class CartCtr extends Controller
             [
             'customerID' => $user_id_prefix,
             'product_code' => $product_code, 
-            'qty' => 1,
+            'qty' => $qty,
             'amount' => $price
             ]);
         }
@@ -147,17 +149,17 @@ class CartCtr extends Controller
           $discount = $this->pwdGenericItemDiscount();
         }
         else{
-          session()->put('checkout-total', $amount);
+          Session::put('checkout-total', $amount);
           return $amount;
         }
        
         $total = $amount - $discount;
-        session()->put('checkout-discount', $discount);
+        Session::put('checkout-discount', $discount);
 
         if($amount == 0){
-          session()->put('checkout-total', $total);
+          Session::put('checkout-total', $total);
         }
-        session()->put('checkout-total', $total);
+        Session::put('checkout-total', $total);
         return $total;
       }
 

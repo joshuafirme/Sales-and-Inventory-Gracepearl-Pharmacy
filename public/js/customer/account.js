@@ -32,9 +32,10 @@ $(document).ready(function(){
         success:function(data){
          if(data){
          
-          $('#municipality').append('<option selected value="' + data[0].municipality + '">' + data[0].municipality + '</option>');
+        //  $('#municipality').append('<option selected value="' + data[0].municipality + '">' + data[0].municipality + '</option>');
 
-          $('#brgy').append('<option selected value="' + data[0].brgy + '">' + data[0].brgy + '</option>');
+        $('#barangay').empty(); 
+          $('#barangay').append('<option selected value="' + data[0].brgy + '">' + data[0].brgy + '</option>');
 
        //   $("#municipality option[value="+data[0].municipality+"]").remove();
 
@@ -64,13 +65,14 @@ $(document).ready(function(){
 
  $('#municipality').change(function () {
     var municipality = $(this).val();
+    
+    $('#barangay').empty(); 
     getBrgy(municipality, '');
     
 });         
      
  function getBrgy(municipality, brgy) {
 
-  $('#barangay').empty(); 
     $.ajax({
         url: '/account/getBrgyList/'+municipality,
         tpye: 'GET',
@@ -199,6 +201,7 @@ $(document).ready(function(){
         }
        
     });
+    
 
     function validateInputs(fullname, phone_no, brgy, flr_bldg_blk) {
 
@@ -285,9 +288,178 @@ $(document).ready(function(){
       $("#btn-upload").attr('disabled', true);
     }
 
+  
+  
+  
+// Send Email Verification Code------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$("#btn-send-email-code").change(function() {
+  $.ajax({
+    url: '/account/send-verification-code/'+email,
+    tpye: 'GET',
+    success:function(data){
+        
+
+    }
+  });
 });
-  
-  
-  
-  
-  
+
+getUserEmail();
+
+function getUserEmail(){
+  $.ajax({
+    url: '/account/get-user-email',
+    tpye: 'GET',
+    success:function(data){
+        $('.send-code-to').text(data);
+        $('#send-code-to_hidden').val(data);
+    }
+  });
+}
+
+
+$('.verify-email').click(function(){
+
+  $('.verify-email').addClass("active");
+  $('.verify-sms').removeClass("active");
+
+  getUserEmail()
+});
+
+$('.verify-sms').click(function(){
+
+  $('.verify-sms').addClass("active");
+  $('.verify-email').removeClass("active");
+
+  $.ajax({
+    url: '/account/get-user-phone',
+    tpye: 'GET',
+    success:function(data){
+        $('.send-code-to').text(data);
+        $('#send-code-to_hidden').val(data);
+    }
+  });
+
+});
+
+
+  $(document).on('click', '#send-email-code', function() {
+    var recipient = $('#send-code-to_hidden').val().replace(/^0+/, ''); //remove leading zeros
+    console.log(recipient);
+    sendOTP(recipient);
+  });
+
+
+function sendOTP(recipient){
+  if($('.verify-email').hasClass('active')){
+    $.ajax({
+      url:"/account/send-email-code/"+recipient,
+      type:"GET",
+      beforeSend:function(){
+        $('#send-email-code').text('Sending...');
+      },
+      success:function(){
+          $('#send-email-code').text('Send Code');
+          setTimer();
+      }         
+     });
+  }
+  else{
+    $.ajax({
+      url:"/account/send-sms-code/"+recipient,
+      type:"GET",
+      beforeSend:function(){
+        $('#send-email-code').text('Sending...');
+      },
+      success:function(){
+          $('#send-email-code').text('Send Code');
+          setTimer();
+      }         
+     });
+  }
+
+}
+
+function setTimer(){
+    $('#send-email-code').css('display', 'none');
+    var timer2 = "0:30";
+    var interval = setInterval(function() {
+    
+      var timer = timer2.split(':');
+      //by parsing integer, I avoid all extra string processing
+      var minutes = parseInt(timer[0], 10);
+      var seconds = parseInt(timer[1], 10);
+      --seconds;
+      minutes = (seconds < 0) ? --minutes : minutes;
+      if (minutes < 0) clearInterval(interval);
+      seconds = (seconds < 0) ? 59 : seconds;
+      seconds = (seconds < 10) ? '0' + seconds : seconds;
+      //minutes = (minutes < 10) ?  minutes : minutes;
+      $('.countdown').text('Resend Code in ' + minutes + ':' + seconds);
+      timer2 = minutes + ':' + seconds;
+
+      if(seconds == 0){
+          minutes = 0;
+          seconds = 0;
+        $('.countdown').css('display', 'none');
+        $('#send-email-code').css('display', 'inline');
+        $('#send-email-code').text('Resend OTP');
+      }
+    }, 1000);
+}
+
+
+$(document).on('blur', '#vcode', function(){
+     var otp = $(this).val();
+     validateOTP(otp);
+});
+
+function validateOTP(otp){
+    if(otp){
+        $.ajax({
+            url:"/account/validate-otp/"+otp,
+            type:"GET",
+            success:function(response){
+                if(response == '1'){
+                    $("#pn-validation").remove();
+                    $('#vcode')
+                    .after('<span class="label-small text-success" id="pn-validation">Code is valid.</div>');
+                }
+                else{
+                    $("#pn-validation").remove();
+                    $('#vcode')
+                    .after('<span class="label-small text-danger" id="pn-validation">Code is invalid.</div>');
+                }
+            }         
+           });
+    }
+} 
+
+$(document).on('click', '#btn-update-password', function(){
+    var otp = $('#vcode').val();
+    var password = $('#new-password').val();
+
+    $.ajax({
+      url:"/account/validate-otp/"+otp,
+      type:"GET",
+      success:function(response){
+          $("#pn-validation").remove();
+          if(response == '1')
+          {     
+            $.ajax({
+              url:"/account/update-password/"+password,
+              type:"POST",
+              success:function(){
+              }         
+            });
+          }
+          else{
+              $("#pn-validation").remove();
+              $('#vcode')
+              .after('<span class="label-small text-danger" id="pn-validation">Code is invalid.</div>');
+          }
+      }         
+     });
+});
+
+});

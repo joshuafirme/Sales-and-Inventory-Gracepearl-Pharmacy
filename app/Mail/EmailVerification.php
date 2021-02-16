@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class MyMail extends Mailable
+class EmailVerification extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,11 +30,9 @@ class MyMail extends Mailable
     public function build()
     {
         return $this->from('gracepearltesting@gmail.com')
-        ->subject('Request Order')
-        ->view('email.send_mail')->with('data', $this->data); 
+        ->subject('Security Verification')
+        ->view('email.verification-code')->with('data', $this->data); 
         
     }
 
-  /* 
-       */
 }

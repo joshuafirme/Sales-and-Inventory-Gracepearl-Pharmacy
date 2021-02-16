@@ -45,7 +45,7 @@ class GoogleLoginCtr extends Controller
         if($account->count() > 0)
         {
             $this->putToSession($email, $avatar);
-            return redirect('/homepage')->send();
+            return redirect('/')->send();
         }
         else
         {
@@ -57,7 +57,7 @@ class GoogleLoginCtr extends Controller
             $cust_acc->email = $email;
             $cust_acc->save();
             
-            return redirect('/homepage')->send();
+            return redirect('/')->send();
         }
     }
 

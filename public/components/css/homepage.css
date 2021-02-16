@@ -382,3 +382,12 @@ align-items: center;
 	border-color: #5CB85C;
 	border-width: 1px;
 }
+
+
+.btn-outline-success:hover{
+	background-color: #fff !important;
+}
+
+.btn-outline-success.active:hover{
+	background-color: #28A745 !important;
+}

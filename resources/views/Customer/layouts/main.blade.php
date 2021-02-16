@@ -33,7 +33,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
-                            <a href="{{ url('/homepage') }}" class="nav-item nav-link dropdown-toggle text-secondary">Home</a>
+                            <a href="{{ url('/') }}" class="nav-item nav-link dropdown-toggle text-secondary">Home</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -73,7 +73,7 @@
                                         <li><a href="{{ url('/account') }}" class="dropdown-item"><i class="fas fa-user"></i> My Account</a></li>
                                         <li><a href="{{ url('/myorders') }}" class="dropdown-item"><i class="fas fa-cube"></i> My Orders</a></li>
                                         <div class="dropdown-divider"></div>
-                                        <li><a href="{{ url('/') }}" onclick="logout()" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                                        <li><a href="{{ url('/customer-login') }}" onclick="logout()" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                                     </ul>
                                 </div>
                             </div>

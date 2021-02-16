@@ -170,11 +170,11 @@
                 <Label class="label-small">Subd/Blk/Bldg</Label>
                 <input type="text" class="form-control mb-3" placeholder="flr/blk/bldg" id="flr-bldg-blk" readonly>
 
-                <Label class="label-small">Note</Label>
+                <Label class="label-small">Nearest landmark</Label>
                 <textarea class="form-control mb-3" id="note" readonly></textarea>
 
-                <Label class="label-small">Contact No.</Label>
-                <input type="text" class="form-control mb-3" id="contact-no" maxlength="11" placeholder="09xxxxxxxxx" readonly>
+                <Label class="label-small">Phone number</Label>
+                <input type="text" class="form-control mb-3" id="contact-no" maxlength="11" readonly>
 
                 <Label class="label-small">Email</Label>
                 <input type="text" class="form-control" id="email" readonly><br>

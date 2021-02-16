@@ -91,16 +91,9 @@
 
             @endforeach
 
-            <div class="col-md-12 mb-2">
-                <hr>
+            <div class="col-md-6 mt-2">
+                <button id="btn-edit-account" class="btn btn-sm btn-blue-primary" data-toggle="modal" data-target="#editAccountModal"><i class="fas fa-edit"></i> Edit Account</button>
             </div>
-
-            <div class="col-md-12">
-                <button id="btn-edit-account" class="btn btn-sm btn-blue-primary" data-toggle="modal" data-target="#editAccountModal">Edit Account</button>
-                
-                <a href="/account/change-password" class="btn btn-sm btn-blue-primary">Change Password</a>
-            </div>
-
 
 
             </div>
@@ -124,10 +117,6 @@
 
 </div>
 
-       <!--loading Modal-->
-       @extends('customer.layouts.modals')
-       @section('editAccountModal')
-       @endsection
 
       
 @endsection

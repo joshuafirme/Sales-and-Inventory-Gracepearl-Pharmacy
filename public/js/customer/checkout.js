@@ -65,28 +65,6 @@ $(document).ready(function(){
     }
     }); 
 
-    
-    function getShippingFee(){
-      var municipality = $('#municipality').val(); 
-      var brgy = $('#brgy').val(); 
-      console.log(municipality+ 'mun');
-      console.log(brgy);
-      $.ajax({
-        url:"/checkout/shipping_fee",
-        type:"GET",
-        data:{
-          municipality:municipality,
-          brgy:brgy
-        },
-        success:function(shipping_fee){
-            $('.txt-shipping-fee').text('₱'+shipping_fee); 
-            getTotal(shipping_fee);
-        }
-         
-       });
-    
-    }
-
     getSubtotal();
 
     function getSubtotal(){
@@ -109,6 +87,21 @@ $(document).ready(function(){
               $('#txt-total-due').text('₱'+moneyFormat(total));
           }         
          });
+    }
+
+    
+    function getShippingFee(){
+      
+      $.ajax({
+        url:"/checkout/shipping_fee",
+        type:"GET",
+        success:function(shipping_fee){
+            $('.txt-shipping-fee').text('₱'+shipping_fee); 
+            getTotal(shipping_fee);
+        }
+         
+       });
+    
     }
 
     function moneyFormat(total)

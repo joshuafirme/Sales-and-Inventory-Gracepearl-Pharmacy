@@ -51,19 +51,32 @@ $(document).ready(function(){
 
 
 
-    getSubtotal();
-
-    function getSubtotal(){
+    getShippingFee();
+    
+    function getShippingFee(){
+      
+      $.ajax({
+        url:"/checkout/shipping_fee",
+        type:"GET",
+        success:function(shipping_fee){
+            $('.txt-shipping-fee').text('₱'+shipping_fee); 
+            getTotal(shipping_fee);
+        }
+         
+       });
+    
+    }
+    
+    function getTotal(shipping_fee){
       $.ajax({
           url:"/checkout/getsubtotal",
           type:"GET",
-          success:function(response){
-              $('#lbl-payment-total').text('₱'+moneyFormat(response));
-              $('#lbl-after-payment').text('₱'+moneyFormat(response));
-              
+          success:function(subtotal){
+            var total = parseFloat(subtotal) + parseFloat(shipping_fee);
+            console.log(subtotal +' '+ shipping_fee);
+              $('#lbl-payment-total').text('₱'+moneyFormat(total));
           }         
          });
-     
     }
   
       setTimeout(function(){

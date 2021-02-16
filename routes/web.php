@@ -11,8 +11,8 @@
 |
 */
 
+Route::get('/', 'Customer\HomePageCtr@index');
 
-Route::get('/', 'Customer\LoginCtr@index');
 
 //Admin
 Route::get('/admin-login', 'AdminLoginCtr@index');
@@ -27,6 +27,7 @@ Route::resource('/products', 'ProductSearch');
 
 //CUSTOMER---------------------------------------------------------------------------------------------------------------
 //login
+Route::get('/customer-login', 'Customer\LoginCtr@index');
 Route::post('customer-login/login', 'Customer\LoginCtr@login');
 Route::get('/customer/logout', 'Customer\LoginCtr@logout');
 //google login
@@ -49,8 +50,18 @@ Route::post('/account/uploadID', 'Customer\CustomerAccountCtr@uploadID');
 Route::get('/account/checkifverified', 'Customer\CustomerAccountCtr@checkIfVerified');
 Route::get('/account/getBrgyList/{municipality}', 'Customer\CustomerAccountCtr@getBrgyList');
 
+Route::get('/account/verify-through', 'Customer\CustomerAccountCtr@verify_through');
+Route::get('/account/change-password', 'Customer\CustomerAccountCtr@change_password_view');
+
+Route::get('/account/get-user-email', 'Customer\CustomerAccountCtr@getUserEmail');
+Route::get('/account/get-user-phone', 'Customer\CustomerAccountCtr@getUserPhoneNo');
+Route::post('/account/update-password/{password}', 'Customer\CustomerAccountCtr@updatePassword');
+//verification
+Route::get('/account/send-email-code/{email}', 'Customer\CustomerAccountCtr@sendEmailVerificationCode');
+Route::get('/account/send-sms-code/{phone_no}', 'Customer\CustomerAccountCtr@sendSMSVerificationCode');
+Route::get('/account/validate-otp/{vcode}', 'Customer\CustomerAccountCtr@validateOTP');
+
 //homepage
-Route::get('/homepage', 'Customer\HomePageCtr@index');
 Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
 Route::get('/homepage/allproduct', 'Customer\HomePageCtr@getAllProduct');
 Route::get('/homepage/searchproduct/{search_key}', 'Customer\HomePageCtr@searchProduct');

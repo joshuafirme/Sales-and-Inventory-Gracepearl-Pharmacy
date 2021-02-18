@@ -41,12 +41,6 @@
                     </div>
                     <div class="panel-body">
       
-                        @if (Session::has('success'))
-                            <div class="alert alert-success text-center">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-                                <p>{{ Session::get('success') }}</p>
-                            </div>
-                        @endif
       
                         <form role="form" action="{{ route('stripe.post') }}" method="post" class="require-validation"
                                                          data-cc-on-file="false"
@@ -102,6 +96,15 @@
                             </div>
                               
                         </form>
+
+                        
+                        @if (Session::has('success'))
+                            <div class="alert alert-success text-center" style="margin-top: 15px;">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                                <p>{{ Session::get('success') }}</p><span><a href="{{ url('/') }}">Go to homepage</a></span>
+                            </div>
+                        @endif
+
                     </div>
                 </div>        
             </div>

@@ -35,7 +35,7 @@
                                   </button>
                                 </a>
       
-                                  <a data-toggle="modal" data-target="#stripeModal" class="btn btn-payment" id="btn-stripe">
+                                  <a href="{{ url('/stripe') }}" class="btn btn-payment" id="btn-stripe">
                                       <img src="{{asset('assets/card_payment_50px.png')}}" alt=""><br>
                                       <p class="mt-1 mb-0">Credit/Debit Card</p>
                                   </a>

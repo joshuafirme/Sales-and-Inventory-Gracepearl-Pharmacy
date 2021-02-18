@@ -116,17 +116,13 @@ $(document).ready(function(){
         return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       }
 
-    var stripe_window;
+   /* var stripe_window;
     $('#btn-stripe').click(function(){
         var left  = ($(window).width()/2)-(400/2),
         top   = ($(window).height()/2)-(600/2);
         stripe_window = window.open ("/stripe", "popup", "width=485, height=450, top="+top+", left="+left);
         
-    });
-    $('#btn-stripe-pay').click(function(){
-      alert('yay');
-      stripe_window.close();
-    });
+    }); */
 
 
 });

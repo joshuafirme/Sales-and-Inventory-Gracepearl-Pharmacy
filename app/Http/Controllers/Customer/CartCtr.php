@@ -64,6 +64,9 @@ class CartCtr extends Controller
         $user_id_prefix = $this->getUserIDWithPrefix();
         $product_code = Input::input('product_code');
         $qty = Input::input('qty');
+        if($qty == null){
+          $qty = 1;
+        }
         $price = $this->getPrice($product_code) * $qty;
   
         if($this->isProductExists($product_code) == true)

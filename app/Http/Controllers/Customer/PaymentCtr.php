@@ -136,7 +136,7 @@ class PaymentCtr extends Controller
                  
             // kalimutan ang source at mag move on :)
             session()->forget('source');
-            return redirect('/homepage')->send();
+            return redirect('/')->send();
         }
     }
 

@@ -88,7 +88,7 @@ $(document).ready(function(){
                 altkey: true
             },
             
-            title: '<p>Gracepearl Pharmacy <br> Sales Report</p>',
+            title: '<p>Gracepearl Pharmacy <br> Sales Report</p><p>'+getCategory()+'</p>',
             messageTop: salesDate(),                
             customize: function (win){
               $(win.document.body).find('h1').css('text-align', 'center');
@@ -101,16 +101,19 @@ $(document).ready(function(){
       });
 
       function salesDate() {
-        var date_from = $('#sales_date_from').val()
-        var date_to = $('#sales_date_to').val();
-      
-        return getSales() + ' as of ' + date_from +' to '+ date_to;
+          var date_from = $('#sales_date_from').val()
+          var date_to = $('#sales_date_to').val();
+          var sales = $('#total-sales').text();
+          return '<h3>Total sales: <b>' + sales + '</b></h3> <h5> From ' + date_from +' to '+ date_to + '</h5>';
        }
 
-      function getSales() {
-        $('#total-sales').text();
-        return $('#total-sales').text();
-      }
+       function getCategory() {
+          let category = $('select[name=sales_category] option').filter(':selected').text();
+          if(category == 'All'){
+            category = 'All Categories';
+          }
+          return category
+       }
       
 
     $('.btn-load-records').click(function(){

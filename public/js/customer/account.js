@@ -311,36 +311,54 @@ function getUserEmail(){
     url: '/account/get-user-email',
     tpye: 'GET',
     success:function(data){
-        $('.send-code-to').text(data);
-        $('#send-code-to_hidden').val(data);
+        $('.send-code-to').html('Code will be send to <b>'+data+'</b>');
+        let recipient = $('#send-code-to_hidden').val(data);
+
+        if(recipient == ''){
+          $('.btn-verify-email').prop('disabled', true);
+          $('.btn-verify-sms').addClass("active");
+          $('.btn-verify-email').removeClass("active");
+          getUserPhoneNo();
+        }
     }
   });
 }
 
 
-$('.verify-email').click(function(){
+$('.btn-verify-email').click(function(){
 
-  $('.verify-email').addClass("active");
-  $('.verify-sms').removeClass("active");
+  $('.btn-verify-email').addClass("active");
+  $('.btn-verify-sms').removeClass("active");
 
   getUserEmail()
 });
 
-$('.verify-sms').click(function(){
+$('.btn-verify-sms').click(function(){
 
-  $('.verify-sms').addClass("active");
-  $('.verify-email').removeClass("active");
+  $('.btn-verify-sms').addClass("active");
+  $('.btn-verify-email').removeClass("active");
 
+  getUserPhoneNo();
+});
+
+function getUserPhoneNo(){
   $.ajax({
     url: '/account/get-user-phone',
     tpye: 'GET',
     success:function(data){
-        $('.send-code-to').text(data);
-        $('#send-code-to_hidden').val(data);
+      
+        $('.send-code-to').html('Code will be send to <b>'+data+'</b>');
+        let recipient = $('#send-code-to_hidden').val(data);
+
+        if(recipient == ''){
+          $('.btn-verify-sms').prop('disabled', true);
+          $('.btn-verify-email').addClass("active");
+          $('.btn-verify-sms').removeClass("active");
+          getUserEmail();
+        }
     }
   });
-
-});
+}
 
 
   $(document).on('click', '#send-email-code', function() {
@@ -351,7 +369,7 @@ $('.verify-sms').click(function(){
 
 
 function sendOTP(recipient){
-  if($('.verify-email').hasClass('active')){
+  if($('.btn-verify-email').hasClass('active')){
     $.ajax({
       url:"/account/send-email-code/"+recipient,
       type:"GET",
@@ -439,32 +457,91 @@ $(document).on('click', '#btn-update-password', function(){
     var otp = $('#vcode').val();
     var password = $('#new-password').val();
 
+    if(otp){
+      $.ajax({
+        url:"/account/validate-otp/"+otp,
+        type:"GET",
+        success:function(response){
+            $("#pn-validation").remove();
+            if(response == '1')
+            {     
+              if(password){
+                $.ajax({
+                  url:"/account/update-password/"+password,
+                  type:"POST",
+                  beforeSend:function(){
+                    $('#btn-update-password').text('Updating...');
+                  },
+                  success:function(){
+                    $('#change-pass-success').css('display', 'block');
+                    $('#btn-update-password').text('Update Password');
+                  }         
+                });
+              }
+              else{
+                $("#pn-validation").remove();
+                $('#new-password')
+                .after('<span class="label-small text-danger" id="pn-validation">Please enter the code</div>');
+              }
+            }
+            else{
+                alert('Invalid ');
+            }
+        }         
+       });
+    }
+    else{
+      
+      $("#pn-validation").remove();
+      $('#vcode')
+      .after('<span class="label-small text-danger" id="pn-validation">Please enter the code</div>');
+    }
+});
+
+
+$(document).on('click', '#btn-update-email', function(){
+  var otp = $('#vcode').val();
+  var email = $('#new-email').val();
+
+  if(otp){
     $.ajax({
       url:"/account/validate-otp/"+otp,
       type:"GET",
-      beforeSend:function(){
-        $('#btn-update-password').text('Updating...');
-      },
       success:function(response){
           $("#pn-validation").remove();
           if(response == '1')
           {     
-            $.ajax({
-              url:"/account/update-password/"+password,
-              type:"POST",
-              success:function(){
-                $('#change-pass-success').css('display', 'block');
-                $('#btn-update-password').text('Update Password');
-              }         
-            });
+            if(password){
+              $.ajax({
+                url:"/account/update-password/"+password,
+                type:"POST",
+                beforeSend:function(){
+                  $('#btn-update-password').text('Updating...');
+                },
+                success:function(){
+                  $('#change-pass-success').css('display', 'block');
+                  $('#btn-update-password').text('Update Password');
+                }         
+              });
+            }
+            else{
+              $("#pn-validation").remove();
+              $('#new-password')
+              .after('<span class="label-small text-danger" id="pn-validation">Please enter the code</div>');
+            }
           }
           else{
-              $("#pn-validation").remove();
-              $('#vcode')
-              .after('<span class="label-small text-danger" id="pn-validation">Code is invalid.</div>');
+              alert('Invalid ');
           }
       }         
      });
+  }
+  else{
+    
+    $("#pn-validation").remove();
+    $('#vcode')
+    .after('<span class="label-small text-danger" id="pn-validation">Please enter the code</div>');
+  }
 });
 
 });

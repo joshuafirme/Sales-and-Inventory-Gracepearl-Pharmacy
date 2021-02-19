@@ -50,16 +50,19 @@ Route::post('/account/uploadID', 'Customer\CustomerAccountCtr@uploadID');
 Route::get('/account/checkifverified', 'Customer\CustomerAccountCtr@checkIfVerified');
 Route::get('/account/getBrgyList/{municipality}', 'Customer\CustomerAccountCtr@getBrgyList');
 
-Route::get('/account/verify-through', 'Customer\CustomerAccountCtr@verify_through');
+//change password
 Route::get('/account/change-password', 'Customer\CustomerAccountCtr@change_password_view');
-
 Route::get('/account/get-user-email', 'Customer\CustomerAccountCtr@getUserEmail');
 Route::get('/account/get-user-phone', 'Customer\CustomerAccountCtr@getUserPhoneNo');
 Route::post('/account/update-password/{password}', 'Customer\CustomerAccountCtr@updatePassword');
-//change password
+
 Route::get('/account/send-email-code/{email}', 'Customer\CustomerAccountCtr@sendEmailVerificationCode');
 Route::get('/account/send-sms-code/{phone_no}', 'Customer\CustomerAccountCtr@sendSMSVerificationCode');
 Route::get('/account/validate-otp/{vcode}', 'Customer\CustomerAccountCtr@validateOTP');
+
+//change email
+Route::get('/account/change-email', 'Customer\CustomerAccountCtr@change_email_view');
+
 //contact us
 Route::get('/contact-us', 'Customer\ContactUsCtr@index');
 Route::get('/contact-us/send', 'Customer\ContactUsCtr@sendMessage');

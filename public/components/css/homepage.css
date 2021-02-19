@@ -384,10 +384,3 @@ align-items: center;
 }
 
 
-.btn-outline-success:hover{
-	background-color: #fff !important;
-}
-
-.btn-outline-success.active:hover{
-	background-color: #28A745 !important;
-}

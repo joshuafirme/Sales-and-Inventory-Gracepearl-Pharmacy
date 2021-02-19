@@ -35,17 +35,17 @@
 
                         <div class="col-md-12 mb-3">
                             <label class="label-small">Fullname</label>
-                            <input type="text" class="form-control" id="fullname" value="{{ $fullname }}" placeholder="First Last">
+                            <input type="text" class="form-control" id="fullname" @if($fullname) value="{{ $fullname }}" @endif placeholder="First Last">
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="label-small">Email</label>
-                            <input type="text" class="form-control" id="email" value="{{ $email }}">
+                            <input type="text" class="form-control" id="email" @if($email) value="{{ $email }}" @endif>
                         </div>
                         
                         <div class="col-md-6 mb-3">
                             <label class="label-small">Phone</label>
-                            <input type="text" class="form-control" id="phone_no" value="{{ $phone_no }}">
+                            <input type="text" class="form-control" id="phone_no" @if($phone_no) value="{{ $phone_no }}" @endif>
                         </div>
 
                         <div class="col-md-12">

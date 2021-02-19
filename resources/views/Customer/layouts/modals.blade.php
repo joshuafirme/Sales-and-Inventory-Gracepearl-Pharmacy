@@ -25,13 +25,13 @@
                 <div class="col-md-4">
                     <label class="label-small">Email Address</label>
                     <input type="email" class="form-control" id="email" readonly>
-                    <a href="" class="label-small" style="color: #1F6EA6;">Change</a>
+                    <a href="{{ url('/account/change-email') }}" class="label-small" style="color: #1F6EA6;">Change</a>
                 </div>
     
                 <div class="col-md-4">
                     <label class="label-small">Phone Number</label>
                     <input type="number" class="form-control" id="phone_no" readonly>
-                    <a href="" class="label-small" style="color: #1F6EA6;">Change</a>
+                    <a href="{{ url('/account/change-phone') }}" class="label-small" style="color: #1F6EA6;">Change</a>
                 </div> 
     
                 <div class="col-md-12 mb-1 mt-2">

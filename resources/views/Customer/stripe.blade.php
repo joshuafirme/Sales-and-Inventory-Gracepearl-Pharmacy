@@ -32,12 +32,11 @@
         <div class="row" style="margin-top: 20px">
             <div class="col-md-5 col-md-offset-3">
                 <div class="panel panel-default credit-card-box">
-                    <div class="col-md-7 col-12 icons" style="margin:15px;">
+                    <div class="col-md-7 col-12 icons">
                         <i class="fa fa-cc-visa fa-3x" style="color: #1A4E9D;" aria-hidden="true"></i>
                         <i class="fa fa-cc-mastercard fa-3x" aria-hidden="true"></i>
                         <i class="fa fa-cc-discover fa-3x" style="color: #027878;" aria-hidden="true"></i>
                         <i class="fa fa-cc-amex fa-3x" style="color: #00A0E9;" aria-hidden="true"></i>
-                        <img width="40px" style="margin-top: -20px" src="{{ asset('assets/jcb_logo.png') }}">
                     </div>
                     <div class="panel-body">
       
@@ -91,7 +90,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <button class="btn btn-success btn-block"  id="btn-stripe-pay" type="submit">Pay 
-                                        <span>₱{{ number_format(session()->get('checkout-total')) }}</span></button>
+                                        <span>₱{{ number_format(session()->get('checkout-total')) + session()->get('after-payment-shipping-fee') }}</span></button>
                                 </div>
                             </div>
                               

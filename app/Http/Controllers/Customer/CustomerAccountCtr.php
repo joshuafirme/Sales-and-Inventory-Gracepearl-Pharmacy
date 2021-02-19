@@ -190,8 +190,51 @@ class CustomerAccountCtr extends Controller
       //  return Redirect::to('/account/change-password')->with('success', 'Your password is updated successfully');
     }
 
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Change email-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+public function change_email_view(){
+    $this->isLoggedIn();
+    return view('customer.change-email',[
+        'email' => $this->getUserEmail()
+    ]);
+}
+
+public function updateEmail($email)
+    {         
+        $user_id = $this->getUserID();  
+
+        DB::table('tblcustomer_account')
+            ->where('id', $user_id)
+            ->update([
+                'email' => $email
+            ]);
+
+        Session::forget('vcode');
+    }
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Change email-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+public function change_contact_number_view(){
+    $this->isLoggedIn();
+    return view('customer.change-contact',[
+        'phone_no' => $this->getUserEmail()
+    ]);
+}
+
+public function updatePhoneNo($phone_no)
+    {         
+        $user_id = $this->getUserID();  
+
+        DB::table('tblcustomer_account')
+            ->where('id', $user_id)
+            ->update([
+                'phone_no' => $phone_no
+            ]);
+
+        Session::forget('vcode');
+    }
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public function uploadID(Request $request){
         $user_id = $this->getUserIDWithPrefix();

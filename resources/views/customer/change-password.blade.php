@@ -34,29 +34,33 @@
                         </div>
 
                         <div class="col-md-12 mb-4">
-                            <a class="btn btn-outline-success verify-email active"><i class="fas fa-mail-bulk"></i> Verify through email</a> 
-                            <a class="btn btn-outline-success verify-sms"><i class="fas fa-sms"></i> Verify through SMS</a>
+                            <button class="btn btn-outline-success btn-verify-email active"><i class="fas fa-mail-bulk"></i> Verify through email</button> 
+                            <button class="btn btn-outline-success btn-verify-sms"><i class="fas fa-sms"></i> Verify through SMS</button>
                         </div>
 
-                        <div class="col-md-6 mb-4" style="margin-top: 5px;">
+                        <div class="col-md-12 mb-4" style="margin-top: 5px;">
                             <input type="hidden" name="send-code-to" id="send-code-to_hidden" value="{{ $email }}">
-                            <a class="send-code-to">{{ $email /*substr_replace(,'****',3,9)*/ }}</a>
+                            <a class="send-code-to"></a>
                         </div>
 
                         <div class="col-md-6">
+                            <label class="label-small">OTP</label>
                             <input type="text" class="form-control" placeholder="4 digits code" id="vcode">
                             <a id="send-email-code" style="cursor: pointer; color:#32638D;" class="label-small"><u>Send Code</u></a>
-                            <span class="countdown label-small"></span>
-                
+                            <span class="countdown label-small"></span>                
                         </div>
 
                         <div class="col-md-6">
                             <label class="label-small">New Password</label>
                             <input type="password" class="form-control" name="new-password" id="new-password">
+                        </div>            
+
+                        <div class="col-md-12">
+                          <hr>
                         </div>
 
-                        <div class="col-md-3 mt-4">
-                            <button id="btn-update-password" class="btn btn-md btn-primary">Update Password</button>
+                        <div class="col-md-3 mt-1">
+                            <button id="btn-update-password" class="btn btn-sm btn-primary">Update Password</button>
                         </div>
 
                 </div>

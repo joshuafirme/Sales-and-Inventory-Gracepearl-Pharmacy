@@ -182,7 +182,8 @@ class SalesCtr extends Controller
         DB::table('tblorder_discount')
             ->insert([
                 'discount_amount' => $discount,
-                'sales_inv_no' => $sales_inv_no
+                'sales_inv_no' => $sales_inv_no,
+                'created_at' => date('Y-m-d h:m:s')
             ]);
       }
 

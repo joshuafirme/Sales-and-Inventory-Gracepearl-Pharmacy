@@ -98,7 +98,7 @@
             <div class="col-md-12">
                 <button id="btn-edit-account" class="btn btn-sm btn-blue-primary" data-toggle="modal" data-target="#editAccountModal">Edit Account</button>
                 
-                <a href="/account/change-password" class="btn btn-sm btn-blue-primary">Change Password</a>
+                <a href="{{ url('/account/change-password') }}" class="btn btn-sm btn-blue-primary">Change Password</a>
             </div>
 
 

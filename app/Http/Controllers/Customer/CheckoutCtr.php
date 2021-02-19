@@ -204,6 +204,7 @@ class CheckoutCtr extends Controller
            ->insert([
               'order_no' => $order_no,
               'shipping_fee' => $shipping_fee,
+              'created_at' => date('Y-m-d h:m:s'),
            ]);
       }
 

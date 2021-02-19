@@ -29,7 +29,7 @@ class MyMail extends Mailable
      */
     public function build()
     {
-        return $this->from('gracepearltesting@gmail.com')
+        return $this->from('admin@gracepearlpharmacy.com')
         ->subject('Request Order')
         ->view('email.send_mail')->with('data', $this->data); 
         

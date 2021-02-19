@@ -29,7 +29,7 @@ class ContactUs extends Mailable
      */
     public function build()
     {
-        return $this->from('gracepearltesting@gmail.com')
+        return $this->from('admin@gracepearlpharmacy.com')
         ->subject('Contact us')
         ->view('email.verification-code')->with('data', $this->data); 
         

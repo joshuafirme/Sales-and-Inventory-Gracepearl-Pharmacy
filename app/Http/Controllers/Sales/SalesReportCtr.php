@@ -57,6 +57,20 @@ class SalesReportCtr extends Controller
         
     }
 
+    public function getTotalDiscount($date_from, $date_to)
+    {
+        return DB::table('tblorder_discount')
+                ->sum('discount_amount');
+            //    ->whereBetween('DATE(created_at)', [$date_from, date('Y-m-d', strtotime($date_to. ' + 1 days'))]);     
+    }
+
+    public function getTotalShippingFee($date_from, $date_to)
+    {
+        return DB::table('tblorder_shipping_fee')
+                ->sum('shipping_fee');
+              //  ->whereBetween('DATE(created_at)', [$date_from, date('Y-m-d', strtotime($date_to. ' + 1 days'))]);     
+    }
+
      public function getSales($date_from, $date_to, $category){
 
         if($category == 'All'){
@@ -77,8 +91,10 @@ class SalesReportCtr extends Controller
             ->sum('amount');
         }
 
-        
-        return $total_sales;
+        $total_discount = $this->getTotalDiscount($date_from, $date_to);
+        $total_fee = $this->getTotalShippingFee($date_from, $date_to);
+        return $total_sales + $total_discount + $total_fee;
+
      }
 
     public function getAllSales(){

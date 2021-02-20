@@ -57,9 +57,20 @@
                           <option value={{ $data->category_name }}>{{ $data->category_name }}</option>
                             @endforeach
                           </select>
-                          </div>
+                        </div>
 
-                        <div class="col-sm-4 mt-1">
+                        <div class="mt-2 ml-4">
+                          Order From
+                        </div>
+
+                        <div class="col-sm-2 mb-3">
+                          <select data-column="4" class=" form-control col-sm-12">
+                            <option value="All">Walk-in</option>
+                            <option value="All">Online</option>
+                          </select>
+                        </div>
+
+                        <div class="col-sm-4 mt-1 mb-3">
                           
                             <button class="btn btn-success btn-sm btn-compute-sales ml-auto" id="btn-compute-sales"><span class='fas fa-chart-line'></span> Compute Sales</button>   
                             <span class="ml-2">Total Sales: ₱ <b style="font-size: 21px" id="total-sales"></b>      </span>    

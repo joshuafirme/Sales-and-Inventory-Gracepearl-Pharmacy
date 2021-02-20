@@ -42,7 +42,7 @@ class SalesReportCtr extends Controller
         }
         return view('/sales/sales_report', 
         [
-            'currentDate' => $this->getDate(),
+            'currentDate' => date('Y-m-d', strtotime(date('Y-m-d'). ' - 1 days')),
             'category' => $category_name
         ]);     
     }

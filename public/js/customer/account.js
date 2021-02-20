@@ -305,6 +305,7 @@ $("#btn-send-email-code").change(function() {
 });
 
 getUserEmail();
+getUserPhoneNo();
 
 function getUserEmail(){
   $.ajax({
@@ -312,9 +313,9 @@ function getUserEmail(){
     tpye: 'GET',
     success:function(data){
         $('.send-code-to').html('Code will be send to <b>'+data+'</b>');
-        let recipient = $('#send-code-to_hidden').val(data);
+        $('#send-code-to_hidden').val(data);
 
-        if(recipient == ''){
+        if(data == '' || data == null){
           $('.btn-verify-email').prop('disabled', true);
           $('.btn-verify-sms').addClass("active");
           $('.btn-verify-email').removeClass("active");
@@ -348,9 +349,9 @@ function getUserPhoneNo(){
     success:function(data){
       
         $('.send-code-to').html('Code will be send to <b>'+data+'</b>');
-        let recipient = $('#send-code-to_hidden').val(data);
+        $('#send-code-to_hidden').val(data);
 
-        if(recipient == ''){
+        if(data == '' || data == null){
           $('.btn-verify-sms').prop('disabled', true);
           $('.btn-verify-email').addClass("active");
           $('.btn-verify-sms').removeClass("active");

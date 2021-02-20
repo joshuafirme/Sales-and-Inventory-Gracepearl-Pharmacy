@@ -183,10 +183,10 @@ class PaymentCtr extends Controller
                 'qty' => $qty,
                 'amount' => $amount,
                 'payment_method' => $payment_method,
-                'date' => date('Y-m-d'),
+                'date' => date('Y-m-d', strtotime(date('Y-m-d'). ' - 1 days')),
                 'order_from' => 'Online',
-                'created_at' => date('Y-m-d h:m:s'),
-                'updated_at' => date('Y-m-d h:m:s')
+                'created_at' => date('Y-m-d', strtotime(date('Y-m-d h:m:s'). ' - 1 days')),
+                'updated_at' => date('Y-m-d', strtotime(date('Y-m-d h:m:s'). ' - 1 days'))
             ]);
     }
 

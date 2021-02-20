@@ -11,7 +11,7 @@ $(document).on('click', '#btn-send-message', function(){
     var fullname, email, phone_no, message;
     fullname = $('#fullname').val();
     email = $('#email').val();
-    phone_no = $('#phone_no').val();
+    phone_no = $('#contact_no').val();
     message = $('#message').val();
 
     $.ajax({

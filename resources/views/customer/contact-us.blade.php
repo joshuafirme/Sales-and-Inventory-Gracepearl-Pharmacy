@@ -45,7 +45,7 @@
                         
                         <div class="col-md-6 mb-3">
                             <label class="label-small">Phone</label>
-                            <input type="text" class="form-control" id="phone_no" @if($phone_no) value="{{ $phone_no }}" @endif>
+                            <input type="text" class="form-control" id="contact_no" @if($phone_no) value="{{ $phone_no }}" @endif>
                         </div>
 
                         <div class="col-md-12">

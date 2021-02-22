@@ -7,14 +7,21 @@ $(document).ready(function(){
       var date_from = $('#sales_date_from').val()
       var date_to = $('#sales_date_to').val();
       var category = $('select[name=sales_category] option').filter(':selected').text();
+      var order_type = $('#order_type option').filter(':selected').text();
 
-     fetch_sales(date_from, date_to, category);
-     computeSales(date_from, date_to, category);
+      computeSales(date_from, date_to, category, order_type);
+      fetch_sales(date_from, date_to, category, order_type);
    }  
 
    
+   function salesDate() {
+    var date_from = $('#sales_date_from').val()
+    var date_to = $('#sales_date_to').val();
+    var sales = $('#total-sales').text();
+    return '<h3>Total sales: <b>' + sales + '</b></h3> <h5> From ' + date_from +' to '+ date_to + '</h5>';
+ }
 
-   function fetch_sales(date_from, date_to, category){
+   function fetch_sales(date_from, date_to, category, order_type){
 
 
     $('#sales-report-table').DataTable({
@@ -37,7 +44,8 @@ $(document).ready(function(){
         data:{
           date_from:date_from,
           date_to:date_to,
-          category:category
+          category:category,
+          order_type:order_type
         },
        }, 
        
@@ -100,12 +108,6 @@ $(document).ready(function(){
        
       });
 
-      function salesDate() {
-          var date_from = $('#sales_date_from').val()
-          var date_to = $('#sales_date_to').val();
-          var sales = $('#total-sales').text();
-          return '<h3>Total sales: <b>' + sales + '</b></h3> <h5> From ' + date_from +' to '+ date_to + '</h5>';
-       }
 
        function getCategory() {
           let category = $('select[name=sales_category] option').filter(':selected').text();
@@ -137,24 +139,33 @@ $(document).ready(function(){
       filterAndCompute();
     });
 
+    $('#order_type').change(function () {
+      filterAndCompute();
+    });
+
+
     $('#btn-compute-sales').change(function () {
       var date_from = $('#sales_date_from').val()
       var date_to = $('#sales_date_to').val();
       var category = $('select[name=sales_category] option').filter(':selected').text();
-      computeSales(date_from, date_to, category);
+      var order_type = $('#order_type option').filter(':selected').text();
+      computeSales(date_from, date_to, category, order_type);
     });
     
     function filterAndCompute() {
       var date_from = $('#sales_date_from').val()
       var date_to = $('#sales_date_to').val();
       var category = $('select[name=sales_category] option').filter(':selected').text();
+      var order_type = $('#order_type option').filter(':selected').text();
+
+      console.log(order_type);
 
       $('#sales-report-table').DataTable().destroy();
-      fetch_sales(date_from, date_to, category); 
-      computeSales(date_from, date_to, category);
+      computeSales(date_from, date_to, category, order_type);
+      fetch_sales(date_from, date_to, category, order_type); 
     }
 
-     function computeSales(date_from, date_to, category){
+     function computeSales(date_from, date_to, category, order_type){
 
       $.ajax({
         url:"/sales/salesreport/compute",
@@ -162,7 +173,8 @@ $(document).ready(function(){
         data:{
           date_from:date_from,
           date_to:date_to,
-          category:category
+          category:category,
+          order_type:order_type
         },
         success:function(data){
   
@@ -184,7 +196,7 @@ $(document).ready(function(){
  //end of fetch_sales
    }
 
-   function computeSales(date_from, date_to, category){
+   function computeSales(date_from, date_to, category, order_type){
 
     $.ajax({
       url:"/sales/salesreport/compute",
@@ -192,7 +204,8 @@ $(document).ready(function(){
       data:{
         date_from:date_from,
         date_to:date_to,
-        category:category
+        category:category,
+        order_type:order_type  
       },
       success:function(data){
 

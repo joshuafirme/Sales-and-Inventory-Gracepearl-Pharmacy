@@ -59,9 +59,12 @@ Route::post('/account/update-password/{password}', 'Customer\CustomerAccountCtr@
 Route::get('/account/send-email-code/{email}', 'Customer\CustomerAccountCtr@sendEmailVerificationCode');
 Route::get('/account/send-sms-code/{phone_no}', 'Customer\CustomerAccountCtr@sendSMSVerificationCode');
 Route::get('/account/validate-otp/{vcode}', 'Customer\CustomerAccountCtr@validateOTP');
-
 //change email
 Route::get('/account/change-email', 'Customer\CustomerAccountCtr@change_email_view');
+Route::post('/account/update-email/{email}', 'Customer\CustomerAccountCtr@updateEmail');
+//change contact
+Route::get('/account/change-contact', 'Customer\CustomerAccountCtr@change_contact_view');
+Route::post('/account/update-contact/{phone_no}', 'Customer\CustomerAccountCtr@updatePhoneNo');
 
 //contact us
 Route::get('/contact-us', 'Customer\ContactUsCtr@index');

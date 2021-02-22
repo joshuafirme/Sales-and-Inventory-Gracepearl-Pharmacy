@@ -132,10 +132,12 @@ class CustomerAccountCtr extends Controller
 
 // Change Password-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public function change_password_view(){
+    public function change_password_view()
+    {
         $this->isLoggedIn();
         return view('customer.change-password',[
-            'email' => $this->getUserEmail()
+            'email' => $this->getUserEmail(),
+            'phone_no' => $this->getUserPhoneNo()
         ]);
     }
 
@@ -193,32 +195,36 @@ class CustomerAccountCtr extends Controller
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Change email-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-public function change_email_view(){
+public function change_email_view()
+{
     $this->isLoggedIn();
     return view('customer.change-email',[
-        'email' => $this->getUserEmail()
+        'email' => $this->getUserEmail(),
+        'phone_no' => $this->getUserPhoneNo()
     ]);
 }
 
 public function updateEmail($email)
-    {         
-        $user_id = $this->getUserID();  
+{         
+    $user_id = $this->getUserID();  
 
-        DB::table('tblcustomer_account')
-            ->where('id', $user_id)
-            ->update([
-                'email' => $email
-            ]);
+    DB::table('tblcustomer_account')
+        ->where('id', $user_id)
+        ->update([
+            'email' => $email
+        ]);
 
-        Session::forget('vcode');
-    }
+    Session::forget('vcode');
+}   
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Change contact number-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-public function change_contact_number_view(){
+public function change_contact_view()
+{
     $this->isLoggedIn();
     return view('customer.change-contact',[
-        'phone_no' => $this->getUserEmail()
+        'email' => $this->getUserEmail(),
+        'phone_no' => $this->getUserPhoneNo()
     ]);
 }
 

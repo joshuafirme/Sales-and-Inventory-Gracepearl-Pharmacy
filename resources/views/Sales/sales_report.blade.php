@@ -60,11 +60,11 @@
                         </div>
 
                         <div class="mt-2 ml-4">
-                          Order From
+                          Order type
                         </div>
 
                         <div class="col-sm-2 mb-3">
-                          <select data-column="4" class=" form-control col-sm-12">
+                          <select data-column="4" class=" form-control col-sm-12" id="order_type">
                             <option value="All">Walk-in</option>
                             <option value="All">Online</option>
                           </select>
@@ -91,7 +91,7 @@
                             <th>Amount</th>
                             <th>Payment Method</th>   
                             <th>Date</th>
-                            <th>From</th>
+                            <th>Order Type</th>
                         </tr>
                     </thead>
                     

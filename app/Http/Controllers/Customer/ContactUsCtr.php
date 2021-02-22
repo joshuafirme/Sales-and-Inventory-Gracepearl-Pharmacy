@@ -68,15 +68,14 @@ class ContactUsCtr extends Controller
             $id =  DB::table($this->tbl_cust_acc)
             ->where('phone_no', $session_phone_no)
             ->value('id');  
-            return $id;
         }
-        else{
+        else if($session_email){
             $id =  DB::table($this->tbl_cust_acc)
             ->where('email', $session_email)
-            ->value('id');  
-            return $id;
+            ->value('id'); 
         }
-       
+        
+        return $id;
     }
 
     public function getUserIDWithPrefix()
@@ -89,14 +88,14 @@ class ContactUsCtr extends Controller
             ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
             ->where('phone_no', $session_phone_no)    
             ->first();  
-            return $id->user_id;
         }
-        else{
+        else if($session_email){
           $id =  DB::table($this->tbl_cust_acc)
           ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
           ->where('email', $session_email)    
           ->first();  
-          return $id->user_id;
         }
+        
+        return $id->user_id;
     }
 }

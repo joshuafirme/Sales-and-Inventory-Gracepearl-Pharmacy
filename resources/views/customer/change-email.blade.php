@@ -39,8 +39,8 @@
                         </div>
 
                         <div class="col-md-12 mb-4" style="margin-top: 5px;">
-                            <input type="hidden" name="send-code-to" id="send-code-to_hidden" value="{{ $email }}">
-                            <a class="send-code-to"></a>
+                          <input type="hidden" name="send-code-to" id="send-code-to_hidden" @if($email) value="{{ $email }}" @else value="{{ $phone_no }}" @endif>
+                          <a class="send-code-to">The code will be sent to <b>@if($email) {{ $email }} @else {{ $phone_no }} @endif</b></a>
                         </div>
 
                         <div class="col-md-6">

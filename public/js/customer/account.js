@@ -205,7 +205,7 @@ $(document).ready(function(){
 
     function validateInputs(fullname, phone_no, brgy, flr_bldg_blk) {
 
-      if(fullname == '' || phone_no == '' || brgy == '' || flr_bldg_blk == ''){
+      if(fullname == '' || brgy == '' || flr_bldg_blk == ''){
           alert('pls input all of your credentials!');
       }
       else{
@@ -305,14 +305,14 @@ $("#btn-send-email-code").change(function() {
 });
 
 getUserEmail();
-getUserPhoneNo();
+//getUserPhoneNo();
 
 function getUserEmail(){
   $.ajax({
     url: '/account/get-user-email',
     tpye: 'GET',
     success:function(data){
-        $('.send-code-to').html('Code will be send to <b>'+data+'</b>');
+        $('.send-code-to').html('The code will be sent to <b>'+data+'</b>');
         $('#send-code-to_hidden').val(data);
 
         if(data == '' || data == null){
@@ -348,7 +348,7 @@ function getUserPhoneNo(){
     tpye: 'GET',
     success:function(data){
       
-        $('.send-code-to').html('Code will be send to <b>'+data+'</b>');
+        $('.send-code-to').html('The code will be sent to <b>'+data+'</b>');
         $('#send-code-to_hidden').val(data);
 
         if(data == '' || data == null){
@@ -512,27 +512,30 @@ $(document).on('click', '#btn-update-email', function(){
           $("#pn-validation").remove();
           if(response == '1')
           {     
-            if(password){
+            if(email)
+            {
               $.ajax({
-                url:"/account/update-password/"+password,
+                url:"/account/update-email/"+email,
                 type:"POST",
                 beforeSend:function(){
-                  $('#btn-update-password').text('Updating...');
+                  $('#btn-update-email').text('Updating...');
                 },
                 success:function(){
                   $('#change-pass-success').css('display', 'block');
-                  $('#btn-update-password').text('Update Password');
+                  $('#btn-update-email').text('Update Email');
                 }         
               });
             }
             else{
               $("#pn-validation").remove();
-              $('#new-password')
-              .after('<span class="label-small text-danger" id="pn-validation">Please enter the code</div>');
+              $('#new-email')
+              .after('<span class="label-small text-danger" id="pn-validation">Please enter your new email</div>');
             }
           }
           else{
-              alert('Invalid ');
+            $("#pn-validation").remove();
+            $('#vcode')
+            .after('<span class="label-small text-danger" id="pn-validation">Invalid code</div>');
           }
       }         
      });
@@ -545,4 +548,55 @@ $(document).on('click', '#btn-update-email', function(){
   }
 });
 
+
+$(document).on('click', '#btn-update-contact', function(){
+  var otp = $('#vcode').val();
+  var phone_no = $('#new-contact').val();
+
+  if(otp){
+    $.ajax({
+      url:"/account/validate-otp/"+otp,
+      type:"GET",
+      success:function(response){
+          $("#pn-validation").remove();
+          if(response == '1')
+          {     
+            if(phone_no)
+            {
+              $.ajax({
+                url:"/account/update-contact/"+phone_no,
+                type:"POST",
+                beforeSend:function(){
+                  $('#btn-update-contact').text('Updating...');
+                },
+                success:function(){
+                  $('#change-pass-success').css('display', 'block');
+                  $('#btn-update-contact').text('Update');
+                }         
+              });
+            }
+            else{
+              $("#pn-validation").remove();
+              $('#new-contact')
+              .after('<span class="label-small text-danger" id="pn-validation">Please enter your new phone number</div>');
+            }
+          }
+          else{
+            $("#pn-validation").remove();
+            $('#vcode')
+            .after('<span class="label-small text-danger" id="pn-validation">Invalid code</div>');
+          }
+      }         
+     });
+  }
+  else{
+    
+    $("#pn-validation").remove();
+    $('#vcode')
+    .after('<span class="label-small text-danger" id="pn-validation">Please enter the code</div>');
+  }
 });
+
+
+});
+

@@ -31,11 +31,11 @@ class SalesReportCtr extends Controller
         
         if(request()->ajax()){   
             if($request->category == 'All'){
-                return datatables()->of($this->getSalesByDate($request->date_from, $request->date_to))
+                return datatables()->of($this->getSalesByDate($request->date_from, $request->date_to, $request->order_type))
                 ->make(true);  
             } 
             else{ 
-                return datatables()->of($this->getSalesByDateAndCategory($request->date_from, $request->date_to, $request->category))
+                return datatables()->of($this->getSalesByDateAndCategory($request->date_from, $request->date_to, $request->category, $request->order_type))
                 ->make(true); 
             }  
            
@@ -52,26 +52,27 @@ class SalesReportCtr extends Controller
         $date_from = Input::input('date_from');
         $date_to = Input::input('date_to');
         $category = Input::input('category');
+        $order_type = Input::input('order_type');
     
-        return $this->getSales($date_from, $date_to, $category);
+        return $this->getSales($date_from, $date_to, $category, $order_type);
         
     }
 
     public function getTotalDiscount($date_from, $date_to)
     {
         return DB::table('tblorder_discount')
-                ->sum('discount_amount');
-            //    ->whereBetween('DATE(created_at)', [$date_from, date('Y-m-d', strtotime($date_to. ' + 1 days'))]);     
+                ->whereBetween(DB::raw('DATE(created_at)'), [$date_from, $date_to])
+                ->sum('discount_amount');    
     }
 
     public function getTotalShippingFee($date_from, $date_to)
     {
         return DB::table('tblorder_shipping_fee')
-                ->sum('shipping_fee');
-              //  ->whereBetween('DATE(created_at)', [$date_from, date('Y-m-d', strtotime($date_to. ' + 1 days'))]);     
+                ->whereBetween(DB::raw('DATE(created_at)'), [$date_from, $date_to])
+                ->sum('shipping_fee');     
     }
 
-     public function getSales($date_from, $date_to, $category){
+     public function getSales($date_from, $date_to, $category, $order_type){
 
         if($category == 'All'){
             $total_sales = DB::table($this->table_sales)
@@ -79,7 +80,17 @@ class SalesReportCtr extends Controller
             ->leftJoin($this->table_prod,  DB::raw('CONCAT('.$this->table_prod.'._prefix, '.$this->table_prod.'.id)'), '=', $this->table_sales . '.product_code')
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
             ->whereBetween('date', [$date_from, $date_to])
+            ->whereIn('order_from', [$order_type])
             ->sum('amount');
+
+            $total_discount = $this->getTotalDiscount($date_from, $date_to);
+            $total_fee = 0;
+            if($order_type == 'Online')
+            {
+                $total_fee = $this->getTotalShippingFee($date_from, $date_to); 
+            }
+
+            return ($total_sales - $total_discount) + $total_fee;
         }
         else{
             $total_sales = DB::table($this->table_sales)
@@ -88,12 +99,11 @@ class SalesReportCtr extends Controller
             ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
             ->whereBetween('date', [$date_from, $date_to])
             ->where('category_name', $category)
+            ->whereIn('order_from', [$order_type])
             ->sum('amount');
+            
+            return $total_sales;
         }
-
-        $total_discount = $this->getTotalDiscount($date_from, $date_to);
-        $total_fee = $this->getTotalShippingFee($date_from, $date_to);
-        return $total_sales + $total_discount + $total_fee;
 
      }
 
@@ -111,7 +121,7 @@ class SalesReportCtr extends Controller
         return $product;
     }
 
-    public function getSalesByDateAndCategory($date_from, $date_to, $category){
+    public function getSalesByDateAndCategory($date_from, $date_to, $category, $order_type){
         // dd('test');
          $product = DB::table($this->table_sales)
          ->select("tblsales.*", DB::raw('CONCAT(tblsales._prefix, tblsales.transactionNo) AS transNo,  DATE_FORMAT(date,"%d-%m-%Y") as date, description, unit, supplierName, category_name'))
@@ -121,12 +131,13 @@ class SalesReportCtr extends Controller
          ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
          ->whereBetween('date', [$date_from, $date_to])
          ->where('category_name', $category)
+         ->whereIn('order_from', [$order_type])
          ->get();
  
          return $product;
      }
 
-     public function getSalesByDate($date_from, $date_to){
+     public function getSalesByDate($date_from, $date_to, $order_type){
         // dd('test');
          $product = DB::table($this->table_sales)
          ->select("tblsales.*", DB::raw('CONCAT(tblsales._prefix, tblsales.transactionNo) AS transNo,  DATE_FORMAT(date,"%d-%m-%Y") as date, description, unit, supplierName, category_name'))
@@ -135,6 +146,7 @@ class SalesReportCtr extends Controller
          ->leftJoin($this->table_cat, $this->table_cat . '.id', '=', $this->table_prod . '.categoryID')
          ->leftJoin($this->table_unit, $this->table_unit . '.id', '=', $this->table_prod . '.unitID')
          ->whereBetween('date', [$date_from, $date_to])
+         ->whereIn('order_from', [$order_type])
          ->get();
  
          return $product;

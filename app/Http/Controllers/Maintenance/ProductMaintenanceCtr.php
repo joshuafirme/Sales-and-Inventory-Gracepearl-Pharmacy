@@ -133,7 +133,8 @@ class ProductMaintenanceCtr extends Controller
             [
                 'product_code' => $product_code,
                 'qty' => $qty,
-                'exp_date' => $exp_date
+                'exp_date' => $exp_date,
+                'archive_status' => 0
             ]
         );
     }

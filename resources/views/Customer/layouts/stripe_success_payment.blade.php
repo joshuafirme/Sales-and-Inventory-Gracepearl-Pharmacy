@@ -27,7 +27,7 @@
                                 <h4 class="text-success text-center" id="lbl-after-payment"></h4>
                             </div>
                      
-                                <a class="m-auto btn btn-sm btn-blue-primary" style="text-align: center" href="{{ url('/homepage') }}">Continue Shopping</a>
+                                <a class="m-auto btn btn-sm btn-blue-primary" style="text-align: center" href="{{ url('/') }}">Continue Shopping</a>
                        
 
                      

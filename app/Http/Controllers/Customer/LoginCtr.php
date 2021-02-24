@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\CustomerAccount;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 
 class LoginCtr extends Controller
 {  
@@ -22,14 +23,14 @@ class LoginCtr extends Controller
     {
         $phone_email = Input::input('phone_email');
         $password = Input::input('password');
-    
-        if($this->isAccountExists($phone_email) == true)
+
+        if (Auth::attempt(['email' => $phone_email, 'password' => $password])) 
         {
-            if($this->isPasswordMatch($phone_email, $password) == true){
-                $this->putToSession($phone_email);
-                return 'valid';
-            }
+            $this->putToSession($phone_email);
+            return 'valid';        
         }
+    
+       
     }
     
     public function isAccountExists($phone_email)
@@ -72,6 +73,7 @@ class LoginCtr extends Controller
     }
 
     public function logout(){
+        Auth::logout();
         session()->forget('phone_no');
         session()->forget('email');
         session()->forget('avatar');

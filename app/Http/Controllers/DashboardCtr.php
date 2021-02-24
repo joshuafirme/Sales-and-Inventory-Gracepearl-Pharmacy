@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Classes\UserAccessRights;
 use App\Classes\Date;
+use Auth;
 
 class DashboardCtr extends Controller
 {

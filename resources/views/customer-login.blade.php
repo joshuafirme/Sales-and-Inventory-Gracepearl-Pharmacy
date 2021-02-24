@@ -17,6 +17,19 @@
 		</div>
 		<div class="login-container">
 			<div class="form">
+
+				@csrf
+
+				<input type="hidden" name="_token" value="{{csrf_token()}}" />
+
+				@if(Session::has('error_msg'))
+					<div  class="my-4 alert alert-danger alert-dismissable ml-0">
+						<i class="fa fa-ban"></i>
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+						{!! Session::get("error_msg") !!}
+					</div>
+				@endif
+
 				<img class="avatar" src="assets/avatar.svg">
 				<p class="title">Sign In</p>
 

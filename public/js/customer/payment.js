@@ -21,7 +21,7 @@ $(document).ready(function(){
           
           if(response != '')
           {          
-            if(response == 'For validation') 
+            if(response == 'For validation' || response == '') 
             {
               alert('Your account is not verified! \n Please verify your account before you proceed to checkout.');
               window.location.href = "/account";

@@ -27,7 +27,7 @@
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
                                 <div class="sidebar-header" style="margin-left:-16px;  background-color:#2A2F6E">
-                                    <img src="../../assets/slogo.jpg" alt="bootraper logo" class="app-logo">
+                                    <img src="../../assets/slogo.jpg" alt="bootraper logo" class="app-logo" style="border-radius: 7px;">
                                     </div>
                             </div>
                         </li>
@@ -61,8 +61,8 @@
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
                                 <a href="" id="login-url" class="nav-item nav-link dropdown-toggle text-secondary" data-toggle="dropdown">
-                                    @if(session()->get('avatar'))
-                                    <img  class="google-avatar" id="user-profile" src="{{ session()->get('avatar') }}" alt="avatar">
+                                    @if(Session::get('avatar'))
+                                    <img  class="google-avatar" id="user-profile" src="{{ Session::get('avatar') }}" alt="avatar">
                                     @else
                                     <img  class="google-avatar" id="user-profile" src="{{ asset('assets/male_user_50px.png') }}" alt="avatar">
                                     @endif

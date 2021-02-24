@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\ProductMaintenance;
 use Session;
+use Auth;
 
 class CartCtr extends Controller
 {
@@ -272,20 +273,11 @@ class CartCtr extends Controller
 
       public function getUserIDWithPrefix()
       {
-        if(session()->get('phone_no')){
-            $id =  DB::table($this->tbl_cust_acc)
-            ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-            ->where('phone_no', session()->get('phone_no'))    
-            ->first();  
-            return $id->user_id;
-        }
-        else{
-          $id =  DB::table($this->tbl_cust_acc)
-          ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-          ->where('email', session()->get('email'))    
-          ->first();  
-          return $id->user_id;
-        }
-       
+        $id =  DB::table($this->tbl_cust_acc)
+        ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+        ->where('id', Auth::id())    
+        ->first();  
+        
+        return $id->user_id;    
       }
 }

@@ -14,6 +14,7 @@ use App\CustomerAccount;
 use App\CustomerVerification;
 use App\Classes\BrgyAPI;
 use Redirect;
+use Auth;
 
 class CustomerAccountCtr extends Controller
 {
@@ -23,7 +24,6 @@ class CustomerAccountCtr extends Controller
     private $tbl_ship_add_maintenance = "tblship_add_maintenance";
 
     public function index(){
-        $this->isLoggedIn();
         $acc_info = $this->getAccountInfo();
         $verification_info = $this->getVerificationInfo();
         $ship_info = $this->getShippingInfo();
@@ -46,23 +46,10 @@ class CustomerAccountCtr extends Controller
     }
 
     public function getAccountInfo()
-    {
-        $session_phone_no = session()->get('phone_no');
-        $session_email = session()->get('email');
-
-        if($session_phone_no){
-            $acc_info = DB::table($this->tbl_cust_acc)
-                    ->where('phone_no', session()->get('phone_no'))
+    {  
+        return DB::table($this->tbl_cust_acc)
+                    ->where('id', Auth::id())
                     ->get(); 
-        }
-        else{
-            $acc_info = DB::table($this->tbl_cust_acc)
-            ->where('email', $session_email)
-            ->get(); 
-        }
-       
-
-        return $acc_info;
     }
 
     public function getVerificationInfo(){
@@ -153,7 +140,7 @@ class CustomerAccountCtr extends Controller
 
     public function sendSMSVerificationCode($phone_no)
     {
-        $basic  = new \Nexmo\Client\Credentials\Basic('a08cdaef', '9cXwHtJotgmRww3t');
+        $basic  = new \Nexmo\Client\Credentials\Basic('1321b19c', 'KqbJKeesS2bvdIgQ');
         $client = new \Nexmo\Client($basic);
 
         $vcode = rand(1000,9999);
@@ -179,11 +166,10 @@ class CustomerAccountCtr extends Controller
 
     public function updatePassword($password)
     {         
-        $user_id = $this->getUserID();  
         $hashed = Hash::make($password);
 
         DB::table('tblcustomer_account')
-            ->where('id', $user_id)
+            ->where('id', Auth::id())
             ->update([
                 'password' => $hashed
             ]);
@@ -206,10 +192,8 @@ public function change_email_view()
 
 public function updateEmail($email)
 {         
-    $user_id = $this->getUserID();  
-
     DB::table('tblcustomer_account')
-        ->where('id', $user_id)
+        ->where('id', Auth::id())
         ->update([
             'email' => $email
         ]);
@@ -230,10 +214,8 @@ public function change_contact_view()
 
 public function updatePhoneNo($phone_no)
     {         
-        $user_id = $this->getUserID();  
-
         DB::table('tblcustomer_account')
-            ->where('id', $user_id)
+            ->where('id', Auth::id())
             ->update([
                 'phone_no' => $phone_no
             ]);
@@ -322,54 +304,28 @@ public function updatePhoneNo($phone_no)
     public function getUserEmail()
     {
         return DB::table('tblcustomer_account')
-                ->where('id', $this->getUserID())
+                ->where('id', Auth::id())
                 ->value('email'); 
     }
 
     public function getUserPhoneNo()
     {
         return DB::table('tblcustomer_account')
-                ->where('id', $this->getUserID())
+                ->where('id', Auth::id())
                 ->value('phone_no'); 
     }
 
-    public function getUserID(){
-        $session_phone_no = session()->get('phone_no');
-        $session_email = session()->get('email');
-
-        if($session_phone_no){
-            $id =  DB::table($this->tbl_cust_acc)
-            ->where('phone_no', $session_phone_no)
-            ->value('id');  
-            return $id;
-        }
-        else{
-            $id =  DB::table($this->tbl_cust_acc)
-            ->where('email', $session_email)
-            ->value('id');  
-            return $id;
-        }
-       
-    }
 
     public function getUserIDWithPrefix()
     {
         $session_phone_no = session()->get('phone_no');
         $session_email = session()->get('email');
 
-        if($session_phone_no){
-            $id =  DB::table($this->tbl_cust_acc)
-            ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-            ->where('phone_no', $session_phone_no)    
-            ->first();  
-            return $id->user_id;
-        }
-        else{
-          $id =  DB::table($this->tbl_cust_acc)
-          ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-          ->where('email', $session_email)    
-          ->first();  
-          return $id->user_id;
-        }
+        $id =  DB::table($this->tbl_cust_acc)
+        ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
+        ->where('id',  Auth::id())    
+        ->first();  
+        return $id->user_id;          
+        
     }
 }

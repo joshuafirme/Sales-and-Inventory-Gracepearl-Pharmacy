@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use App\OnlineOrder;
 use App\OrderDiscount;
+use Auth;
 
 class CheckoutCtr extends Controller
 {
@@ -232,21 +233,17 @@ class CheckoutCtr extends Controller
         return $inc;
     }
 
-    public function getUserIDWithPrefix(){
-      if(session()->get('phone_no')){
+    public function getUserIDWithPrefix()
+    {
+        $session_phone_no = session()->get('phone_no');
+        $session_email = session()->get('email');
+
         $id =  DB::table($this->tbl_cust_acc)
         ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-        ->where('phone_no', session()->get('phone_no'))    
+        ->where('id',  Auth::id())    
         ->first();  
-        return $id->user_id;
-    }
-    else{
-      $id =  DB::table($this->tbl_cust_acc)
-      ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-      ->where('email', session()->get('email'))    
-      ->first();  
-      return $id->user_id;
-     }
+        return $id->user_id;          
+        
     }
 
 }

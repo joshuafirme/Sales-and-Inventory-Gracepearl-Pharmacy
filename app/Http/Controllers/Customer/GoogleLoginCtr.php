@@ -9,6 +9,10 @@ use App\CustomerAccount;
 use App\GoogleAccount;
 use Illuminate\Http\Request;
 use Socialite;
+use Redirect;
+use Auth;
+use App\User;
+use Session;
 
 class GoogleLoginCtr extends Controller
 {
@@ -40,12 +44,13 @@ class GoogleLoginCtr extends Controller
 
     public function googleLogin($email, $name, $avatar){
 
-        $account =  DB::table($this->tbl_cust_acc)->where('email', $email)->get();  
-
-        if($account->count() > 0)
+        $user = User::where('email', $email)->first();
+        
+        if($user)
         {
-            $this->putToSession($email, $avatar);
-            return redirect('/')->send();
+        //    Auth::loginUsingId($user->id, true);   
+            $this->putToSession($user->id, $email, $avatar);
+            return Redirect::to('/')->send();
         }
         else
         {
@@ -57,11 +62,14 @@ class GoogleLoginCtr extends Controller
             $cust_acc->email = $email;
             $cust_acc->save();
             
-            return redirect('/')->send();
+            $this->putToSession($email, $avatar);
+            Auth::loginUsingId($user->id);
+            return Redirect::to('/')->send();   
         }
     }
 
-    public function putToSession($email, $avatar){
+    public function putToSession($id, $email, $avatar){
+        session()->put('user-id', $id);
         session()->put('email', $email);
         session()->put('avatar', $avatar);
         session()->put('is-customer-logged', 'yes');

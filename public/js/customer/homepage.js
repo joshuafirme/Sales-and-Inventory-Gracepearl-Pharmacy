@@ -45,15 +45,10 @@ $(document).ready(function(){
         },
         beforeSend:function(){
           $('#loading-modal').modal('toggle');
-          setTimeout(function() {
-            $('#loading-modal').modal('toggle');
-          },800);
       },
         success:function(data){
           cardHTML(data); 
-    
-        }
-         
+        }    
        });
     }
   
@@ -152,14 +147,10 @@ $(document).ready(function(){
         },
           beforeSend:function(){
             $('#loading-modal').modal('toggle');
-            setTimeout(function() {
-              $('#loading-modal').modal('toggle');
-            },800);
           },
           success:function(data){
             console.log(data);
             cardHTML(data);
-
           }  
        });
     }
@@ -215,6 +206,10 @@ $(document).ready(function(){
         $('#homepage-cards').html(cards);
       }
      
+    
+      setTimeout(function() {
+        $('#loading-modal').modal('toggle');
+      },800);
     }
     
     function moneyFormat(total)

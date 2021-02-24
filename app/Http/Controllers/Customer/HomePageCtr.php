@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Input;
 use App\ProductMaintenance;
+use Session;
+use Auth;
 
 class HomePageCtr extends Controller
 {
@@ -20,6 +22,7 @@ class HomePageCtr extends Controller
      // $str = "Hello, world, beautiful, day.";
     //  $cat_arr = explode(', ',$str);
     //  dd($cat_imp = implode('", "', $cat_arr));
+    Auth::loginUsingId(Session::get('user-id'));
         return view('/customer/homepage', 
         [
           'products' => $this->getAllProduct(),

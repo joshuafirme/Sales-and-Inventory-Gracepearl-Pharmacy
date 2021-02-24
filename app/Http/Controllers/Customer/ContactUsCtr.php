@@ -41,26 +41,47 @@ class ContactUsCtr extends Controller
 
     public function getUserFullname()
     {
-        return DB::table('tblcustomer_account')
-                ->where('id', $this->getUserID())
-                ->value('fullname'); 
+        $user_id = $this->getUserID();
+        if($user_id)
+        {
+            return DB::table('tblcustomer_account')
+                    ->where('id', )
+                    ->value('fullname'); 
+        }
+        else{
+            return "";
+        }
     }
 
     public function getUserEmail()
     {
-        return DB::table('tblcustomer_account')
-                ->where('id', $this->getUserID())
-                ->value('email'); 
+       $user_id = $this->getUserID();
+        if($user_id)
+        {
+            return DB::table('tblcustomer_account')
+                    ->where('id', )
+                    ->value('email'); 
+        }
+        else{
+            return "";
+        }
     }
 
     public function getUserPhone()
     {
-        return DB::table('tblcustomer_account')
-                ->where('id', $this->getUserID())
-                ->value('phone_no'); 
+         $user_id = $this->getUserID();
+        if($user_id)
+        {
+            return DB::table('tblcustomer_account')
+                    ->where('id', )
+                    ->value('phone_no'); 
+        }
+        else{
+            return "";
+        }
     }
 
-    public function getUserID(){
+   public function getUserID(){
         $session_phone_no = session()->get('phone_no');
         $session_email = session()->get('email');
 
@@ -75,7 +96,7 @@ class ContactUsCtr extends Controller
             ->value('id'); 
         }
         
-        return $id;
+        return null;
     }
 
     public function getUserIDWithPrefix()

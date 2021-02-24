@@ -43,10 +43,10 @@ $(document).ready(function(){
             success:function(response){
                 console.log(response);
                 if(response == 'valid'){
-                    window.location.href = "/homepage";
+                    window.location.href = "/";
                 }
                 else{
-                    alert('Invalid credential!')
+                    alert('Invalid credentials!')
                 }
              
             }         

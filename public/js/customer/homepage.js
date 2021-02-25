@@ -209,7 +209,7 @@ $(document).ready(function(){
     
       setTimeout(function() {
         $('#loading-modal').modal('toggle');
-      },800);
+      },500);
     }
     
     function moneyFormat(total)
@@ -219,6 +219,8 @@ $(document).ready(function(){
       return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
+
+    // ADD TO CART
     $(document).on('click', '#btn-add-to-cart', function(){
         var product_code = $(this).attr('product-code');
         var qty = $('#qty-buynow').val();
@@ -249,6 +251,7 @@ $(document).ready(function(){
                     setTimeout(function(){
                         $('#loading-modal').modal('toggle');
                         countCart();
+                        $('#cartOrHomepageModal').modal('show');
                     },500);
                   
                 }

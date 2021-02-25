@@ -27,7 +27,7 @@
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
                                 <div class="sidebar-header" style="margin-left:-16px;  background-color:#2A2F6E">
-                                    <img src="../../assets/slogo.jpg" alt="bootraper logo" class="app-logo" style="border-radius: 7px;">
+                                    <img src="../../assets/slogo.jpg" alt="bootraper logo" class="app-logo"->
                                     </div>
                             </div>
                         </li>

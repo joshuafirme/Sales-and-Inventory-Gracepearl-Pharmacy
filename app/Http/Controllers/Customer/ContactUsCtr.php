@@ -10,6 +10,7 @@ use Mail;
 use Session;
 use App\Mail\ContactUs;
 use App\CustomerAccount;
+use Auth;
 
 class ContactUsCtr extends Controller
 {
@@ -41,82 +42,24 @@ class ContactUsCtr extends Controller
 
     public function getUserFullname()
     {
-        $user_id = $this->getUserID();
-        if($user_id)
-        {
-            return DB::table('tblcustomer_account')
-                    ->where('id', )
-                    ->value('fullname'); 
-        }
-        else{
-            return "";
-        }
+        return DB::table('tblcustomer_account')
+        ->where('id', Auth::id())
+        ->value('fullname');
     }
 
     public function getUserEmail()
     {
-       $user_id = $this->getUserID();
-        if($user_id)
-        {
-            return DB::table('tblcustomer_account')
-                    ->where('id', )
-                    ->value('email'); 
-        }
-        else{
-            return "";
-        }
+        return DB::table('tblcustomer_account')
+                ->where('id', Auth::id())
+                ->value('email'); 
+     
     }
 
     public function getUserPhone()
     {
-         $user_id = $this->getUserID();
-        if($user_id)
-        {
-            return DB::table('tblcustomer_account')
-                    ->where('id', )
-                    ->value('phone_no'); 
-        }
-        else{
-            return "";
-        }
+        return DB::table('tblcustomer_account')
+                ->where('id', Auth::id())
+                ->value('phone_no'); 
     }
 
-   public function getUserID(){
-        $session_phone_no = session()->get('phone_no');
-        $session_email = session()->get('email');
-
-        if($session_phone_no){
-            $id =  DB::table($this->tbl_cust_acc)
-            ->where('phone_no', $session_phone_no)
-            ->value('id');  
-        }
-        else if($session_email){
-            $id =  DB::table($this->tbl_cust_acc)
-            ->where('email', $session_email)
-            ->value('id'); 
-        }
-        
-        return null;
-    }
-
-    public function getUserIDWithPrefix()
-    {
-        $session_phone_no = session()->get('phone_no');
-        $session_email = session()->get('email');
-
-        if($session_phone_no){
-            $id =  DB::table($this->tbl_cust_acc)
-            ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-            ->where('phone_no', $session_phone_no)    
-            ->first();  
-        }
-        else if($session_email){
-          $id =  DB::table($this->tbl_cust_acc)
-          ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-          ->where('email', $session_email)    
-          ->first();  
-        }
-        
-        return $id->user_id;
-    }
 }

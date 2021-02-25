@@ -40,6 +40,8 @@ function initMunicipality()
     }
 }
 
+
+
  $('select[name=municipality]').change(function () {
     var municipality = $(this).val();
        
@@ -68,7 +70,9 @@ function initMunicipality()
 $(document).on('click', '#btn-edit-shipping', function(){
     var id = $(this).attr('edit-id');
     
-    console.log(id);
+    var municipality =$('#edit_municipality').val();
+    console.log(municipality);
+    getBrgy(municipality);
   
     $.ajax({
       url:"/maintenance/shippingadd/show/"+id,

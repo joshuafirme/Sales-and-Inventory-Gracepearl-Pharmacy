@@ -135,7 +135,7 @@
  
 
     </div>
-
+    @include('customer.layouts.cart-continue')
     @extends('customer.layouts.loading_modal')
     @section('modals')
     @endsection

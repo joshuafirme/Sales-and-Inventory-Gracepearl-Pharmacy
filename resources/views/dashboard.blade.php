@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="icon-big text-center">
-                                    <i class="olive fas fa-shopping-cart"></i>
+                                    <i class="fas fa-shopping-cart" style="color:#5CB85C;"></i>
                                 </div>
                             </div>
                             <div class="col-sm-8">
@@ -40,13 +40,13 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="icon-big text-center">
-                                    <i class="olive fas fa-money-bill-alt"></i>
+                                    <i class="fas fa-money-bill-alt" style="color:#5CB85C;"></i>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail text-center">
                                     <p>Walk-in Sales</p>
-                                  <span class="number">₱{{ number_format($currentMonthSales, 2, '.',',')  }}</span>
+                                  <span class="number">₱{{ number_format($walkinSales, 2, '.',',')  }}</span>
                                 </div>
                             </div>
                         </div>
@@ -65,13 +65,13 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="icon-big text-center">
-                                    <i class="olive fas fa-dollar-sign"></i>
+                                    <i class="fas fa-dollar-sign" style="color:#5CB85C;"></i>
                                 </div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="detail text-center">
                                     <p>Online Sales</p>
-                                    <span class="number">₱{{ number_format($currentMonthSales, 2, '.',',')  }}</span>
+                                    <span class="number">₱{{ number_format($onlineSales, 2, '.',',')  }}</span>
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="icon-big text-center">
-                                    <i class="olive fas fa-users"></i>
+                                    <i class="fas fa-users" style="color:#5CB85C;"></i>
                                 </div>
                             </div>
                             <div class="col-sm-8">
@@ -103,7 +103,7 @@
                         <div class="footer">
                             <hr />
                             <div class="stats">
-                                <i class="fas fa-envelope-open-text"></i> Active in the last 7 days
+                                <i class="fas fa-users"></i> Current Registered Customer
                             </div>
                         </div>
                     </div>

@@ -24,7 +24,8 @@ class DashboardCtr extends Controller
 
         return view('/dashboard',[
             'newOrders' => $this->getOrders(),
-            'currentMonthSales' => $this->getCurrentMonthSales(),
+            'walkinSales' => $this->getWalkinSales(),
+            'onlineSales' => $this->getOnlineSales(),
             'registeredCustomer' => $this->getRegisteredCustomer()
         ]);
     }
@@ -35,9 +36,17 @@ class DashboardCtr extends Controller
                 ->count();
     }
 
-    public function getCurrentMonthSales(){
+    public function getWalkinSales(){
         return DB::table('tblsales')
                 ->whereBetween('date', [date('Y-m-d', strtotime("-3 months")), date('Y-m-d')])
+                ->where('order_from', 'Walk-in')
+                ->sum('amount');
+    }
+
+    public function getOnlineSales(){
+        return DB::table('tblsales')
+                ->whereBetween('date', [date('Y-m-d', strtotime("-3 months")), date('Y-m-d')])
+                ->where('order_from', 'Online')
                 ->sum('amount');
     }
 

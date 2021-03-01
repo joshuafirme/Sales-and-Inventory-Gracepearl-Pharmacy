@@ -184,7 +184,14 @@ $(document).ready(function(){
           cards += '</p>';
           cards += ' <div class="card__info">';
           cards += '<p class="mt-3 text-success">₱ '+moneyFormat(data[i].selling_price)+'</p>';
-          cards += '<button class="btn btn-sm card__btn-add ml-auto" product-code='+data[i].product_code+' id="btn-add-to-cart">Add to cart</button><br>';      
+
+          if(data[i].with_prescription == 'yes'){   
+            cards += '<p class="label small" style="margin-left: 14px; margin-top: 17px; font-style: italic;">Prescription needed</p>';  
+          }
+          else{
+            cards += '<button class="btn btn-sm card__btn-add ml-auto" product-code='+data[i].product_code+' id="btn-add-to-cart">Add to cart</button><br>'; 
+          }
+         
           cards += '</div></div></div>';    
 
           if(data.length >= 12){

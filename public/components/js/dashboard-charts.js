@@ -8,9 +8,26 @@
 var trafficchart = document.getElementById("trafficflow");
 var saleschart = document.getElementById("sales");
 
+//getLast30DaysSales();
+
+    $.ajax({
+        url: '/dashboard/getLast30DaysSales',
+        tpye: 'GET',
+        success:function(data){
+            let i;
+            for(i = 0; i < data.length; i++){
+                var arr = data[i].total_amount+' '+data[i].date;
+            }
+            
+        }
+      });
+
+
 var myChart1 = new Chart(trafficchart, {
+    
     type: 'line',
     data: {
+        
             labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
             datasets: [{
                 backgroundColor: "rgba(48, 164, 255, 0.5)",
@@ -45,7 +62,7 @@ var myChart1 = new Chart(trafficchart, {
     }
 });
 
-var myChart2 = new Chart(saleschart, {
+/*var myChart2 = new Chart(saleschart, {
     type: 'bar',
     data: {
         labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
@@ -80,4 +97,4 @@ var myChart2 = new Chart(saleschart, {
             }]
         }
     }
-});
+});*/

@@ -17,6 +17,7 @@ class DashboardCtr extends Controller
     private $module = "Maintenance";
 
     public function index(){
+    //    dd($this->getLast30DaysSales());
         if(session()->get('is-login') !== 'yes'){
    
             return redirect()->to('/admin-login')->send();
@@ -52,6 +53,15 @@ class DashboardCtr extends Controller
 
     public function getRegisteredCustomer(){
         return DB::table('tblcustomer_account')->count();
+    }
+
+    public function getLast30DaysSales(){
+        return DB::table('tblsales')
+                ->select(DB::raw('SUM(amount) as total_amount, date'))
+                ->whereBetween('date', [date('Y-m-d', strtotime("-1 months")), date('Y-m-d')])
+                ->where('order_from', 'Walk-in')
+                ->groupBy('date')
+                ->get();
     }
 
 

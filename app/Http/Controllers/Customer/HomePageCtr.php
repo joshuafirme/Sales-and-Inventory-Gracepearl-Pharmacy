@@ -43,6 +43,7 @@ class HomePageCtr extends Controller
                  'P.orig_price', 
                  'P.selling_price', 
                  'E.qty', 
+                 'P.with_prescription', 
                  'unit', 
                  'category_name', 
                  DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
@@ -62,6 +63,7 @@ class HomePageCtr extends Controller
                  'P.orig_price', 
                  'P.selling_price', 
                  'E.qty', 
+                 'P.with_prescription', 
                  'unit', 
                  'category_name', 
                  DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
@@ -99,6 +101,7 @@ class HomePageCtr extends Controller
                    'P.orig_price', 
                    'P.selling_price', 
                    'E.qty', 
+                   'P.with_prescription', 
                    'unit', 
                    'category_name', 
                    DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))

@@ -22,6 +22,8 @@ Route::get('/admin-login/logout', 'AdminLoginCtr@logout');
 
 //DASHBOARD
 Route::get('/dashboard', 'DashboardCtr@index')->name('dashboard');
+Route::get('/dashboard/getLast30DaysSales', 'DashboardCtr@getLast30DaysSales');
+
 
 Route::resource('/products', 'ProductSearch');
 

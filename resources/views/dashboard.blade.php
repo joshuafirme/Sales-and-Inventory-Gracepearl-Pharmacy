@@ -116,8 +116,9 @@
                 <div class="card">
                     <div class="content">
                         <div class="head">
-                            <h4 class="mb-0">Traffic Overview</h4>
-                            <p class="text-muted">Your year long website traffic data</p>
+                            <h4 class="mb-3">Walk-in Sales Overview</h4>
+                            {{--
+                            <p class="text-muted">Your year long website traffic data</p>--}}
                         </div>
                         <div class="canvas-wrapper">
                             <canvas class="chart" id="trafficflow"></canvas>
@@ -130,6 +131,21 @@
                 <div class="card">
                     <div class="content">
                         <div class="head">
+                            <h4 class="mb-0">Online Sales Overview</h4>
+                             {{--
+                            <p class="text-muted">Your year long website traffic data</p>--}}
+                        </div>
+                        <div class="canvas-wrapper">
+                            <canvas class="chart" id="trafficflow"></canvas>
+                        </div>
+                        <div class="ui hidden divider"></div>
+                    </div>
+                </div>
+            </div>
+            {{--<div class="col-md-6">
+                <div class="card">
+                    <div class="content">
+                        <div class="head">
                             <h4 class="mb-0">Sales Overview</h4>
                             <p class="text-muted">Your year long sales data</p>
                         </div>
@@ -139,7 +155,7 @@
                         <div class="ui hidden divider"></div>
                     </div>
                 </div>
-            </div>
+            </div>--}}
         </div>
 
         <div class="row">

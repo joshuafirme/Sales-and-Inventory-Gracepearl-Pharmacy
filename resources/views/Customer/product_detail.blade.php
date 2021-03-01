@@ -2,6 +2,11 @@
 
 @section('content')
 
+<style>
+  
+        
+</style>
+
 <div class="container-fluid">
 
     <!--Section: Block Content-->
@@ -52,9 +57,13 @@
                
                     <p><h4 class="mr-1 text-success">₱<span id="price-buynow">{{ number_format($data->selling_price) }}</span></h4></p>
                   <!--  <button type="button" class="btn btn-sm card__btn-buy mr-1 mb-2" id="btn-buynow" product-code=// $data->product_code }}>Buy now</button> -->
-                    <button type="button" class="btn btn-sm btn-success mr-1 mb-2" style="border-radius: 50px;" id="btn-add-to-cart" product-code={{ $data->product_code }}>
-                        <i class="fas fa-cart-plus"></i> Add to cart</button>
-                    
+                    @if($data->with_prescription == 'yes')
+                      <p class="label small" style="margin-left: 14px; margin-top: 17px; font-style: italic;">Prescription needed</p>
+                    @else
+                      <button type="button" class="btn btn-sm btn-success mr-1 mb-2" style="border-radius: 50px;" id="btn-add-to-cart" product-code={{ $data->product_code }}>
+                      <i class="fas fa-cart-plus"></i> Add to cart</button>
+                    @endif
+                      
                         <!-- QTY -->
                         <div class="def-number-input number-input safari_only mt-2 w-100">
                             <button class="btn btn-sm"

@@ -54,7 +54,6 @@ class GoogleLoginCtr extends Controller
         }
         else
         {
-            $this->putToSession($email, $avatar);
 
             $cust_acc = new CustomerAccount;
             $cust_acc->_prefix = 'CUST-'. date('yy').'-';
@@ -62,8 +61,8 @@ class GoogleLoginCtr extends Controller
             $cust_acc->email = $email;
             $cust_acc->save();
             
-            $this->putToSession($email, $avatar);
-            Auth::loginUsingId($user->id);
+            $this->putToSession($cust_acc->id, $email, $avatar);
+       //     Auth::loginUsingId($cust_acc->id);
             return Redirect::to('/')->send();   
         }
     }

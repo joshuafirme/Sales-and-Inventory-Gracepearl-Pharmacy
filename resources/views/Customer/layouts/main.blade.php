@@ -36,11 +36,11 @@
                             <a href="{{ url('/') }}" class="nav-item nav-link dropdown-toggle text-secondary">Home</a>
                             </div>
                         </li>
-                        <li class="nav-item dropdown">
+                        {{--<li class="nav-item dropdown">
                             <div class="nav-dropdown">
                                 <a href="" class="nav-item nav-link dropdown-toggle text-secondary">About us</a>
                             </div>
-                        </li>
+                        </li>--}}
                         <li class="nav-item dropdown">
                             <div class="nav-dropdown">
                                 <a href="{{ url('/contact-us') }}" class="nav-item nav-link dropdown-toggle text-secondary">Contact us</a>

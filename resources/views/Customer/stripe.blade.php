@@ -90,7 +90,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <button class="btn btn-success btn-block"  id="btn-stripe-pay" type="submit">Pay 
-                                        <span>₱{{ number_format(session()->get('checkout-total')) + session()->get('after-payment-shipping-fee') }}</span></button>
+                                        <span>₱{{ number_format(session()->get('checkout-total') + session()->get('after-payment-shipping-fee'))  }}</span></button>
                                 </div>
                             </div>
                               

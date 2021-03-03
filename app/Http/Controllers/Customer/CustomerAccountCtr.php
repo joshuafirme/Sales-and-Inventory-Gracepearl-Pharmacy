@@ -68,22 +68,21 @@ class CustomerAccountCtr extends Controller
 
     public function updateAccount()
     {
-        $user_id = $this->getUserID();
-        $fullname = Input::input('fullname');
-        $email = Input::input('email');
-        $phone_no = Input::input('phone_no');
+     //   $fullname = Input::input('fullname');
+     //   $email = Input::input('email');
+     //   $phone_no = Input::input('phone_no');
 
         $flr_bldg_blk = Input::input('flr_bldg_blk');
         $municipality = Input::input('municipality');
         $brgy = Input::input('brgy');
         $notes = Input::input('notes');
 
-        CustomerAccount::where('id', $user_id)
+      /*  CustomerAccount::where('id', $user_id)
         ->update([
             'fullname' => $fullname,
             'email' => $email,
             'phone_no' => $phone_no
-            ]);
+            ]); */
 
         $this->updateShippingAddress($flr_bldg_blk, $municipality, $brgy, $notes);
     }

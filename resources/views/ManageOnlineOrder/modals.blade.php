@@ -166,7 +166,7 @@
           </div> 
           <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
           <button class="btn btn-outline-dark btn-sm" id="btn-gen-sales-inv"><span class='fas fa-print'></span> Generate Sales Invoice</button> 
-          <button style="color: #fff" class="btn btn-sm btn-success" id="btn-pack">Pack items</button>
+          <button style="color: #fff" class="btn btn-sm btn-success" id="btn-process">Pack items</button>
        
         </div>
   

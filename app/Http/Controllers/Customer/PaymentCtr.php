@@ -97,12 +97,12 @@ class PaymentCtr extends Controller
     {     
         $source_ss = session()->get('source');
         $shipping_fee = $this->getShippingFee();
-        $amount = Session::get('checkout-total') + $shipping_fee;    
+        (int)$amount = Session::get('checkout-total') + $shipping_fee;    
         
         if(!$source_ss) {
         $source = Paymongo::source()->create([
             'type' => 'gcash',
-            'amount' => number_format($amount,2,'.',','),
+            'amount' => $amount,
             'currency' => 'PHP',
             'redirect' => [
                 'success' => route('gcashpayment'),

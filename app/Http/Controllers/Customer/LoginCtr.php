@@ -15,7 +15,10 @@ class LoginCtr extends Controller
     private $tbl_cust_acc = "tblcustomer_account";
 
     public function index(){
-    
+        if(session()->get('is-customer-logged') == 'yes'){
+   
+            return redirect()->to('/')->send();
+         }
         return view('/customer-login');
     }
 

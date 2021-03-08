@@ -137,6 +137,7 @@ Route::post('/cashiering/credential', 'Sales\SalesCtr@credentialBeforeVoid');
 Route::get('/sales/salesreport', 'Sales\SalesReportCtr@index');
 Route::get('/sales/displaySales', 'Sales\SalesReportCtr@displaySales');
 Route::get('/sales/salesreport/compute', 'Sales\SalesReportCtr@computeSales');
+Route::get('/sales/salesreport/{date_from}/{date_to}/{category}/{order_type}', 'Sales\SalesReportCtr@previewReport');
 
 //MAINTENANCE---------------------------------------------------------------------------------------------------------------
 

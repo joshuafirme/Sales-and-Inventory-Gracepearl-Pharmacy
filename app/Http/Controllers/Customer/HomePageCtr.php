@@ -36,9 +36,9 @@ class HomePageCtr extends Controller
     {
       $limit = Input::input('limit');
       if($limit){
-        $product = DB::table('tblexpiration AS E')
-        ->select("E.*", 'E.product_code','E.id as id_exp', 'P.id as product_id', 'image',
-                 'P.description',
+        $product = DB::table('tblproduct AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) as product_code'),'E.id as id_exp', 'P.id as product_id', 'P.image',
+               'P.description',
                  'P.re_order', 
                  'P.orig_price', 
                  'P.selling_price', 
@@ -47,7 +47,7 @@ class HomePageCtr extends Controller
                  'unit', 
                  'category_name', 
                  DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
-        ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+        ->leftJoin('tblexpiration AS E', 'E.product_code', '=', DB::raw('CONCAT(P._prefix, P.id)'))
         ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
         ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
         ->where('E.archive_status', 0)
@@ -56,9 +56,9 @@ class HomePageCtr extends Controller
         ->get();
       }
       else{
-        $product = DB::table('tblexpiration AS E')
-        ->select("E.*", 'E.product_code','E.id as id_exp', 'P.id as product_id', 'image',
-                 'P.description',
+        $product = DB::table('tblproduct AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) as product_code'),'E.id as id_exp', 'P.id as product_id', 'P.image',
+               'P.description',
                  'P.re_order', 
                  'P.orig_price', 
                  'P.selling_price', 
@@ -67,7 +67,7 @@ class HomePageCtr extends Controller
                  'unit', 
                  'category_name', 
                  DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
-        ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+        ->leftJoin('tblexpiration AS E', 'E.product_code', '=', DB::raw('CONCAT(P._prefix, P.id)'))
         ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
         ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
         ->where('E.archive_status', 0)
@@ -77,7 +77,7 @@ class HomePageCtr extends Controller
       }
      
 
-      return $product;      
+      return $product->unique('id');         
     }  
 
     public function searchProduct($search_key)
@@ -94,9 +94,9 @@ class HomePageCtr extends Controller
         }
 
         if($search_key !== ''){
-          $product = DB::table('tblexpiration AS E')
-          ->select("E.*", 'E.product_code','E.id as id_exp', 'P.id as product_id', 'image',
-                   'P.description',
+          $product = DB::table('tblproduct AS P')
+          ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) as product_code'),'E.id as id_exp', 'P.id as product_id', 'P.image',
+                 'P.description',
                    'P.re_order', 
                    'P.orig_price', 
                    'P.selling_price', 
@@ -105,7 +105,7 @@ class HomePageCtr extends Controller
                    'unit', 
                    'category_name', 
                    DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
-          ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+          ->leftJoin('tblexpiration AS E', 'E.product_code', '=', DB::raw('CONCAT(P._prefix, P.id)'))
           ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
           ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
           ->where('E.archive_status', 0)
@@ -117,10 +117,18 @@ class HomePageCtr extends Controller
               ->get();
         }
         else{
-          $product = DB::table($this->table_exp.' AS E')
-          ->select("E.*", 'E.product_code', 'P.description', 'P.re_order', 'P.orig_price', 'P.selling_price', 'E.qty', 'unit', 'category_name', 
-          DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
-          ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
+          $product = DB::table('tblproduct AS P')
+        ->select("P.*", DB::raw('CONCAT(P._prefix, P.id) as product_code'),'E.id as id_exp', 'P.id as product_id', 'P.image',
+               'P.description',
+                 'P.re_order', 
+                 'P.orig_price', 
+                 'P.selling_price', 
+                 'E.qty', 
+                 'P.with_prescription', 
+                 'unit', 
+                 'category_name', 
+                 DB::raw('DATE_FORMAT(E.exp_date,"%d-%m-%Y") as exp_date'))
+          ->leftJoin('tblexpiration AS E', 'E.product_code', '=', DB::raw('CONCAT(P._prefix, P.id)'))
           ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
           ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
           ->whereRaw('E.exp_date >= CURDATE()')
@@ -128,7 +136,7 @@ class HomePageCtr extends Controller
           ->limit($limit)
           ->get();
         }
-        return $product;         
+        return $product->unique('id');         
     } 
 
     public function getMaxPrice(){

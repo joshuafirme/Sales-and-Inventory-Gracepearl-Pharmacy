@@ -166,7 +166,7 @@ class SalesCtr extends Controller
             $sales->product_code = $data->product_code;
             $sales->qty = $data->qty;
             $sales->amount = $data->amount;       
-            $sales->date = date('Y-m-d', strtotime(date('Y-m-d'). ' - 1 days')); 
+            $sales->date = date('Y-m-d'); 
             $sales->payment_method = $payment_method;    
           //  $sales->employeeID = 20001;   
             $sales->order_from = "Walk-in";   

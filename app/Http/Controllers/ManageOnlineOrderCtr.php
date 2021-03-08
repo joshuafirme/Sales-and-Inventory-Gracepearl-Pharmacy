@@ -56,7 +56,7 @@ class ManageOnlineOrderCtr extends Controller
         {
             return datatables()->of($ol_order)
             ->addColumn('action', function($ol_order){
-                $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $ol_order->order_num .' user-id='.$ol_order->user_id.'  order-id='. $ol_order->order_no .'
+                $button = '<a class="btn btn-sm" id="btn-show-processing" btn-text="Pack" order-no='. $ol_order->order_num .' user-id='.$ol_order->user_id.'  order-id='. $ol_order->order_no .'
                  title="View order"><i class="fas fa-eye"></i></a>';
 
              //   $button .= '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $ol_order->order_num .'
@@ -78,7 +78,7 @@ class ManageOnlineOrderCtr extends Controller
             ->addColumn('action', function($packed_order){
              //   $button = '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $packed_order->order_num .' 
             //    title="Generate sales invoice"><i class="fas fa-print"></i></a>';
-            $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $packed_order->order_num .' user-id='.$packed_order->user_id.'  order-id='. $packed_order->order_no .'
+            $button = '<a class="btn btn-sm" id="btn-show-pack" btn-text="Dispatch" order-no='. $packed_order->order_num .' user-id='.$packed_order->user_id.'  order-id='. $packed_order->order_no .'
             title="View order"><i class="fas fa-eye"></i></a>';
 
                 return $button;
@@ -97,7 +97,7 @@ class ManageOnlineOrderCtr extends Controller
             ->addColumn('action', function($d){
              //   $button = '<a class="btn btn-sm" id="fa-gen-sales-inv" order-no='. $d->order_num .' 
             //    title="Generate sales invoice"><i class="fas fa-print"></i></a>';
-            $button = '<a class="btn btn-sm" id="btn-show-items" order-no='. $ol_order->order_num .' user-id='.$ol_order->user_id.'  order-id='. $ol_order->order_no .'
+            $button = '<a class="btn btn-sm" id="btn-show-dispatch" btn-text="Delivered" order-no='. $d->order_num .' user-id='.$d->user_id.'  order-id='. $d->order_no .'
             title="View order"><i class="fas fa-eye"></i></a>';
 
                 return $button;
@@ -361,6 +361,32 @@ class ManageOnlineOrderCtr extends Controller
         ])
         ->update([
             'status' => 'Packed'
+        ]); 
+   
+    }
+
+    public function dispatchItems($order_no){
+        $user_id = Input::input('user_id');
+        DB::table($this->tbl_ol_order.' as O')
+        ->where([
+            ['email',  $user_id],
+            [DB::raw('CONCAT(O._prefix, O.order_no)'),  $order_no]
+        ])
+        ->update([
+            'status' => 'Dispatch'
+        ]); 
+   
+    }
+
+    public function deliveredItems($order_no){
+        $user_id = Input::input('user_id');
+        DB::table($this->tbl_ol_order.' as O')
+        ->where([
+            ['email',  $user_id],
+            [DB::raw('CONCAT(O._prefix, O.order_no)'),  $order_no]
+        ])
+        ->update([
+            'status' => 'Delivered'
         ]); 
    
     }

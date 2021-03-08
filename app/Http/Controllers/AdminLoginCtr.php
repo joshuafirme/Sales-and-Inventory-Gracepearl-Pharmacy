@@ -11,7 +11,10 @@ class AdminLoginCtr extends Controller
     private $table_emp = "tblemployee";
 
     public function index(){
-      //  dd(session()->get('emp-username') . session()->get('is-login'));
+        if(session()->get('is-login') == 'yes'){
+   
+            return redirect()->to('/dashboard')->send();
+         }
         return view('/admin-login');
     }
 

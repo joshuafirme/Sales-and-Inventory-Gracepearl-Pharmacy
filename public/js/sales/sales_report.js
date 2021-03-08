@@ -63,59 +63,10 @@ $(document).ready(function(){
         {data: 'order_from', name: 'order_from',orderable: false},
        ],
 
-       //buttons
-       dom: 'Bfrtip',
-       initComplete: function () {
-        $('.buttons-pdf').html('<span class="fa fa-file-pdf" data-toggle="tooltip" title="Download PDF"/>').css({"background-color": "yellow"})
-        $('.buttons-print').html('<span class="fa fa-print" data-toggle="tooltip" title="Print"/>')
-        $('.buttons-csv').html('<span class="fa fa-file-csv" data-toggle="tooltip" title="Export To CSV"/>')
-        },
-       buttons: [
-        {
-         
-            extend: 'excel', 
-            text:'nya',       
-            title: 'Gracepearl Pharmacy <br> Sales Report',
-            messageTop: salesDate()
-        },
-        {
-            extend: 'pdf',
-            title: 'Gracepearl Pharmacy <br> Sales Report',
-            messageTop: salesDate()
-        },
-        {
-            extend: 'csv',
-            title: 'Gracepearl Pharmacy <br> Sales Report',
-            messageTop: salesDate()
-        },
-        {
-            extend: 'print',
-            text: '<em>P</em>rint',
-            key: {
-                key: 'p',
-                altkey: true
-            },
-            
-            title: '<p>Gracepearl Pharmacy <br> Sales Report</p><p>'+getCategory()+'</p>',
-            messageTop: salesDate(),                
-            customize: function (win){
-              $(win.document.body).find('h1').css('text-align', 'center');
-              $(win.document.body).css( 'font-size', '10pt' )
-                  
-            },
-        }
-    ],
+     
        
       });
 
-
-       function getCategory() {
-          let category = $('select[name=sales_category] option').filter(':selected').text();
-          if(category == 'All'){
-            category = 'All Categories';
-          }
-          return category
-       }
       
 
     $('.btn-load-records').click(function(){
@@ -195,6 +146,15 @@ $(document).ready(function(){
 
  //end of fetch_sales
    }
+
+   $('#btn-print-sales').click(function () {
+    var date_from = $('#sales_date_from').val()
+    var date_to = $('#sales_date_to').val();
+    var category = $('select[name=sales_category] option').filter(':selected').text();
+    var order_type = $('#order_type option').filter(':selected').text();
+    window.open('/sales/salesreport/'+date_from+'/'+date_to+'/'+category+'/'+order_type, '_blank'); 
+     
+  });
 
    function computeSales(date_from, date_to, category, order_type){
 

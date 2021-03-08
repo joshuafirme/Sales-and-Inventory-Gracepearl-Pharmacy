@@ -150,6 +150,8 @@ $(document).ready(function(){
       var reason = $('select[name=rc_reason] option').filter(':selected').val();
       var date = $('#rc_date').val();
 
+      console.log(exp_date);
+
       console.log(sales_inv_no+' and '+product_code);
       console.log(qty_return+' and '+reason);
       console.log(date);

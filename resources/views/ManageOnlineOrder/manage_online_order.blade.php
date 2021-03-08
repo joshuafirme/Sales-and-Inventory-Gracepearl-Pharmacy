@@ -140,7 +140,7 @@
                       <thead>
                         <tr>
 
-                          <th><input type="checkbox" name="select_all" value="1" id="select-all"></th>
+                          <th><input type="checkbox" name="select_all" value="1" id="select-all-delivered"></th>
                           <th>Order #</th>
                           <th>Customer Name</th>                                                           
                           <th>Phone No</th>        

@@ -107,7 +107,7 @@ class SupplierDeliveryCtr extends Controller
         $sd->exp_date = Input::input('exp_date');
         $sd->date_recieved = Input::input('date_recieved');
        
-        $checked_result = $this->checkDeliveredQty($sd->product_code, $sd->qty_delivered);
+        $checked_result = $this->checkDeliveredQty($sd->po_num, $sd->product_code, $sd->qty_delivered);
       
         $sd->remarks = $checked_result;
 
@@ -127,19 +127,20 @@ class SupplierDeliveryCtr extends Controller
             );
     }
 
-    public function checkDeliveredQty($product_code, $qty_delivered){
-        $qty_order = DB::table($this->table_po)
-            ->where('product_code', $product_code)
-            ->pluck('qty_order');
-
-            if($qty_order > $qty_delivered){
-                return 'Partially Completed';
-            }
-            if($qty_order == $qty_delivered){
-                return 'Completed';
-            }
-            
-          //  return $p;
+    public function checkDeliveredQty($po_num, $product_code, $qty_delivered){
+        $qty_order = DB::table($this->table_po.' as PO')
+        ->where(DB::raw('CONCAT(PO._prefix, PO.po_num)'), $po_num)
+        ->where('product_code', $product_code)
+        ->value('qty_order');
+        
+        if($qty_order == $qty_delivered){
+            $res = 'Completed';
+        }
+        else if($qty_order > $qty_delivered){
+            $res = 'Partially Completed';
+        }
+        
+        return $res;
     }
 
     public function updateInventory($product_code, $qty_delivered, $exp_date)
@@ -156,7 +157,8 @@ class SupplierDeliveryCtr extends Controller
                 [
                     'product_code' => $product_code,
                     'qty' => $qty_delivered,
-                    'exp_date' => $exp_date
+                    'exp_date' => $exp_date,
+                    'archive_status' => 0
                 ]
             );
         }
@@ -185,7 +187,7 @@ class SupplierDeliveryCtr extends Controller
         DB::raw('CONCAT(D._prefix, D.delivery_num) 
         AS del_num, description, supplierName, category_name, unit, qty_order,  DATE_FORMAT(D.exp_date,"%d-%m-%Y") as exp_date, DATE_FORMAT(date_recieved,"%d-%m-%Y") as date_recieved'))
         ->leftJoin($this->table_prod.' AS P',  DB::raw('CONCAT(P._prefix, P.id)'), '=', 'D.product_code')
-        ->leftJoin($this->table_po.' AS PO', 'PO.product_code', '=', 'D.product_code')
+        ->leftJoin($this->table_po.' AS PO', DB::raw('CONCAT(PO._prefix, PO.po_num)'), '=', 'D.po_num')
         ->leftJoin($this->table_suplr.' AS S', 'S.id', '=', 'P.supplierID')
         ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
         ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')

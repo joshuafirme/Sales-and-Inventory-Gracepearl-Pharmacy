@@ -70,7 +70,8 @@ class PaymentCtr extends Controller
                 $order[$i]->qty,
                 $order[$i]->amount,
                 'COD'
-            );    
+            );      
+            $this->updateInventory($order[$i]->product_code, $order[$i]->qty);
         }
         $this->forgetOrder();  
     }
@@ -170,8 +171,8 @@ class PaymentCtr extends Controller
                 $order[$i]->amount,
                 $payment_method
             );    
+            $this->updateInventory($order[$i]->product_code, $order[$i]->qty);
         }
-        $this->updateInventory($order[0]->product_code, $order[0]->qty);
     }
 
     
@@ -184,7 +185,7 @@ class PaymentCtr extends Controller
                 'qty' => $qty,
                 'amount' => $amount,
                 'payment_method' => $payment_method,
-                'date' => date('Y-m-d', strtotime(date('Y-m-d'). ' - 1 days')),
+                'date' => date('Y-m-d'),
                 'order_from' => 'Online',
                 'created_at' => date('Y-m-d', strtotime(date('Y-m-d h:m:s'). ' - 1 days')),
                 'updated_at' => date('Y-m-d', strtotime(date('Y-m-d h:m:s'). ' - 1 days'))

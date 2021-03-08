@@ -28,29 +28,19 @@
 
               
                   <div class="row">
-
-
-                    <div class="mt-2 ml-3">
-                       Date From
-                      </div>              
+           
                     
-                    <div class="col-sm-2 mb-3">
-                      <input data-column="9" type="date" class="form-control" name="sales_date_from" id="sales_date_from" value="{{ $currentDate }}">
+                    <div class="col-xs-12 col-md-6 col-lg-2 mb-3">
+                      Date From<input data-column="9" type="date" class="form-control" name="sales_date_from" id="sales_date_from" value="{{ date('Y-m-d', strtotime($currentDate. ' + 1 days')) }}">
                       </div>
-
-                      <div class="mt-2">
-                        -
-                        </div>
           
-                      <div class="col-sm-2 mb-3">
-                        <input data-column="9" type="date" class="form-control" name="sales_date_to" id="sales_date_to" value="{{ $currentDate }}">
+                      <div class="col-xs-12 col-md-6 col-lg-2 mb-3">
+                        To<input data-column="9" type="date" class="form-control" name="sales_date_to" id="sales_date_to" value="{{ date('Y-m-d', strtotime($currentDate. ' + 1 days')) }}">
                         </div>
 
-                        <div class="mt-2 ml-4">
+
+                        <div class="col-xs-12 col-md-6 col-lg-2 mb-3">
                           Category
-                        </div>
-
-                        <div class="col-sm-2 mb-3">
                           <select data-column="4" class=" form-control col-sm-12" name="sales_category" id="sales_category">
                             <option value="All">All</option>
                             @foreach($category as $data)
@@ -59,23 +49,23 @@
                           </select>
                         </div>
 
-                        <div class="mt-2 ml-4">
+                        <div class="col-xs-12 col-md-6 col-lg-2 mb-3">
                           Order type
-                        </div>
-
-                        <div class="col-sm-2 mb-3">
                           <select data-column="4" class=" form-control col-sm-12" id="order_type">
                             <option value="All">Walk-in</option>
                             <option value="All">Online</option>
                           </select>
                         </div>
 
-                        <div class="col-sm-4 mt-1 mb-3">
+                        <div class="col-xs-12 col-md-6 col-lg-4 mt-4 mb-3">
                           
                             <button class="btn btn-success btn-sm btn-compute-sales ml-auto" id="btn-compute-sales"><span class='fas fa-chart-line'></span> Compute Sales</button>   
                             <span class="ml-2">Total Sales: ₱ <b style="font-size: 21px" id="total-sales"></b>      </span>    
-                          </div>
-                 
+                           
+                        </div>
+                        <div class="col-12 mt-4 mb-3">
+                           <button class="btn btn-sm btn-outline-dark" id="btn-print-sales"><span class='fas fa-print'></span> Print</button>  
+                        </div>
 
                    </div>
                     <table class="table table-data responsive  table-hover" id="sales-report-table" width="100%">                               

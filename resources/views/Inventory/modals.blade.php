@@ -275,7 +275,7 @@
       <div class="modal-footer">
 
         <div class="update-success-validation mr-auto ml-3" style="display: none">
-          <label class="label text-success">Product is successfully added to delivery</label>    
+          <label class="label text-success">Product is successfully returned</label>    
         </div> 
         <img src="../../assets/loader.gif" class="loader" alt="loader" style="display: none">
           <button type="submit" class="btn btn-sm btn-primary" id="btn-add-return"><i class="fas fa-plus"></i> Return</button>

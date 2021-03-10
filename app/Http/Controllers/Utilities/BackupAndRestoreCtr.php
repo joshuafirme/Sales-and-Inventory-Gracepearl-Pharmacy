@@ -4,10 +4,18 @@ namespace App\Http\Controllers\Utilities;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Classes\UserAccessRights;
 
 class BackupAndRestoreCtr extends Controller
 {
     public function index(){
+        $rights = new UserAccessRights;
+
+        if(!($rights->isUserAuthorize('Utilities')))
+        {
+            return view('/layouts.not_auth');
+        }   
+
         return view('/utilities/backup_restore');
     }
 

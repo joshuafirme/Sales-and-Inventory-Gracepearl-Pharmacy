@@ -83,6 +83,7 @@ Route::get('/productdetails', 'Customer\ProductDetailCtr@index');
 Route::get('/productdetails/{product_code}', 'Customer\ProductDetailCtr@getProductDetails');
 Route::post('/productdetails/buynow', 'Customer\ProductDetailCtr@buyNow');
 Route::get('/productdetails/buynow/forget', 'Customer\ProductDetailCtr@forgetBuyNow');
+Route::get('/productdetails/get-qty/{product_code}', 'Customer\ProductDetailCtr@getQty');
 //cart
 Route::post('/homepage/addtocart', 'Customer\CartCtr@addToCart');
 Route::get('/cart', 'Customer\CartCtr@index');
@@ -122,6 +123,7 @@ Route::get('myorder/cancel/{order_no}', 'Customer\MyOrdersCtr@cancelOrder');
 Route::get('/sales/cashiering', 'Sales\SalesCtr@index');
 Route::post('/sales/cashiering/{search_key}', 'Sales\SalesCtr@search');
 Route::get('/sales/cashiering/addToCart', 'Sales\SalesCtr@addToCart');
+Route::get('/inventory/check-qty/{product_code}/{qty_order}', 'Sales\SalesCtr@checkProductQty');
 Route::get('/cashiering/total_amount', 'Sales\SalesCtr@getTotalAmount');
 Route::get('/cashiering/generic_total_amount', 'Sales\SalesCtr@getGenericTotalAmount');
 Route::get('/sales/cashiering/process', 'Sales\SalesCtr@process');

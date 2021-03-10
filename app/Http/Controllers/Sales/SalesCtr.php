@@ -86,9 +86,9 @@ class SalesCtr extends Controller
                 ->leftJoin($this->table_prod.' AS P', DB::raw('CONCAT(P._prefix, P.id)'), '=', 'E.product_code')
                 ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
                 ->where('E.archive_status', 0)               
-                ->where('E.qty', '>', 0)
-               // ->where('E.product_code', 'LIKE', '%'.$search_key.'%') // CONCAT 
+             //   ->where('E.qty', '>', 0)
                 ->where('P.description', 'LIKE', '%'.$search_key.'%')
+             //   ->where('E.product_code', 'LIKE', '%'.$search_key.'%')
                 ->orderBy('E.exp_date') // First expiry first out
                 ->get();
 
@@ -99,8 +99,8 @@ class SalesCtr extends Controller
     }
  
     
-    public function addToCart(){
-  
+    public function addToCart()
+    {
             $product_code = Input::input('product_code');
             $qty = Input::input('qty_order');
             $total = Input::input('total');
@@ -119,6 +119,17 @@ class SalesCtr extends Controller
                 $c->amount = $total;
                 $c->save();
             }
+    }
+
+    public function checkProductQty($product_code, $qty_order)
+    {
+        $inventory_qty = DB::table('tblexpiration')
+            ->where('product_code', $product_code)
+            ->sum('qty');
+            
+        
+        return $inventory_qty >= $qty_order ? '1' : '0';
+
     }
 
     public function isProductExists($product_code){

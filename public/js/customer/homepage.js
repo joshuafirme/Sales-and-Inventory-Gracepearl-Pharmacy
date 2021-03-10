@@ -155,13 +155,18 @@ $(document).ready(function(){
        });
     }
     function cardHTML(data){
-
+      
       $('#homepage-cards').html('');
       
       if(data.length > 0){
+
         for (var i = 0; i < data.length; i++) {
+
         
           var cards = ' <div class="card-product"><a class="card__image-container div-product-details" href="/productdetails/'+data[i].product_code+' ">';
+          cards += '<input type="hidden" id="'+data[i].product_code+'">';
+          
+
           if(data[i].image){           
             cards += '<img  src="../../storage/'+data[i].image+'" class="img-fluid w-100" alt="..."></a>'
           }
@@ -189,7 +194,8 @@ $(document).ready(function(){
             cards += '<p class="label small" style="margin-left: 14px; margin-top: 17px; font-style: italic;">Prescription needed</p>';  
           }
           else{
-            cards += '<button class="btn btn-sm card__btn-add ml-auto" product-code='+data[i].product_code+' id="btn-add-to-cart">Add to cart</button><br>'; 
+            cards += '<div style="margin-left:24px;" id="btn'+data[i].product_code+'"></div>';    
+            getQty(data[i].product_code);          
           }
          
           cards += '</div></div></div>';    
@@ -209,7 +215,7 @@ $(document).ready(function(){
        
       } 
       else{
-        var cards = ' <div class="row"><a class="m-auto">No product found.</a></div>';
+        cards += ' <div class="row"><a class="m-auto">No product found.</a></div>';
         $('#homepage-cards').html(cards);
       }
      
@@ -224,6 +230,27 @@ $(document).ready(function(){
       var decimal = (Math.round(total * 100) / 100).toFixed(2);
      // var round_off = Math.round((parseInt(parseFloat(decimal)) + Number.EPSILON) * 100) / 100;
       return money_format = parseFloat(decimal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function getQty(product_code){
+      $.ajax({
+        url:"/productdetails/get-qty/"+product_code,
+        type:"GET",
+        success:function(data){
+          
+          if(data == 0)
+          {
+           var btn = '<p class="label small" style="margin-left: 14px; margin-top: 17px; font-style: italic; color: red;">Out of stock</p>';
+           console.log('oot');
+          }
+          else{             
+            var btn =  '<button class="btn btn-sm card__btn-add ml-auto" product-code='+product_code+' id="btn-add-to-cart-home">Add to cart</button><br>';                  
+          }
+          $('#btn'+product_code).append(btn);
+          console.log(data);
+        }
+         
+       });
     }
 
 
@@ -244,26 +271,20 @@ $(document).ready(function(){
               window.location.href = "/customer-login";
             }
             else{
-              $.ajax({
-                url:"/homepage/addtocart",
-                type:"POST",
-                data: {
-                    product_code:product_code,
-                    qty:qty
-                },
-                beforeSend:function(){
-                    $('#loading-modal').modal('toggle');
-                  },
-                success:function(){
-                    setTimeout(function(){
-                        $('#loading-modal').modal('toggle');
-                        countCart();
-                        $('#cartOrHomepageModal').modal('show');
-                    },500);
-                  
+              $.ajax({ //check QTY
+                url:"/inventory/check-qty/"+product_code+'/'+qty,
+                type:"GET",
+        
+                success:function(response){
+                  if(response == '1'){         
+                    addToCart(product_code, qty);
+                  }
+                  else{
+                      alert('Not enough stock')
+                  }
                 }
-                 
-               });
+              });    
+             
             }
        
           }
@@ -271,6 +292,55 @@ $(document).ready(function(){
          });
       
     });
+
+     // ADD TO IN HOMEPAGE
+     $(document).on('click', '#btn-add-to-cart-home', function(){
+      var product_code = $(this).attr('product-code');
+      var qty = $('#qty-buynow').val();
+      console.log(qty);
+
+      console.log(product_code);
+
+      $.ajax({
+        url:"/customer/islogged",
+        type:"GET",
+        success:function(response){
+            
+          if(response !== 'yes'){
+            window.location.href = "/customer-login";
+          }
+          else{
+            addToCart(product_code, qty);
+          }
+     
+        }
+         
+       });
+    
+  });
+
+    function addToCart(product_code, qty){
+      $.ajax({
+        url:"/homepage/addtocart",
+        type:"POST",
+        data: {
+            product_code:product_code,
+            qty:qty
+        },
+        beforeSend:function(){
+            $('#loading-modal').modal('toggle');
+          },
+        success:function(){
+            setTimeout(function(){
+                $('#loading-modal').modal('toggle');
+                countCart();
+                $('#cartOrHomepageModal').modal('show');
+            },500);
+          
+        }
+         
+       });
+    }
 
     countCart();
 

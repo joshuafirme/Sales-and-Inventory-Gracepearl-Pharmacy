@@ -139,6 +139,12 @@ class HomePageCtr extends Controller
         return $product->unique('id');         
     } 
 
+    public function getQty($product_code){
+      return DB::table($this->table_exp)
+        ->where('product_code', $product_code)
+        ->sum('qty');
+    }
+
     public function getMaxPrice(){
       $price = DB::table($this->table_prod)
       ->max('selling_price');

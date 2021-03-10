@@ -213,13 +213,13 @@
                     
                     <div class="wrapper">
                         <div class="page vertical-align text-center">
-                            <div class="page-content vertical-align-middle">
-                            <header>
-                                <p>You are not authorized to access this module!</p>
-                            </header>
-                            <p class="error-advise">Please see your administrator.</p>
-                            <a class="btn btn-primary btn-round mb-5" href="/dashboard">GO TO HOME PAGE</a>
-                            
+                            <div class="page-content vertical-align-middle" style="margin-top:220px">                    
+                                <i class="fas fa-exclamation-circle fa-5x mb-4" style="color: #DC3545;"></i>
+                                <header>
+                                    <p>You are not authorized to access this module!</p>
+                                </header>
+                                <p class="error-advise">Please see your administrator.</p>
+                                <a class="btn btn-primary btn-round mb-5" href="/dashboard">GO TO DASHBOARD</a>      
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,8 @@ class ProductDetailCtr extends Controller
 
 
         $details = DB::table($this->table_prod.' AS P')
-          ->select("P.*",'unit', 'category_name', 'description', DB::raw('CONCAT(P._prefix, P.id) AS product_code'))
+          ->select('E.qty', 'unit', 'category_name', 'description', 'image', 'selling_price', 'with_prescription','highlights',
+            DB::raw('CONCAT(P._prefix, P.id) AS product_code'))
           ->leftJoin($this->table_exp.' AS E', 'E.product_code', '=', DB::raw('CONCAT(P._prefix, P.id)'))
           ->leftJoin($this->table_cat.' AS C', 'C.id', '=', 'P.categoryID')
           ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
@@ -30,11 +31,10 @@ class ProductDetailCtr extends Controller
         return view('customer/product_detail',['product' => $details->unique('id'), 'qty' =>  $this->getQty($product_code)]);      
       } 
 
-      public function getQty($product_code){
-        return DB::table($this->table_prod.' AS P')
-          ->leftJoin($this->table_exp.' AS E', 'E.product_code', '=', DB::raw('CONCAT(P._prefix, P.id)'))
-          ->where('E.product_code', $product_code)
-          ->sum('E.qty');
+      public static function getQty($product_code){
+        return DB::table('tblexpiration')
+          ->where('product_code', $product_code)
+          ->sum('qty');
       }
 
       public function buyNow()

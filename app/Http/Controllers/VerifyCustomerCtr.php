@@ -18,7 +18,7 @@ class VerifyCustomerCtr extends Controller
 
         if(!($rights->isUserAuthorize($this->module)))
         {
-            $rights->notAuthMessage();
+            return view('/layouts.not_auth');
         }
         $fvc = $this->forValidationCustomer();
 

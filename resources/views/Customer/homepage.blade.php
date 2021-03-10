@@ -70,7 +70,7 @@
 
                 <div class="line mt-4 mb-3"></div>
 
-                <div class="card__filter mt-4">
+                {{--<div class="card__filter mt-4">
              
                     <h5>Unit type</h5>
 
@@ -109,7 +109,7 @@
                     </div>
                 </div>
 
-                <div class="line mt-4 mb-3"></div>
+                <div class="line mt-4 mb-3"></div>--}}
 
                 
                 <label class="text-muted">Price Range</label>

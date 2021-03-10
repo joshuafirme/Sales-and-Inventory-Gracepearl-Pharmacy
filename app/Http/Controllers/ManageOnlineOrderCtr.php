@@ -27,7 +27,7 @@ class ManageOnlineOrderCtr extends Controller
 
         if(!($rights->isUserAuthorize($this->module)))
         {
-            $rights->notAuthMessage();
+            return view('/layouts.not_auth');
         }
         return view('/manageonlineorder/manage_online_order',['currentDate' => date('Y-m-d')]);
     }

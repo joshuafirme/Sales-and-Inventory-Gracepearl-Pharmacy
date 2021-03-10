@@ -71,21 +71,34 @@ $(document).ready(function(){
 
 
    // Add to Cart
-   $('#btn-addToCart').click(function(){   
+   $('#btn-addToCart').click(function(){
+     
+    var product_code  = $('#product_code').val();
+    var qty_order  = $('#qty_order').val();
+    var price  = $('#price').val();
+    var total  = $('#total').val();    
     if($('#cashiering_search').val() == ''){
       alert('Enter product code or product description');
     }
     else{
-      addProduct();
+      $.ajax({ //check QTY
+        url:"/inventory/check-qty/"+product_code+'/'+qty_order,
+        type:"GET",
+
+        success:function(response){
+          if(response == '1'){         
+              addProduct(product_code, qty_order, price, total);
+          }
+          else{
+              alert('Not enough stock')
+          }
+        }
+      });    
     }
     
     });  
     
-    function addProduct(){
-      var product_code  = $('#product_code').val();
-      var qty_order  = $('#qty_order').val();
-      var price  = $('#price').val();
-      var total  = $('#total').val();                         
+    function addProduct(product_code, qty_order, price, total){                        
       console.log(product_code);
         $.ajax({
           url:"/sales/cashiering/addToCart",

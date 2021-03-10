@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Input;
 use Session;
 use Stripe;
+use Auth;
 
 class StripePaymentCtr extends Controller
 {
@@ -147,21 +148,17 @@ class StripePaymentCtr extends Controller
         }
     }
 
-    public function getUserIDWithPrefix(){
-        if(session()->get('phone_no')){
-          $id =  DB::table($this->tbl_cust_acc)
-          ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-          ->where('phone_no', session()->get('phone_no'))    
-          ->first();  
-          return $id->user_id;
-      }
-      else{
+    public function getUserIDWithPrefix()
+    {
+        $session_phone_no = session()->get('phone_no');
+        $session_email = session()->get('email');
+
         $id =  DB::table($this->tbl_cust_acc)
         ->select(DB::raw('CONCAT('.$this->tbl_cust_acc.'._prefix, '.$this->tbl_cust_acc.'.id) as user_id'))
-        ->where('email', session()->get('email'))    
+        ->where('id',  Auth::id())    
         ->first();  
-        return $id->user_id;
-       }
-      }
+        return $id->user_id;          
+        
+    }
 
 }

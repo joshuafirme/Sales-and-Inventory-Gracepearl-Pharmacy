@@ -141,7 +141,7 @@ class PurchaseOrderCtr extends Controller
         ->where('P.supplierID', $supplier)
         ->get();
 
-        return $product;
+        return $product->unique('product_code');
     }
     
     public function getAllOrders($date_from, $date_to, $supplier){

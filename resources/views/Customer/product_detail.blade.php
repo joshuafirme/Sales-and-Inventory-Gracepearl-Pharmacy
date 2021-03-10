@@ -59,9 +59,16 @@
                   <!--  <button type="button" class="btn btn-sm card__btn-buy mr-1 mb-2" id="btn-buynow" product-code=// $data->product_code }}>Buy now</button> -->
                     @if($data->with_prescription == 'yes')
                       <p class="label small" style="margin-left: 14px; margin-top: 17px; font-style: italic;">Prescription needed</p>
-                    @else
-                      <button type="button" class="btn btn-sm btn-success mr-1 mb-2" style="border-radius: 50px;" id="btn-add-to-cart" product-code={{ $data->product_code }}>
-                      <i class="fas fa-cart-plus"></i> Add to cart</button>
+                    @else                 
+                      <?php 
+                      $stock = DB::table('tblexpiration')
+                            ->where('product_code', $data->product_code)
+                            ->sum('qty');
+                      ?>
+                       @if($stock !== 0)
+                          <button type="button" class="btn btn-sm btn-success mr-1 mb-2" style="border-radius: 50px;" id="btn-add-to-cart" product-code={{ $data->product_code }}>
+                          <i class="fas fa-cart-plus"></i> Add to cart</button>
+                       @endif
                     @endif
                       
                         <!-- QTY -->
@@ -91,9 +98,17 @@
                                     <th scope="row">Unit type</th>
                                     <td>{{ $data->unit }}</td>
                                 </tr> 
-                                <tr>
+                                <tr><?php 
+                                  $stock = DB::table('tblexpiration')
+                                        ->where('product_code', $data->product_code)
+                                        ->sum('qty');
+                                  ?>
+                                  @if($stock == 0)
+                                    <p class="label small" style="margin-left: 14px; margin-top: 17px; font-style: italic; color: red;">Out of stock</p>
+                                  @else
                                     <th scope="row">Stock</th>
-                                    <td>{{ $qty }}</td>
+                                    <td>{{ $stock }}</td>
+                                  @endif
                                 </tr>           
                                 </tbody>
                             </table>
@@ -127,7 +142,7 @@
   <!--Section: Block Content-->
 
 </div>
-
+      @include('customer.layouts.cart-continue')
 
       @extends('customer.layouts.loading_modal')
       @section('modals')

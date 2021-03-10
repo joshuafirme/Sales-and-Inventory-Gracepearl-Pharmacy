@@ -89,10 +89,10 @@ $(document).ready(function(){
           $('#edit_chk-'+modules_arr[i].replace(/\s/g, '')).prop('checked', true);  
         }
 
-        $('#edit_chk-User').attr("disabled", false);
+        $('#edit_chk-Utilities').attr("disabled", false);
         if(response[0].position == 'Administrator') // disabled user checkbox if edit admin modal is show
         {
-          $('#edit_chk-User').attr("disabled", true);
+          $('#edit_chk-Utilities').attr("disabled", true);
         }    
       }
     });
@@ -118,6 +118,7 @@ $(document).ready(function(){
     $('#edit_chk-Reports').prop('checked', false);
     $('#edit_chk-Maintenance').prop('checked', false);
     $('#edit_chk-User').prop('checked', false);
+    $('#edit_chk-Utilities').prop('checked', false);
     $('#edit_chk-manageorder').prop('checked', false);
     $('#edit_chk-verifycustomer').prop('checked', false);
    }

@@ -6,6 +6,31 @@ $(document).ready(function(){
         }
       });
 
+      showReminder();
+    
+      function showReminder() {
+        $.ajax({
+          url:"/is-reminder-showed",
+          type:"GET",
+            success:function(response){
+                if(response == '1'){
+                  $('#reminderModal').modal('toggle');
+                }
+            }  
+         });
+      }
+
+      $(document).on('click', '#btn-ok-reminder', function(){
+        $.ajax({
+          url:"/not-show-reminder",
+          type:"POST",
+            success:function(){
+              $('#reminderModal').modal('toggle');
+              console.log('success');
+            }
+         });
+    });
+
 
     checkIfLoggedIn();
 

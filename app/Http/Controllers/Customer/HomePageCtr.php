@@ -22,6 +22,17 @@ class HomePageCtr extends Controller
      // $str = "Hello, world, beautiful, day.";
     //  $cat_arr = explode(', ',$str);
     //  dd($cat_imp = implode('", "', $cat_arr));
+    //dd(Session::get('reminder'));
+    if(session()->get('is-customer-logged') == 'yes')
+    { 
+       
+
+    }
+    else{
+
+      Session::put('reminder', '1');
+    }
+
     Auth::loginUsingId(Session::get('user-id'));
         return view('/customer/homepage', 
         [
@@ -30,6 +41,16 @@ class HomePageCtr extends Controller
           'minPrice' => $this->getMinPrice()
           ]);
       }
+
+    public function isReminderShowed()
+    {
+      return Session::get('reminder');
+    }
+
+    public function notShowReminder()
+    {
+      Session::put('reminder', '0');
+    }
 
     
     public function getAllProduct()

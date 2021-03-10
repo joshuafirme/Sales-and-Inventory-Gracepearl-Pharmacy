@@ -284,15 +284,12 @@ $('#cancelled_date_to').change(function()
       $('#order-no').val(order_no);
       $('#user-id').val(user_id);
 
-      $('#showItemsModal').modal('toggle');
 
-      $('#btn-process').removeClass('btn-dispatch btn-delivered');
-      $('#btn-process').addClass('btn-pack');
-      $('.btn-pack').text(btn_data);
       console.log(order_id);
       getOrderItems(order_no, order_id);
       fetchAccountInfo(user_id);
       fetchShippingInfo(user_id);
+      $('#showItemsModal').modal('toggle');
 
     });
 
@@ -308,15 +305,12 @@ $('#cancelled_date_to').change(function()
       $('#order-no').val(order_no);
       $('#user-id').val(user_id);
 
-      $('#showItemsModal').modal('toggle');
 
-      $('#btn-process').removeClass('btn-pack btn-delivered btn-dispatch');
-      $('#btn-process').addClass('btn-dispatch');
-      $('.btn-dispatch').text(btn_data);
       console.log(order_id);
       getOrderItems(order_no, order_id);
       fetchAccountInfo(user_id);
       fetchShippingInfo(user_id);
+      $('#showItemsModal').modal('toggle');
 
     });
 
@@ -334,9 +328,6 @@ $('#cancelled_date_to').change(function()
 
       $('#showItemsModal').modal('toggle');
 
-      $('#btn-process').removeClass('btn-pack btn-delivered btn-dispatch');
-      $('#btn-process').addClass('btn-delivered');
-      $('.btn-delivered').text(btn_data);
       console.log(order_id);
       getOrderItems(order_no, order_id);
       fetchAccountInfo(user_id);
@@ -481,7 +472,7 @@ $('#cancelled_date_to').change(function()
       url:"/manageorder/shippingfee/"+order_id,
       type:"GET",
       success:function(data){ 
-        console.log(data); 
+        console.log(data+' fee'); 
         if(data){
           $('#txt_shipping_fee').text(data);
         }

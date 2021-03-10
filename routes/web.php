@@ -77,6 +77,8 @@ Route::get('/homepage/pricefilter', 'Customer\HomePageCtr@getPriceFilter');
 Route::get('/homepage/allproduct', 'Customer\HomePageCtr@getAllProduct');
 Route::get('/homepage/searchproduct/{search_key}', 'Customer\HomePageCtr@searchProduct');
 Route::get('/terms_and_condition', 'Customer\HomePageCtr@termsAndCondition');
+Route::get('/is-reminder-showed', 'Customer\HomePageCtr@isReminderShowed');
+Route::post('/not-show-reminder', 'Customer\HomePageCtr@notShowReminder');
 
 //product detail
 Route::get('/productdetails', 'Customer\ProductDetailCtr@index');

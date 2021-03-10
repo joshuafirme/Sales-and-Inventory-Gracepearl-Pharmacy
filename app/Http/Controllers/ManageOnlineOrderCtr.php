@@ -291,9 +291,10 @@ class ManageOnlineOrderCtr extends Controller
     
     public function getShippingFee($order_id){
 
-        return DB::table('tblorder_shipping_fee')
+        $fee = DB::table('tblorder_shipping_fee')
                     ->where('order_no', $order_id)
                     ->pluck('shipping_fee'); 
+        return $fee->unique('order_no');
     }
 
     public function getOrderTotalAmount($order_id){
@@ -304,8 +305,8 @@ class ManageOnlineOrderCtr extends Controller
         $subtotal = DB::table('tblonline_order')
                     ->where('order_no', $order_id)
                     ->sum('amount'); 
-
-        return ($subtotal + $fee[0]) - $discount;
+        $disc = $discount > 0 ? $discount : 0;
+        return ($subtotal + $fee[0]) - $disc;
     }
 
 

@@ -136,6 +136,7 @@
 
     </div>
     @include('customer.layouts.cart-continue')
+    @include('customer.layouts.reminder')
     @extends('customer.layouts.loading_modal')
     @section('modals')
     @endsection

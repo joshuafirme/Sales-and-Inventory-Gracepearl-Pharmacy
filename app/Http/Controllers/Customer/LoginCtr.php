@@ -15,6 +15,8 @@ class LoginCtr extends Controller
     private $tbl_cust_acc = "tblcustomer_account";
 
     public function index(){
+        
+        session()->put('reminder', '1');
         if(session()->get('is-customer-logged') == 'yes'){
    
             return redirect()->to('/')->send();
@@ -77,6 +79,7 @@ class LoginCtr extends Controller
 
     public function logout(){
         Auth::logout();
+        session()->forget('reminder', '0');
         session()->forget('phone_no');
         session()->forget('email');
         session()->forget('avatar');

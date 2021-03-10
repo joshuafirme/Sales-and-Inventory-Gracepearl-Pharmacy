@@ -22,7 +22,7 @@
                 <label class="col-form-label">Position</label>
                 <select class="form-control" name="position" id="position">
                     <option value="Cashier">Cashier</option>
-                    <option value="Cashier">Purchaser</option>
+                    <option value="Purchaser">Purchaser</option>
                     <option value="Pharmacy Assistant">Pharmacy Assistant</option>
                     <option value="Certified Pharmacy Assistant">Certified Pharmacy Assistant</option>
                     <option value="Administrator">Administrator</option>
@@ -90,8 +90,8 @@
                  </div>
 
                  <div class="form-check col-md-4">
-                    <input type="checkbox" class="form-check-input" id="chk-user" name="chk-module[]" value="User">
-                    <label class="form-check-label">User</label>
+                    <input type="checkbox" class="form-check-input" id="chk-utilities" name="chk-module[]" value="Utilities">
+                    <label class="form-check-label">Utilities</label>
                  </div>
 
               </div>
@@ -205,9 +205,9 @@
                  </div>
 
                  <div class="form-check col-md-4">
-                    <input type="checkbox" class="form-check-input" id="edit_chk-User" name="chk-module[]" value="User">
-                    <label class="form-check-label">User</label>
-                 </div>
+                  <input type="checkbox" class="form-check-input" id="edit_chk-Utilities" name="chk-module[]" value="Utilities">
+                  <label class="form-check-label">Utilities</label>
+               </div>
 
               </div>
               

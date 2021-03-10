@@ -97,24 +97,26 @@ class SupplierMaintenanceCtr extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update()
+    public function update(Request $request)
     {
         $suplr = new SupplierMaintenance;
-        $suplr->id = Input::get('id');
-        $suplr->supplierName = Input::get('supplier_name');
-        $suplr->address = Input::get('address');
-        $suplr->email = Input::get('email');
-        $suplr->person = Input::get('person');
-        $suplr->contact = Input::get('contact');
+        $suplr->id = $request->input('edit_id');
+        $suplr->supplierName = $request->input('supplier_name');
+        $suplr->address = $request->input('address');
+        $suplr->email = $request->input('email');
+        $suplr->person = $request->input('person');
+        $suplr->contact = $request->input('contact');
 
-        DB::update('UPDATE '. $this->table_name .' SET supplierName = ?,
-                                                        address = ?,
-                                                        email= ?,
-                                                        person = ?,
-                                                        contact = ?,
-                                                        WHERE id = ?',
-        [$suplr->supplierName, $suplr->address, $suplr->email, $suplr->person, $suplr->contact, $suplr->id]);
-
+        DB::table('tblsupplier')
+        ->where('id', $suplr->id)
+        ->update([
+            'supplierName' => $suplr->supplierName,
+            'address' => $suplr->address,
+            'email' => $suplr->email,
+            'person' => $suplr->person,
+            'contact' => $suplr->contact
+        ]);
+        return redirect('/maintenance/supplier')->with('success', 'Data Saved');
     
     }
 

@@ -58,7 +58,7 @@ class SignUpCtr extends Controller
 
     public function sendOTP(){
         $phone_no = Input::input('phone_no');
-        $basic  = new \Nexmo\Client\Credentials\Basic('a08cdaef', '9cXwHtJotgmRww3t');
+        $basic  = new \Nexmo\Client\Credentials\Basic('1321b19c', 'KqbJKeesS2bvdIgQ');
         $client = new \Nexmo\Client($basic);
 
         $otp = rand(1000,9999);

@@ -29,7 +29,7 @@ class LoginCtr extends Controller
         $phone_email = Input::input('phone_email');
         $password = Input::input('password');
 
-        if (Auth::attempt(['email' => $phone_email, 'password' => $password])) 
+        if (Auth::attempt(['phone_no' => $phone_email, 'password' => $password])) 
         {
             $this->putToSession($phone_email);
             return 'valid';        

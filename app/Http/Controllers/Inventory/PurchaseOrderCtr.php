@@ -348,7 +348,8 @@ public function convertProductDataToHTML(){
     $output = '
     <div style="width:100%">
     <p style="text-align:right;">Date: '. $this->getDate() .'</p>
-    <h1 style="text-align:center;">'. $po_supplier .'</h1>
+    <h1 style="text-align:center;">Gracepearl Pharmacy</h1>
+    <h2 style="text-align:center;">'. $po_supplier .'</h2>
     <h3 style="text-align:center;">Purchase Order</h3>
 
     <table width="100%" style="border-collapse:collapse; border: 1px solid;">

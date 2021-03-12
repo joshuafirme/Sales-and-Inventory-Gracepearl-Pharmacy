@@ -54,12 +54,12 @@
 
             <div class="col-md-4">
               <label class="col-form-label">Quantity</label>
-              <input type="number" min="1" class="form-control" name="qty" id="qty" required>
+              <input type="number" min="1" class="form-control" name="qty" id="qty" required onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
             </div>
   
             <div class="col-md-4  mb-2">
               <label class="col-form-label">Original Price</label>
-              <input type="number" step=".01" min="0" max="9999999"  class="form-control" name="orig_price" id="orig_price" required>
+              <input type="number" step=".01" min="0" max="9999999"  class="form-control" name="orig_price" id="orig_price" required onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
             </div>
             
             <div class="col-md-4  mb-2">
@@ -69,12 +69,12 @@
             
             <div class="col-md-4">
               <label class="col-form-label">Selling Price</label>
-              <input  type="text" step=".01" min="0" class="form-control orig_price" name="selling_price" id="selling_price" required>
+              <input  type="text" step=".01" min="0" class="form-control orig_price" name="selling_price" id="selling_price" required onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
             </div>
             
             <div class="col-md-4">
               <label class="col-form-label">Reorder Point</label>
-              <input type="number" class="form-control" name="re_order" id="re_order" required>
+              <input type="number" class="form-control" name="re_order" id="re_order" required onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
             </div>
 
             <div class="col-md-4">

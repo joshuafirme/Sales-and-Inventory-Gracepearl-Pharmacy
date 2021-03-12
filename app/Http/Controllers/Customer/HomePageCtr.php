@@ -30,7 +30,6 @@ class HomePageCtr extends Controller
     }
     else{
 
-      Session::put('reminder', '1');
     }
 
     Auth::loginUsingId(Session::get('user-id'));
@@ -73,6 +72,7 @@ class HomePageCtr extends Controller
         ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
         ->where('E.archive_status', 0)
         ->whereRaw('E.exp_date >= CURDATE()')
+        ->orderBy('P.with_prescription', 'asc')
         ->limit($limit)
         ->get();
       }
@@ -93,6 +93,7 @@ class HomePageCtr extends Controller
         ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
         ->where('E.archive_status', 0)
         ->whereRaw('E.exp_date >= CURDATE()')
+        ->orderBy('P.with_prescription', 'asc')
         ->limit(8)
         ->get();
       }
@@ -134,6 +135,7 @@ class HomePageCtr extends Controller
               ->where('description', 'LIKE', '%'.$search_key.'%')
               ->whereRaw('C.category_name IN ("'.$cat_imp.'")')
               ->whereBetween('selling_price', [$min_price, $max_price])
+              ->orderBy('P.with_prescription', 'asc')
               ->limit($limit)
               ->get();
         }
@@ -154,6 +156,7 @@ class HomePageCtr extends Controller
           ->leftJoin($this->table_unit.' AS U', 'U.id', '=', 'P.unitID')
           ->whereRaw('E.exp_date >= CURDATE()')
           ->whereRaw('C.category_name IN ("'.$cat_imp.'")')
+          ->orderBy('P.with_prescription', 'asc')
           ->limit($limit)
           ->get();
         }

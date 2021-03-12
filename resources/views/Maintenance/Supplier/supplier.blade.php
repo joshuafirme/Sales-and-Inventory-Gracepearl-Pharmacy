@@ -69,7 +69,7 @@
                               <td>
                                <a class="btn btn-sm" id="btn-edit-supplier" supplier-id="{{ $data->id }}" data-toggle="modal" data-target="#editSupplierModal"><i class="fa fa-edit"></i></a>
                           
-                                <a class="btn btn-sm" id="delete-supplier" delete-id="{{ $data->id }}"><i style="color:#DC3545;" class="fa fa-trash"></i></a>
+                                {{--<a class="btn btn-sm" id="delete-supplier" delete-id="{{ $data->id }}"><i style="color:#DC3545;" class="fa fa-trash"></i></a>--}}
                               </td> 
                                
                             </tr>

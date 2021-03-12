@@ -72,7 +72,7 @@
                                               </tr>
                                           </thead>
                                                  
-                                          <tbody>
+                                          <tbody data-toggle="tooltip" title="3 months before expiration">
                                               <tr>    
                                                 @foreach ($nearExpiryProduct as $data)                        
                                                 <td>{{ $data->product_code }}</td>
@@ -186,7 +186,11 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-
+    <script>
+      $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+      </script>
     @extends('inventory.modals')
     @section('modals')
     @endsection

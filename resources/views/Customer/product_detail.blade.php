@@ -14,8 +14,8 @@
 
     <!--Grid row-->
     <div class="row">
-
-        <div class="col-lg-8 mt-3 m-auto"><h4>Product Details</h4></div>
+      <div class="col-lg-8 mt-3 mt-4 m-auto"><a href="/" class="btn btn-sm"><i class="fas fa-angle-left  fa-3x" style="color: #28A745;"></i></a></div>
+        <div class="col-lg-8 mt-3 mt-4 m-auto"><h4>Product Details</h4></div>
   
       <!--Grid column-->
       <div class="col-lg-8 mt-3 m-auto">
@@ -59,7 +59,21 @@
                   <!--  <button type="button" class="btn btn-sm card__btn-buy mr-1 mb-2" id="btn-buynow" product-code=// $data->product_code }}>Buy now</button> -->
                     @if($data->with_prescription == 'yes')
                       <p class="label small" style="margin-left: 14px; margin-top: 17px; font-style: italic;">Prescription needed</p>
-                    @else                 
+                    @else  
+                    <!-- QTY -->
+                    <div class="def-number-input number-input safari_only mt-2 mb-3 w-100">
+                      <button class="btn btn-sm"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                        class="minus"><i class="fas fa-minus"></i></button>
+
+                      <input class="quantity" min="1" id="qty-buynow" value="1" type="number"
+                       style="width: 40px;">
+
+                      <button class="btn btn-sm"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                        class="plus"><i class="fas fa-plus"></i></button>
+                    </div>
+                  <!-- END QTY -->               
                       <?php 
                       $stock = DB::table('tblexpiration')
                             ->where('product_code', $data->product_code)
@@ -71,20 +85,7 @@
                        @endif
                     @endif
                       
-                        <!-- QTY -->
-                        <div class="def-number-input number-input safari_only mt-2 w-100">
-                            <button class="btn btn-sm"
-                              onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                              class="minus"><i class="fas fa-minus"></i></button>
-
-                            <input class="quantity" min="1" id="qty-buynow" value="1" type="number"
-                             style="width: 40px;">
-
-                            <button class="btn btn-sm"
-                              onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                              class="plus"><i class="fas fa-plus"></i></button>
-                          </div>
-                        <!-- END QTY -->
+                        
                         <hr>
                         
                         <div class="table-responsive pt-1">

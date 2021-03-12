@@ -22,6 +22,7 @@
                         So we doesn't just dispense the medicine with patients without a legitimate prescription from the doctor.
                         Thank you for understanding.
                     </p>
+                    <img src="" alt="">
                 </div> 
     
             </div>
@@ -29,7 +30,8 @@
           
         </div>
         <div class="modal-footer">
-          <button class="btn btn-sm btn-success" id="btn-ok-reminder">Ok</button>
+            <button class="btn btn-sm btn-success" id="btn-ok-reminder">Ok</button>
+          </div>
         </div>
       </div>
     </div>

@@ -38,9 +38,7 @@ $(document).ready(function(){
     var password = $('#password').val();
     var confirm_password = $('#confirm_password').val();
 
-    if(password !== confirm_password){
-      alert('Password do not match!')
-    }
+    validatePassword(password, confirm_password);
    });
 
    $('#edit_confirm_password').blur(function(){
@@ -48,10 +46,29 @@ $(document).ready(function(){
     var password = $('#edit_password').val();
     var confirm_password = $('#edit_confirm_password').val();
 
-    if(password !== confirm_password){
-      alert('Password do not match!')
-    }
+    validatePassword(password, confirm_password);
    });
+
+
+   function validatePassword(password, confirm_password) {
+    if(password.replace(/ /g,'').length >= 6){
+        if(password == confirm_password){
+            return true;
+        }
+        else{
+            alert('Password do not match!');
+        }
+    }
+    else{
+        alert('Minimum of 6 characters!');
+        $('#password').val('');
+        $('#confirm_password').val('');
+        $('#edit_password').val('');
+        $('#edit_confirm_password').val('');
+    }
+}
+
+   
    
 
   //edit show

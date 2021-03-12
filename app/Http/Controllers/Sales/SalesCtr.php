@@ -26,6 +26,7 @@ class SalesCtr extends Controller
 
     public function index()
     {
+       // dd($this->getTransactionNo());
        // dd(session()->get('cart'));
       //  session()->forget('cart');
         $rights = new UserAccessRights;
@@ -170,9 +171,12 @@ class SalesCtr extends Controller
             $this->storeDiscount($discount, $sales_inv_no);
         }
 
+        $trans_no = $this->getTransactionNo();
+        
         foreach($this->getCashieringProduct() as $data){
             $sales = new Sales;
             $sales->_prefix = $this->getPrefix();
+            $sales->transactionNo = $trans_no;
             $sales->sales_inv_no = $sales_inv_no;
             $sales->product_code = $data->product_code;
             $sales->qty = $data->qty;
@@ -186,6 +190,13 @@ class SalesCtr extends Controller
             $this->updateInventory($sales->product_code, $sales->qty);
         }
  
+    }
+
+    public function getTransactionNo(){
+        $trans_no = DB::table('tblsales')
+        ->max('transactionNo');
+        $inc = ++ $trans_no;
+        return str_pad($inc, 5, '0', STR_PAD_LEFT);
     }
 
     public function storeDiscount($discount, $sales_inv_no){

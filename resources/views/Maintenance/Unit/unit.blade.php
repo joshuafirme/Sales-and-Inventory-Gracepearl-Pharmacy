@@ -53,7 +53,7 @@
                             <td>{{ $data->unit }}</td>                                                     
                                 <td>
                                     <a class="btn" id="btn-edit-unit" unit-id="{{ $data->id }}" data-toggle="modal" data-target="#editUnitModal"><i class="fa fa-edit"></i></a>
-                                    <a class="btn" name="id" id="deleteUnit" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>
+                              {{--      <a class="btn" name="id" id="deleteUnit" delete-id="{{ $data->id }}"><i class="fa fa-trash"></i></a>--}}
                                 </td>                             
                             </tr>
                             @endforeach 

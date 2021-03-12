@@ -52,7 +52,7 @@
 
         <div class="col-md-4">
           <label class="col-form-label">Qty to adjust</label>
-          <input type="number" min="0" class="form-control" name="qty_to_adjust" id="qty_to_adjust" autofocus>
+          <input type="number" min="0" class="form-control" name="qty_to_adjust" id="qty_to_adjust"  onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
         </div>
 
         <div class="col-md-4">

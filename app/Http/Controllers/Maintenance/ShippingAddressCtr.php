@@ -30,7 +30,7 @@ class ShippingAddressCtr extends Controller
             {
                $button = '<a class="btn btn-sm" id="btn-edit-shipping" edit-id="'. $s->id .'" data-toggle="modal" data-target="#editShippingModal"><i class="fa fa-edit"></i></a>';
                $button .= '&nbsp;&nbsp;';
-               $button .= '<a class="btn btn-sm" name="id" id="btn-delete-shipping" delete-id="'. $s->id .'"><i style="color:#DC3545;" class="fa fa-trash"></i></a>';
+             //  $button .= '<a class="btn btn-sm" name="id" id="btn-delete-shipping" delete-id="'. $s->id .'"><i style="color:#DC3545;" class="fa fa-trash"></i></a>';
                return $button;
             })
             ->addColumn('shipping_fee', function($s)
@@ -56,14 +56,30 @@ class ShippingAddressCtr extends Controller
 
    public function store(Request $request)
     {    
-        $sam = new ShippingAddressMaintenance;
-        $sam->municipality = $request->input('municipality');
-        $sam->brgy = $request->input('brgy');
-        $sam->shipping_fee = $request->input('shipping-fee');
-        $sam->save();
+         $sam = new ShippingAddressMaintenance;
+         $sam->municipality = $request->input('municipality');
+         $sam->brgy = $request->input('brgy');
+
+         if($this->isAddressExists($sam->municipality, $sam->brgy))
+         {
+            return redirect('/maintenance/shippingadd')->with('danger', 'Address is already exists!');
+         }
+
+         $sam->shipping_fee = $request->input('shipping-fee');
+         $sam->save();
 
         return redirect('/maintenance/shippingadd')->with('success', 'Data Saved');
     }
+
+    public function isAddressExists($municipality, $brgy){
+      $data = DB::table('tblship_add_maintenance')
+         ->where('municipality', $municipality)
+         ->where('brgy', $brgy)
+         ->get();
+
+      $res = $data->count() > 0 ? true : false;
+      return $res;
+   }
 
    public function getMunicipalityList(){
 

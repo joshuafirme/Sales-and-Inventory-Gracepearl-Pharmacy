@@ -34,11 +34,11 @@
                   </div>
                   @endif
                 <form method="POST" action="{{ action('Maintenance\DiscountCtr@activate') }}">
-                    {{ csrf_field() }}
+                    {{ csrf_field() }}                  <small class="form-text text-muted">0.01 is equal to 1% discount.</small>
                         <div class="form-group">
                           <label for="discount">Senior Citizen</label>
                           <input type="number" step="0.01" min="0.01" max="1.0" class="form-control" name="sc-discount" id="sc-discount" value={{ number_format($sc_discount, 2,'.',',') }}>
-                          <small class="form-text text-muted">0.01 is equal to 1% discount.</small>
+        
                         </div> 
                         
                         <div class="form-group">

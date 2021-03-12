@@ -54,7 +54,7 @@
                               <td class="td-cat-name">{{ $data->category_name }}</td>                                                           
                                 <td>
                                   <a class="btn btn-sm" id="btn-edit-category-maintenance" category-id="{{ $data->id }}" data-toggle="modal" data-target="#editCategoryModal"><i class="fa fa-edit"></i></a>
-                                  <a class="btn btn-sm" name="id" id="deleteCategory" delete-id="{{ $data->id }}"><i style="color:#DC3545;" class="fa fa-trash"></i></a>
+                                 {{-- <a class="btn btn-sm" name="id" id="deleteCategory" delete-id="{{ $data->id }}"><i style="color:#DC3545;" class="fa fa-trash"></i></a>--}}
                                 </td>
                             </tr>
                             @endforeach 

@@ -65,8 +65,12 @@ class StripePaymentCtr extends Controller
         ]); 
         $order = $this->getOrderDetails($this->getOrderNo() -1);
 
+        $sales_inv_no = $this->getSalesInvNo();
+        $trans_no = $this->getTransactionNo();
         for($i = 0; $i < $order->count(); $i++){
             $this->recordSales(
+                $trans_no,
+                $sales_inv_no,
                 $order[$i]->product_code,
                 $order[$i]->qty,
                 $order[$i]->amount,
@@ -99,10 +103,11 @@ class StripePaymentCtr extends Controller
           }
     }
 
-    public function recordSales($product_code, $qty, $amount, $payment_method){
+    public function recordSales($trans_no,$product_code, $qty, $amount, $payment_method){
         DB::table('tblsales')
             ->insert([
                 '_prefix' => date('Ymd'),
+                'transactionNo' => $trans_no,
                 'sales_inv_no' => $this->getSalesInvNo(),
                 'product_code' => $product_code,
                 'qty' => $qty,
@@ -113,6 +118,13 @@ class StripePaymentCtr extends Controller
                 'created_at' => date('Y-m-d h:m:s'),
                 'updated_at' => date('Y-m-d h:m:s')
             ]);
+    }
+
+    public function getTransactionNo(){
+        $trans_no = DB::table('tblsales')
+        ->max('transactionNo');
+        $inc = ++ $trans_no;
+        return str_pad($inc, 5, '0', STR_PAD_LEFT);
     }
 
     public function updateInventory($product_code, $qty){   

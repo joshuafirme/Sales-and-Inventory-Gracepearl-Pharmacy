@@ -64,8 +64,13 @@ class PaymentCtr extends Controller
 
         $order = $this->getOrderDetails($order_no);
 
+        $sales_inv_no = $this->getSalesInvNo();
+        $trans_no = $this->getTransactionNo();
+
         for($i = 0; $i < $order->count(); $i++){
             $this->recordSales(
+                $trans_no,
+                $sales_inv_no,
                 $order[$i]->product_code,
                 $order[$i]->qty,
                 $order[$i]->amount,
@@ -164,8 +169,13 @@ class PaymentCtr extends Controller
 
         $order = $this->getOrderDetails($order_no);
 
+        $sales_inv_no = $this->getSalesInvNo();
+        $trans_no = $this->getTransactionNo();
+
         for($i = 0; $i < $order->count(); $i++){
             $this->recordSales(
+                $trans_no,
+                $sales_inv_no,
                 $order[$i]->product_code,
                 $order[$i]->qty,
                 $order[$i]->amount,
@@ -175,12 +185,20 @@ class PaymentCtr extends Controller
         }
     }
 
+    public function getTransactionNo(){
+        $trans_no = DB::table('tblsales')
+        ->max('transactionNo');
+        $inc = ++ $trans_no;
+        return str_pad($inc, 5, '0', STR_PAD_LEFT);
+    }
+
     
-    public function recordSales($product_code, $qty, $amount, $payment_method){
+    public function recordSales($trans_no, $sales_inv_no, $product_code, $qty, $amount, $payment_method){
         DB::table('tblsales')
             ->insert([
                 '_prefix' => date('Ymd'),
-                'sales_inv_no' => $this->getSalesInvNo(),
+                'transactionNo' => $trans_no,
+                'sales_inv_no' => $sales_inv_no,
                 'product_code' => $product_code,
                 'qty' => $qty,
                 'amount' => $amount,

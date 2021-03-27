@@ -95,7 +95,7 @@ class UserMaintenanceCtr extends Controller
                 $button = ' <a class="btn btn-sm" id="btn-edit-user" emp-id="'. $user->id .'"
                 data-toggle="modal" data-target="#editUserModal" ><i class="fa fa-edit"></i></a>';
 
-              //  $button .= '<a class="btn btn-sm" id="delete-user" delete-id="'. $user->id .'"><i  style="color:#DC3545;" class="fa fa-trash"></i></a>';
+              //-  $button .= '<a class="btn btn-sm" id="delete-user" delete-id="'. $user->id .'"><i  style="color:#DC3545;" class="fa fa-trash"></i></a>';
                 return $button;
 
             })

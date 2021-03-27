@@ -125,7 +125,7 @@ class ProductMaintenanceCtr extends Controller
         $this->storeImage($product->id);
         $this->storeExpiration($product->_prefix.str_pad($product->id, 4, '0', STR_PAD_LEFT), $product->qty, $product->exp_date);
 
-        return redirect('/maintenance/product')->with('success', 'Data Saved');
+            
     }
 
     public function storeExpiration($product_code, $qty, $exp_date){

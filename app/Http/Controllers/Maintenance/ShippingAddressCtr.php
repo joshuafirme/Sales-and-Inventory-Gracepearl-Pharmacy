@@ -30,7 +30,10 @@ class ShippingAddressCtr extends Controller
             {
                $button = '<a class="btn btn-sm" id="btn-edit-shipping" edit-id="'. $s->id .'" data-toggle="modal" data-target="#editShippingModal"><i class="fa fa-edit"></i></a>';
                $button .= '&nbsp;&nbsp;';
-             //  $button .= '<a class="btn btn-sm" name="id" id="btn-delete-shipping" delete-id="'. $s->id .'"><i style="color:#DC3545;" class="fa fa-trash"></i></a>';
+               $button .= '<a class="btn btn-sm" name="id" id="btn-delete-shipping" delete-id="'. $s->id .'"><i style="color:#DC3545;" class="fa fa-trash"></i></a>';
+               if($s->is_active == 0){
+                  $button .= '<span class="badge" style="background-color:#337AB7; margin-left:50px; color:#fff;">Inactive</span>';     
+               }
                return $button;
             })
             ->addColumn('shipping_fee', function($s)
@@ -56,17 +59,25 @@ class ShippingAddressCtr extends Controller
 
    public function store(Request $request)
     {    
-         $sam = new ShippingAddressMaintenance;
-         $sam->municipality = $request->input('municipality');
-         $sam->brgy = $request->input('brgy');
-
-         if($this->isAddressExists($sam->municipality, $sam->brgy))
+        // $sam = new ShippingAddressMaintenance;
+         $municipality = $request->input('municipality');
+         $brgy = $request->input('brgy');
+         $shipping_fee = $request->input('shipping-fee');
+  
+         if($this->isAddressExists($municipality, $brgy))
          {
             return redirect('/maintenance/shippingadd')->with('danger', 'Address is already exists!');
          }
 
-         $sam->shipping_fee = $request->input('shipping-fee');
-         $sam->save();
+         DB::table('tblship_add_maintenance')
+         ->insert([
+            'municipality' => $municipality,
+            'brgy' => $brgy,
+            'shipping_fee' => $shipping_fee,
+            'is_active' => 1
+         ]);
+
+       //  $sam->save();
 
         return redirect('/maintenance/shippingadd')->with('success', 'Data Saved');
     }
@@ -127,8 +138,11 @@ class ShippingAddressCtr extends Controller
    }
 
    public function destroy($id){
-       $s = ShippingAddressMaintenance::findOrFail($id);
-       $s->delete();
-       return redirect('/maintenance/shippingadd')->with('success', 'Shipping address was successfully deleted.');
+      DB::table('tblship_add_maintenance')
+      ->where('id', $id)
+      ->update([
+         'is_active' => 0
+      ]);
+       return redirect('/maintenance/shippingadd')->with('success', 'Shipping address was successfully inactive.');
    }
 }

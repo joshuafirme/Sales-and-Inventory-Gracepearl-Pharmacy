@@ -96,7 +96,7 @@ $(document).on('click', '#btn-delete-shipping', function(){
     id = $(this).attr('delete-id');
     $('#confirmModal').modal('show');
     $('.delete-success').hide();
-    $('.delete-message').html('Are you sure do you want to delete this address?');
+    $('.delete-message').html('Are you sure do you want to inactive this address?');
   }); 
   
   
